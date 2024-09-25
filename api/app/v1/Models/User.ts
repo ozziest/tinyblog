@@ -19,12 +19,7 @@ class User extends Model {
   }
 
   get handlers() {
-    return [
-      HandlerTypes.DELETE,
-      HandlerTypes.INSERT,
-      HandlerTypes.UPDATE,
-      HandlerTypes.SHOW,
-    ];
+    return [HandlerTypes.INSERT];
   }
 
   get hiddens() {
