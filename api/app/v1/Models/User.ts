@@ -1,4 +1,4 @@
-import { HandlerTypes, Model } from "axe-api";
+import { HandlerTypes, IHandlerBasedTransactionConfig, Model } from "axe-api";
 
 class User extends Model {
   get fillable() {

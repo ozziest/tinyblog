@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "../components/inputs/Button";
 import TextInput from "../components/inputs/TextInput";
 import { useState } from "react";
@@ -8,6 +8,7 @@ import { useTranslation } from "react-i18next";
 
 const RegisterView = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const [state, setState] = useState<IUserPost>({
     email: "",
     username: "",
@@ -18,6 +19,7 @@ const RegisterView = () => {
 
   const handleCreate = async () => {
     await api.user.createUser(state);
+    navigate("/auth/login");
   };
 
   const handleChange = (

@@ -9,6 +9,7 @@ export const up = function (knex) {
     table.integer("stats_post").notNullable().defaultTo(0);
     table.integer("stats_follower").notNullable().defaultTo(0);
     table.integer("stats_following").notNullable().defaultTo(0);
+    table.boolean("is_email_confirmed").notNullable().defaultTo(false);
     table.timestamps();
   });
 };
