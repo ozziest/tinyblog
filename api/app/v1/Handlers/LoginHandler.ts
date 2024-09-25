@@ -9,8 +9,8 @@ export default async (req: AxeRequest, res: AxeResponse) => {
 
   const user = await db
     .table("users")
-    .where("email", email)
-    .orWhere("username", email)
+    .where("email", email.trim().toLowerCase())
+    .orWhere("username", email.trim().toLowerCase())
     .first();
 
   if (!user) {
