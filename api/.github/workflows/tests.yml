@@ -1,0 +1,46 @@
+name: Tests
+
+on:
+  push:
+    branches:
+      - master
+
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  units:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x, 21.x]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Build the app
+        run: |
+          npm ci
+          cp .env.example .env
+          npm run build
+
+      - name: Start the application
+        run: npm run start &
+
+      - name: Wait for the server to start
+        run: sleep 5
+
+      - name: Test API endpoint
+        run: |
+          response=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:3000/docs)
+          if [ $response == "200" ]; then
+            echo "API endpoint is reachable."
+            exit 0
+          else
+            echo "API endpoint is not reachable."
+            exit 1
+          fi
