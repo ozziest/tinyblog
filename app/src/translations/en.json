@@ -1,0 +1,40 @@
+{
+  "login": {
+    "title": "Login to your account",
+    "email": {
+      "label": "E-mail or username",
+      "placeholder": "Type your e-mail address or username"
+    },
+    "password": {
+      "label": "Password",
+      "placeholder": "The most secret thing on earth"
+    },
+    "button": "Login",
+    "createNewAccount": "Create a new account"
+  },
+  "register": {
+    "title": "Create a new account",
+    "email": {
+      "label": "E-mail",
+      "placeholder": "Type your e-mail address"
+    },
+    "username": {
+      "label": "Username",
+      "placeholder": "Select a username"
+    },
+    "name": {
+      "label": "Name",
+      "placeholder": "Type your name"
+    },
+    "password": {
+      "label": "Password",
+      "placeholder": "Select a password"
+    },
+    "passwordRetry": {
+      "label": "Password (Retry)",
+      "placeholder": "Type the same password here"
+    },
+    "button": "Create",
+    "loginAccountLink": "Login your account"
+  }
+}

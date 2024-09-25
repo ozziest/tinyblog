@@ -4,8 +4,10 @@ import TextInput from "../components/inputs/TextInput";
 import { useState } from "react";
 import { IUserPost } from "../interfaces";
 import api from "../api";
+import { useTranslation } from "react-i18next";
 
 const RegisterView = () => {
+  const { t } = useTranslation();
   const [state, setState] = useState<IUserPost>({
     email: "",
     username: "",
@@ -36,39 +38,39 @@ const RegisterView = () => {
 
       <form className="py-8 flex flex-col gap-4">
         <TextInput
-          label="E-mail"
-          placeholder="Type your e-mail address"
+          label={t("register.email.label")}
+          placeholder={t("register.email.placeholder")}
           value={state.email}
           onChange={(event) => handleChange(event, "email")}
         />
         <TextInput
-          label="Username"
-          placeholder="Select a username"
+          label={t("register.username.label")}
+          placeholder={t("register.username.placeholder")}
           value={state.username}
           onChange={(event) => handleChange(event, "username")}
         />
         <TextInput
-          label="Name"
-          placeholder="Select a name"
+          label={t("register.name.label")}
+          placeholder={t("register.name.placeholder")}
           value={state.name}
           onChange={(event) => handleChange(event, "name")}
         />
         <TextInput
-          label="Password"
           type="password"
-          placeholder="Select a password"
+          label={t("register.password.label")}
+          placeholder={t("register.password.placeholder")}
           value={state.password}
           onChange={(event) => handleChange(event, "password")}
         />
         <TextInput
-          label="Password (Retry)"
           type="password"
-          placeholder="Type the same password here"
+          label={t("register.passwordRetry.label")}
+          placeholder={t("register.passwordRetry.placeholder")}
           value={state.passwordRetry}
           onChange={(event) => handleChange(event, "passwordRetry")}
         />
         <Button type="button" onClick={handleCreate}>
-          Create
+          {t("register.button")}
         </Button>
       </form>
 
@@ -77,7 +79,7 @@ const RegisterView = () => {
           to="/auth/login"
           className="text-neutral-600 hover:underline hover:text-neutral-950"
         >
-          Login your account
+          {t("register.loginAccountLink")}
         </Link>
       </div>
     </div>
