@@ -12,6 +12,9 @@ const loadFile = (file: string) => {
 
 const TEMPLATES: Record<EmailTemplates, string> = {
   [EmailTemplates.EmailConfirmation]: loadFile("EmailConfirmation.html"),
+  [EmailTemplates.Welcome]: loadFile("Welcome.html"),
+  [EmailTemplates.PasswordReset]: loadFile("PasswordReset.html"),
+  [EmailTemplates.AccountDeactivated]: loadFile("AccountDeactivated.html"),
 };
 
 export const prepareTemplates = () => {
