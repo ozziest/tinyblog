@@ -25,7 +25,7 @@
     "mysql": "^2.18.1",
     "mysql2": "^3.11.3",
     "nanoid": "^5.0.7",
-    "robust-validator": "^1.1.0"
+    "robust-validator": "^2.0.0-rc-1"
   },
   "devDependencies": {
     "@babel/cli": "^7.25.6",

@@ -7,6 +7,9 @@ import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import en from "./translations/en.json";
 import router from "./router";
+import { setLocales, en as validationEn } from "robust-validator";
+
+setLocales(validationEn);
 
 axios.interceptors.request.use(
   function (config) {

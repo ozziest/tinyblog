@@ -6,11 +6,18 @@ import { ILoginPost, ILoginResponse } from "../interfaces";
 import api from "../api";
 import useAuthStore from "../stores/authStore";
 import { useTranslation } from "react-i18next";
+import { IValidationResult, validate } from "robust-validator";
+
+const RULES = {
+  email: "required|min:3",
+  password: "required|min:8",
+};
 
 const LoginView = () => {
   const authStore = useAuthStore();
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const [validation, setValidation] = useState<IValidationResult | null>(null);
 
   const [state, setState] = useState<ILoginPost>({
     email: "",
@@ -19,6 +26,13 @@ const LoginView = () => {
 
   const handleLogin = async (event: React.FormEvent) => {
     event.preventDefault();
+
+    setValidation(null);
+    const result = await validate(state, RULES);
+    if (result.isInvalid) {
+      setValidation(result);
+      return;
+    }
 
     const { data } = await api.user.login(state);
     authStore.set(data as ILoginResponse);
@@ -36,7 +50,7 @@ const LoginView = () => {
   };
 
   return (
-    <div className="border border-neutral-200 p-8 rounded min-w-[500px]">
+    <div className="border border-neutral-200 p-8 rounded w-[500px]">
       <h2 className="font-semibold text-lg text-neutral-800 text-center">
         {t("login.title")}
       </h2>
@@ -47,6 +61,7 @@ const LoginView = () => {
         action="/"
         method="post"
       >
+        {JSON.stringify(validation)}
         <TextInput
           autoComplete="email"
           label={t("login.email.label")}
