@@ -7,6 +7,7 @@ import api from "../api";
 import { useTranslation } from "react-i18next";
 import { IValidationResult, validate } from "robust-validator";
 import { notification } from "../helpers/notication";
+import PasswordStrengthMeter from "../components/inputs/PasswordStrengthMeter";
 
 const RULES = {
   email: "required|email|max:320",
@@ -117,6 +118,7 @@ const RegisterView = () => {
           onChange={(event) => handleChange(event, "password")}
           validation={validation}
         />
+        <PasswordStrengthMeter password={state.password} />
         <TextInput
           type="password"
           name="password_confirmed"
