@@ -33,6 +33,13 @@ export default async (req: AxeRequest, res: AxeResponse) => {
     });
   }
 
+  // Delete old confirmation email links
+  await db
+    .table("confirmations")
+    .where("user_id", user.id)
+    .where("confirmation_type", "email")
+    .delete();
+
   // Create secret and code
   const secret = nanoid(32);
   const codeGenerator = customAlphabet("1234567890", 6);
