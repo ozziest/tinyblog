@@ -5,11 +5,12 @@ interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   name: string;
   label?: string;
   validation?: IValidationResult;
+  error?: string;
 }
 
-const TextInput = ({ name, label, validation, ...rest }: Props) => {
+const TextInput = ({ name, label, validation, error, ...rest }: Props) => {
   return (
-    <FormGroup label={label} validation={validation} name={name}>
+    <FormGroup label={label} validation={validation} name={name} error={error}>
       <input
         className="outline outline-neutral-500 rounded px-3 py-2"
         name={name}

@@ -17,6 +17,17 @@ export interface ILoginPost {
   password: string;
 }
 
+export interface IProfilCheckPost {
+  email: string;
+  username: string;
+}
+
+export interface IProfilCheckResponse {
+  error?: string;
+  email: boolean;
+  username: boolean;
+}
+
 export interface ILoginResponse {
   name: string;
   follower: number;

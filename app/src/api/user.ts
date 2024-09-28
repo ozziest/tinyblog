@@ -1,4 +1,9 @@
-import { ILoginPost, IUserPost } from "../interfaces";
+import {
+  ILoginPost,
+  IProfilCheckPost,
+  IProfilCheckResponse,
+  IUserPost,
+} from "../interfaces";
 import { resource } from "axe-api-client";
 
 const createUser = async (data: IUserPost) => {
@@ -9,7 +14,14 @@ const login = async (data: ILoginPost) => {
   return resource("login").post(data);
 };
 
+const profileCheck = async (
+  data: IProfilCheckPost,
+): Promise<IProfilCheckResponse> => {
+  return resource("profileCheck").post(data);
+};
+
 export default {
   createUser,
   login,
+  profileCheck,
 };

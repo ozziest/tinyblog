@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Button from "../components/inputs/Button";
 import TextInput from "../components/inputs/TextInput";
 import { useState } from "react";
-import { IUserPost } from "../interfaces";
+import { IProfilCheckResponse, IUserPost } from "../interfaces";
 import api from "../api";
 import { useTranslation } from "react-i18next";
 import { IValidationResult, validate } from "robust-validator";
@@ -26,6 +26,7 @@ const RegisterView = () => {
     password_confirmed: "",
   });
   const [validation, setValidation] = useState<IValidationResult>();
+  const [profile, setProfile] = useState<IProfilCheckResponse>();
 
   const handleCreate = async () => {
     setValidation(undefined);
@@ -53,6 +54,19 @@ const RegisterView = () => {
     });
   };
 
+  const handleProfileCheck = async () => {
+    const { error, ...data } = await api.user.profileCheck({
+      email: state.email,
+      username: state.username,
+    });
+
+    if (error) {
+      notification.error(error);
+    } else {
+      setProfile(data);
+    }
+  };
+
   return (
     <div className="border border-neutral-200 p-8 rounded w-[500px]">
       <h2 className="font-semibold text-lg text-neutral-800 text-center">
@@ -67,6 +81,10 @@ const RegisterView = () => {
           value={state.email}
           onChange={(event) => handleChange(event, "email")}
           validation={validation}
+          onBlur={handleProfileCheck}
+          error={
+            profile?.email === true ? "E-mail is already used!" : undefined
+          }
         />
         <TextInput
           name="username"
@@ -74,7 +92,13 @@ const RegisterView = () => {
           placeholder={t("register.username.placeholder")}
           value={state.username}
           onChange={(event) => handleChange(event, "username")}
+          onBlur={handleProfileCheck}
           validation={validation}
+          error={
+            profile?.username === true
+              ? "The username is already taken!"
+              : undefined
+          }
         />
         <TextInput
           name="name"
