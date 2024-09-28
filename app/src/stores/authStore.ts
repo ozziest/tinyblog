@@ -10,10 +10,13 @@ export interface ExtendedState {
   following: number;
 }
 
+type IncreaseType = "post" | "following";
+
 interface AuthState {
   state: ExtendedState;
   set: (newState: ILoginResponse) => void;
   logout: () => void;
+  increase: (type: IncreaseType) => void;
 }
 
 const DEFAULT_STATE: ExtendedState = {
@@ -56,6 +59,17 @@ const useAuthStore = create<AuthState>()((set) => ({
     };
     sessionStorage.setItem("useAuthStore", JSON.stringify(value));
     set(() => ({ state: value }));
+  },
+
+  increase(type: IncreaseType) {
+    set(() => {
+      return {
+        state: {
+          ...this.state,
+          [type]: this.state[type] + 1,
+        },
+      };
+    });
   },
 
   logout() {

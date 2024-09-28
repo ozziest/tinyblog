@@ -13,6 +13,7 @@ const ShareInput = ({ isReply = false }: Props) => {
 
   const handleCreate = async () => {
     await api.post.store({ content });
+    authStore.increase("post");
   };
 
   return (
