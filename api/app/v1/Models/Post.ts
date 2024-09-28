@@ -1,4 +1,11 @@
-import { HandlerTypes, Model, ModelMiddleware } from "axe-api";
+import {
+  deny,
+  HandlerTypes,
+  IQueryLimitConfig,
+  Model,
+  ModelMiddleware,
+  QueryFeature,
+} from "axe-api";
 import SessionMiddleware from "../Middlewares/SessionMiddleware";
 
 class Post extends Model {
@@ -24,8 +31,16 @@ class Post extends Model {
     return [HandlerTypes.INSERT, HandlerTypes.PAGINATE];
   }
 
+  get limits(): IQueryLimitConfig[][] {
+    return [deny(QueryFeature.WithHasMany, ["views"])];
+  }
+
   user() {
     return this.hasOne("User", "id", "user_id");
+  }
+
+  views() {
+    return this.hasMany("PostView", "id", "post_id");
   }
 }
 
