@@ -40,7 +40,7 @@ i18n.use(initReactI18next).init({
 
 createRoot(document.getElementById("root")!).render(
   <>
-    <RouterProvider router={router} />,
+    <RouterProvider router={router} />
     <ErrorMessageComponent />
   </>,
 );

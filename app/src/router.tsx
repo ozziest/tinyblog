@@ -6,6 +6,7 @@ import AuthLayout from "./components/layout/AuthLayout";
 import FeedView from "./views/FeedView";
 import UserView from "./views/UserView";
 import RegisterView from "./views/RegisterView";
+import PageNotFoundView from "./views/PageNotFoundView";
 
 const router = createBrowserRouter([
   {
@@ -40,6 +41,7 @@ const router = createBrowserRouter([
       },
     ],
   },
+  { path: "*", element: <PageNotFoundView /> },
 ]);
 
 export default router;
