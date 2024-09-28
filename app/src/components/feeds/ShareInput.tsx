@@ -2,7 +2,7 @@ import { useState } from "react";
 import Avatar from "../user/Avatar";
 import api from "../../api";
 import useAuthStore from "../../stores/authStore";
-import useFeedsStore from "../../stores/feedsStore";
+import usePostStore from "../../stores/postStore";
 
 interface Props {
   isReply?: boolean;
@@ -11,7 +11,7 @@ interface Props {
 const ShareInput = ({ isReply = false }: Props) => {
   const [content, setContent] = useState("");
   const authStore = useAuthStore();
-  const feedsStore = useFeedsStore();
+  const postStore = usePostStore();
 
   const handleCreate = async () => {
     const response = await api.post.store({ content });
@@ -20,7 +20,7 @@ const ShareInput = ({ isReply = false }: Props) => {
     authStore.increase("post");
 
     setContent("");
-    feedsStore.push({
+    postStore.push({
       id: feed.id,
       content: feed.content,
       created_at: feed.created_at,

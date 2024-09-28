@@ -7,7 +7,7 @@ interface IState {
   maxId: number;
 }
 
-interface IFeedsStore {
+interface IPostStore {
   state: IState;
   init: (feeds: IPost[]) => void;
   push: (feed: IPost) => void;
@@ -25,7 +25,7 @@ const getMinId = (feeds: IPost[]): number => {
   }, Infinity);
 };
 
-const useFeedsStore = create<IFeedsStore>()((set) => ({
+const usePostStore = create<IPostStore>()((set) => ({
   state: {
     feeds: [],
     minId: 0,
@@ -65,4 +65,4 @@ const useFeedsStore = create<IFeedsStore>()((set) => ({
   },
 }));
 
-export default useFeedsStore;
+export default usePostStore;

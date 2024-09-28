@@ -3,14 +3,14 @@ import FeedContainer from "../components/feeds/FeedContainer";
 import Feeds from "../components/feeds/Feeds";
 import ShareInput from "../components/feeds/ShareInput";
 import api from "../api";
-import useFeedsStore from "../stores/feedsStore";
+import usePostStore from "../stores/postStore";
 
 const FeedView = () => {
-  const feedStore = useFeedsStore();
+  const postStore = usePostStore();
 
   const fetchFeeds = async () => {
     const response = await api.post.paginate();
-    feedStore.init(response.data);
+    postStore.init(response.data);
   };
 
   useEffect(() => {
@@ -20,7 +20,7 @@ const FeedView = () => {
   return (
     <FeedContainer>
       <ShareInput />
-      <Feeds posts={feedStore.state.feeds} />
+      <Feeds posts={postStore.state.feeds} />
     </FeedContainer>
   );
 };
