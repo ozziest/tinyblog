@@ -88,12 +88,19 @@ const LoginView = () => {
         <Button type="submit">{t("login.button")}</Button>
       </form>
 
-      <div className="text-center">
+      <div className="text-center flex gap-3 justify-center">
         <Link
           to="/auth/register"
           className="text-neutral-600 hover:underline hover:text-neutral-950"
         >
-          {t("login.createNewAccount")}
+          Register
+        </Link>
+        |
+        <Link
+          to="/confirm/email"
+          className="text-neutral-600 hover:underline hover:text-neutral-950"
+        >
+          E-mail confirmation
         </Link>
       </div>
     </div>

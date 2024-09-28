@@ -8,6 +8,7 @@ import UserView from "./views/UserView";
 import RegisterView from "./views/RegisterView";
 import PageNotFoundView from "./views/PageNotFoundView";
 import EmailConfirmationView from "./views/EmailConfirmationView";
+import EmailConfirmationResetView from "./views/EmailConfirmationResetView";
 
 const router = createBrowserRouter([
   {
@@ -49,6 +50,10 @@ const router = createBrowserRouter([
       {
         path: "email/:secret/:code",
         element: <EmailConfirmationView />,
+      },
+      {
+        path: "email",
+        element: <EmailConfirmationResetView />,
       },
     ],
   },
