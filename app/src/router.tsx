@@ -9,6 +9,7 @@ import RegisterView from "./views/RegisterView";
 import PageNotFoundView from "./views/PageNotFoundView";
 import EmailConfirmationView from "./views/EmailConfirmationView";
 import EmailConfirmationResetView from "./views/EmailConfirmationResetView";
+import ForgetPasswordView from "./views/ForgetPasswordView";
 
 const router = createBrowserRouter([
   {
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
       {
         path: "register",
         element: <RegisterView />,
+      },
+      {
+        path: "forget-password",
+        element: <ForgetPasswordView />,
       },
     ],
   },

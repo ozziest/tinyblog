@@ -2,6 +2,7 @@ import {
   IConfirmationPost,
   IConfirmationResetPost,
   ILoginPost,
+  IPasswordResetPost,
   IProfilCheckPost,
   IProfilCheckResponse,
   IUserPost,
@@ -30,10 +31,15 @@ const confirmationReset = async (data: IConfirmationResetPost) => {
   return resource("confirmReset").post(data);
 };
 
+const passwordReset = async (data: IPasswordResetPost) => {
+  return resource("passwordReset").post(data);
+};
+
 export default {
   createUser,
   login,
   profileCheck,
   confirmation,
   confirmationReset,
+  passwordReset,
 };

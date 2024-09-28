@@ -9,6 +9,7 @@ import router from "./router";
 import { setLocales, en as validationEn } from "robust-validator";
 import { setConfig } from "axe-api-client";
 import ErrorMessageComponent from "./components/messages/ErrorMessage";
+import SuccessMessage from "./components/messages/SuccessMessage";
 
 setLocales(validationEn);
 setConfig({
@@ -42,5 +43,6 @@ createRoot(document.getElementById("root")!).render(
   <>
     <RouterProvider router={router} />
     <ErrorMessageComponent />
+    <SuccessMessage />
   </>,
 );

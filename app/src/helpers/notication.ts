@@ -7,6 +7,14 @@ export const error = (message: string) => {
   window.dispatchEvent(event);
 };
 
+export const success = (message: string) => {
+  const event = new CustomEvent(MessageTypes.SimpleSuccess, {
+    detail: { message },
+  });
+  window.dispatchEvent(event);
+};
+
 export const notification = {
   error,
+  success,
 };

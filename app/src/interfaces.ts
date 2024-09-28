@@ -45,3 +45,7 @@ export interface ILoginResponse {
   token: string;
   username: string;
 }
+
+export interface IPasswordResetPost {
+  email: string;
+}

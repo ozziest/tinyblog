@@ -97,7 +97,7 @@ const LoginView = () => {
         </Link>
         |
         <Link
-          to="/auth/register"
+          to="/auth/forget-password"
           className="text-neutral-600 hover:underline hover:text-neutral-950"
         >
           Forget password

@@ -3,10 +3,16 @@ import { Knex } from "knex";
 import { validate } from "robust-validator";
 import { nanoid, customAlphabet } from "nanoid";
 import { addMinutes } from "date-fns";
-import { getConfirmationLink } from "../Services/ConfirmationService";
+import {
+  getConfirmationLink,
+  getPasswordResetLink,
+} from "../Services/ConfirmationService";
 import { getTemplate } from "../Services/TemplateService";
 import { EmailTemplates } from "../../enums";
 import { sendEmail } from "../Services/MailService";
+
+const SUCCESS_MESSAGE =
+  "The password reset link has been send to the e-mail address.";
 
 export default async (req: AxeRequest, res: AxeResponse) => {
   const validation = await validate(req.body, {
@@ -23,14 +29,14 @@ export default async (req: AxeRequest, res: AxeResponse) => {
   const user = await db
     .table("users")
     .where("email", email)
-    .where("is_email_confirmed", false)
+    .where("is_email_confirmed", true)
     .first();
 
+  console.log(user);
+
+  // We shouldn't give too much information to the users
   if (!user) {
-    return res.status(404).json({
-      error:
-        "The e-mail is not found, or it is alredy confirmed. Please check your email address. You can go to the login page if it looks good.",
-    });
+    return res.json({});
   }
 
   // Create secret and code
@@ -38,10 +44,17 @@ export default async (req: AxeRequest, res: AxeResponse) => {
   const codeGenerator = customAlphabet("1234567890", 6);
   const confirmation_code = codeGenerator();
 
+  // Delete old reset-password links
+  await db
+    .table("confirmations")
+    .where("user_id", user.id)
+    .where("confirmation_type", "password-reset")
+    .delete();
+
   // Add new confirmation code to the db
   const data = {
     user_id: user.id,
-    confirmation_type: "email",
+    confirmation_type: "password-reset",
     confirmation_secret: secret,
     confirmation_code,
     expires_at: addMinutes(new Date(), 30),
@@ -51,13 +64,13 @@ export default async (req: AxeRequest, res: AxeResponse) => {
   await db.table("confirmations").insert(data);
 
   // Send the confirmation link as e-mail
-  const LINK = getConfirmationLink(secret, confirmation_code);
-  const html = getTemplate(EmailTemplates.EmailConfirmation)
+  const LINK = getPasswordResetLink(secret, confirmation_code);
+  const html = getTemplate(EmailTemplates.PasswordReset)
     .replace("{NAME}", user.name)
     .replace("{LINK}", LINK)
     .replace("{LINK}", LINK);
 
-  await sendEmail(user.email, "E-mail confirmation", html);
+  await sendEmail(user.email, "Password reset", html);
 
   return res.json({});
 };
