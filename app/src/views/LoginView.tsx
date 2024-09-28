@@ -7,6 +7,7 @@ import api from "../api";
 import useAuthStore from "../stores/authStore";
 import { useTranslation } from "react-i18next";
 import { IValidationResult, validate } from "robust-validator";
+import { notification } from "../helpers/notication";
 
 const RULES = {
   email: "required|min:3",
@@ -34,9 +35,14 @@ const LoginView = () => {
       return;
     }
 
-    const { data } = await api.user.login(state);
-    authStore.set(data as ILoginResponse);
-    navigate("/");
+    const { error, ...data } = await api.user.login(state);
+    if (error) {
+      notification.error(error);
+      console.log(error);
+    } else {
+      authStore.set(data as ILoginResponse);
+      navigate("/");
+    }
   };
 
   const handleChange = (

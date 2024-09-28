@@ -8,6 +8,7 @@ import en from "./translations/en.json";
 import router from "./router";
 import { setLocales, en as validationEn } from "robust-validator";
 import { setConfig } from "axe-api-client";
+import ErrorMessageComponent from "./components/messages/ErrorMessage";
 
 setLocales(validationEn);
 setConfig({
@@ -38,5 +39,8 @@ i18n.use(initReactI18next).init({
 });
 
 createRoot(document.getElementById("root")!).render(
-  <RouterProvider router={router} />,
+  <>
+    <RouterProvider router={router} />,
+    <ErrorMessageComponent />
+  </>,
 );

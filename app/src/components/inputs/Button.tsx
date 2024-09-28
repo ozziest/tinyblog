@@ -4,7 +4,7 @@ const Button = ({
 }: React.ButtonHTMLAttributes<HTMLButtonElement>) => {
   return (
     <button
-      className=" bg-neutral-900 text-white font-semibold px-4 py-3 rounded"
+      className=" bg-neutral-900 text-white font-semibold px-4 py-2 rounded"
       {...rest}
     >
       {children}
