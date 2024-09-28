@@ -3,6 +3,9 @@ export interface IPostApi {
   content: string;
   created_at: string;
   updated_at: string;
+  stats_likes: number;
+  stats_shares: number;
+  stats_views: number;
   user: IUserApi;
 }
 

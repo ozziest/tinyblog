@@ -21,14 +21,24 @@ const Feed = ({ post }: Props) => {
     navigate(`/u/${post.user.username}`);
   };
 
-  const setAsViewed = () => {
-    if (post.isViewed === false) {
-      postStore.setViewed(post.id);
-      api.post.setViewed(post.id);
+  const setAsViewed = async () => {
+    // We don't need to send another request
+    if (post.isViewed) {
+      return;
     }
+
+    const response = await api.post.setViewed(post.id);
+    const data = await response.json();
+    postStore.setViewed(post.id, data.isAlreadyViewed);
   };
 
   const hadleMouseEnter = () => {
+    // We don't need to set a timer
+    if (post.isViewed) {
+      return;
+    }
+
+    // Set a timer to set as viewed
     setTimer(setTimeout(setAsViewed, 1500));
   };
 

@@ -17,6 +17,6 @@ export default async ({
 
   // If so, we shouldn't allow to create another view record to prevent abuse
   if (item) {
-    return res.status(201).json({ view: true });
+    return res.status(201).json({ isAlreadyViewed: true });
   }
 };

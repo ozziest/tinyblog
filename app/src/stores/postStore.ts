@@ -15,7 +15,7 @@ interface IPostStore {
   state: IState;
   init: (feeds: IPostApi[]) => void;
   push: (feed: IPostApi) => void;
-  setViewed: (id: number) => void;
+  setViewed: (id: number, isAlreadyViewed: boolean) => void;
 }
 
 const getMaxId = (feeds: IPostApi[]): number => {
@@ -78,11 +78,15 @@ const usePostStore = create<IPostStore>()((set) => ({
     }));
   },
 
-  setViewed(id: number) {
+  setViewed(id: number, isAlreadyViewed: boolean) {
     const newState = { ...this.state };
     const found = newState.feeds.find((item) => item.id === id);
     if (found) {
       found.isViewed = true;
+
+      if (isAlreadyViewed !== true) {
+        found.stats_views++;
+      }
     }
 
     set(() => ({ state: newState }));
