@@ -38,7 +38,6 @@ const LoginView = () => {
     const { error, ...data } = await api.user.login(state);
     if (error) {
       notification.error(error);
-      console.log(error);
     } else {
       authStore.set(data as ILoginResponse);
       navigate("/");
