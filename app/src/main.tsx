@@ -1,30 +1,30 @@
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import { RouterProvider } from "react-router-dom";
-import axios from "axios";
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import en from "./translations/en.json";
 import router from "./router";
 import { setLocales, en as validationEn } from "robust-validator";
-import { setConfig } from "axe-api-client";
+import { setConfig, interceptors, IRequest } from "axe-api-client";
 import ErrorMessageComponent from "./components/messages/ErrorMessage";
 import SuccessMessage from "./components/messages/SuccessMessage";
+import { getDefaultStore } from "./stores/authStore";
 
 setLocales(validationEn);
 setConfig({
   baseURL: "http://localhost:3005/api/v1",
 });
 
-axios.interceptors.request.use(
-  function (config) {
-    config.baseURL = "http://localhost:3005/api/v1";
-    return config;
-  },
-  function (error) {
-    return Promise.reject(error);
-  },
-);
+interceptors.addRequest((request: IRequest) => {
+  const auth = getDefaultStore();
+
+  if (auth && auth.token) {
+    request.headers["Authorization"] = `Bearer ${auth.token}`;
+  }
+
+  return request;
+});
 
 i18n.use(initReactI18next).init({
   resources: {

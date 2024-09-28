@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { ILoginResponse } from "../interfaces";
 
-interface ExtendedState extends ILoginResponse {
+export interface ExtendedState extends ILoginResponse {
   isLoggedIn: boolean;
 }
 
@@ -21,7 +21,7 @@ const DEFAULT_STATE: ExtendedState = {
   username: "",
 };
 
-const getDefaultStore = () => {
+export const getDefaultStore = (): ExtendedState => {
   const content = sessionStorage.getItem("useAuthStore");
   if (content) {
     return JSON.parse(content) as ExtendedState;

@@ -13,5 +13,5 @@
       "@core": ["./core/index"]
     }
   },
-  "include": ["app/**/*", "index.ts"]
+  "include": ["app/**/*", "index.ts", "types/index.d.ts"]
 }

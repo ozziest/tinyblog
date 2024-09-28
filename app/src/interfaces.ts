@@ -56,3 +56,7 @@ export interface IChangePasswordPost {
   password: string;
   password_confirmed: string;
 }
+
+export interface IStorePost {
+  content: string;
+}
