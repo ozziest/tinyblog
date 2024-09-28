@@ -8,8 +8,12 @@ import { initReactI18next } from "react-i18next";
 import en from "./translations/en.json";
 import router from "./router";
 import { setLocales, en as validationEn } from "robust-validator";
+import { setConfig } from "axe-api-client";
 
 setLocales(validationEn);
+setConfig({
+  baseURL: "http://localhost:3005/api/v1",
+});
 
 axios.interceptors.request.use(
   function (config) {

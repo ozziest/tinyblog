@@ -14,6 +14,7 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "axe-api-client": "^2.1.0",
     "axios": "^1.7.7",
     "i18next": "^23.15.1",
     "react": "^18.3.1",

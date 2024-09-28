@@ -1,12 +1,12 @@
-import axios from "axios";
 import { ILoginPost, IUserPost } from "../interfaces";
+import { resource } from "axe-api-client";
 
 const createUser = async (data: IUserPost) => {
-  return await axios.post("users", data);
+  return resource("users").post(data);
 };
 
 const login = async (data: ILoginPost) => {
-  return await axios.post("login", data);
+  return resource("login").post(data);
 };
 
 export default {
