@@ -61,3 +61,31 @@ export const LoadingIcon = () => {
     </svg>
   );
 };
+
+export const SuccessIcon = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 100 100"
+      width="100"
+      height="100"
+    >
+      <circle
+        cx="50"
+        cy="50"
+        r="45"
+        stroke="currentColor"
+        strokeWidth="5"
+        fill="none"
+      />
+      <polyline
+        points="30,55 45,70 70,40"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+};

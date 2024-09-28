@@ -1,5 +1,5 @@
-import { Link, useParams } from "react-router-dom";
-import { LoadingIcon } from "../components/Icons";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { LoadingIcon, SuccessIcon } from "../components/Icons";
 import { useEffect, useState } from "react";
 import api from "../api";
 import Button from "../components/inputs/Button";
@@ -10,11 +10,11 @@ import { IValidationResult, validate } from "robust-validator";
 type Statuses = "loading" | "success" | "error" | "resetSuccess";
 
 const EmailConfirmation = () => {
+  const navigate = useNavigate();
   const { secret, code } = useParams();
   const [status, setStatus] = useState<Statuses>("loading");
   const [email, setEmail] = useState("");
   const [validation, setValidation] = useState<IValidationResult>();
-  console.log(secret, code);
 
   const confirm = async () => {
     const { error } = await api.user.confirmation({
@@ -25,6 +25,10 @@ const EmailConfirmation = () => {
       setStatus("error");
     } else {
       setStatus("success");
+      const timeout = setTimeout(() => {
+        clearTimeout(timeout);
+        navigate("/auth/login");
+      }, 3000);
     }
   };
 
@@ -56,7 +60,31 @@ const EmailConfirmation = () => {
     <div className="border border-neutral-200 p-8 rounded w-[500px]">
       <div className="py-10 flex justify-center text-neutral-600">
         {status === "loading" && <LoadingIcon />}
-        {status === "success" && <div>Success</div>}
+        {status === "success" && (
+          <div className="text-green-700 flex flex-col gap-3">
+            <div className="flex justify-center">
+              <SuccessIcon />
+            </div>
+            <div className="text-center text-neutral-500">
+              <p>The confirmation is completed.</p>
+              <p>You will be redirected to the login page.</p>
+              <p>Please wait!</p>
+            </div>
+          </div>
+        )}
+        {status === "resetSuccess" && (
+          <div className="text-green-700 flex flex-col gap-3">
+            <div className="flex justify-center">
+              <SuccessIcon />
+            </div>
+            <div className="text-center text-neutral-500">
+              <p>
+                A new confirmation link has been sent to your e-mail address.
+                Please check your inbox!
+              </p>
+            </div>
+          </div>
+        )}
         {status === "error" && (
           <div>
             <div className="flex flex-col items-center">
