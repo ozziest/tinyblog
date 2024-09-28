@@ -5,6 +5,15 @@ import { useState } from "react";
 import { IUserPost } from "../interfaces";
 import api from "../api";
 import { useTranslation } from "react-i18next";
+import { IValidationResult, validate } from "robust-validator";
+import { notification } from "../helpers/notication";
+
+const RULES = {
+  email: "required|email|max:320",
+  username: "required|min:3|max:30",
+  password: "required|min:8|max:50|confirmed",
+  name: "required|min:3|max:50",
+};
 
 const RegisterView = () => {
   const { t } = useTranslation();
@@ -14,12 +23,24 @@ const RegisterView = () => {
     username: "",
     name: "",
     password: "",
-    passwordRetry: "",
+    password_confirmed: "",
   });
+  const [validation, setValidation] = useState<IValidationResult>();
 
   const handleCreate = async () => {
-    await api.user.createUser(state);
-    navigate("/auth/login");
+    setValidation(undefined);
+    const result = await validate(state, RULES);
+    setValidation(result);
+    if (result.isInvalid) {
+      return;
+    }
+
+    const { error } = await api.user.createUser(state);
+    if (error) {
+      notification.error(error);
+    } else {
+      navigate("/auth/login");
+    }
   };
 
   const handleChange = (
@@ -40,36 +61,46 @@ const RegisterView = () => {
 
       <form className="py-8 flex flex-col gap-4">
         <TextInput
+          name="email"
           label={t("register.email.label")}
           placeholder={t("register.email.placeholder")}
           value={state.email}
           onChange={(event) => handleChange(event, "email")}
+          validation={validation}
         />
         <TextInput
+          name="username"
           label={t("register.username.label")}
           placeholder={t("register.username.placeholder")}
           value={state.username}
           onChange={(event) => handleChange(event, "username")}
+          validation={validation}
         />
         <TextInput
+          name="name"
           label={t("register.name.label")}
           placeholder={t("register.name.placeholder")}
           value={state.name}
           onChange={(event) => handleChange(event, "name")}
+          validation={validation}
         />
         <TextInput
+          name="password"
           type="password"
           label={t("register.password.label")}
           placeholder={t("register.password.placeholder")}
           value={state.password}
           onChange={(event) => handleChange(event, "password")}
+          validation={validation}
         />
         <TextInput
           type="password"
+          name="password_confirmed"
           label={t("register.passwordRetry.label")}
           placeholder={t("register.passwordRetry.placeholder")}
-          value={state.passwordRetry}
-          onChange={(event) => handleChange(event, "passwordRetry")}
+          value={state.password_confirmed}
+          onChange={(event) => handleChange(event, "password_confirmed")}
+          validation={validation}
         />
         <Button type="button" onClick={handleCreate}>
           {t("register.button")}

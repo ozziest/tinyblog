@@ -7,7 +7,7 @@ export interface IFeed {
 export interface IUserPost {
   email: string;
   password: string;
-  passwordRetry: string;
+  password_confirmed: string;
   username: string;
   name: string;
 }
