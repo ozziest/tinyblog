@@ -1,4 +1,6 @@
 import {
+  IConfirmationPost,
+  IConfirmationResetPost,
   ILoginPost,
   IProfilCheckPost,
   IProfilCheckResponse,
@@ -20,8 +22,18 @@ const profileCheck = async (
   return resource("profileCheck").post(data);
 };
 
+const confirmation = async (data: IConfirmationPost) => {
+  return resource("confirm").post(data);
+};
+
+const confirmationReset = async (data: IConfirmationResetPost) => {
+  return resource("confirmReset").post(data);
+};
+
 export default {
   createUser,
   login,
   profileCheck,
+  confirmation,
+  confirmationReset,
 };

@@ -7,6 +7,7 @@ import FeedView from "./views/FeedView";
 import UserView from "./views/UserView";
 import RegisterView from "./views/RegisterView";
 import PageNotFoundView from "./views/PageNotFoundView";
+import EmailConfirmationView from "./views/EmailConfirmationView";
 
 const router = createBrowserRouter([
   {
@@ -38,6 +39,16 @@ const router = createBrowserRouter([
       {
         path: "register",
         element: <RegisterView />,
+      },
+    ],
+  },
+  {
+    path: "confirm",
+    element: <AuthLayout />,
+    children: [
+      {
+        path: "email/:secret/:code",
+        element: <EmailConfirmationView />,
       },
     ],
   },

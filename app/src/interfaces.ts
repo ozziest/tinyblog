@@ -17,6 +17,15 @@ export interface ILoginPost {
   password: string;
 }
 
+export interface IConfirmationPost {
+  secret: string;
+  code: string;
+}
+
+export interface IConfirmationResetPost {
+  email: string;
+}
+
 export interface IProfilCheckPost {
   email: string;
   username: string;

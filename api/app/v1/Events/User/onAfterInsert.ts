@@ -5,6 +5,7 @@ import { getTemplate } from "../../Services/TemplateService";
 import { EmailTemplates } from "../../../enums";
 import { nanoid, customAlphabet } from "nanoid";
 import { addMinutes } from "date-fns";
+import { getConfirmationLink } from "../../Services/ConfirmationService";
 
 export default async ({ database, item }: IBeforeInsertContext) => {
   try {
@@ -26,7 +27,7 @@ export default async ({ database, item }: IBeforeInsertContext) => {
 
     await database.table("confirmations").insert(data);
 
-    const LINK = `${process.env.DOMAIN}/confirm/email/${secret}/${code}`;
+    const LINK = getConfirmationLink(secret, code);
 
     const html = getTemplate(EmailTemplates.EmailConfirmation)
       .replace("{NAME}", name)
