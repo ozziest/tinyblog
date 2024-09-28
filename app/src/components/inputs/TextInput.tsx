@@ -1,16 +1,21 @@
+import { IValidationResult } from "robust-validator";
+import FormGroup from "./FormGroup";
+
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
+  name: string;
   label?: string;
+  validation?: IValidationResult;
 }
 
-const TextInput = ({ label, ...rest }: Props) => {
+const TextInput = ({ name, label, validation, ...rest }: Props) => {
   return (
-    <div className="flex flex-col gap-2">
-      {label && <label className="font-semibold">{label}</label>}
+    <FormGroup label={label} validation={validation} name={name}>
       <input
         className="outline outline-neutral-500 rounded px-3 py-2"
+        name={name}
         {...rest}
       />
-    </div>
+    </FormGroup>
   );
 };
 

@@ -17,7 +17,7 @@ const LoginView = () => {
   const authStore = useAuthStore();
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const [validation, setValidation] = useState<IValidationResult | null>(null);
+  const [validation, setValidation] = useState<IValidationResult>();
 
   const [state, setState] = useState<ILoginPost>({
     email: "",
@@ -27,10 +27,10 @@ const LoginView = () => {
   const handleLogin = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    setValidation(null);
+    setValidation(undefined);
     const result = await validate(state, RULES);
+    setValidation(result);
     if (result.isInvalid) {
-      setValidation(result);
       return;
     }
 
@@ -61,21 +61,24 @@ const LoginView = () => {
         action="/"
         method="post"
       >
-        {JSON.stringify(validation)}
         <TextInput
           autoComplete="email"
+          name="email"
           label={t("login.email.label")}
           placeholder={t("login.email.placeholder")}
           value={state.email}
           onChange={(event) => handleChange(event, "email")}
+          validation={validation}
         />
         <TextInput
           autoComplete="password"
           type="password"
+          name="password"
           label={t("login.password.label")}
           placeholder={t("login.password.placeholder")}
           value={state.password}
           onChange={(event) => handleChange(event, "password")}
+          validation={validation}
         />
         <Button type="submit">{t("login.button")}</Button>
       </form>
