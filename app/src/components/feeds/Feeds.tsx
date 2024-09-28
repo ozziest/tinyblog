@@ -1,9 +1,11 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
-import { IPost } from "../../interfaces";
+import { IPostApi } from "../../types/ApiTypes";
 import Feed from "./Feed";
 
-const Feeds = ({ posts }: { posts: IPost[] }) => {
+interface Props {
+  posts: IPostApi[];
+}
+
+const Feeds = ({ posts }: Props) => {
   return (
     <>
       {posts.map((post) => (

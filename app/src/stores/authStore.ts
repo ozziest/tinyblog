@@ -1,9 +1,10 @@
 import { create } from "zustand";
-import { ILoginResponse, IUser } from "../interfaces";
+import { ILoginResponse } from "../interfaces";
+import { IUserApi } from "../types/ApiTypes";
 
 export interface IState {
   isLoggedIn: boolean;
-  user: IUser;
+  user: IUserApi;
   token: string;
   post: number;
   follower: number;
@@ -14,7 +15,8 @@ type IncreaseType = "post" | "following";
 
 interface AuthState {
   state: IState;
-  set: (newState: ILoginResponse) => void;
+  init: (newState: ILoginResponse) => void;
+  update: (user: IUserApi) => void;
   logout: () => void;
   increase: (type: IncreaseType) => void;
 }
@@ -44,7 +46,7 @@ export const getDefaultStore = (): IState => {
 const useAuthStore = create<AuthState>()((set) => ({
   state: getDefaultStore(),
 
-  set: (newState: ILoginResponse) => {
+  init: (newState: ILoginResponse) => {
     const value: IState = {
       isLoggedIn: true,
       user: {
@@ -70,6 +72,11 @@ const useAuthStore = create<AuthState>()((set) => ({
         },
       };
     });
+  },
+
+  update(user: IUserApi) {
+    const newState = { ...this.state, user };
+    set(() => ({ state: newState }));
   },
 
   logout() {

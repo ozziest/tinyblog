@@ -1,25 +1,25 @@
 import { create } from "zustand";
-import { IPost } from "../interfaces";
+import { IPostApi } from "../types/ApiTypes";
 
 interface IState {
-  feeds: IPost[];
+  feeds: IPostApi[];
   minId: number;
   maxId: number;
 }
 
 interface IPostStore {
   state: IState;
-  init: (feeds: IPost[]) => void;
-  push: (feed: IPost) => void;
+  init: (feeds: IPostApi[]) => void;
+  push: (feed: IPostApi) => void;
 }
 
-const getMaxId = (feeds: IPost[]): number => {
+const getMaxId = (feeds: IPostApi[]): number => {
   return feeds.reduce((max, obj) => {
     return obj.id > max ? obj.id : max;
   }, 0);
 };
 
-const getMinId = (feeds: IPost[]): number => {
+const getMinId = (feeds: IPostApi[]): number => {
   return feeds.reduce((min, obj) => {
     return obj.id < min ? obj.id : min;
   }, Infinity);
@@ -32,7 +32,7 @@ const usePostStore = create<IPostStore>()((set) => ({
     maxId: 0,
   },
 
-  init: (feeds: IPost[]) => {
+  init: (feeds: IPostApi[]) => {
     let minId = 0;
     let maxId = 0;
 
@@ -50,7 +50,7 @@ const usePostStore = create<IPostStore>()((set) => ({
     }));
   },
 
-  push(feed: IPost) {
+  push(feed: IPostApi) {
     const feeds = [feed, ...this.state.feeds];
     const maxId = getMaxId(feeds);
     const minId = getMinId(feeds);

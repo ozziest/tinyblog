@@ -1,10 +1,10 @@
-import { IPost } from "../../interfaces";
+import { IPostApi } from "../../types/ApiTypes";
 import Avatar from "../user/Avatar";
 import ActionButton from "./ActionButton";
 import { Link, useNavigate } from "react-router-dom";
 import { formatDistance } from "date-fns";
 
-const Feed = ({ post }: { post: IPost }) => {
+const Feed = ({ post }: { post: IPostApi }) => {
   const navigate = useNavigate();
 
   const handleUserClick = (event: React.MouseEvent<HTMLElement>) => {

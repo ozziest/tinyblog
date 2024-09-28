@@ -1,7 +1,7 @@
-import { IUser } from "../../interfaces";
+import { IUserApi } from "../../types/ApiTypes";
 
 interface Props {
-  user: IUser;
+  user: IUserApi;
   size?: number;
 }
 

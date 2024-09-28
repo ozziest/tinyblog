@@ -39,7 +39,7 @@ const LoginView = () => {
     if (error) {
       notification.error(error);
     } else {
-      authStore.set(data as ILoginResponse);
+      authStore.init(data as ILoginResponse);
       navigate("/");
     }
   };

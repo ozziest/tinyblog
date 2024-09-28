@@ -5,15 +5,23 @@ import Footer from "./Footer";
 import Navigation from "./Navigation";
 import { useEffect, useState } from "react";
 import useAuthStore from "../../stores/authStore";
+import api from "../../api";
+import { IUserApi } from "../../types/ApiTypes";
 
 const SessionLayout = () => {
   const authStore = useAuthStore();
   const navigate = useNavigate();
   const [isReady, setReady] = useState(false);
 
+  const getMeData = async () => {
+    const user: IUserApi = await api.user.getMyself();
+    authStore.update(user);
+  };
+
   useEffect(() => {
     if (authStore.state.isLoggedIn) {
       setReady(true);
+      getMeData();
     } else {
       navigate("/auth/login");
     }

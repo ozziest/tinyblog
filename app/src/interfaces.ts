@@ -61,17 +61,3 @@ export interface IChangePasswordPost {
 export interface IStorePost {
   content: string;
 }
-
-export interface IPost {
-  id: number;
-  content: string;
-  created_at: string;
-  updated_at: string;
-  user: IUser;
-}
-
-export interface IUser {
-  name: string;
-  username: string;
-  avatar: string;
-}

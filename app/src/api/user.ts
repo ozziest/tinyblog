@@ -39,6 +39,9 @@ const passwordReset = async (data: IPasswordResetPost) => {
 const changePassword = async (data: IChangePasswordPost) => {
   return resource("changePassword").post(data);
 };
+const getMyself = async () => {
+  return resource("me").get();
+};
 
 export default {
   createUser,
@@ -48,4 +51,5 @@ export default {
   confirmationReset,
   passwordReset,
   changePassword,
+  getMyself,
 };
