@@ -5,6 +5,9 @@ export interface ExtendedState {
   isLoggedIn: boolean;
   user: IUser;
   token: string;
+  post: number;
+  follower: number;
+  following: number;
 }
 
 interface AuthState {
@@ -21,6 +24,9 @@ const DEFAULT_STATE: ExtendedState = {
     avatar: "",
   },
   token: "",
+  post: 0,
+  follower: 0,
+  following: 0,
 };
 
 export const getDefaultStore = (): ExtendedState => {
@@ -44,6 +50,9 @@ const useAuthStore = create<AuthState>()((set) => ({
         avatar: newState.avatar,
       },
       token: newState.token,
+      post: newState.post,
+      follower: newState.follower,
+      following: newState.following,
     };
     sessionStorage.setItem("useAuthStore", JSON.stringify(value));
     set(() => ({ state: value }));
