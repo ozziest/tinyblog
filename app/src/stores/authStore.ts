@@ -1,43 +1,39 @@
 import { create } from "zustand";
-import { ILoginResponse } from "../interfaces";
-import { IUserApi } from "../types/ApiTypes";
+import { ILoginResponseApi, IUserApi } from "../types/ApiTypes";
 
-export interface IState {
+export interface AuthStoreState {
   isLoggedIn: boolean;
-  user: IUserApi;
   token: string;
-  post: number;
-  follower: number;
-  following: number;
+  user: IUserApi;
 }
 
 type IncreaseType = "post" | "following";
 
 interface AuthState {
-  state: IState;
-  init: (newState: ILoginResponse) => void;
+  state: AuthStoreState;
+  init: (response: ILoginResponseApi) => void;
   update: (user: IUserApi) => void;
   logout: () => void;
   increase: (type: IncreaseType) => void;
 }
 
-const DEFAULT_STATE: IState = {
+const DEFAULT_STATE: AuthStoreState = {
   isLoggedIn: false,
   user: {
     name: "",
     username: "",
     avatar: "",
+    post: 0,
+    follower: 0,
+    following: 0,
   },
   token: "",
-  post: 0,
-  follower: 0,
-  following: 0,
 };
 
-export const getDefaultStore = (): IState => {
+export const getDefaultStore = (): AuthStoreState => {
   const content = sessionStorage.getItem("useAuthStore");
   if (content) {
-    return JSON.parse(content) as IState;
+    return JSON.parse(content) as AuthStoreState;
   }
 
   return DEFAULT_STATE;
@@ -46,32 +42,20 @@ export const getDefaultStore = (): IState => {
 const useAuthStore = create<AuthState>()((set) => ({
   state: getDefaultStore(),
 
-  init: (newState: ILoginResponse) => {
-    const value: IState = {
+  init: (response: ILoginResponseApi) => {
+    const value: AuthStoreState = {
       isLoggedIn: true,
-      user: {
-        name: newState.name,
-        username: newState.username,
-        avatar: newState.avatar,
-      },
-      token: newState.token,
-      post: newState.post,
-      follower: newState.follower,
-      following: newState.following,
+      token: response.token,
+      user: response.user,
     };
-    sessionStorage.setItem("useAuthStore", JSON.stringify(value));
+    sessionStorage.setItemUse("useAuthStore", JSON.stringify(value));
     set(() => ({ state: value }));
   },
 
   increase(type: IncreaseType) {
-    set(() => {
-      return {
-        state: {
-          ...this.state,
-          [type]: this.state[type] + 1,
-        },
-      };
-    });
+    const newState = { ...this.state };
+    newState.user[type] = newState.user[type] + 1;
+    set(() => ({ state: newState }));
   },
 
   update(user: IUserApi) {

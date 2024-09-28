@@ -37,16 +37,6 @@ export interface IProfilCheckResponse {
   username: boolean;
 }
 
-export interface ILoginResponse {
-  name: string;
-  follower: number;
-  following: number;
-  post: number;
-  token: string;
-  username: string;
-  avatar: string;
-}
-
 export interface IPasswordResetPost {
   email: string;
 }

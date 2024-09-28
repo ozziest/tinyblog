@@ -35,11 +35,13 @@ export default async (req: AxeRequest, res: AxeResponse) => {
   const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET as string);
   return res.json({
     token,
-    username: user.username,
-    name: user.name,
-    post: user.stats_post,
-    follower: user.stats_follower,
-    following: user.stats_following,
-    avatar: getUserAvatar(user.email),
+    user: {
+      username: user.username,
+      name: user.name,
+      post: user.stats_post,
+      follower: user.stats_follower,
+      following: user.stats_following,
+      avatar: getUserAvatar(user.email),
+    },
   });
 };
