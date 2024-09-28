@@ -2,7 +2,6 @@ import { useState } from "react";
 import Avatar from "../user/Avatar";
 import api from "../../api";
 import useAuthStore from "../../stores/authStore";
-import { notification } from "../../helpers/notication";
 
 interface Props {
   isReply?: boolean;
@@ -13,13 +12,11 @@ const ShareInput = ({ isReply = false }: Props) => {
   const authStore = useAuthStore();
 
   const handleCreate = async () => {
-    const { error } = await api.post.store({ content });
-    if (error) {
-      notification.error(error);
-    } else {
-      authStore.increase("post");
-      setContent("");
-    }
+    const response = await api.post.store({ content });
+    // ???
+    console.log(await response.json());
+    authStore.increase("post");
+    setContent("");
   };
 
   return (

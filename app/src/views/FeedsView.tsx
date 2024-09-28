@@ -1,29 +1,26 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import FeedContainer from "../components/feeds/FeedContainer";
 import Feeds from "../components/feeds/Feeds";
 import ShareInput from "../components/feeds/ShareInput";
 import api from "../api";
-import { IPagination } from "axe-api-client";
-import { IPost } from "../interfaces";
+import useFeedsStore from "../stores/feedsStore";
 
 const FeedView = () => {
-  const [pagination, setPagination] = useState<IPagination>();
+  const feedStore = useFeedsStore();
 
   const fetchFeeds = async () => {
     const response = await api.post.paginate();
-    setPagination(response);
+    feedStore.init(response.data);
   };
 
   useEffect(() => {
     fetchFeeds();
   }, []);
 
-  const items: IPost[] = pagination?.data || [];
-
   return (
     <FeedContainer>
       <ShareInput />
-      <Feeds posts={items} />
+      <Feeds posts={feedStore.state.feeds} />
     </FeedContainer>
   );
 };

@@ -9,7 +9,7 @@ const paginate = async () => {
   return resource("posts")
     .with("user{id,name,username,email}")
     .sort("id", "DESC")
-    .paginate();
+    .paginate({ perPage: 30, page: 1 });
 };
 
 export default {
