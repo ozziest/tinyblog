@@ -21,8 +21,6 @@ export default async (req: AxeRequest, res: AxeResponse) => {
     .where("confirmation_secret", secret)
     .first();
 
-  console.log(confirmation);
-
   if (!confirmation) {
     return res.status(404).json({
       error: "Invalid confirmation - 1",

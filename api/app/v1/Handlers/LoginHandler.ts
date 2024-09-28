@@ -25,6 +25,12 @@ export default async (req: AxeRequest, res: AxeResponse) => {
     });
   }
 
+  if (user.is_email_confirmed === 0) {
+    return res.status(404).json({
+      error: "The e-mail address it not confirmed!",
+    });
+  }
+
   const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET as string);
   return res.json({
     token,
