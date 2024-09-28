@@ -89,3 +89,30 @@ export const SuccessIcon = () => {
     </svg>
   );
 };
+
+export const LogoIcon = ({ size }: { size: number }) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 100 100"
+      width={size}
+      height={size}
+    >
+      <path
+        d="M20,40 Q20,20 40,20 H60 Q80,20 80,40 V60 Q80,80 60,80 H40 L20,90 Z"
+        fill="currentColor"
+        stroke="none"
+      />
+
+      <path
+        d="M30,45 Q30,30 45,30 H55 Q70,30 70,45 V55 Q70,70 55,70 H45 Z"
+        fill="white"
+        stroke="none"
+      />
+
+      <circle cx="40" cy="50" r="3" fill="currentColor" />
+      <circle cx="50" cy="50" r="3" fill="currentColor" />
+      <circle cx="60" cy="50" r="3" fill="currentColor" />
+    </svg>
+  );
+};
