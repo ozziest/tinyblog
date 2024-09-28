@@ -49,3 +49,10 @@ export interface ILoginResponse {
 export interface IPasswordResetPost {
   email: string;
 }
+
+export interface IChangePasswordPost {
+  secret: string;
+  code: string;
+  password: string;
+  password_confirmed: string;
+}

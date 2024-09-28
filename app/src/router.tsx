@@ -10,6 +10,7 @@ import PageNotFoundView from "./views/PageNotFoundView";
 import EmailConfirmationView from "./views/EmailConfirmationView";
 import EmailConfirmationResetView from "./views/EmailConfirmationResetView";
 import ForgetPasswordView from "./views/ForgetPasswordView";
+import ResetPasswordView from "./views/ResetPasswordView";
 
 const router = createBrowserRouter([
   {
@@ -55,6 +56,10 @@ const router = createBrowserRouter([
       {
         path: "email/:secret/:code",
         element: <EmailConfirmationView />,
+      },
+      {
+        path: "reset-password/:secret/:code",
+        element: <ResetPasswordView />,
       },
       {
         path: "email",

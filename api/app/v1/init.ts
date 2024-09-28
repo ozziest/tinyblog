@@ -7,6 +7,7 @@ import ConfirmHandler from "./Handlers/ConfirmHandler";
 import ConfirmResetHandler from "./Handlers/ConfirmResetHandler";
 import { en, setLocales } from "robust-validator";
 import PasswordResetHandler from "./Handlers/PasswordResetHandler";
+import ChangePasswordHandler from "./Handlers/ChangePasswordHandler";
 
 const CORS_WHITE_LIST = ["http://localhost:5173", "http://localhost:3005"];
 
@@ -38,6 +39,7 @@ const onBeforeInit = async (app: App) => {
   app.post("/api/v1/confirm", ConfirmHandler);
   app.post("/api/v1/confirmReset", ConfirmResetHandler);
   app.post("/api/v1/passwordReset", PasswordResetHandler);
+  app.post("/api/v1/changePassword", ChangePasswordHandler);
 };
 
 const onAfterInit = async (app: App) => {};
