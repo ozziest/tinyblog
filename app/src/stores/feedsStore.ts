@@ -3,36 +3,63 @@ import { IPost } from "../interfaces";
 
 interface IState {
   feeds: IPost[];
-  firstId: number;
-  lastId: number;
+  minId: number;
+  maxId: number;
 }
 
 interface IFeedsStore {
   state: IState;
   init: (feeds: IPost[]) => void;
+  push: (feed: IPost) => void;
 }
+
+const getMaxId = (feeds: IPost[]): number => {
+  return feeds.reduce((max, obj) => {
+    return obj.id > max ? obj.id : max;
+  }, 0);
+};
+
+const getMinId = (feeds: IPost[]): number => {
+  return feeds.reduce((min, obj) => {
+    return obj.id < min ? obj.id : min;
+  }, Infinity);
+};
 
 const useFeedsStore = create<IFeedsStore>()((set) => ({
   state: {
     feeds: [],
-    firstId: 0,
-    lastId: 0,
+    minId: 0,
+    maxId: 0,
   },
 
   init: (feeds: IPost[]) => {
-    let firstId = 0;
-    let lastId = 0;
+    let minId = 0;
+    let maxId = 0;
 
     if (feeds.length > 0) {
-      lastId = feeds[0].id;
-      firstId = feeds[feeds.length - 1].id;
+      maxId = getMaxId(feeds);
+      minId = getMinId(feeds);
     }
 
     set(() => ({
       state: {
         feeds,
-        firstId,
-        lastId,
+        minId,
+        maxId,
+      },
+    }));
+  },
+
+  push(feed: IPost) {
+    const feeds = [feed, ...this.state.feeds];
+    const maxId = getMaxId(feeds);
+    const minId = getMinId(feeds);
+
+    set(() => ({
+      state: {
+        feeds,
+        minId,
+        maxId,
       },
     }));
   },

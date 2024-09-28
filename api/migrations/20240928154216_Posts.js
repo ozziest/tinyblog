@@ -3,6 +3,9 @@ export const up = function (knex) {
     table.increments();
     table.integer("user_id").unsigned().notNullable();
     table.string("content", 400).notNullable();
+    table.integer("stats_views").notNullable().defaultTo(0);
+    table.integer("stats_likes").notNullable().defaultTo(0);
+    table.integer("stats_shares").notNullable().defaultTo(0);
     table.timestamps();
 
     table.foreign("user_id").references("users.id");
