@@ -34,6 +34,7 @@ const ShareInput = ({ isReply = false }: Props) => {
               placeholder="What's on your mind?"
               value={content}
               onChange={(event) => setContent(event.target.value)}
+              maxLength={240}
             />
             <div className="flex justify-between items-center pt-[2px]">
               <div className="text-neutral-500 text-sm">
