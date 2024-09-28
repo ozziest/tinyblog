@@ -1,11 +1,19 @@
-import { IPostApi } from "../../types/ApiTypes";
 import Avatar from "../user/Avatar";
 import ActionButton from "./ActionButton";
 import { Link, useNavigate } from "react-router-dom";
 import { formatDistance } from "date-fns";
+import { useState } from "react";
+import usePostStore, { ExtendedPost } from "../../stores/postStore";
+import api from "../../api";
 
-const Feed = ({ post }: { post: IPostApi }) => {
+interface Props {
+  post: ExtendedPost;
+}
+
+const Feed = ({ post }: Props) => {
   const navigate = useNavigate();
+  const postStore = usePostStore();
+  const [timer, setTimer] = useState<number | undefined>();
 
   const handleUserClick = (event: React.MouseEvent<HTMLElement>) => {
     event.stopPropagation();
@@ -13,10 +21,27 @@ const Feed = ({ post }: { post: IPostApi }) => {
     navigate(`/u/${post.user.username}`);
   };
 
+  const setAsViewed = () => {
+    if (post.isViewed === false) {
+      postStore.setViewed(post.id);
+      api.post.setViewed(post.id);
+    }
+  };
+
+  const hadleMouseEnter = () => {
+    setTimer(setTimeout(setAsViewed, 1500));
+  };
+
+  const handleMouseLeave = () => {
+    clearTimeout(timer);
+  };
+
   return (
     <Link
       to={`/${post.id}`}
       className="p-4 border-b border-neutral-100 flex gap-2 justify-between transition-colors duration-300 hover:bg-neutral-50/50 last:border-none"
+      onMouseEnter={hadleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
       <div>
         <Avatar user={post.user} />

@@ -12,7 +12,12 @@ const paginate = async () => {
     .paginate({ perPage: 30, page: 1 });
 };
 
+const setViewed = async (postId: number) => {
+  return resource(`posts/${postId}/views`).post();
+};
+
 export default {
   store,
   paginate,
+  setViewed,
 };

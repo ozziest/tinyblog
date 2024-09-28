@@ -1,8 +1,12 @@
 import { create } from "zustand";
 import { IPostApi } from "../types/ApiTypes";
 
+export interface ExtendedPost extends IPostApi {
+  isViewed: boolean;
+}
+
 interface IState {
-  feeds: IPostApi[];
+  feeds: ExtendedPost[];
   minId: number;
   maxId: number;
 }
@@ -11,6 +15,7 @@ interface IPostStore {
   state: IState;
   init: (feeds: IPostApi[]) => void;
   push: (feed: IPostApi) => void;
+  setViewed: (id: number) => void;
 }
 
 const getMaxId = (feeds: IPostApi[]): number => {
@@ -23,6 +28,15 @@ const getMinId = (feeds: IPostApi[]): number => {
   return feeds.reduce((min, obj) => {
     return obj.id < min ? obj.id : min;
   }, Infinity);
+};
+
+const toExtendedPost = (feeds: IPostApi[]): ExtendedPost[] => {
+  return feeds.map((feed) => {
+    return {
+      ...feed,
+      isViewed: false,
+    };
+  });
 };
 
 const usePostStore = create<IPostStore>()((set) => ({
@@ -43,7 +57,7 @@ const usePostStore = create<IPostStore>()((set) => ({
 
     set(() => ({
       state: {
-        feeds,
+        feeds: toExtendedPost(feeds),
         minId,
         maxId,
       },
@@ -51,7 +65,7 @@ const usePostStore = create<IPostStore>()((set) => ({
   },
 
   push(feed: IPostApi) {
-    const feeds = [feed, ...this.state.feeds];
+    const feeds = [...toExtendedPost([feed]), ...this.state.feeds];
     const maxId = getMaxId(feeds);
     const minId = getMinId(feeds);
 
@@ -62,6 +76,16 @@ const usePostStore = create<IPostStore>()((set) => ({
         maxId,
       },
     }));
+  },
+
+  setViewed(id: number) {
+    const newState = { ...this.state };
+    const found = newState.feeds.find((item) => item.id === id);
+    if (found) {
+      found.isViewed = true;
+    }
+
+    set(() => ({ state: newState }));
   },
 }));
 
