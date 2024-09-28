@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { IFeed } from "../../interfaces";
+import { IPost } from "../../interfaces";
 import Feed from "./Feed";
 
-const Feeds = ({ posts }: { posts: IFeed[] }) => {
+const Feeds = ({ posts }: { posts: IPost[] }) => {
   return (
     <>
       {posts.map((post) => (

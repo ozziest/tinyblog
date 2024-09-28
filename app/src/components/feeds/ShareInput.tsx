@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Avatar from "../user/Avatar";
 import api from "../../api";
+import useAuthStore from "../../stores/authStore";
 
 interface Props {
   isReply?: boolean;
@@ -8,6 +9,7 @@ interface Props {
 
 const ShareInput = ({ isReply = false }: Props) => {
   const [content, setContent] = useState("");
+  const authStore = useAuthStore();
 
   const handleCreate = async () => {
     await api.post.store({ content });
@@ -17,7 +19,7 @@ const ShareInput = ({ isReply = false }: Props) => {
     <div className="border-b border-neutral-100 p-4 pb-3 sticky top-[40px] bg-white">
       <form>
         <div className="flex gap-2">
-          <Avatar src="https://i.pravatar.cc/300" size={12} />
+          <Avatar user={authStore.state.user} size={12} />
           <div className=" flex-grow">
             <textarea
               className="w-full p-2 border rounded"

@@ -21,7 +21,11 @@ class Post extends Model {
   }
 
   get handlers() {
-    return [HandlerTypes.INSERT];
+    return [HandlerTypes.INSERT, HandlerTypes.PAGINATE];
+  }
+
+  user() {
+    return this.hasOne("User", "id", "user_id");
   }
 }
 

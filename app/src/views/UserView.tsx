@@ -1,21 +1,20 @@
 import { useParams } from "react-router-dom";
 import FeedContainer from "../components/feeds/FeedContainer";
-import Feeds from "../components/feeds/Feeds";
+// import Feeds from "../components/feeds/Feeds";
 import ShareInput from "../components/feeds/ShareInput";
-import { getFeeds } from "../fakes";
-import Avatar from "../components/user/Avatar";
+// import { getFeeds } from "../fakes";
 import Button from "../components/inputs/Button";
 
 const UserView = () => {
   const { username } = useParams();
-  const FAKE_ANSWERS = getFeeds().reverse();
+  // const FAKE_ANSWERS = getFeeds().reverse();
 
   return (
     <>
       <div className="bg-white sticky top-[44px] pt-4">
         <div className="flex gap-4 outline outline-neutral-900 rounded p-4 mb-1 justify-between">
           <div>
-            <Avatar src="https://i.pravatar.cc/300" size={20} />
+            {/* <Avatar src="https://i.pravatar.cc/300" size={20} /> */}
           </div>
           <div className="flex-grow ">
             <h1 className="font-bold text-2xl">Özgür Adem Işıklı</h1>
@@ -33,9 +32,9 @@ const UserView = () => {
         </FeedContainer>
       </div>
       <div className="">
-        <FeedContainer>
+        {/* <FeedContainer>
           <Feeds posts={FAKE_ANSWERS} />
-        </FeedContainer>
+        </FeedContainer> */}
       </div>
     </>
   );

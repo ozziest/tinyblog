@@ -165,7 +165,7 @@ const config: IApplicationConfig = {
      *
      * @link https://axe-api.com/reference/cache-configs.html#enable
      */
-    enable: true,
+    enable: false,
 
     /**
      * The default invalidation time in seconds.

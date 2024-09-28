@@ -9,7 +9,6 @@ export default (
   next: NextFunction
 ) => {
   const authorization = req.headers["authorization"];
-  console.log("authorization", authorization);
   if (!authorization) {
     res.statusCode = 401;
     res.write(

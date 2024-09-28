@@ -23,7 +23,7 @@ class User extends Model {
   }
 
   get hiddens() {
-    return ["password", "email"];
+    return ["password"];
   }
 }
 

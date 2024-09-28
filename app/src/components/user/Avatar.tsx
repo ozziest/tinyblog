@@ -1,4 +1,11 @@
-const Avatar = ({ src, size = 12 }: { src: string; size?: number }) => {
+import { IUser } from "../../interfaces";
+
+interface Props {
+  user: IUser;
+  size?: number;
+}
+
+const Avatar = ({ user, size = 12 }: Props) => {
   const realSize = `${size * 4}px`;
   return (
     <img
@@ -9,7 +16,7 @@ const Avatar = ({ src, size = 12 }: { src: string; size?: number }) => {
         width: realSize,
         height: realSize,
       }}
-      src={src}
+      src={user.avatar}
     />
   );
 };

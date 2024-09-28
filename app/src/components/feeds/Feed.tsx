@@ -1,15 +1,16 @@
-import { IFeed } from "../../interfaces";
+import { IPost } from "../../interfaces";
 import Avatar from "../user/Avatar";
 import ActionButton from "./ActionButton";
 import { Link, useNavigate } from "react-router-dom";
+import { formatDistance } from "date-fns";
 
-const Feed = ({ post }: { post: IFeed }) => {
+const Feed = ({ post }: { post: IPost }) => {
   const navigate = useNavigate();
 
   const handleUserClick = (event: React.MouseEvent<HTMLElement>) => {
     event.stopPropagation();
     event.preventDefault();
-    navigate("/u/iozguradem");
+    navigate(`/u/${post.user.username}`);
   };
 
   return (
@@ -18,7 +19,7 @@ const Feed = ({ post }: { post: IFeed }) => {
       className="p-4 border-b border-neutral-100 flex gap-2 justify-between transition-colors duration-300 hover:bg-neutral-50/50 last:border-none"
     >
       <div>
-        <Avatar src={post.avatar} />
+        <Avatar user={post.user} />
       </div>
       <div className="flex-grow">
         <div className="flex gap-2 justify-between items-center">
@@ -27,10 +28,14 @@ const Feed = ({ post }: { post: IFeed }) => {
             className="group text-neutral-600 font-semibold transition-colors duration-300 hover:text-neutral-950 flex gap-2 items-center"
             onClick={handleUserClick}
           >
-            <span className=" group-hover:underline">Özgür Adem Işıklı</span>
-            <span className="text-neutral-400 text-sm">@iozguradem</span>
+            <span className=" group-hover:underline">{post.user.name}</span>
+            <span className="text-neutral-400 text-sm">
+              @{post.user.username}
+            </span>
           </button>
-          <div className="text-neutral-300 text-sm">2 days ago</div>
+          <div className="text-neutral-300 text-sm">
+            {formatDistance(new Date(post.created_at), new Date())}
+          </div>
         </div>
         <p className="pt-1">{post.content}</p>
         <div className="flex gap-4 pt-2">

@@ -1,8 +1,10 @@
 import { create } from "zustand";
-import { ILoginResponse } from "../interfaces";
+import { ILoginResponse, IUser } from "../interfaces";
 
-export interface ExtendedState extends ILoginResponse {
+export interface ExtendedState {
   isLoggedIn: boolean;
+  user: IUser;
+  token: string;
 }
 
 interface AuthState {
@@ -13,12 +15,12 @@ interface AuthState {
 
 const DEFAULT_STATE: ExtendedState = {
   isLoggedIn: false,
-  name: "",
-  follower: 0,
-  following: 0,
-  post: 0,
+  user: {
+    name: "",
+    username: "",
+    avatar: "",
+  },
   token: "",
-  username: "",
 };
 
 export const getDefaultStore = (): ExtendedState => {
@@ -35,8 +37,13 @@ const useAuthStore = create<AuthState>()((set) => ({
 
   set: (newState: ILoginResponse) => {
     const value: ExtendedState = {
-      ...newState,
       isLoggedIn: true,
+      user: {
+        name: newState.name,
+        username: newState.username,
+        avatar: newState.avatar,
+      },
+      token: newState.token,
     };
     sessionStorage.setItem("useAuthStore", JSON.stringify(value));
     set(() => ({ state: value }));
