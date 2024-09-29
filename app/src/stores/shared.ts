@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { IPostApi } from "../types/ApiTypes";
 import { extendPost, resolvePosts } from "../helpers/posts";
+import { StoreType } from "../enums";
 
 export interface ExtendedPost extends IPostApi {
   isViewed: boolean;
@@ -8,6 +9,7 @@ export interface ExtendedPost extends IPostApi {
 }
 
 export interface IState {
+  type: StoreType;
   rootFeed?: ExtendedPost;
   feeds: ExtendedPost[];
   minId: number;
@@ -24,9 +26,10 @@ export interface IPostStore {
   unlike: (id: number) => void;
 }
 
-export const createStore = () =>
+export const createStore = (type: StoreType) =>
   create<IPostStore>()((set) => ({
     state: {
+      type,
       feed: undefined,
       feeds: [],
       minId: 0,
@@ -72,15 +75,17 @@ export const createStore = () =>
     },
 
     like(id: number) {
-      const feeds = [...this.state.feeds];
-      const found = feeds.find((item) => item.id === id);
-      if (found) {
-        found.is_liked_by_you = true;
-        found.stats_likes++;
-      }
-
       set((current) => ({
-        state: { ...current.state, feeds },
+        state: {
+          ...current.state,
+          feeds: this.state.feeds.map((feed) => {
+            if (feed.id === id) {
+              feed.is_liked_by_you = true;
+              feed.stats_likes++;
+            }
+            return feed;
+          }),
+        },
       }));
     },
 

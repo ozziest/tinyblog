@@ -3,8 +3,8 @@ export enum MessageTypes {
   SimpleSuccess = "SimpleSuccess",
 }
 
-export enum ViewTypes {
-  Dashboard,
-  PostDetail,
-  UserProfile,
+export enum StoreType {
+  Dashboard = "Dashboard",
+  PostDetail = "PostDetail",
+  UserProfile = "UserProfile",
 }
