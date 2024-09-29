@@ -5,16 +5,16 @@ import ShareInput from "@/components/feeds/ShareInput";
 import api from "@/api";
 import useDashboardStore from "@/stores/dashboardStore";
 
-const FeedView = () => {
+const DashboardView = () => {
   const store = useDashboardStore();
 
-  const fetchFeeds = async () => {
+  const fetchPosts = async () => {
     const response = await api.post.paginate();
-    store.setFeeds(response.data);
+    store.setPosts(response.data);
   };
 
   useEffect(() => {
-    fetchFeeds();
+    fetchPosts();
   }, []);
 
   return (
@@ -25,4 +25,4 @@ const FeedView = () => {
   );
 };
 
-export default FeedView;
+export default DashboardView;

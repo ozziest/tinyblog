@@ -10,17 +10,17 @@ export interface ExtendedPost extends IPostApi {
 
 export interface IState {
   type: StoreType;
-  rootFeed?: ExtendedPost;
-  feeds: ExtendedPost[];
+  rootPost?: ExtendedPost;
+  posts: ExtendedPost[];
   minId: number;
   maxId: number;
 }
 
 export interface IPostStore {
   state: IState;
-  setRootFeed: (feed: IPostApi) => void;
-  setFeeds: (feeds: IPostApi[]) => void;
-  pushFeed: (feed: IPostApi) => void;
+  setRootPost: (post: IPostApi) => void;
+  setPosts: (posts: IPostApi[]) => void;
+  pushPost: (post: IPostApi) => void;
   setViewed: (id: number, isAlreadyViewed: boolean) => void;
   like: (id: number) => void;
   unlike: (id: number) => void;
@@ -30,37 +30,40 @@ export const createStore = (type: StoreType) =>
   create<IPostStore>()((set) => ({
     state: {
       type,
-      feed: undefined,
-      feeds: [],
+      post: undefined,
+      posts: [],
       minId: 0,
       maxId: 0,
     },
 
-    setRootFeed(feed: IPostApi) {
+    setRootPost(post: IPostApi) {
       set((current) => ({
-        state: { ...current.state, rootFeed: extendPost(feed) },
+        state: { ...current.state, rootPost: extendPost(post) },
       }));
     },
 
-    setFeeds(feeds: IPostApi[]) {
-      const { items, minId, maxId } = resolvePosts(feeds);
+    setPosts(posts: IPostApi[]) {
+      const { items, minId, maxId } = resolvePosts(posts);
 
       set((current) => ({
-        state: { ...current.state, feeds: items, minId, maxId },
+        state: { ...current.state, posts: items, minId, maxId },
       }));
     },
 
-    pushFeed(feed: IPostApi) {
-      const post = extendPost(feed);
+    pushPost(post: IPostApi) {
+      const extendedPost = extendPost(post);
 
       set((current) => ({
-        state: { ...current.state, feeds: [post, ...current.state.feeds] },
+        state: {
+          ...current.state,
+          posts: [extendedPost, ...current.state.posts],
+        },
       }));
     },
 
     setViewed(id: number, isAlreadyViewed: boolean) {
-      const feeds = [...this.state.feeds];
-      const found = feeds.find((item) => item.id === id);
+      const posts = [...this.state.posts];
+      const found = posts.find((item) => item.id === id);
       if (found) {
         found.isViewed = true;
 
@@ -70,7 +73,7 @@ export const createStore = (type: StoreType) =>
       }
 
       set((current) => ({
-        state: { ...current.state, feeds },
+        state: { ...current.state, posts },
       }));
     },
 
@@ -78,27 +81,27 @@ export const createStore = (type: StoreType) =>
       set((current) => ({
         state: {
           ...current.state,
-          feeds: this.state.feeds.map((feed) => {
-            if (feed.id === id) {
-              feed.is_liked_by_you = true;
-              feed.stats_likes++;
+          posts: this.state.posts.map((post) => {
+            if (post.id === id) {
+              post.is_liked_by_you = true;
+              post.stats_likes++;
             }
-            return feed;
+            return post;
           }),
         },
       }));
     },
 
     unlike(id: number) {
-      const feeds = [...this.state.feeds];
-      const found = feeds.find((item) => item.id === id);
+      const posts = [...this.state.posts];
+      const found = posts.find((item) => item.id === id);
       if (found) {
         found.is_liked_by_you = false;
         found.stats_likes--;
       }
 
       set((current) => ({
-        state: { ...current.state, feeds },
+        state: { ...current.state, posts },
       }));
     },
   }));

@@ -41,7 +41,7 @@ const ShareInput = ({ store, parent, onShared }: Props) => {
     if (onShared) {
       onShared(newPost);
     } else {
-      store.pushFeed(newPost);
+      store.pushPost(newPost);
     }
   };
 

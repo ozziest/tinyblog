@@ -1,5 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
-import FeedsView from "./views/FeedsView";
+import DashboardView from "./views/DashboardView";
 import SessionLayout from "./components/layout/SessionLayout";
 import AuthLayout from "./components/layout/AuthLayout";
 import FeedView from "./views/FeedView";
@@ -19,7 +19,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <FeedsView />,
+        element: <DashboardView />,
       },
       {
         path: "/u/:username",

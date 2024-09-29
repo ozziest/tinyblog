@@ -15,12 +15,12 @@ const FeedView = () => {
 
   const fetchData = async (id: number) => {
     const data = await api.post.getPost(id);
-    store.setRootFeed(data);
+    store.setRootPost(data);
   };
 
   const fetchDetails = async (parentId: number) => {
     const response = await api.post.getReplies(parentId);
-    store.setFeeds(response.data as IPostApi[]);
+    store.setPosts(response.data as IPostApi[]);
   };
 
   useEffect(() => {
@@ -34,7 +34,7 @@ const FeedView = () => {
     fetchDetails(id);
   }, [feedId]);
 
-  if (!store.state.rootFeed) {
+  if (!store.state.rootPost) {
     return <div>loading</div>;
   }
 
@@ -42,8 +42,8 @@ const FeedView = () => {
     <>
       <div className="bg-white sticky top-[40px]">
         <FeedContainer>
-          <Feed store={store} post={store.state.rootFeed} autoView={false} />
-          <ShareInput store={store} parent={store.state.rootFeed} />
+          <Feed store={store} post={store.state.rootPost} autoView={false} />
+          <ShareInput store={store} parent={store.state.rootPost} />
         </FeedContainer>
       </div>
       <div className="">
