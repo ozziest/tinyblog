@@ -6,26 +6,7 @@ import {
   resolvePosts,
   toExtendedPost,
 } from "../helpers/posts";
-
-export interface ExtendedPost extends IPostApi {
-  isViewed: boolean;
-  parent?: ExtendedPost;
-}
-
-interface IState {
-  feeds: ExtendedPost[];
-  minId: number;
-  maxId: number;
-}
-
-interface IPostStore {
-  state: IState;
-  init: (feeds: IPostApi[]) => void;
-  push: (feed: IPostApi) => void;
-  setViewed: (id: number, isAlreadyViewed: boolean) => void;
-  like: (id: number) => void;
-  unlike: (id: number) => void;
-}
+import { IPostStore } from "./shared";
 
 const usePostStore = create<IPostStore>()((set) => ({
   state: {
@@ -34,7 +15,7 @@ const usePostStore = create<IPostStore>()((set) => ({
     maxId: 0,
   },
 
-  init: (feeds: IPostApi[]) => {
+  setFeeds: (feeds: IPostApi[]) => {
     const { items, minId, maxId } = resolvePosts(feeds);
 
     set(() => ({
@@ -46,7 +27,7 @@ const usePostStore = create<IPostStore>()((set) => ({
     }));
   },
 
-  push(feed: IPostApi) {
+  pushFeed(feed: IPostApi) {
     const feeds = [...toExtendedPost([feed]), ...this.state.feeds];
     const maxId = getMaxId(feeds);
     const minId = getMinId(feeds);
@@ -73,6 +54,7 @@ const usePostStore = create<IPostStore>()((set) => ({
 
     set(() => ({ state: newState }));
   },
+
   like(id: number) {
     const newState = { ...this.state };
     const found = newState.feeds.find((item) => item.id === id);
@@ -83,6 +65,7 @@ const usePostStore = create<IPostStore>()((set) => ({
 
     set(() => ({ state: newState }));
   },
+
   unlike(id: number) {
     const newState = { ...this.state };
     const found = newState.feeds.find((item) => item.id === id);

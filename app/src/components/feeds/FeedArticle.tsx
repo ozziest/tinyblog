@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import usePostStore, { ExtendedPost } from "../../stores/postStore";
+import usePostStore from "../../stores/postStore";
 import Avatar from "../user/Avatar";
 import { useNavigate } from "react-router-dom";
 import api from "../../api";
 import classNames from "classnames";
+import { ExtendedPost } from "../../stores/shared";
 
 interface Props {
   post: ExtendedPost;

@@ -4,13 +4,14 @@ import Feeds from "../components/feeds/Feeds";
 import ShareInput from "../components/feeds/ShareInput";
 import api from "../api";
 import usePostStore from "../stores/postStore";
+import { ViewTypes } from "../enums";
 
 const FeedView = () => {
   const postStore = usePostStore();
 
   const fetchFeeds = async () => {
     const response = await api.post.paginate();
-    postStore.init(response.data);
+    postStore.setFeeds(response.data);
   };
 
   useEffect(() => {
@@ -20,7 +21,7 @@ const FeedView = () => {
   return (
     <FeedContainer>
       <ShareInput />
-      <Feeds posts={postStore.state.feeds} />
+      <Feeds viewType={ViewTypes.Dashboard} posts={postStore.state.feeds} />
     </FeedContainer>
   );
 };

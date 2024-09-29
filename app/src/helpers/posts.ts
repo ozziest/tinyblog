@@ -1,5 +1,5 @@
 import { IResolvedList } from "../interfaces";
-import { ExtendedPost } from "../stores/postStore";
+import { ExtendedPost } from "../stores/shared";
 import { IPostApi } from "../types/ApiTypes";
 
 export const extendPost = (post: IPostApi): ExtendedPost => {

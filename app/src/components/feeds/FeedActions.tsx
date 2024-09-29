@@ -1,5 +1,6 @@
 import api from "../../api";
-import usePostStore, { ExtendedPost } from "../../stores/postStore";
+import usePostStore from "../../stores/postStore";
+import { ExtendedPost } from "../../stores/shared";
 import { LikeIcon, ReplyIcon, ShareIcon, ViewCountIcon } from "../Icons";
 import ActionButton from "./ActionButton";
 

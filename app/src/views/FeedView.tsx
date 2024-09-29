@@ -9,6 +9,7 @@ import Feeds from "../components/feeds/Feeds";
 import { extendPost, resolvePosts } from "../helpers/posts";
 import { IPostApi } from "../types/ApiTypes";
 import { IResolvedList } from "../interfaces";
+import { ViewTypes } from "../enums";
 
 const FeedView = () => {
   const navigate = useNavigate();
@@ -65,7 +66,7 @@ const FeedView = () => {
       </div>
       <div className="">
         <FeedContainer>
-          <Feeds posts={replies.items} />
+          <Feeds viewType={ViewTypes.PostDetail} posts={replies.items} />
         </FeedContainer>
       </div>
     </>

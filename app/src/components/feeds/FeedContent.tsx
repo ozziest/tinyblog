@@ -1,4 +1,4 @@
-import { ExtendedPost } from "../../stores/postStore";
+import { ExtendedPost } from "../../stores/shared";
 
 interface Props {
   post: ExtendedPost;

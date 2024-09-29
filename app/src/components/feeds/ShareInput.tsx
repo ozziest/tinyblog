@@ -2,8 +2,9 @@ import { useState } from "react";
 import Avatar from "../user/Avatar";
 import api from "../../api";
 import useAuthStore from "../../stores/authStore";
-import usePostStore, { ExtendedPost } from "../../stores/postStore";
+import usePostStore from "../../stores/postStore";
 import { IPostApi } from "../../types/ApiTypes";
+import { ExtendedPost } from "../../stores/shared";
 
 interface Props {
   parent?: ExtendedPost;
@@ -33,13 +34,15 @@ const ShareInput = ({ parent, onShared }: Props) => {
       stats_likes: 0,
       stats_shares: 0,
       stats_views: 0,
+      stats_replies: 0,
       user: authStore.state.user,
+      is_liked_by_you: false,
     };
 
     if (onShared) {
       onShared(newPost);
     } else {
-      postStore.push(newPost);
+      postStore.pushFeed(newPost);
     }
   };
 
