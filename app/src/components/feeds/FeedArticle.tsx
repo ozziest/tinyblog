@@ -55,15 +55,15 @@ const FeedArticle = ({
 
   return (
     <>
-      {post.parent && (
+      {/* {post.parent && (
         <div className="ml-[72px] text-neutral-500 text-sm py-[2px]">
           Replying to{" "}
           <span className="text-neutral-700">@{post.parent.user.username}</span>
         </div>
-      )}
+      )} */}
       <article
         className={classNames(
-          "p-4 flex gap-2 justify-between transition-colors duration-300 hover:bg-neutral-50 cursor-pointer",
+          "p-4 flex gap-2 justify-between transition-colors duration-300 cursor-pointer",
           {
             "border-b border-neutral-200": showBorder,
           },
@@ -75,7 +75,7 @@ const FeedArticle = ({
         <div className="flex flex-col items-center">
           <Avatar user={post.user} />
           {isParent && (
-            <div className="bg-neutral-100 h-full w-[3px] rounded mt-1 -mb-[300px] z-10"></div>
+            <div className="bg-neutral-100 h-full w-[3px] rounded mt-1 -mb-[28px] z-10"></div>
           )}
         </div>
         <div className="flex-grow">{children}</div>

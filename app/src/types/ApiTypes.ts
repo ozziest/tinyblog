@@ -6,6 +6,7 @@ export interface IPostApi {
   stats_likes: number;
   stats_shares: number;
   stats_views: number;
+  stats_replies: number;
   user: IUserApi;
   is_liked_by_you: boolean;
   parent?: IPostApi;

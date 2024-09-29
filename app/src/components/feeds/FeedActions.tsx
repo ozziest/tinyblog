@@ -1,5 +1,6 @@
 import api from "../../api";
 import { ExtendedPost } from "../../stores/postStore";
+import { LikeIcon, ReplyIcon, ShareIcon, ViewCountIcon } from "../Icons";
 import ActionButton from "./ActionButton";
 
 interface Props {
@@ -20,18 +21,30 @@ const FeedActions = ({ post }: Props) => {
   };
 
   return (
-    <div className="flex gap-4 pt-2">
+    <div className="flex gap-6 mt-2">
       <ActionButton
-        icon="♥"
+        icon={<LikeIcon size={20} />}
         count={post.stats_likes}
         isSelected={post.is_liked_by_you}
         onClick={handleLikeClick}
       />
       <ActionButton
-        icon="📢"
+        icon={<ShareIcon size={20} />}
         count={post.stats_shares}
         isSelected={false}
         onClick={handleShareClick}
+      />
+      <ActionButton
+        icon={<ReplyIcon size={20} />}
+        count={post.stats_replies}
+        isSelected={false}
+        onClick={handleLikeClick}
+      />
+      <ActionButton
+        icon={<ViewCountIcon size={20} />}
+        count={post.stats_views}
+        isSelected={false}
+        onClick={handleLikeClick}
       />
     </div>
   );

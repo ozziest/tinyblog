@@ -116,3 +116,67 @@ export const LogoIcon = ({ size }: { size: number }) => {
     </svg>
   );
 };
+
+export const ReplyIcon = ({ size }: { size: number }) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      width={size}
+      height={size}
+    >
+      <path
+        d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H8l-4 4V6a2 2 0 0 1 2-2z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+};
+
+export const LikeIcon = ({ size }: { size: number }) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      width={size}
+      height={size}
+    >
+      <path
+        d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+};
+
+export const ShareIcon = ({ size }: { size: number }) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      width={size}
+      height={size}
+    >
+      <path
+        d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7a3.23 3.23 0 0 0 0-1.39l7.09-4.11a2.5 2.5 0 1 0-1.14-1.66L7.77 9.65a2.5 2.5 0 1 0 0 4.7l7.09 4.11a2.5 2.5 0 1 0 3.14-2.38z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+};
+
+export const ViewCountIcon = ({ size }: { size: number }) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      width={size}
+      height={size}
+    >
+      <path
+        d="M12 4.5C7.05 4.5 2.73 7.61 1 12c1.73 4.39 6.05 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6.05-7.5-11-7.5zm0 12.5c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+};

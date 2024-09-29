@@ -1,7 +1,7 @@
 import classNames from "classnames";
 
 interface Props {
-  icon: string;
+  icon: string | React.ReactNode;
   count: number;
   isSelected: boolean;
   onClick: (event: React.MouseEvent<HTMLElement>) => void;
@@ -11,21 +11,17 @@ const ActionButton = ({ icon, count, isSelected, onClick }: Props) => {
   return (
     <button
       type="button"
-      className="flex gap-1 items-center text-sm text-neutral-400 group"
+      className={classNames(
+        "flex gap-[6px] items-center text-sm hover:bg-neutral-700 hover:text-white rounded-full px-2 py-1 transition-all",
+        {
+          "text-neutral-900": isSelected,
+          "text-neutral-200": !isSelected,
+        },
+      )}
       onClick={onClick}
     >
-      <span
-        className={classNames(
-          "px-3 py-1 rounded-full text-neutral-600 group-hover:bg-neutral-800 group-hover:text-neutral-50",
-          {
-            "bg-neutral-700 text-white": isSelected,
-            "bg-neutral-200": !isSelected,
-          },
-        )}
-      >
-        {icon}
-      </span>
-      {count}
+      <span>{icon}</span>
+      <span className="text-neutral-300 text-xs font-semibold">{count}</span>
     </button>
   );
 };
