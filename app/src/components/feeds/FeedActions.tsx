@@ -11,9 +11,7 @@ const FeedActions = ({ post }: Props) => {
     event.preventDefault();
     event.stopPropagation();
 
-    const response = await api.post.like(post.id);
-
-    console.log(response);
+    await api.post.like(post.id);
   };
 
   const handleShareClick = (event: React.MouseEvent<HTMLElement>) => {

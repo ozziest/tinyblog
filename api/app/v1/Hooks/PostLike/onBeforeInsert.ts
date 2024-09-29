@@ -17,6 +17,15 @@ export default async ({
 
   // Users should be able to like only once
   if (item) {
+    // We should delete the old like
+    await database.table("post_likes").where("id", item.id).delete();
+
+    // We should dec the post like stats
+    await database
+      .table("posts")
+      .where("id", item.post_id)
+      .decrement({ stats_likes: 1 });
+
     return res.status(201).json({ isAlreadyLiked: true });
   }
 };
