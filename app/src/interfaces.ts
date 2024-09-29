@@ -52,3 +52,9 @@ export interface IStorePost {
   content: string;
   parent_id?: number;
 }
+
+export interface IResolvedList<T> {
+  minId: number;
+  maxId: number;
+  items: T[];
+}

@@ -4,14 +4,17 @@ import FeedContainer from "../components/feeds/FeedContainer";
 import ShareInput from "../components/feeds/ShareInput";
 import { useEffect, useState } from "react";
 import api from "../api";
-import { ExtendedPost, extendPost, toExtendedPost } from "../stores/postStore";
+import { ExtendedPost } from "../stores/postStore";
 import Feeds from "../components/feeds/Feeds";
+import { extendPost, resolvePosts } from "../helpers/posts";
+import { IPostApi } from "../types/ApiTypes";
+import { IResolvedList } from "../interfaces";
 
 const FeedView = () => {
   const navigate = useNavigate();
   const { feedId } = useParams();
   const [post, setPost] = useState<ExtendedPost>();
-  const [replies, setReplies] = useState<ExtendedPost[]>([]);
+  const [replies, setReplies] = useState<IResolvedList<ExtendedPost>>();
 
   const fetchData = async (id: number) => {
     const data = await api.post.getPost(id);
@@ -19,8 +22,9 @@ const FeedView = () => {
   };
 
   const fetchDetails = async (parentId: number) => {
-    const data = await api.post.getReplies(parentId);
-    setReplies(toExtendedPost(data.data));
+    const response = await api.post.getReplies(parentId);
+    const data = resolvePosts(response.data as IPostApi[]);
+    setReplies(data);
   };
 
   useEffect(() => {
@@ -34,7 +38,7 @@ const FeedView = () => {
     fetchDetails(id);
   }, [feedId]);
 
-  if (!post) {
+  if (!post || !replies) {
     return <div>loading</div>;
   }
 
@@ -48,7 +52,7 @@ const FeedView = () => {
       </div>
       <div className="">
         <FeedContainer>
-          <Feeds posts={replies} />
+          <Feeds posts={replies.items} />
         </FeedContainer>
       </div>
     </>
