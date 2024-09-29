@@ -1,12 +1,12 @@
 import { useNavigate, useParams } from "react-router-dom";
-import PostContainer from "@/components/feeds/PostContainer";
-import ShareInput from "@/components/feeds/ShareInput";
+import PostContainer from "@/components/posts/PostContainer";
+import ShareInput from "@/components/posts/ShareInput";
 import { useEffect } from "react";
 import api from "@/api";
 import { IPostApi } from "@/types/ApiTypes";
 import useFeedDetailStore from "@/stores/feedDetailStore";
-import Post from "@/components/feeds/Post";
-import Posts from "@/components/feeds/Posts";
+import Post from "@/components/posts/Post";
+import Posts from "@/components/posts/Posts";
 
 const PostDetailView = () => {
   const navigate = useNavigate();
