@@ -14,7 +14,7 @@ interface Props {
   children: React.ReactNode;
 }
 
-const FeedArticle = ({
+const PostArticle = ({
   store,
   post,
   autoView,
@@ -80,4 +80,4 @@ const FeedArticle = ({
   );
 };
 
-export default FeedArticle;
+export default PostArticle;

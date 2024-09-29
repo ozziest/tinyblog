@@ -1,6 +1,6 @@
 import FeedAuthor from "./FeedAuthor";
 import FeedContent from "./FeedContent";
-import FeedArticle from "./FeedArticle";
+import PostArticle from "./PostArticle";
 import { ExtendedPost, IPostStore } from "@/stores/shared";
 import PostActions from "./PostActions";
 
@@ -14,7 +14,7 @@ const Post = ({ store, post, autoView = true }: Props) => {
   return (
     <div className="flex flex-col">
       {post.parent && (
-        <FeedArticle
+        <PostArticle
           store={store}
           post={post.parent}
           autoView={autoView}
@@ -23,14 +23,14 @@ const Post = ({ store, post, autoView = true }: Props) => {
           <FeedAuthor post={post.parent} />
           <FeedContent post={post.parent} />
           <PostActions store={store} post={post.parent} />
-        </FeedArticle>
+        </PostArticle>
       )}
 
-      <FeedArticle store={store} post={post} autoView={autoView} showBorder>
+      <PostArticle store={store} post={post} autoView={autoView} showBorder>
         <FeedAuthor post={post} />
         <FeedContent post={post} />
         <PostActions store={store} post={post} />
-      </FeedArticle>
+      </PostArticle>
     </div>
   );
 };
