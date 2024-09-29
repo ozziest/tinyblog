@@ -4,6 +4,7 @@ import api from "@/api";
 import useAuthStore from "@/stores/authStore";
 import { IPostApi } from "@/types/ApiTypes";
 import { ExtendedPost, IPostStore } from "@/stores/postStore";
+import classNames from "classnames";
 
 interface Props {
   store: IPostStore;
@@ -46,7 +47,12 @@ const ShareInput = ({ store, parent, onShared }: Props) => {
   };
 
   return (
-    <div className="border-b border-neutral-100 p-4 pb-3 sticky top-[40px] bg-white z-50">
+    <div
+      className={classNames(
+        "border-b border-neutral-100 p-4 pb-3 sticky top-[40px]  z-50",
+        { "bg-white": !parent, "bg-neutral-100": !!parent },
+      )}
+    >
       <form>
         <div className="flex gap-2">
           <Avatar user={authStore.state.user} size={12} />
