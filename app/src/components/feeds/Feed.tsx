@@ -8,9 +8,10 @@ import api from "../../api";
 
 interface Props {
   post: ExtendedPost;
+  autoView?: boolean;
 }
 
-const Feed = ({ post }: Props) => {
+const Feed = ({ post, autoView = true }: Props) => {
   const navigate = useNavigate();
   const postStore = usePostStore();
   const [timer, setTimer] = useState<number | undefined>();
@@ -23,7 +24,7 @@ const Feed = ({ post }: Props) => {
 
   const setAsViewed = async () => {
     // We don't need to send another request
-    if (post.isViewed) {
+    if (post.isViewed || autoView === false) {
       return;
     }
 
@@ -34,12 +35,12 @@ const Feed = ({ post }: Props) => {
 
   const hadleMouseEnter = () => {
     // We don't need to set a timer
-    if (post.isViewed) {
+    if (post.isViewed || autoView === false) {
       return;
     }
 
     // Set a timer to set as viewed
-    setTimer(setTimeout(setAsViewed, 1500));
+    setTimer(setTimeout(setAsViewed, 1000));
   };
 
   const handleMouseLeave = () => {

@@ -33,7 +33,7 @@ const FeedView = () => {
     <>
       <div className="bg-white sticky top-[40px]">
         <FeedContainer>
-          <Feed post={post} />
+          <Feed post={post} autoView={false} />
           <ShareInput isReply />
         </FeedContainer>
       </div>
