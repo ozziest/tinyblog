@@ -6,7 +6,7 @@ import {
   ViewCountIcon,
 } from "@/components/Icons";
 import ActionButton from "./ActionButton";
-import { ExtendedPost, IPostStore } from "@/stores/posts";
+import { ExtendedPost, IPostStore } from "@/stores/postStore";
 
 interface Props {
   store: IPostStore;

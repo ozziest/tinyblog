@@ -1,4 +1,4 @@
-import { ExtendedPost } from "@/stores/posts";
+import { ExtendedPost } from "@/stores/postStore";
 import { formatDistance } from "date-fns";
 import { useNavigate } from "react-router-dom";
 

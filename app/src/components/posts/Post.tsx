@@ -2,7 +2,7 @@ import PostContent from "./PostContent";
 import PostArticle from "./PostArticle";
 import PostActions from "./PostActions";
 import PostAuthor from "./PostAuthor";
-import { ExtendedPost, IPostStore } from "@/stores/posts";
+import { ExtendedPost, IPostStore } from "@/stores/postStore";
 
 interface Props {
   store: IPostStore;

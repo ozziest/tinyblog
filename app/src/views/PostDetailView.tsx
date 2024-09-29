@@ -6,7 +6,7 @@ import api from "@/api";
 import { IPostApi } from "@/types/ApiTypes";
 import Post from "@/components/posts/Post";
 import Posts from "@/components/posts/Posts";
-import { useFeedDetailStore } from "@/stores/posts";
+import { useFeedDetailStore } from "@/stores/postStore";
 
 const PostDetailView = () => {
   const navigate = useNavigate();

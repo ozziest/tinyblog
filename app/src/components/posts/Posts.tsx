@@ -1,4 +1,4 @@
-import { IPostStore } from "@/stores/posts";
+import { IPostStore } from "@/stores/postStore";
 import Post from "./Post";
 
 interface Props {
