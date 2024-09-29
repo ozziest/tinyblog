@@ -81,7 +81,6 @@ const config: IApplicationConfig = {
       user: process.env.DB_USER || "user",
       password: process.env.DB_PASSWORD || "password",
       database: process.env.DB_DATABASE || "database",
-      filename: path.join(__dirname, "..", `${process.env.DB_DATABASE}.sqlite`), // For SQLite
     },
     searchPath: [process.env.DB_USER || "user", "public"],
     pool: {

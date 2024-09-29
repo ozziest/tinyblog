@@ -32,8 +32,6 @@ export default async (req: AxeRequest, res: AxeResponse) => {
     .where("is_email_confirmed", true)
     .first();
 
-  console.log(user);
-
   // We shouldn't give too much information to the users
   if (!user) {
     return res.json({});
