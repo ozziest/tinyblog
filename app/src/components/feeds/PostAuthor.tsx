@@ -6,7 +6,7 @@ interface Props {
   post: ExtendedPost;
 }
 
-const FeedAuthor = ({ post }: Props) => {
+const PostAuthor = ({ post }: Props) => {
   const navigate = useNavigate();
 
   const handleUserClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -32,4 +32,4 @@ const FeedAuthor = ({ post }: Props) => {
   );
 };
 
-export default FeedAuthor;
+export default PostAuthor;
