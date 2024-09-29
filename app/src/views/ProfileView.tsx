@@ -3,10 +3,10 @@ import PostContainer from "@/components/posts/PostContainer";
 import ShareInput from "@/components/posts/ShareInput";
 import Button from "@/components/inputs/Button";
 import Posts from "@/components/posts/Posts";
-import { useUserFeedStore } from "@/stores/postStore";
+import { useProfilePostsStore } from "@/stores/postStore";
 
 const ProfileView = () => {
-  const store = useUserFeedStore();
+  const store = useProfilePostsStore();
   const { username } = useParams();
 
   return (
