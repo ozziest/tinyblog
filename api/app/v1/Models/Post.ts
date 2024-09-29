@@ -33,7 +33,7 @@ class Post extends Model {
   }
 
   get limits(): IQueryLimitConfig[][] {
-    return [deny(QueryFeature.WithHasMany, ["views"])];
+    return [deny(QueryFeature.WithHasMany, ["views", "likes"])];
   }
 
   user() {
@@ -46,6 +46,10 @@ class Post extends Model {
 
   views() {
     return this.hasMany("PostView", "id", "post_id");
+  }
+
+  likes() {
+    return this.hasMany("PostLike", "id", "post_id");
   }
 }
 
