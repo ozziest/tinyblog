@@ -1,9 +1,9 @@
 import { useEffect } from "react";
-import FeedContainer from "@/components/feeds/FeedContainer";
 import Feeds from "@/components/feeds/Feeds";
 import ShareInput from "@/components/feeds/ShareInput";
 import api from "@/api";
 import useDashboardStore from "@/stores/dashboardStore";
+import PostContainer from "@/components/feeds/PostContainer";
 
 const DashboardView = () => {
   const store = useDashboardStore();
@@ -18,10 +18,10 @@ const DashboardView = () => {
   }, []);
 
   return (
-    <FeedContainer>
+    <PostContainer>
       <ShareInput store={store} />
       <Feeds store={store} />
-    </FeedContainer>
+    </PostContainer>
   );
 };
 

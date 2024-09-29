@@ -2,7 +2,7 @@ interface Props {
   children: React.ReactNode;
 }
 
-const FeedContainer = ({ children }: Props) => {
+const PostContainer = ({ children }: Props) => {
   return (
     <div className="flex flex-col border border-neutral-100 rounded">
       {children}
@@ -10,4 +10,4 @@ const FeedContainer = ({ children }: Props) => {
   );
 };
 
-export default FeedContainer;
+export default PostContainer;

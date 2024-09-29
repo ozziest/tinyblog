@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
-import FeedContainer from "@/components/feeds/FeedContainer";
+import PostContainer from "@/components/feeds/PostContainer";
 import ShareInput from "@/components/feeds/ShareInput";
 import { useEffect } from "react";
 import api from "@/api";
@@ -41,15 +41,15 @@ const PostDetailView = () => {
   return (
     <>
       <div className="bg-white sticky top-[40px]">
-        <FeedContainer>
+        <PostContainer>
           <Post store={store} post={store.state.rootPost} autoView={false} />
           <ShareInput store={store} parent={store.state.rootPost} />
-        </FeedContainer>
+        </PostContainer>
       </div>
       <div className="">
-        <FeedContainer>
+        <PostContainer>
           <Feeds store={store} />
-        </FeedContainer>
+        </PostContainer>
       </div>
     </>
   );

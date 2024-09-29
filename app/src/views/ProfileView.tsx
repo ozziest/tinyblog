@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import FeedContainer from "@/components/feeds/FeedContainer";
+import PostContainer from "@/components/feeds/PostContainer";
 import ShareInput from "@/components/feeds/ShareInput";
 import Button from "@/components/inputs/Button";
 import useUserFeedStore from "@/stores/userFeedStore";
@@ -27,14 +27,14 @@ const ProfileView = () => {
             <Button>Follow</Button>
           </div>
         </div>
-        <FeedContainer>
+        <PostContainer>
           <ShareInput store={store} />
-        </FeedContainer>
+        </PostContainer>
       </div>
       <div className="">
-        <FeedContainer>
+        <PostContainer>
           <Feeds store={store} />
-        </FeedContainer>
+        </PostContainer>
       </div>
     </>
   );
