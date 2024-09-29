@@ -37,7 +37,7 @@ export const extendPost = (post: IPostApi): ExtendedPost => {
   };
 };
 
-const toExtendedPost = (feeds: IPostApi[]): ExtendedPost[] => {
+export const toExtendedPost = (feeds: IPostApi[]): ExtendedPost[] => {
   return feeds.map(extendPost);
 };
 
