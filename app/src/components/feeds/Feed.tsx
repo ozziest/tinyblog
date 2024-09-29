@@ -1,6 +1,6 @@
 import Avatar from "../user/Avatar";
 import ActionButton from "./ActionButton";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { formatDistance } from "date-fns";
 import { useState } from "react";
 import usePostStore, { ExtendedPost } from "../../stores/postStore";
@@ -46,12 +46,16 @@ const Feed = ({ post }: Props) => {
     clearTimeout(timer);
   };
 
+  const handleClick = () => {
+    navigate(`/${post.id}`);
+  };
+
   return (
-    <Link
-      to={`/${post.id}`}
-      className="p-4 border-b border-neutral-100 flex gap-2 justify-between transition-colors duration-300 hover:bg-neutral-50/50 last:border-none"
+    <article
+      className="p-4 border-b border-neutral-100 flex gap-2 justify-between transition-colors duration-300 hover:bg-neutral-50 last:border-none cursor-pointer"
       onMouseEnter={hadleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      onClick={handleClick}
     >
       <div>
         <Avatar user={post.user} />
@@ -78,7 +82,7 @@ const Feed = ({ post }: Props) => {
           <ActionButton icon="📢" count={5} isSelected={true} />
         </div>
       </div>
-    </Link>
+    </article>
   );
 };
 
