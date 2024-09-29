@@ -23,6 +23,12 @@ export default async ({ database, item, req }: IAfterShowContext) => {
         created_at: new Date(),
         updated_at: new Date(),
       });
+
+      // Update the post's view count
+      await database
+        .table("posts")
+        .where("id", postId)
+        .increment({ stats_views: 1 });
     }
   };
 
