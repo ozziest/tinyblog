@@ -5,6 +5,7 @@ export const up = function (knex) {
     table.integer("user_id").unsigned().notNullable();
     table.string("content", 400).notNullable();
     table.integer("stats_views").notNullable().defaultTo(0);
+    table.integer("stats_replies").notNullable().defaultTo(0);
     table.integer("stats_likes").notNullable().defaultTo(0);
     table.integer("stats_shares").notNullable().defaultTo(0);
     table.timestamps();
