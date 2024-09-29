@@ -9,7 +9,7 @@ const FeedActions = ({ post }: Props) => {
   return (
     <div className="flex gap-4 pt-2">
       <ActionButton icon="♥" count={post.stats_likes} isSelected={false} />
-      <ActionButton icon="📢" count={post.stats_shares} isSelected={true} />
+      <ActionButton icon="📢" count={post.stats_shares} isSelected={false} />
     </div>
   );
 };
