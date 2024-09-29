@@ -1,5 +1,5 @@
-import Feed from "./Feed";
 import { IPostStore } from "@/stores/shared";
+import Post from "./Post";
 
 interface Props {
   store: IPostStore;
@@ -9,7 +9,7 @@ const Feeds = ({ store }: Props) => {
   return (
     <>
       {store.state.posts.map((post) => (
-        <Feed key={post.id} post={post} store={store} />
+        <Post key={post.id} post={post} store={store} />
       ))}
     </>
   );

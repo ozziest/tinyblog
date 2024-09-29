@@ -10,7 +10,7 @@ interface Props {
   autoView?: boolean;
 }
 
-const Feed = ({ store, post, autoView = true }: Props) => {
+const Post = ({ store, post, autoView = true }: Props) => {
   return (
     <div className="flex flex-col">
       {post.parent && (
@@ -35,4 +35,4 @@ const Feed = ({ store, post, autoView = true }: Props) => {
   );
 };
 
-export default Feed;
+export default Post;
