@@ -23,6 +23,8 @@ interface IPostStore {
   init: (feeds: IPostApi[]) => void;
   push: (feed: IPostApi) => void;
   setViewed: (id: number, isAlreadyViewed: boolean) => void;
+  like: (id: number) => void;
+  unlike: (id: number) => void;
 }
 
 const usePostStore = create<IPostStore>()((set) => ({
@@ -67,6 +69,26 @@ const usePostStore = create<IPostStore>()((set) => ({
       if (isAlreadyViewed !== true) {
         found.stats_views++;
       }
+    }
+
+    set(() => ({ state: newState }));
+  },
+  like(id: number) {
+    const newState = { ...this.state };
+    const found = newState.feeds.find((item) => item.id === id);
+    if (found) {
+      found.is_liked_by_you = true;
+      found.stats_likes++;
+    }
+
+    set(() => ({ state: newState }));
+  },
+  unlike(id: number) {
+    const newState = { ...this.state };
+    const found = newState.feeds.find((item) => item.id === id);
+    if (found) {
+      found.is_liked_by_you = false;
+      found.stats_likes--;
     }
 
     set(() => ({ state: newState }));
