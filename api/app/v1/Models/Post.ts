@@ -40,6 +40,10 @@ class Post extends Model {
     return this.hasOne("User", "id", "user_id");
   }
 
+  parent() {
+    return this.hasOne("Post", "id", "parent_id");
+  }
+
   views() {
     return this.hasMany("PostView", "id", "post_id");
   }

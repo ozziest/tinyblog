@@ -7,7 +7,7 @@ const store = async (data: IStorePost) => {
 
 const paginate = async () => {
   return resource("posts")
-    .with("user{id,name,username,email}")
+    .with("user{id,name,username,email},parent{user{id,name,username,email}}")
     .sort("id", "DESC")
     .paginate({ perPage: 30, page: 1 });
 };
