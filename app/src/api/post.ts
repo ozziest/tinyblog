@@ -30,10 +30,15 @@ const getReplies = async (parentId: number) => {
     .paginate({ perPage: 30, page: 1 });
 };
 
+const like = async (postId: number) => {
+  return resource(`posts/${postId}/likes`).post();
+};
+
 export default {
   store,
   paginate,
   setViewed,
   getPost,
   getReplies,
+  like,
 };
