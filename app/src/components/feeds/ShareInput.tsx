@@ -20,16 +20,16 @@ const ShareInput = ({ store, parent, onShared }: Props) => {
       content,
       parent_id: parent?.id,
     });
-    const feed = await response.json();
+    const post = await response.json();
 
     authStore.increase("post");
     setContent("");
 
     const newPost: IPostApi = {
-      id: feed.id,
-      content: feed.content,
-      created_at: feed.created_at,
-      updated_at: feed.updated_at,
+      id: post.id,
+      content: post.content,
+      created_at: post.created_at,
+      updated_at: post.updated_at,
       stats_likes: 0,
       stats_shares: 0,
       stats_views: 0,

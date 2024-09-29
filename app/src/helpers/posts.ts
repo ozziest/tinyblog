@@ -10,18 +10,18 @@ export const extendPost = (post: IPostApi): ExtendedPost => {
   };
 };
 
-export const toExtendedPost = (feeds: IPostApi[]): ExtendedPost[] => {
-  return feeds.map(extendPost);
+export const toExtendedPost = (posts: IPostApi[]): ExtendedPost[] => {
+  return posts.map(extendPost);
 };
 
-export const getMaxId = (feeds: IPostApi[]): number => {
-  return feeds.reduce((max, obj) => {
+export const getMaxId = (posts: IPostApi[]): number => {
+  return posts.reduce((max, obj) => {
     return obj.id > max ? obj.id : max;
   }, 0);
 };
 
-export const getMinId = (feeds: IPostApi[]): number => {
-  return feeds.reduce((min, obj) => {
+export const getMinId = (posts: IPostApi[]): number => {
+  return posts.reduce((min, obj) => {
     return obj.id < min ? obj.id : min;
   }, Infinity);
 };
