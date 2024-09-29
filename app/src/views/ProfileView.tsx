@@ -5,7 +5,7 @@ import Button from "@/components/inputs/Button";
 import useUserFeedStore from "@/stores/userFeedStore";
 import Feeds from "@/components/feeds/Feeds";
 
-const UserView = () => {
+const ProfileView = () => {
   const store = useUserFeedStore();
   const { username } = useParams();
 
@@ -40,4 +40,4 @@ const UserView = () => {
   );
 };
 
-export default UserView;
+export default ProfileView;

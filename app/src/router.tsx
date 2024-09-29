@@ -2,8 +2,8 @@ import { createBrowserRouter } from "react-router-dom";
 import DashboardView from "./views/DashboardView";
 import SessionLayout from "./components/layout/SessionLayout";
 import AuthLayout from "./components/layout/AuthLayout";
-import FeedView from "./views/FeedView";
-import UserView from "./views/UserView";
+import PostDetailView from "./views/PostDetailView";
+import ProfileView from "./views/ProfileView";
 import PageNotFoundView from "./views/PageNotFoundView";
 import LoginView from "./views/user/LoginView";
 import RegisterView from "./views/user/RegisterView";
@@ -23,11 +23,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/u/:username",
-        element: <UserView />,
+        element: <ProfileView />,
       },
       {
-        path: "/:feedId",
-        element: <FeedView />,
+        path: "/:postId",
+        element: <PostDetailView />,
       },
     ],
   },

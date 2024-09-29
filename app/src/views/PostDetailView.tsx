@@ -8,31 +8,31 @@ import Feeds from "@/components/feeds/Feeds";
 import { IPostApi } from "@/types/ApiTypes";
 import useFeedDetailStore from "@/stores/feedDetailStore";
 
-const FeedView = () => {
+const PostDetailView = () => {
   const navigate = useNavigate();
   const store = useFeedDetailStore();
-  const { feedId } = useParams();
+  const { postId } = useParams();
 
-  const fetchData = async (id: number) => {
+  const fetchPost = async (id: number) => {
     const data = await api.post.getPost(id);
     store.setRootPost(data);
   };
 
-  const fetchDetails = async (parentId: number) => {
+  const fetchPostReplies = async (parentId: number) => {
     const response = await api.post.getReplies(parentId);
     store.setPosts(response.data as IPostApi[]);
   };
 
   useEffect(() => {
-    if (!feedId) {
+    if (!postId) {
       navigate("/");
       return;
     }
 
-    const id = parseInt(feedId);
-    fetchData(id);
-    fetchDetails(id);
-  }, [feedId]);
+    const id = parseInt(postId);
+    fetchPost(id);
+    fetchPostReplies(id);
+  }, [postId]);
 
   if (!store.state.rootPost) {
     return <div>loading</div>;
@@ -55,4 +55,4 @@ const FeedView = () => {
   );
 };
 
-export default FeedView;
+export default PostDetailView;

@@ -8,7 +8,7 @@ interface Props {
 const Feeds = ({ store }: Props) => {
   return (
     <>
-      {store.state.feeds.map((post) => (
+      {store.state.posts.map((post) => (
         <Feed key={post.id} post={post} store={store} />
       ))}
     </>
