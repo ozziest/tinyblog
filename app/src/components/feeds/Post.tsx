@@ -1,8 +1,8 @@
 import FeedAuthor from "./FeedAuthor";
 import FeedContent from "./FeedContent";
-import FeedActions from "./FeedActions";
 import FeedArticle from "./FeedArticle";
 import { ExtendedPost, IPostStore } from "@/stores/shared";
+import PostActions from "./PostActions";
 
 interface Props {
   store: IPostStore;
@@ -22,14 +22,14 @@ const Post = ({ store, post, autoView = true }: Props) => {
         >
           <FeedAuthor post={post.parent} />
           <FeedContent post={post.parent} />
-          <FeedActions store={store} post={post.parent} />
+          <PostActions store={store} post={post.parent} />
         </FeedArticle>
       )}
 
       <FeedArticle store={store} post={post} autoView={autoView} showBorder>
         <FeedAuthor post={post} />
         <FeedContent post={post} />
-        <FeedActions store={store} post={post} />
+        <PostActions store={store} post={post} />
       </FeedArticle>
     </div>
   );

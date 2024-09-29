@@ -13,7 +13,7 @@ interface Props {
   post: ExtendedPost;
 }
 
-const FeedActions = ({ store, post }: Props) => {
+const PostActions = ({ store, post }: Props) => {
   const handleLikeClick = async (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
     event.stopPropagation();
@@ -62,4 +62,4 @@ const FeedActions = ({ store, post }: Props) => {
   );
 };
 
-export default FeedActions;
+export default PostActions;
