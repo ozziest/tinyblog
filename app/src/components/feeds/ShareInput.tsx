@@ -2,19 +2,22 @@ import { useState } from "react";
 import Avatar from "../user/Avatar";
 import api from "../../api";
 import useAuthStore from "../../stores/authStore";
-import usePostStore from "../../stores/postStore";
+import usePostStore, { ExtendedPost } from "../../stores/postStore";
 
 interface Props {
-  isReply?: boolean;
+  parent?: ExtendedPost;
 }
 
-const ShareInput = ({ isReply = false }: Props) => {
+const ShareInput = ({ parent }: Props) => {
   const [content, setContent] = useState("");
   const authStore = useAuthStore();
   const postStore = usePostStore();
 
   const handleCreate = async () => {
-    const response = await api.post.store({ content });
+    const response = await api.post.store({
+      content,
+      parent_id: parent?.id,
+    });
     const feed = await response.json();
 
     authStore.increase("post");
@@ -25,6 +28,9 @@ const ShareInput = ({ isReply = false }: Props) => {
       content: feed.content,
       created_at: feed.created_at,
       updated_at: feed.updated_at,
+      stats_likes: 0,
+      stats_shares: 0,
+      stats_views: 0,
       user: authStore.state.user,
     });
   };
@@ -52,7 +58,7 @@ const ShareInput = ({ isReply = false }: Props) => {
                 className="px-3 py-1 border bg-gray-200 hover:bg-gray-300 rounded font-semibold text-sm"
                 onClick={handleCreate}
               >
-                {isReply ? "Reply" : "Share"}
+                {parent ? "Reply" : "Share"}
               </button>
             </div>
           </div>

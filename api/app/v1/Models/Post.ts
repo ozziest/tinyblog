@@ -11,13 +11,14 @@ import SessionMiddleware from "../Middlewares/SessionMiddleware";
 class Post extends Model {
   get fillable() {
     return {
-      POST: ["content"],
+      POST: ["parent_id", "content"],
     };
   }
 
   get validations() {
     return {
       POST: {
+        parent_id: "numeric",
         content: "required|min:1|max:240",
       },
     };

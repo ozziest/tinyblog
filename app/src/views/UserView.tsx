@@ -28,7 +28,7 @@ const UserView = () => {
           </div>
         </div>
         <FeedContainer>
-          <ShareInput isReply />
+          <ShareInput />
         </FeedContainer>
       </div>
       <div className="">
