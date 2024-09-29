@@ -16,14 +16,14 @@ const Feed = ({ post, autoView = true }: Props) => {
         <FeedArticle post={post.parent} autoView={autoView} isParent>
           <FeedAuthor post={post.parent} />
           <FeedContent post={post.parent} />
-          <FeedActions />
+          <FeedActions post={post.parent} />
         </FeedArticle>
       )}
 
       <FeedArticle post={post} autoView={autoView} showBorder>
         <FeedAuthor post={post} />
         <FeedContent post={post} />
-        <FeedActions />
+        <FeedActions post={post} />
       </FeedArticle>
     </div>
   );

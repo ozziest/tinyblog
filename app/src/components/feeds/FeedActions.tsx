@@ -1,10 +1,15 @@
+import { ExtendedPost } from "../../stores/postStore";
 import ActionButton from "./ActionButton";
 
-const FeedActions = () => {
+interface Props {
+  post: ExtendedPost;
+}
+
+const FeedActions = ({ post }: Props) => {
   return (
     <div className="flex gap-4 pt-2">
-      <ActionButton icon="♥" count={10} isSelected={false} />
-      <ActionButton icon="📢" count={5} isSelected={true} />
+      <ActionButton icon="♥" count={post.stats_likes} isSelected={false} />
+      <ActionButton icon="📢" count={post.stats_shares} isSelected={true} />
     </div>
   );
 };
