@@ -48,7 +48,7 @@ const useAuthStore = create<AuthState>()((set) => ({
       token: response.token,
       user: response.user,
     };
-    sessionStorage.setItemUse("useAuthStore", JSON.stringify(value));
+    sessionStorage.setItem("useAuthStore", JSON.stringify(value));
     set(() => ({ state: value }));
   },
 
