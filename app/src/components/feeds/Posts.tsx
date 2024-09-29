@@ -5,7 +5,7 @@ interface Props {
   store: IPostStore;
 }
 
-const Feeds = ({ store }: Props) => {
+const Posts = ({ store }: Props) => {
   return (
     <>
       {store.state.posts.map((post) => (
@@ -15,4 +15,4 @@ const Feeds = ({ store }: Props) => {
   );
 };
 
-export default Feeds;
+export default Posts;

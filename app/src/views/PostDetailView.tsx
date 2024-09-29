@@ -3,10 +3,10 @@ import PostContainer from "@/components/feeds/PostContainer";
 import ShareInput from "@/components/feeds/ShareInput";
 import { useEffect } from "react";
 import api from "@/api";
-import Feeds from "@/components/feeds/Feeds";
 import { IPostApi } from "@/types/ApiTypes";
 import useFeedDetailStore from "@/stores/feedDetailStore";
 import Post from "@/components/feeds/Post";
+import Posts from "@/components/feeds/Posts";
 
 const PostDetailView = () => {
   const navigate = useNavigate();
@@ -48,7 +48,7 @@ const PostDetailView = () => {
       </div>
       <div className="">
         <PostContainer>
-          <Feeds store={store} />
+          <Posts store={store} />
         </PostContainer>
       </div>
     </>

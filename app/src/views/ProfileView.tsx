@@ -3,7 +3,7 @@ import PostContainer from "@/components/feeds/PostContainer";
 import ShareInput from "@/components/feeds/ShareInput";
 import Button from "@/components/inputs/Button";
 import useUserFeedStore from "@/stores/userFeedStore";
-import Feeds from "@/components/feeds/Feeds";
+import Posts from "@/components/feeds/Posts";
 
 const ProfileView = () => {
   const store = useUserFeedStore();
@@ -33,7 +33,7 @@ const ProfileView = () => {
       </div>
       <div className="">
         <PostContainer>
-          <Feeds store={store} />
+          <Posts store={store} />
         </PostContainer>
       </div>
     </>

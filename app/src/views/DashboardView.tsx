@@ -1,9 +1,9 @@
 import { useEffect } from "react";
-import Feeds from "@/components/feeds/Feeds";
 import ShareInput from "@/components/feeds/ShareInput";
 import api from "@/api";
 import useDashboardStore from "@/stores/dashboardStore";
 import PostContainer from "@/components/feeds/PostContainer";
+import Posts from "@/components/feeds/Posts";
 
 const DashboardView = () => {
   const store = useDashboardStore();
@@ -20,7 +20,7 @@ const DashboardView = () => {
   return (
     <PostContainer>
       <ShareInput store={store} />
-      <Feeds store={store} />
+      <Posts store={store} />
     </PostContainer>
   );
 };
