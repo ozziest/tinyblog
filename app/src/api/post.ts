@@ -16,8 +16,13 @@ const setViewed = async (postId: number) => {
   return resource(`posts/${postId}/views`).post();
 };
 
+const getPost = async (id: number) => {
+  return resource(`posts/${id}`).with("user{id,name,username,email}").get();
+};
+
 export default {
   store,
   paginate,
   setViewed,
+  getPost,
 };

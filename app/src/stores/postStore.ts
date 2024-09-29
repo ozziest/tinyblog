@@ -30,13 +30,15 @@ const getMinId = (feeds: IPostApi[]): number => {
   }, Infinity);
 };
 
+export const extendPost = (post: IPostApi): ExtendedPost => {
+  return {
+    ...post,
+    isViewed: false,
+  };
+};
+
 const toExtendedPost = (feeds: IPostApi[]): ExtendedPost[] => {
-  return feeds.map((feed) => {
-    return {
-      ...feed,
-      isViewed: false,
-    };
-  });
+  return feeds.map(extendPost);
 };
 
 const usePostStore = create<IPostStore>()((set) => ({

@@ -1,26 +1,46 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Feed from "../components/feeds/Feed";
 import FeedContainer from "../components/feeds/FeedContainer";
-import Feeds from "../components/feeds/Feeds";
 import ShareInput from "../components/feeds/ShareInput";
-import { getFeed, getFeeds } from "../fakes";
+import { useEffect, useState } from "react";
+import api from "../api";
+import { ExtendedPost, extendPost } from "../stores/postStore";
 
 const FeedView = () => {
+  const navigate = useNavigate();
   const { feedId } = useParams();
-  const FAKE_FEED = getFeed(parseInt(feedId || "0"));
-  const FAKE_ANSWERS = getFeeds().reverse();
+  const [post, setPost] = useState<ExtendedPost>();
+
+  const fetchData = async () => {
+    if (!feedId) {
+      navigate("/");
+      return;
+    }
+
+    const data = await api.post.getPost(parseInt(feedId));
+    setPost(extendPost(data));
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, [feedId]);
+
+  if (!post) {
+    return <div>loading</div>;
+  }
 
   return (
     <>
       <div className="bg-white sticky top-[40px]">
         <FeedContainer>
-          <Feed post={FAKE_FEED} />
+          <Feed post={post} />
           <ShareInput isReply />
         </FeedContainer>
       </div>
       <div className="">
         <FeedContainer>
-          <Feeds posts={FAKE_ANSWERS} />
+          answers...
+          {/* <Feeds posts={FAKE_ANSWERS} /> */}
         </FeedContainer>
       </div>
     </>

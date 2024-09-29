@@ -28,7 +28,7 @@ class Post extends Model {
   }
 
   get handlers() {
-    return [HandlerTypes.INSERT, HandlerTypes.PAGINATE];
+    return [HandlerTypes.INSERT, HandlerTypes.PAGINATE, HandlerTypes.SHOW];
   }
 
   get limits(): IQueryLimitConfig[][] {
