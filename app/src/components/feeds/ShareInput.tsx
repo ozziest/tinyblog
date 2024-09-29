@@ -2,19 +2,18 @@ import { useState } from "react";
 import Avatar from "../user/Avatar";
 import api from "../../api";
 import useAuthStore from "../../stores/authStore";
-import usePostStore from "../../stores/postStore";
 import { IPostApi } from "../../types/ApiTypes";
-import { ExtendedPost } from "../../stores/shared";
+import { ExtendedPost, IPostStore } from "../../stores/shared";
 
 interface Props {
+  store: IPostStore;
   parent?: ExtendedPost;
   onShared?: (post: IPostApi) => void;
 }
 
-const ShareInput = ({ parent, onShared }: Props) => {
+const ShareInput = ({ store, parent, onShared }: Props) => {
   const [content, setContent] = useState("");
   const authStore = useAuthStore();
-  const postStore = usePostStore();
 
   const handleCreate = async () => {
     const response = await api.post.store({
@@ -42,7 +41,7 @@ const ShareInput = ({ parent, onShared }: Props) => {
     if (onShared) {
       onShared(newPost);
     } else {
-      postStore.pushFeed(newPost);
+      store.pushFeed(newPost);
     }
   };
 

@@ -4,15 +4,16 @@ import FeedContainer from "../components/feeds/FeedContainer";
 import ShareInput from "../components/feeds/ShareInput";
 import { useEffect, useState } from "react";
 import api from "../api";
-import { ExtendedPost } from "../stores/postStore";
 import Feeds from "../components/feeds/Feeds";
 import { extendPost, resolvePosts } from "../helpers/posts";
 import { IPostApi } from "../types/ApiTypes";
 import { IResolvedList } from "../interfaces";
-import { ViewTypes } from "../enums";
+import useFeedDetailStore from "../stores/feedDetailStore";
+import { ExtendedPost } from "../stores/shared";
 
 const FeedView = () => {
   const navigate = useNavigate();
+  const store = useFeedDetailStore();
   const { feedId } = useParams();
   const [post, setPost] = useState<ExtendedPost>();
   const [replies, setReplies] = useState<IResolvedList<ExtendedPost>>();
@@ -60,13 +61,13 @@ const FeedView = () => {
     <>
       <div className="bg-white sticky top-[40px]">
         <FeedContainer>
-          <Feed post={post} autoView={false} />
-          <ShareInput parent={post} onShared={handleShared} />
+          <Feed store={store} post={post} autoView={false} />
+          <ShareInput store={store} parent={post} onShared={handleShared} />
         </FeedContainer>
       </div>
       <div className="">
         <FeedContainer>
-          <Feeds viewType={ViewTypes.PostDetail} posts={replies.items} />
+          <Feeds store={store} />
         </FeedContainer>
       </div>
     </>

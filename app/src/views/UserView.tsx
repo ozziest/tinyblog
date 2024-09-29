@@ -1,13 +1,13 @@
 import { useParams } from "react-router-dom";
 import FeedContainer from "../components/feeds/FeedContainer";
-// import Feeds from "../components/feeds/Feeds";
 import ShareInput from "../components/feeds/ShareInput";
-// import { getFeeds } from "../fakes";
 import Button from "../components/inputs/Button";
+import useUserFeedStore from "../stores/userFeedStore";
+import Feeds from "../components/feeds/Feeds";
 
 const UserView = () => {
+  const store = useUserFeedStore();
   const { username } = useParams();
-  // const FAKE_ANSWERS = getFeeds().reverse();
 
   return (
     <>
@@ -28,13 +28,13 @@ const UserView = () => {
           </div>
         </div>
         <FeedContainer>
-          <ShareInput />
+          <ShareInput store={store} />
         </FeedContainer>
       </div>
       <div className="">
-        {/* <FeedContainer>
-          <Feeds posts={FAKE_ANSWERS} />
-        </FeedContainer> */}
+        <FeedContainer>
+          <Feeds store={store} />
+        </FeedContainer>
       </div>
     </>
   );

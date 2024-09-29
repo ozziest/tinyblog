@@ -2,28 +2,34 @@ import FeedAuthor from "./FeedAuthor";
 import FeedContent from "./FeedContent";
 import FeedActions from "./FeedActions";
 import FeedArticle from "./FeedArticle";
-import { ExtendedPost } from "../../stores/shared";
+import { ExtendedPost, IPostStore } from "../../stores/shared";
 
 interface Props {
+  store: IPostStore;
   post: ExtendedPost;
   autoView?: boolean;
 }
 
-const Feed = ({ post, autoView = true }: Props) => {
+const Feed = ({ store, post, autoView = true }: Props) => {
   return (
     <div className="flex flex-col">
       {post.parent && (
-        <FeedArticle post={post.parent} autoView={autoView} isParent>
+        <FeedArticle
+          store={store}
+          post={post.parent}
+          autoView={autoView}
+          isParent
+        >
           <FeedAuthor post={post.parent} />
           <FeedContent post={post.parent} />
-          <FeedActions post={post.parent} />
+          <FeedActions store={store} post={post.parent} />
         </FeedArticle>
       )}
 
-      <FeedArticle post={post} autoView={autoView} showBorder>
+      <FeedArticle store={store} post={post} autoView={autoView} showBorder>
         <FeedAuthor post={post} />
         <FeedContent post={post} />
-        <FeedActions post={post} />
+        <FeedActions store={store} post={post} />
       </FeedArticle>
     </div>
   );

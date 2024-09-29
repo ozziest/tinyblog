@@ -1,19 +1,15 @@
 import Feed from "./Feed";
-import { ViewTypes } from "../../enums";
-import { ExtendedPost } from "../../stores/shared";
+import { IPostStore } from "../../stores/shared";
 
 interface Props {
-  viewType: ViewTypes;
-  posts: ExtendedPost[];
+  store: IPostStore;
 }
 
-const Feeds = ({ viewType, posts }: Props) => {
-  console.log("FeedView", viewType);
-
+const Feeds = ({ store }: Props) => {
   return (
     <>
-      {posts.map((post) => (
-        <Feed key={post.id} post={post} />
+      {store.state.feeds.map((post) => (
+        <Feed key={post.id} post={post} store={store} />
       ))}
     </>
   );

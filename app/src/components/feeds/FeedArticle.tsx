@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import usePostStore from "../../stores/postStore";
 import Avatar from "../user/Avatar";
 import { useNavigate } from "react-router-dom";
 import api from "../../api";
 import classNames from "classnames";
-import { ExtendedPost } from "../../stores/shared";
+import { ExtendedPost, IPostStore } from "../../stores/shared";
 
 interface Props {
+  store: IPostStore;
   post: ExtendedPost;
   autoView?: boolean;
   showBorder?: boolean;
@@ -15,6 +15,7 @@ interface Props {
 }
 
 const FeedArticle = ({
+  store,
   post,
   autoView,
   showBorder,
@@ -22,7 +23,6 @@ const FeedArticle = ({
   children,
 }: Props) => {
   const navigate = useNavigate();
-  const postStore = usePostStore();
   const [timer, setTimer] = useState<number | undefined>();
 
   const setAsViewed = async () => {
@@ -33,7 +33,7 @@ const FeedArticle = ({
 
     const response = await api.post.setViewed(post.id);
     const data = await response.json();
-    postStore.setViewed(post.id, data.isAlreadyViewed);
+    store.setViewed(post.id, data.isAlreadyViewed);
   };
 
   const hadleMouseEnter = () => {

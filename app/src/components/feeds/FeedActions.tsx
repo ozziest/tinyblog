@@ -1,16 +1,14 @@
 import api from "../../api";
-import usePostStore from "../../stores/postStore";
-import { ExtendedPost } from "../../stores/shared";
+import { ExtendedPost, IPostStore } from "../../stores/shared";
 import { LikeIcon, ReplyIcon, ShareIcon, ViewCountIcon } from "../Icons";
 import ActionButton from "./ActionButton";
 
 interface Props {
+  store: IPostStore;
   post: ExtendedPost;
 }
 
-const FeedActions = ({ post }: Props) => {
-  const postStore = usePostStore();
-
+const FeedActions = ({ store, post }: Props) => {
   const handleLikeClick = async (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
     event.stopPropagation();
@@ -18,9 +16,9 @@ const FeedActions = ({ post }: Props) => {
     const response = await api.post.like(post.id);
     const { isAlreadyLiked } = await response.json();
     if (isAlreadyLiked) {
-      postStore.unlike(post.id);
+      store.unlike(post.id);
     } else {
-      postStore.like(post.id);
+      store.like(post.id);
     }
   };
 
