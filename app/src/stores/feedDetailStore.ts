@@ -1,5 +1,5 @@
 import { createStore } from "./shared";
 
-const useFeedDetailStore = createStore("FEED-DETAIL");
+const useFeedDetailStore = createStore();
 
 export default useFeedDetailStore;

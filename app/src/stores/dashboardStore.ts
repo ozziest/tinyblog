@@ -1,5 +1,5 @@
 import { createStore } from "./shared";
 
-const useDashboardStore = createStore("DASHBOARD");
+const useDashboardStore = createStore();
 
 export default useDashboardStore;
