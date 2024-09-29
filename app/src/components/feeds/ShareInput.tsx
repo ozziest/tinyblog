@@ -3,12 +3,14 @@ import Avatar from "../user/Avatar";
 import api from "../../api";
 import useAuthStore from "../../stores/authStore";
 import usePostStore, { ExtendedPost } from "../../stores/postStore";
+import { IPostApi } from "../../types/ApiTypes";
 
 interface Props {
   parent?: ExtendedPost;
+  onShared?: (post: IPostApi) => void;
 }
 
-const ShareInput = ({ parent }: Props) => {
+const ShareInput = ({ parent, onShared }: Props) => {
   const [content, setContent] = useState("");
   const authStore = useAuthStore();
   const postStore = usePostStore();
@@ -21,9 +23,9 @@ const ShareInput = ({ parent }: Props) => {
     const feed = await response.json();
 
     authStore.increase("post");
-
     setContent("");
-    postStore.push({
+
+    const newPost: IPostApi = {
       id: feed.id,
       content: feed.content,
       created_at: feed.created_at,
@@ -32,7 +34,13 @@ const ShareInput = ({ parent }: Props) => {
       stats_shares: 0,
       stats_views: 0,
       user: authStore.state.user,
-    });
+    };
+
+    if (onShared) {
+      onShared(newPost);
+    } else {
+      postStore.push(newPost);
+    }
   };
 
   return (

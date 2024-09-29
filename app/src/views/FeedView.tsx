@@ -27,6 +27,19 @@ const FeedView = () => {
     setReplies(data);
   };
 
+  const handleShared = (post: IPostApi) => {
+    if (!replies) {
+      return;
+    }
+
+    // The new items list
+    const items = [extendPost(post), ...replies.items];
+    // Convert to replies
+    const data = resolvePosts(items);
+    // Setting the new state
+    setReplies(data);
+  };
+
   useEffect(() => {
     if (!feedId) {
       navigate("/");
@@ -47,7 +60,7 @@ const FeedView = () => {
       <div className="bg-white sticky top-[40px]">
         <FeedContainer>
           <Feed post={post} autoView={false} />
-          <ShareInput parent={post} />
+          <ShareInput parent={post} onShared={handleShared} />
         </FeedContainer>
       </div>
       <div className="">
