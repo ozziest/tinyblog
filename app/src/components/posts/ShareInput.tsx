@@ -3,7 +3,7 @@ import Avatar from "@/components/user/Avatar";
 import api from "@/api";
 import useAuthStore from "@/stores/authStore";
 import { IPostApi } from "@/types/ApiTypes";
-import { ExtendedPost, IPostStore } from "@/stores/shared";
+import { ExtendedPost, IPostStore } from "@/stores/posts";
 
 interface Props {
   store: IPostStore;

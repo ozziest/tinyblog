@@ -1,7 +1,7 @@
 import { create } from "zustand";
+import { StoreType } from "@/enums";
 import { IPostApi } from "@/types/ApiTypes";
 import { extendPost, resolvePosts } from "@/helpers/posts";
-import { StoreType } from "@/enums";
 
 export interface ExtendedPost extends IPostApi {
   isViewed: boolean;
@@ -105,3 +105,7 @@ export const createStore = (type: StoreType) =>
       }));
     },
   }));
+
+export const useDashboardStore = createStore(StoreType.Dashboard);
+export const useFeedDetailStore = createStore(StoreType.PostDetail);
+export const useUserFeedStore = createStore(StoreType.UserProfile);

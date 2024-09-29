@@ -1,8 +1,8 @@
 import PostContent from "./PostContent";
 import PostArticle from "./PostArticle";
-import { ExtendedPost, IPostStore } from "@/stores/shared";
 import PostActions from "./PostActions";
 import PostAuthor from "./PostAuthor";
+import { ExtendedPost, IPostStore } from "@/stores/posts";
 
 interface Props {
   store: IPostStore;

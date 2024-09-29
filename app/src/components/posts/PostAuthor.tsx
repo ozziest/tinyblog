@@ -1,6 +1,6 @@
+import { ExtendedPost } from "@/stores/posts";
 import { formatDistance } from "date-fns";
 import { useNavigate } from "react-router-dom";
-import { ExtendedPost } from "@/stores/shared";
 
 interface Props {
   post: ExtendedPost;

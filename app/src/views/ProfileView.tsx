@@ -2,8 +2,8 @@ import { useParams } from "react-router-dom";
 import PostContainer from "@/components/posts/PostContainer";
 import ShareInput from "@/components/posts/ShareInput";
 import Button from "@/components/inputs/Button";
-import useUserFeedStore from "@/stores/userFeedStore";
 import Posts from "@/components/posts/Posts";
+import { useUserFeedStore } from "@/stores/posts";
 
 const ProfileView = () => {
   const store = useUserFeedStore();

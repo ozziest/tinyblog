@@ -3,7 +3,7 @@ import Avatar from "@/components/user/Avatar";
 import { useNavigate } from "react-router-dom";
 import api from "@/api";
 import classNames from "classnames";
-import { ExtendedPost, IPostStore } from "@/stores/shared";
+import { ExtendedPost, IPostStore } from "@/stores/posts";
 
 interface Props {
   store: IPostStore;

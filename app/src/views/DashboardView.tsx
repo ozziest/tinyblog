@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import ShareInput from "@/components/posts/ShareInput";
 import api from "@/api";
-import useDashboardStore from "@/stores/dashboardStore";
 import PostContainer from "@/components/posts/PostContainer";
 import Posts from "@/components/posts/Posts";
+import { useDashboardStore } from "@/stores/posts";
 
 const DashboardView = () => {
   const store = useDashboardStore();

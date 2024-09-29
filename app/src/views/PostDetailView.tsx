@@ -4,9 +4,9 @@ import ShareInput from "@/components/posts/ShareInput";
 import { useEffect } from "react";
 import api from "@/api";
 import { IPostApi } from "@/types/ApiTypes";
-import useFeedDetailStore from "@/stores/feedDetailStore";
 import Post from "@/components/posts/Post";
 import Posts from "@/components/posts/Posts";
+import { useFeedDetailStore } from "@/stores/posts";
 
 const PostDetailView = () => {
   const navigate = useNavigate();

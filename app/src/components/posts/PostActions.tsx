@@ -1,5 +1,4 @@
 import api from "@/api";
-import { ExtendedPost, IPostStore } from "@/stores/shared";
 import {
   LikeIcon,
   ReplyIcon,
@@ -7,6 +6,7 @@ import {
   ViewCountIcon,
 } from "@/components/Icons";
 import ActionButton from "./ActionButton";
+import { ExtendedPost, IPostStore } from "@/stores/posts";
 
 interface Props {
   store: IPostStore;
