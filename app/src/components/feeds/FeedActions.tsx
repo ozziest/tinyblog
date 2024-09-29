@@ -26,7 +26,7 @@ const FeedActions = ({ post }: Props) => {
       <ActionButton
         icon="♥"
         count={post.stats_likes}
-        isSelected={false}
+        isSelected={post.is_liked_by_you}
         onClick={handleLikeClick}
       />
       <ActionButton

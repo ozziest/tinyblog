@@ -1,3 +1,5 @@
+import classNames from "classnames";
+
 interface Props {
   icon: string;
   count: number;
@@ -13,7 +15,13 @@ const ActionButton = ({ icon, count, isSelected, onClick }: Props) => {
       onClick={onClick}
     >
       <span
-        className={`${isSelected ? "bg-neutral-700" : "bg-neutral-200"} px-3 py-1 rounded-full text-neutral-600 group-hover:bg-neutral-800 group-hover:text-neutral-50`}
+        className={classNames(
+          "px-3 py-1 rounded-full text-neutral-600 group-hover:bg-neutral-800 group-hover:text-neutral-50",
+          {
+            "bg-neutral-700 text-white": isSelected,
+            "bg-neutral-200": !isSelected,
+          },
+        )}
       >
         {icon}
       </span>
