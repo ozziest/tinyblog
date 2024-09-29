@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { ILoginResponseApi, IUserApi } from "../types/ApiTypes";
+import { ILoginResponseApi, IUserApi } from "@/types/ApiTypes";
 
 export interface AuthStoreState {
   isLoggedIn: boolean;

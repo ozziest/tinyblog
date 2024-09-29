@@ -1,7 +1,7 @@
 import { create } from "zustand";
-import { IPostApi } from "../types/ApiTypes";
-import { extendPost, resolvePosts } from "../helpers/posts";
-import { StoreType } from "../enums";
+import { IPostApi } from "@/types/ApiTypes";
+import { extendPost, resolvePosts } from "@/helpers/posts";
+import { StoreType } from "@/enums";
 
 export interface ExtendedPost extends IPostApi {
   isViewed: boolean;

@@ -1,5 +1,5 @@
 import Feed from "./Feed";
-import { IPostStore } from "../../stores/shared";
+import { IPostStore } from "@/stores/shared";
 
 interface Props {
   store: IPostStore;

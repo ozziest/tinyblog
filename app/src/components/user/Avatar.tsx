@@ -1,4 +1,4 @@
-import { IUserApi } from "../../types/ApiTypes";
+import { IUserApi } from "@/types/ApiTypes";
 
 interface Props {
   user: IUserApi;

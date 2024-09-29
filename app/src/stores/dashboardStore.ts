@@ -1,4 +1,4 @@
-import { StoreType } from "../enums";
+import { StoreType } from "@/enums";
 import { createStore } from "./shared";
 
 const useDashboardStore = createStore(StoreType.Dashboard);

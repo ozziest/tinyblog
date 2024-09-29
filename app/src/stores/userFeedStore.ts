@@ -1,4 +1,4 @@
-import { StoreType } from "../enums";
+import { StoreType } from "@/enums";
 import { createStore } from "./shared";
 
 const useUserFeedStore = createStore(StoreType.UserProfile);

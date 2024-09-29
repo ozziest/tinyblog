@@ -1,9 +1,3 @@
-export interface IFeed {
-  id: number;
-  avatar: string;
-  content: string;
-}
-
 export interface IUserPost {
   email: string;
   password: string;

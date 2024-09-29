@@ -1,9 +1,9 @@
 import { useEffect } from "react";
-import FeedContainer from "../components/feeds/FeedContainer";
-import Feeds from "../components/feeds/Feeds";
-import ShareInput from "../components/feeds/ShareInput";
-import api from "../api";
-import useDashboardStore from "../stores/dashboardStore";
+import FeedContainer from "@/components/feeds/FeedContainer";
+import Feeds from "@/components/feeds/Feeds";
+import ShareInput from "@/components/feeds/ShareInput";
+import api from "@/api";
+import useDashboardStore from "@/stores/dashboardStore";
 
 const FeedView = () => {
   const store = useDashboardStore();

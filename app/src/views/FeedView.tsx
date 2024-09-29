@@ -1,12 +1,12 @@
 import { useNavigate, useParams } from "react-router-dom";
-import Feed from "../components/feeds/Feed";
-import FeedContainer from "../components/feeds/FeedContainer";
-import ShareInput from "../components/feeds/ShareInput";
+import Feed from "@/components/feeds/Feed";
+import FeedContainer from "@/components/feeds/FeedContainer";
+import ShareInput from "@/components/feeds/ShareInput";
 import { useEffect } from "react";
-import api from "../api";
-import Feeds from "../components/feeds/Feeds";
-import { IPostApi } from "../types/ApiTypes";
-import useFeedDetailStore from "../stores/feedDetailStore";
+import api from "@/api";
+import Feeds from "@/components/feeds/Feeds";
+import { IPostApi } from "@/types/ApiTypes";
+import useFeedDetailStore from "@/stores/feedDetailStore";
 
 const FeedView = () => {
   const navigate = useNavigate();

@@ -2,7 +2,7 @@ import FeedAuthor from "./FeedAuthor";
 import FeedContent from "./FeedContent";
 import FeedActions from "./FeedActions";
 import FeedArticle from "./FeedArticle";
-import { ExtendedPost, IPostStore } from "../../stores/shared";
+import { ExtendedPost, IPostStore } from "@/stores/shared";
 
 interface Props {
   store: IPostStore;

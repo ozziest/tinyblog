@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { LogoIcon } from "../Icons";
+import { LogoIcon } from "@/components/Icons";
 
 const Header = () => {
   return (

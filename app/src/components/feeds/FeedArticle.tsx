@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import Avatar from "../user/Avatar";
+import Avatar from "@/components/user/Avatar";
 import { useNavigate } from "react-router-dom";
-import api from "../../api";
+import api from "@/api";
 import classNames from "classnames";
-import { ExtendedPost, IPostStore } from "../../stores/shared";
+import { ExtendedPost, IPostStore } from "@/stores/shared";
 
 interface Props {
   store: IPostStore;
@@ -43,7 +43,7 @@ const FeedArticle = ({
     }
 
     // Set a timer to set as viewed
-    setTimer(setTimeout(setAsViewed, 1000));
+    setTimer(window.setTimeout(setAsViewed, 1000));
   };
 
   const handleMouseLeave = () => {

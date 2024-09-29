@@ -1,12 +1,12 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
-import api from "../api";
-import Button from "../components/inputs/Button";
-import { notification } from "../helpers/notication";
-import TextInput from "../components/inputs/TextInput";
+import api from "@/api";
+import Button from "@/components/inputs/Button";
+import { notification } from "@/helpers/notication";
+import TextInput from "@/components/inputs/TextInput";
 import { IValidationResult, validate } from "robust-validator";
-import PasswordStrengthMeter from "../components/inputs/PasswordStrengthMeter";
-import { IChangePasswordPost } from "../interfaces";
+import PasswordStrengthMeter from "@/components/inputs/PasswordStrengthMeter";
+import { IChangePasswordPost } from "@/interfaces";
 
 const RULES = {
   password: "required|min:8|max:50|confirmed",

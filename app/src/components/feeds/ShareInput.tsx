@@ -1,9 +1,9 @@
 import { useState } from "react";
-import Avatar from "../user/Avatar";
-import api from "../../api";
-import useAuthStore from "../../stores/authStore";
-import { IPostApi } from "../../types/ApiTypes";
-import { ExtendedPost, IPostStore } from "../../stores/shared";
+import Avatar from "@/components/user/Avatar";
+import api from "@/api";
+import useAuthStore from "@/stores/authStore";
+import { IPostApi } from "@/types/ApiTypes";
+import { ExtendedPost, IPostStore } from "@/stores/shared";
 
 interface Props {
   store: IPostStore;

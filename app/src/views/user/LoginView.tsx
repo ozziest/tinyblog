@@ -1,14 +1,14 @@
 import { Link, useNavigate } from "react-router-dom";
-import Button from "../components/inputs/Button";
-import TextInput from "../components/inputs/TextInput";
+import Button from "@/components/inputs/Button";
+import TextInput from "@/components/inputs/TextInput";
 import { useState } from "react";
-import { ILoginPost } from "../interfaces";
-import api from "../api";
-import useAuthStore from "../stores/authStore";
+import { ILoginPost } from "@/interfaces";
+import api from "@/api";
+import useAuthStore from "@/stores/authStore";
 import { useTranslation } from "react-i18next";
 import { IValidationResult, validate } from "robust-validator";
-import { notification } from "../helpers/notication";
-import { ILoginResponseApi } from "../types/ApiTypes";
+import { notification } from "@/helpers/notication";
+import { ILoginResponseApi } from "@/types/ApiTypes";
 
 const RULES = {
   email: "required|min:3",

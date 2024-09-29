@@ -1,6 +1,11 @@
-import api from "../../api";
-import { ExtendedPost, IPostStore } from "../../stores/shared";
-import { LikeIcon, ReplyIcon, ShareIcon, ViewCountIcon } from "../Icons";
+import api from "@/api";
+import { ExtendedPost, IPostStore } from "@/stores/shared";
+import {
+  LikeIcon,
+  ReplyIcon,
+  ShareIcon,
+  ViewCountIcon,
+} from "@/components/Icons";
 import ActionButton from "./ActionButton";
 
 interface Props {

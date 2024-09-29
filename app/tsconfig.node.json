@@ -16,7 +16,12 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+
+    "baseUrl": ".", // This should point to the root of your project
+    "paths": {
+      "@/*": ["src/*"] // Replace 'src' with the folder where your code is located
+    }
   },
   "include": ["vite.config.ts"]
 }

@@ -1,4 +1,4 @@
-import { MessageTypes } from "../enums";
+import { MessageTypes } from "@/enums";
 
 export const error = (message: string) => {
   const event = new CustomEvent(MessageTypes.SimpleError, {

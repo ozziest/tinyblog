@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
-import Button from "../components/inputs/Button";
-import TextInput from "../components/inputs/TextInput";
+import Button from "@/components/inputs/Button";
+import TextInput from "@/components/inputs/TextInput";
 import { useState } from "react";
-import { IPasswordResetPost } from "../interfaces";
-import api from "../api";
+import { IPasswordResetPost } from "@/interfaces";
+import api from "@/api";
 import { IValidationResult, validate } from "robust-validator";
-import { notification } from "../helpers/notication";
+import { notification } from "@/helpers/notication";
 
 const RULES = {
   email: "required|email|min:3",

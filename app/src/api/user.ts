@@ -7,7 +7,7 @@ import {
   IProfilCheckPost,
   IProfilCheckResponse,
   IUserPost,
-} from "../interfaces";
+} from "@/interfaces";
 import { resource } from "axe-api-client";
 
 const createUser = async (data: IUserPost) => {

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { MessageTypes } from "../../enums";
-import Button from "../inputs/Button";
-import { SuccessIcon } from "../Icons";
+import { MessageTypes } from "@/enums";
+import Button from "@/components/inputs/Button";
+import { SuccessIcon } from "@/components/Icons";
 
 const SuccessMessage = () => {
   const [message, setMessage] = useState<string | undefined>();

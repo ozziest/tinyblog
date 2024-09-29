@@ -1,36 +1,18 @@
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { LoadingIcon, SuccessIcon } from "../components/Icons";
-import { useEffect, useState } from "react";
-import api from "../api";
-import Button from "../components/inputs/Button";
-import { notification } from "../helpers/notication";
-import TextInput from "../components/inputs/TextInput";
+import { Link } from "react-router-dom";
+import { SuccessIcon } from "@/components/Icons";
+import { useState } from "react";
+import api from "@/api";
+import Button from "@/components/inputs/Button";
+import { notification } from "@/helpers/notication";
+import TextInput from "@/components/inputs/TextInput";
 import { IValidationResult, validate } from "robust-validator";
 
-type Statuses = "loading" | "success" | "error" | "resetSuccess";
+type Statuses = "resetSuccess";
 
 const EmailConfirmation = () => {
-  const navigate = useNavigate();
-  const { secret, code } = useParams();
-  const [status, setStatus] = useState<Statuses>("loading");
+  const [status, setStatus] = useState<Statuses>();
   const [email, setEmail] = useState("");
   const [validation, setValidation] = useState<IValidationResult>();
-
-  const confirm = async () => {
-    const { error } = await api.user.confirmation({
-      secret: secret || "",
-      code: code || "",
-    });
-    if (error) {
-      setStatus("error");
-    } else {
-      setStatus("success");
-      const timeout = setTimeout(() => {
-        clearTimeout(timeout);
-        navigate("/auth/login");
-      }, 3000);
-    }
-  };
 
   const handleResetConfirmationLink = async () => {
     // Validate the email address
@@ -52,26 +34,9 @@ const EmailConfirmation = () => {
     }
   };
 
-  useEffect(() => {
-    confirm();
-  }, []);
-
   return (
     <div className="border border-neutral-200 p-8 rounded w-[500px]">
       <div className="py-10 flex justify-center text-neutral-600">
-        {status === "loading" && <LoadingIcon />}
-        {status === "success" && (
-          <div className="text-green-700 flex flex-col gap-3">
-            <div className="flex justify-center">
-              <SuccessIcon />
-            </div>
-            <div className="text-center text-neutral-500">
-              <p>The confirmation is completed.</p>
-              <p>You will be redirected to the login page.</p>
-              <p>Please wait!</p>
-            </div>
-          </div>
-        )}
         {status === "resetSuccess" && (
           <div className="text-green-700 flex flex-col gap-3">
             <div className="flex justify-center">
@@ -85,7 +50,7 @@ const EmailConfirmation = () => {
             </div>
           </div>
         )}
-        {status === "error" && (
+        {status !== "resetSuccess" && (
           <div>
             <div className="flex flex-col items-center">
               <div className="text-red-600 py-2 text-3xl font-bold">Error</div>

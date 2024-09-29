@@ -1,9 +1,9 @@
 import { useParams } from "react-router-dom";
-import FeedContainer from "../components/feeds/FeedContainer";
-import ShareInput from "../components/feeds/ShareInput";
-import Button from "../components/inputs/Button";
-import useUserFeedStore from "../stores/userFeedStore";
-import Feeds from "../components/feeds/Feeds";
+import FeedContainer from "@/components/feeds/FeedContainer";
+import ShareInput from "@/components/feeds/ShareInput";
+import Button from "@/components/inputs/Button";
+import useUserFeedStore from "@/stores/userFeedStore";
+import Feeds from "@/components/feeds/Feeds";
 
 const UserView = () => {
   const store = useUserFeedStore();

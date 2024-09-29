@@ -1,12 +1,12 @@
 import { Outlet, useNavigate } from "react-router-dom";
 import Header from "./Header";
-import UserBox from "../user/UserBox";
+import UserBox from "@/components/user/UserBox";
 import Footer from "./Footer";
 import Navigation from "./Navigation";
 import { useEffect, useState } from "react";
-import useAuthStore from "../../stores/authStore";
-import api from "../../api";
-import { IUserApi } from "../../types/ApiTypes";
+import useAuthStore from "@/stores/authStore";
+import api from "@/api";
+import { IUserApi } from "@/types/ApiTypes";
 
 const SessionLayout = () => {
   const authStore = useAuthStore();
