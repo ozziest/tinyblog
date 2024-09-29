@@ -44,3 +44,55 @@ export const resolvePosts = (
     maxId,
   };
 };
+
+export const setViewedMap = (
+  post: ExtendedPost,
+  id: number,
+  isAlreadyViewed: boolean,
+) => {
+  if (post.id === id) {
+    post.isViewed = true;
+
+    if (isAlreadyViewed !== true) {
+      post.stats_views++;
+    }
+  }
+
+  if (post.parent?.id === id) {
+    post.parent.isViewed = true;
+
+    if (isAlreadyViewed !== true) {
+      post.parent.stats_views++;
+    }
+  }
+
+  return post;
+};
+
+export const likeMap = (post: ExtendedPost, id: number) => {
+  if (post.id === id) {
+    post.is_liked_by_you = true;
+    post.stats_likes++;
+  }
+
+  if (post.parent?.id === id) {
+    post.parent.is_liked_by_you = true;
+    post.parent.stats_likes++;
+  }
+
+  return post;
+};
+
+export const unlikeMap = (post: ExtendedPost, id: number) => {
+  if (post.id === id) {
+    post.is_liked_by_you = false;
+    post.stats_likes--;
+  }
+
+  if (post.parent?.id === id) {
+    post.parent.is_liked_by_you = false;
+    post.parent.stats_likes--;
+  }
+
+  return post;
+};

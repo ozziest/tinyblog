@@ -1,7 +1,15 @@
 import { create } from "zustand";
 import { StoreType } from "@/enums";
 import { IPostApi } from "@/types/ApiTypes";
-import { extendPost, getMaxId, getMinId, resolvePosts } from "@/helpers/posts";
+import {
+  extendPost,
+  getMaxId,
+  getMinId,
+  likeMap,
+  resolvePosts,
+  setViewedMap,
+  unlikeMap,
+} from "@/helpers/posts";
 
 export interface ExtendedPost extends IPostApi {
   isViewed: boolean;
@@ -50,7 +58,7 @@ export const createStore = (type: StoreType) =>
       const maxId = getMaxId(replies);
 
       set((current) => ({
-        state: { ...current.state, posts: posts, minId, maxId },
+        state: { ...current.state, posts, minId, maxId },
       }));
     },
 
@@ -66,68 +74,30 @@ export const createStore = (type: StoreType) =>
     },
 
     setViewed(id: number, isAlreadyViewed: boolean) {
-      const posts = [...this.state.posts].map((post) => {
-        if (post.id === id) {
-          post.isViewed = true;
-
-          if (isAlreadyViewed !== true) {
-            post.stats_views++;
-          }
-        }
-
-        if (post.parent?.id === id) {
-          post.parent.isViewed = true;
-
-          if (isAlreadyViewed !== true) {
-            post.parent.stats_views++;
-          }
-        }
-
-        return post;
-      });
+      const mapper = (post: ExtendedPost) =>
+        setViewedMap(post, id, isAlreadyViewed);
 
       set((current) => ({
-        state: { ...current.state, posts },
+        state: {
+          ...current.state,
+          posts: current.state.posts.map(mapper),
+        },
       }));
     },
 
     like(id: number) {
-      const posts = [...this.state.posts].map((post) => {
-        if (post.id === id) {
-          post.is_liked_by_you = true;
-          post.stats_likes++;
-        }
-
-        if (post.parent?.id === id) {
-          post.parent.is_liked_by_you = true;
-          post.parent.stats_likes++;
-        }
-
-        return post;
-      });
+      const mapper = (post: ExtendedPost) => likeMap(post, id);
 
       set((current) => ({
-        state: { ...current.state, posts },
+        state: { ...current.state, posts: current.state.posts.map(mapper) },
       }));
     },
 
     unlike(id: number) {
-      const posts = [...this.state.posts].map((post) => {
-        if (post.id === id) {
-          post.is_liked_by_you = false;
-          post.stats_likes--;
-        }
-
-        if (post.parent?.id === id) {
-          post.parent.is_liked_by_you = false;
-          post.parent.stats_likes--;
-        }
-
-        return post;
-      });
+      const mapper = (post: ExtendedPost) => unlikeMap(post, id);
 
       set((current) => ({
-        state: { ...current.state, posts },
+        state: { ...current.state, posts: current.state.posts.map(mapper) },
       }));
     },
   }));
