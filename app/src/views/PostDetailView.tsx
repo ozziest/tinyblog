@@ -3,38 +3,50 @@ import PostContainer from "@/components/posts/PostContainer";
 import ShareInput from "@/components/posts/ShareInput";
 import { useEffect } from "react";
 import api from "@/api";
-import { IPostApi } from "@/types/ApiTypes";
 import Post from "@/components/posts/Post";
 import Posts from "@/components/posts/Posts";
-import { usePostDetailStore } from "@/stores/postStore";
+import { ExtendedPost, usePostDetailStore } from "@/stores/postStore";
+import { toExtendedPost } from "@/helpers/posts";
 
 const PostDetailView = () => {
   const navigate = useNavigate();
   const store = usePostDetailStore();
   const { postId } = useParams();
 
-  const fetchPost = async (id: number) => {
-    const data = await api.post.getPost(id);
-    store.setRootPost(data);
-  };
-
-  const fetchPostReplies = async (parentId: number) => {
-    const response = await api.post.getReplies(parentId);
-    store.setPosts(response.data as IPostApi[]);
-  };
-
-  useEffect(() => {
+  const fetch = async () => {
     if (!postId) {
       navigate("/");
       return;
     }
 
     const id = parseInt(postId);
-    fetchPost(id);
-    fetchPostReplies(id);
+
+    // Fetching the parent post and the replies together
+    const results = await Promise.all([
+      api.post.getPost(id),
+      api.post.getReplies(id),
+    ]);
+
+    // Create the extended post array all together
+    const [post, replies] = results;
+    const items: ExtendedPost[] = toExtendedPost([post, ...replies.data]);
+
+    // The first post should be the root post
+    if (items.length > 0) {
+      items[0].isRootPost = true;
+    }
+
+    // Set the post on the store
+    store.setExtendedPosts(items);
+  };
+
+  useEffect(() => {
+    fetch();
   }, [postId]);
 
-  if (!store.state.rootPost) {
+  const rootPost = store.state.posts.find((item) => item.isRootPost);
+
+  if (!rootPost) {
     return <div>loading</div>;
   }
 
@@ -42,8 +54,8 @@ const PostDetailView = () => {
     <>
       <div className="bg-white sticky top-[40px]">
         <PostContainer>
-          <Post store={store} post={store.state.rootPost} autoView={false} />
-          <ShareInput store={store} parent={store.state.rootPost} />
+          <Post store={store} post={rootPost} autoView={false} />
+          <ShareInput store={store} parent={rootPost} />
         </PostContainer>
       </div>
       <div className="">

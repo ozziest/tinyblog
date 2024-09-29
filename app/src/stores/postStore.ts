@@ -1,16 +1,16 @@
 import { create } from "zustand";
 import { StoreType } from "@/enums";
 import { IPostApi } from "@/types/ApiTypes";
-import { extendPost, resolvePosts } from "@/helpers/posts";
+import { extendPost, getMaxId, getMinId, resolvePosts } from "@/helpers/posts";
 
 export interface ExtendedPost extends IPostApi {
   isViewed: boolean;
+  isRootPost: boolean;
   parent?: ExtendedPost;
 }
 
 export interface IState {
   type: StoreType;
-  rootPost?: ExtendedPost;
   posts: ExtendedPost[];
   minId: number;
   maxId: number;
@@ -18,8 +18,8 @@ export interface IState {
 
 export interface IPostStore {
   state: IState;
-  setRootPost: (post: IPostApi) => void;
   setPosts: (posts: IPostApi[]) => void;
+  setExtendedPosts: (posts: ExtendedPost[]) => void;
   pushPost: (post: IPostApi) => void;
   setViewed: (id: number, isAlreadyViewed: boolean) => void;
   like: (id: number) => void;
@@ -36,17 +36,21 @@ export const createStore = (type: StoreType) =>
       maxId: 0,
     },
 
-    setRootPost(post: IPostApi) {
-      set((current) => ({
-        state: { ...current.state, rootPost: extendPost(post) },
-      }));
-    },
-
     setPosts(posts: IPostApi[]) {
       const { items, minId, maxId } = resolvePosts(posts);
 
       set((current) => ({
         state: { ...current.state, posts: items, minId, maxId },
+      }));
+    },
+
+    setExtendedPosts(posts: ExtendedPost[]) {
+      const replies = posts.filter((item) => item.isRootPost === false);
+      const minId = getMinId(replies);
+      const maxId = getMaxId(replies);
+
+      set((current) => ({
+        state: { ...current.state, posts: posts, minId, maxId },
       }));
     },
 
@@ -62,15 +66,25 @@ export const createStore = (type: StoreType) =>
     },
 
     setViewed(id: number, isAlreadyViewed: boolean) {
-      const posts = [...this.state.posts];
-      const found = posts.find((item) => item.id === id);
-      if (found) {
-        found.isViewed = true;
+      const posts = [...this.state.posts].map((post) => {
+        if (post.id === id) {
+          post.isViewed = true;
 
-        if (isAlreadyViewed !== true) {
-          found.stats_views++;
+          if (isAlreadyViewed !== true) {
+            post.stats_views++;
+          }
         }
-      }
+
+        if (post.parent?.id === id) {
+          post.parent.isViewed = true;
+
+          if (isAlreadyViewed !== true) {
+            post.parent.stats_views++;
+          }
+        }
+
+        return post;
+      });
 
       set((current) => ({
         state: { ...current.state, posts },
@@ -78,27 +92,39 @@ export const createStore = (type: StoreType) =>
     },
 
     like(id: number) {
+      const posts = [...this.state.posts].map((post) => {
+        if (post.id === id) {
+          post.is_liked_by_you = true;
+          post.stats_likes++;
+        }
+
+        if (post.parent?.id === id) {
+          post.parent.is_liked_by_you = true;
+          post.parent.stats_likes++;
+        }
+
+        return post;
+      });
+
       set((current) => ({
-        state: {
-          ...current.state,
-          posts: this.state.posts.map((post) => {
-            if (post.id === id) {
-              post.is_liked_by_you = true;
-              post.stats_likes++;
-            }
-            return post;
-          }),
-        },
+        state: { ...current.state, posts },
       }));
     },
 
     unlike(id: number) {
-      const posts = [...this.state.posts];
-      const found = posts.find((item) => item.id === id);
-      if (found) {
-        found.is_liked_by_you = false;
-        found.stats_likes--;
-      }
+      const posts = [...this.state.posts].map((post) => {
+        if (post.id === id) {
+          post.is_liked_by_you = false;
+          post.stats_likes--;
+        }
+
+        if (post.parent?.id === id) {
+          post.parent.is_liked_by_you = false;
+          post.parent.stats_likes--;
+        }
+
+        return post;
+      });
 
       set((current) => ({
         state: { ...current.state, posts },

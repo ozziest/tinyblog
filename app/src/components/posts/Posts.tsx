@@ -6,9 +6,11 @@ interface Props {
 }
 
 const Posts = ({ store }: Props) => {
+  const notRootPosts = store.state.posts.filter((item) => !item.isRootPost);
+
   return (
     <>
-      {store.state.posts.map((post) => (
+      {notRootPosts.map((post) => (
         <Post key={post.id} post={post} store={store} />
       ))}
     </>
