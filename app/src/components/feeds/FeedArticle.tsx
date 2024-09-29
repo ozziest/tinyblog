@@ -75,7 +75,7 @@ const FeedArticle = ({
         <div className="flex flex-col items-center">
           <Avatar user={post.user} />
           {isParent && (
-            <div className="bg-neutral-300 h-full w-[3px] rounded mt-1 -mb-[300px] z-10"></div>
+            <div className="bg-neutral-100 h-full w-[3px] rounded mt-1 -mb-[300px] z-10"></div>
           )}
         </div>
         <div className="flex-grow">{children}</div>
