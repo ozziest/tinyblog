@@ -56,7 +56,7 @@ const PostArticle = ({
 
   return (
     <>
-      {/* <FeedRepliedToText post={post} /> */}
+      {/* <PostRepliedToText post={post} /> */}
       <article
         className={classNames(
           "p-4 flex gap-2 justify-between transition-colors duration-300 cursor-pointer",

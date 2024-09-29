@@ -4,7 +4,7 @@ interface Props {
   post: ExtendedPost;
 }
 
-const FeedRepliedToText = ({ post }: Props) => {
+const PostRepliedToText = ({ post }: Props) => {
   return (
     <>
       {post.parent && (
@@ -17,4 +17,4 @@ const FeedRepliedToText = ({ post }: Props) => {
   );
 };
 
-export default FeedRepliedToText;
+export default PostRepliedToText;
