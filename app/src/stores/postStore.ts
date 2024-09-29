@@ -9,6 +9,7 @@ import {
 
 export interface ExtendedPost extends IPostApi {
   isViewed: boolean;
+  parent?: ExtendedPost;
 }
 
 interface IState {

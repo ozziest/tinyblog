@@ -7,6 +7,7 @@ export interface IPostApi {
   stats_shares: number;
   stats_views: number;
   user: IUserApi;
+  parent?: IPostApi;
 }
 
 export interface IUserApi {

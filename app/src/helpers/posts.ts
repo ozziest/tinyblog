@@ -6,6 +6,7 @@ export const extendPost = (post: IPostApi): ExtendedPost => {
   return {
     ...post,
     isViewed: false,
+    parent: post.parent ? extendPost(post.parent) : undefined,
   };
 };
 

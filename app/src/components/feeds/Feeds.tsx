@@ -1,8 +1,8 @@
-import { IPostApi } from "../../types/ApiTypes";
+import { ExtendedPost } from "../../stores/postStore";
 import Feed from "./Feed";
 
 interface Props {
-  posts: IPostApi[];
+  posts: ExtendedPost[];
 }
 
 const Feeds = ({ posts }: Props) => {

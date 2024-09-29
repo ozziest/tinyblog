@@ -36,7 +36,7 @@ const ShareInput = ({ parent }: Props) => {
   };
 
   return (
-    <div className="border-b border-neutral-100 p-4 pb-3 sticky top-[40px] bg-white">
+    <div className="border-b border-neutral-100 p-4 pb-3 sticky top-[40px] bg-white z-50">
       <form>
         <div className="flex gap-2">
           <Avatar user={authStore.state.user} size={12} />
