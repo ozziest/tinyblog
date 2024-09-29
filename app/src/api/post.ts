@@ -17,7 +17,9 @@ const setViewed = async (postId: number) => {
 };
 
 const getPost = async (id: number) => {
-  return resource(`posts/${id}`).with("user{id,name,username,email}").get();
+  return resource(`posts/${id}`)
+    .with("user{id,name,username,email},parent{user{id,name,username,email}}")
+    .get();
 };
 
 const getReplies = async (parentId: number) => {
