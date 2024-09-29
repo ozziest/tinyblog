@@ -1,4 +1,4 @@
-import FeedContent from "./FeedContent";
+import PostContent from "./PostContent";
 import PostArticle from "./PostArticle";
 import { ExtendedPost, IPostStore } from "@/stores/shared";
 import PostActions from "./PostActions";
@@ -21,14 +21,14 @@ const Post = ({ store, post, autoView = true }: Props) => {
           isParent
         >
           <PostAuthor post={post.parent} />
-          <FeedContent post={post.parent} />
+          <PostContent post={post.parent} />
           <PostActions store={store} post={post.parent} />
         </PostArticle>
       )}
 
       <PostArticle store={store} post={post} autoView={autoView} showBorder>
         <PostAuthor post={post} />
-        <FeedContent post={post} />
+        <PostContent post={post} />
         <PostActions store={store} post={post} />
       </PostArticle>
     </div>
