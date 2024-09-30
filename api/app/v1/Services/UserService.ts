@@ -3,6 +3,10 @@ import { IoCService } from "axe-api";
 import { Knex } from "knex";
 
 export const getUserAvatar = (email: string) => {
+  if (!email) {
+    return "/empty-user.svg";
+  }
+
   const hash = md5(email);
   return `https://gravatar.com/avatar/${hash}`;
 };
