@@ -29,7 +29,7 @@ const getReplies = async (parentId: number) => {
     .where("parent_id", parentId)
     .with("user{id,name,username,email}")
     .sort("id", "DESC")
-    .paginate({ perPage: 30, page: 1 });
+    .paginate({ perPage: 50, page: 1 });
 };
 
 const like = async (postId: number) => {

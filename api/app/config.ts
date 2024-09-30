@@ -178,7 +178,7 @@ const config: IApplicationConfig = {
      *
      * @link https://axe-api.com/reference/cache-configs.html#invalidation
      */
-    invalidation: CacheStrategies.TagBased,
+    invalidation: CacheStrategies.TimeBased,
 
     /**
      * The cache prefix that used on all cache keys. You can use your
