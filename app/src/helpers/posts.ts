@@ -81,6 +81,11 @@ export const likeMap = (post: ExtendedPost, id: number) => {
     post.parent.stats_likes++;
   }
 
+  if (post.reshare?.id === id) {
+    post.reshare.is_liked_by_you = true;
+    post.reshare.stats_likes++;
+  }
+
   return post;
 };
 
@@ -93,6 +98,11 @@ export const unlikeMap = (post: ExtendedPost, id: number) => {
   if (post.parent?.id === id) {
     post.parent.is_liked_by_you = false;
     post.parent.stats_likes--;
+  }
+
+  if (post.reshare?.id === id) {
+    post.reshare.is_liked_by_you = false;
+    post.reshare.stats_likes--;
   }
 
   return post;

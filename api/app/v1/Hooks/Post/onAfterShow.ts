@@ -19,5 +19,9 @@ export default async ({ req, item }: IAfterShowContext) => {
     if (item.parent) {
       item.parent.is_liked_by_you = myLikedPostIds.includes(item.parent.id);
     }
+
+    if (item.reshare) {
+      item.reshare.is_liked_by_you = myLikedPostIds.includes(item.reshare.id);
+    }
   }
 };
