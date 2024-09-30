@@ -1,30 +1,22 @@
 import { IBeforeInsertContext } from "axe-api";
+import PostService from "../../Services/PostService";
 
-export default async ({
-  req,
-  formData,
-  database,
-  res,
-}: IBeforeInsertContext) => {
+export default async ({ req, formData, res }: IBeforeInsertContext) => {
   formData.user_id = req.original.auth?.userId;
 
   // Check if the user already likes the post
-  const item = await database
-    .table("post_likes")
-    .where("user_id", formData.user_id)
-    .where("post_id", formData.post_id)
-    .first();
+  const item = await PostService.getPostLike(
+    formData.user_id,
+    formData.post_id
+  );
 
   // Users should be able to like only once
   if (item) {
     // We should delete the old like
-    await database.table("post_likes").where("id", item.id).delete();
+    await PostService.deletePostLike(item.id);
 
     // We should dec the post like stats
-    await database
-      .table("posts")
-      .where("id", item.post_id)
-      .decrement({ stats_likes: 1 });
+    await PostService.decrementPostLike(item.post_id);
 
     return res.status(201).json({ isAlreadyLiked: true });
   }

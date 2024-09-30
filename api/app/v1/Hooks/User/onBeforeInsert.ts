@@ -1,15 +1,15 @@
 import { IBeforeInsertContext } from "axe-api";
 import bcrypt from "bcrypt";
+import UserService from "../../Services/UserService";
 
 export default async ({ formData, database, res }: IBeforeInsertContext) => {
   formData.email = formData.email.trim().toLowerCase();
   formData.username = formData.username.trim().toLowerCase();
 
-  const user = await database
-    .table("users")
-    .where("email", formData.email)
-    .orWhere("username", formData.username)
-    .first();
+  const user = await UserService.getUserByEmailOrUsername(
+    formData.email,
+    formData.username
+  );
 
   if (user) {
     return res.status(400).json({

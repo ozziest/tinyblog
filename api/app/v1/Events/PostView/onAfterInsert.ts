@@ -1,12 +1,10 @@
 import { IBeforeInsertContext } from "axe-api";
 import { captureError } from "../../Services/ErrorService";
+import PostService from "../../Services/PostService";
 
-export default async ({ database, item }: IBeforeInsertContext) => {
+export default async ({ item }: IBeforeInsertContext) => {
   try {
-    await database
-      .table("posts")
-      .where("id", item.post_id)
-      .increment({ stats_views: 1 });
+    await PostService.incrementPostView(item.post_id);
   } catch (error) {
     captureError(error, { postId: item.post_id });
   }

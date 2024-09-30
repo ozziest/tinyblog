@@ -1,6 +1,7 @@
 import { IAfterShowContext } from "axe-api";
+import PostService from "../../Services/PostService";
 
-export default async ({ database, item, req }: IAfterShowContext) => {
+export default async ({ item, req }: IAfterShowContext) => {
   const userId = req.original.auth?.userId;
 
   if (!userId) {
@@ -9,26 +10,14 @@ export default async ({ database, item, req }: IAfterShowContext) => {
 
   const setAsViewed = async (postId: number) => {
     // Check the post view
-    const postView = await database
-      .table("post_views")
-      .where("user_id", userId)
-      .where("post_id", postId)
-      .first();
+    const postView = await PostService.getPostView(userId, postId);
 
     // We should add the view if there is not any post view
     if (!postView) {
-      await database.table("post_views").insert({
-        user_id: userId,
-        post_id: postId,
-        created_at: new Date(),
-        updated_at: new Date(),
-      });
+      await PostService.addPostView(userId, postId);
 
       // Update the post's view count
-      await database
-        .table("posts")
-        .where("id", postId)
-        .increment({ stats_views: 1 });
+      await PostService.incrementPostView(postId);
     }
   };
 

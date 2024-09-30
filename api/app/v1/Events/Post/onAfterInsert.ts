@@ -1,21 +1,17 @@
 import { IBeforeInsertContext } from "axe-api";
 import { captureError } from "../../Services/ErrorService";
+import UserService from "../../Services/UserService";
+import PostService from "../../Services/PostService";
 
-export default async ({ database, item }: IBeforeInsertContext) => {
+export default async ({ item }: IBeforeInsertContext) => {
   try {
     // Upgrading the user's post count
-    await database
-      .table("users")
-      .where("id", item.user_id)
-      .increment({ stats_post: 1 });
+    await UserService.incrementUserPostCount(item.user_id);
 
     // If the new post a reply to another post, we should update the parent
     // post's status
     if (item.parent_id) {
-      await database
-        .table("posts")
-        .where("id", item.parent_id)
-        .increment({ stats_replies: 1 });
+      await PostService.incrementPostReplies(item.parent_id);
     }
   } catch (error) {
     captureError(error, {
