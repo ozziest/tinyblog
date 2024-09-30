@@ -1,12 +1,7 @@
 import { IBeforeInsertContext } from "axe-api";
 import PostService from "../../Services/PostService";
 
-export default async ({
-  req,
-  formData,
-  database,
-  res,
-}: IBeforeInsertContext) => {
+export default async ({ req, formData, res }: IBeforeInsertContext) => {
   formData.user_id = req.original.auth?.userId;
 
   // Check if the user already viewed the post
