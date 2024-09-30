@@ -7,6 +7,7 @@ import {
 } from "@/components/Icons";
 import ActionButton from "./ActionButton";
 import { ExtendedPost, IPostStore } from "@/stores/postStore";
+import useAuthStore from "@/stores/authStore";
 
 interface Props {
   store: IPostStore;
@@ -14,6 +15,8 @@ interface Props {
 }
 
 const PostActions = ({ store, post }: Props) => {
+  const authStore = useAuthStore();
+
   const handleLikeClick = async (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
     event.stopPropagation();
@@ -43,12 +46,14 @@ const PostActions = ({ store, post }: Props) => {
         isSelected={post.is_liked_by_you}
         onClick={handleLikeClick}
       />
-      <ActionButton
-        icon={<ShareIcon size={20} />}
-        count={post.stats_shares}
-        isSelected={false}
-        onClick={handleShareClick}
-      />
+      {authStore.state.user.username !== post.user.username && (
+        <ActionButton
+          icon={<ShareIcon size={20} />}
+          count={post.stats_shares}
+          isSelected={false}
+          onClick={handleShareClick}
+        />
+      )}
       <ActionButton
         icon={<ReplyIcon size={20} />}
         count={post.stats_replies}

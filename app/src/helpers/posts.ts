@@ -8,6 +8,7 @@ export const extendPost = (post: IPostApi): ExtendedPost => {
     isViewed: false,
     isRootPost: false,
     parent: post.parent ? extendPost(post.parent) : undefined,
+    reshare: post.reshare ? extendPost(post.reshare) : undefined,
   };
 };
 

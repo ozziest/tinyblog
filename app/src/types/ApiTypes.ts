@@ -10,6 +10,7 @@ export interface IPostApi {
   user: IUserApi;
   is_liked_by_you: boolean;
   parent?: IPostApi;
+  reshare?: IPostApi;
 }
 
 export interface IUserApi {

@@ -44,6 +44,10 @@ class Post extends Model {
     return this.hasOne("Post", "id", "parent_id");
   }
 
+  reshare() {
+    return this.hasOne("Post", "id", "reshare_id");
+  }
+
   views() {
     return this.hasMany("PostView", "id", "post_id");
   }

@@ -15,6 +15,7 @@ export interface ExtendedPost extends IPostApi {
   isViewed: boolean;
   isRootPost: boolean;
   parent?: ExtendedPost;
+  reshare?: ExtendedPost;
 }
 
 export interface IState {

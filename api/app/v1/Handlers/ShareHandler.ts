@@ -31,6 +31,10 @@ export default async (req: AxeRequest, res: AxeResponse) => {
     return res.status(404).json({ error: "The post not found!" });
   }
 
+  if (post.user_id == userId) {
+    return res.status(403).json({ error: "You can not reshare your post!" });
+  }
+
   await PostService.share(postId, userId);
 
   return res.status(201).json({});

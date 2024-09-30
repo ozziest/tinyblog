@@ -1,13 +1,15 @@
 import { IStorePost } from "@/interfaces";
 import { resource } from "axe-api-client";
 
+const USER_RELATION = "user{id,name,username,email}";
+
 const store = async (data: IStorePost) => {
   return resource("posts").post(data);
 };
 
 const paginate = async () => {
   return resource("posts")
-    .with("user{id,name,username,email},parent{user{id,name,username,email}}")
+    .with(`${USER_RELATION},parent{${USER_RELATION}},reshare{${USER_RELATION}}`)
     .sort("id", "DESC")
     .paginate({ perPage: 30, page: 1 });
 };
@@ -19,7 +21,7 @@ const setViewed = async (postId: number) => {
 const getPost = async (id: number) => {
   return resource(`posts/${id}`)
     .with(
-      "user{id,name,username,email},parent{parent{id,user{id,email,username}},user{id,name,username,email}}",
+      `${USER_RELATION},parent{parent{id,${USER_RELATION}},${USER_RELATION}}`,
     )
     .get();
 };
@@ -27,7 +29,7 @@ const getPost = async (id: number) => {
 const getReplies = async (parentId: number) => {
   return resource("posts")
     .where("parent_id", parentId)
-    .with("user{id,name,username,email}")
+    .with(`${USER_RELATION}`)
     .sort("id", "DESC")
     .paginate({ perPage: 50, page: 1 });
 };
