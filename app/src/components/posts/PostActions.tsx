@@ -27,9 +27,12 @@ const PostActions = ({ store, post }: Props) => {
     }
   };
 
-  const handleShareClick = (event: React.MouseEvent<HTMLElement>) => {
+  const handleShareClick = async (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
     event.stopPropagation();
+
+    const response = await api.post.share(post.id);
+    console.log(response);
   };
 
   return (

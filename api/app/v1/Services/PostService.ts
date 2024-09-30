@@ -29,6 +29,11 @@ const deletePostLike = async (postLikeId: number) => {
   await db.table("post_likes").where("id", postLikeId).delete();
 };
 
+const getPost = async (postId: number) => {
+  const db = await IoCService.use<Knex>("Database");
+  return await db.table("posts").where("id", postId).first();
+};
+
 const decrementPostLike = async (postId: number) => {
   const db = await IoCService.use<Knex>("Database");
   await db.table("posts").where("id", postId).decrement({ stats_likes: 1 });
@@ -68,6 +73,22 @@ const incrementPostLike = async (postId: number) => {
   await db.table("posts").where("id", postId).increment({ stats_likes: 1 });
 };
 
+const share = async (postId: number, userId: number) => {
+  const db = await IoCService.use<Knex>("Database");
+  await db.table("posts").insert({
+    reshare_id: postId,
+    parent_id: null,
+    user_id: userId,
+    content: "",
+    stats_views: 0,
+    stats_replies: 0,
+    stats_likes: 0,
+    stats_shares: 0,
+    created_at: new Date(),
+    updated_at: new Date(),
+  });
+};
+
 export default {
   getMyLikedPostIds,
   getPostLike,
@@ -78,4 +99,6 @@ export default {
   addPostView,
   incrementPostView,
   incrementPostLike,
+  getPost,
+  share,
 };

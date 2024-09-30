@@ -36,6 +36,10 @@ const like = async (postId: number) => {
   return resource(`posts/${postId}/likes`).post();
 };
 
+const share = async (postId: number) => {
+  return resource(`posts/${postId}/shares`).post();
+};
+
 export default {
   store,
   paginate,
@@ -43,4 +47,5 @@ export default {
   getPost,
   getReplies,
   like,
+  share,
 };

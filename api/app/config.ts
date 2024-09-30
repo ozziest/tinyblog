@@ -232,7 +232,7 @@ const config: IApplicationConfig = {
    *
    * @link https://axe-api.com/blog/2024-02-18-axe-api-v1-is-out.html#supporting-robus-validator-library
    */
-  validator: "validatorjs",
+  validator: "robust-validator",
 };
 
 export default config;
