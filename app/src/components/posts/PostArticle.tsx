@@ -56,10 +56,9 @@ const PostArticle = ({
 
   return (
     <>
-      {/* <PostRepliedToText post={post} /> */}
       <article
         className={classNames(
-          "p-4 flex gap-2 justify-between transition-colors duration-300 cursor-pointer",
+          "p-4 flex gap-2 justify-between transition-colors duration-300 cursor-pointer transition-all hover:bg-neutral-50",
           {
             "border-b border-neutral-200": showBorder,
           },

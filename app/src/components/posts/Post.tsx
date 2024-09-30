@@ -3,6 +3,7 @@ import PostArticle from "./PostArticle";
 import PostActions from "./PostActions";
 import PostAuthor from "./PostAuthor";
 import { ExtendedPost, IPostStore } from "@/stores/postStore";
+import PostRepliedToText from "./PostRepliedToText";
 
 interface Props {
   store: IPostStore;
@@ -14,16 +15,20 @@ const Post = ({ store, post, autoView = true }: Props) => {
   return (
     <div className="flex flex-col">
       {post.parent && (
-        <PostArticle
-          store={store}
-          post={post.parent}
-          autoView={autoView}
-          isParent
-        >
-          <PostAuthor post={post.parent} />
-          <PostContent post={post.parent} />
-          <PostActions store={store} post={post.parent} />
-        </PostArticle>
+        <>
+          <PostRepliedToText post={post.parent} />
+
+          <PostArticle
+            store={store}
+            post={post.parent}
+            autoView={autoView}
+            isParent
+          >
+            <PostAuthor post={post.parent} />
+            <PostContent post={post.parent} />
+            <PostActions store={store} post={post.parent} />
+          </PostArticle>
+        </>
       )}
 
       <PostArticle store={store} post={post} autoView={autoView} showBorder>

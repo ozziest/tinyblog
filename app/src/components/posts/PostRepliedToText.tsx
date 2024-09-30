@@ -8,9 +8,9 @@ const PostRepliedToText = ({ post }: Props) => {
   return (
     <>
       {post.parent && (
-        <div className="ml-[72px] text-neutral-500 text-sm py-[2px]">
+        <div className="ml-[72px] text-neutral-600 text-sm py-1 mt-1">
           Replying to{" "}
-          <span className="text-neutral-700">@{post.parent.user.username}</span>
+          <span className="text-neutral-800">@{post.parent.user.username}</span>
         </div>
       )}
     </>
