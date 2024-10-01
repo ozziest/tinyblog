@@ -11,7 +11,7 @@ import PasswordStrengthMeter from "@/components/inputs/PasswordStrengthMeter";
 
 const RULES = {
   email: "required|email|max:320",
-  username: "required|min:3|max:30",
+  username: "required|alpha_dash|min:3|max:30",
   password: "required|min:8|max:50|confirmed",
   name: "required|min:3|max:50",
 };

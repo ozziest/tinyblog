@@ -1,9 +1,10 @@
 export {};
 
-import { IAuth } from "../app/interfaces";
+import { IAuth, IPostContent } from "../app/interfaces";
 
 declare module "http" {
   interface IncomingMessage {
     auth?: IAuth;
+    post?: IPostContent;
   }
 }

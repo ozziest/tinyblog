@@ -1,4 +1,13 @@
-import { HandlerTypes, IHandlerBasedTransactionConfig, Model } from "axe-api";
+import {
+  allow,
+  deny,
+  HandlerTypes,
+  IHandlerBasedTransactionConfig,
+  IQueryLimitConfig,
+  Model,
+  QueryFeature,
+} from "axe-api";
+import SessionMiddleware from "../Middlewares/SessionMiddleware";
 
 class User extends Model {
   get fillable() {
@@ -11,7 +20,7 @@ class User extends Model {
     return {
       POST: {
         email: "required|email|max:320",
-        username: "required|min:3|max:30",
+        username: "required|alpha_dash|min:3|max:30",
         password: "required|min:8|max:50",
         name: "required|min:3|max:50",
       },
@@ -19,7 +28,24 @@ class User extends Model {
   }
 
   get handlers() {
-    return [HandlerTypes.INSERT];
+    return [HandlerTypes.INSERT, HandlerTypes.PAGINATE];
+  }
+
+  get middlewares() {
+    return [
+      {
+        handler: [HandlerTypes.PAGINATE],
+        middleware: SessionMiddleware,
+      },
+    ];
+  }
+
+  get limits(): IQueryLimitConfig[][] {
+    return [
+      deny(QueryFeature.All),
+      deny(QueryFeature.FieldsAll),
+      allow(QueryFeature.WhereLike, ["username"]),
+    ];
   }
 
   get hiddens() {
