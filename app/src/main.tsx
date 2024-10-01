@@ -9,7 +9,6 @@ import { setLocales, en as validationEn } from "robust-validator";
 import { setConfig, interceptors, IRequest } from "axe-api-client";
 import ErrorMessageComponent from "./components/messages/ErrorMessage";
 import SuccessMessage from "./components/messages/SuccessMessage";
-import { getDefaultStore } from "./stores/authStore";
 
 setLocales(validationEn);
 setConfig({
@@ -17,11 +16,7 @@ setConfig({
 });
 
 interceptors.addRequest((request: IRequest) => {
-  const auth = getDefaultStore();
-
-  if (auth && auth.token) {
-    request.headers["Authorization"] = `Bearer ${auth.token}`;
-  }
+  (request as RequestInit).credentials = "include";
 
   return request;
 });

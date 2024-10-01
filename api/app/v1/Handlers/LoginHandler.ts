@@ -2,7 +2,7 @@ import { AxeRequest, AxeResponse, IoCService } from "axe-api";
 import { Knex } from "knex";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { getUserAvatar } from "../Services/UserService";
+import UserService, { getUserAvatar } from "../Services/UserService";
 
 export default async (req: AxeRequest, res: AxeResponse) => {
   const { email, password } = req.body;
@@ -33,8 +33,9 @@ export default async (req: AxeRequest, res: AxeResponse) => {
   }
 
   const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET as string);
+  res.header("Set-Cookie", UserService.getCookieContent(token));
+
   return res.json({
-    token,
     user: {
       username: user.username,
       name: user.name,

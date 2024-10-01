@@ -1,4 +1,4 @@
-import { App, AxeRequest, AxeResponse } from "axe-api";
+import { App } from "axe-api";
 import cors from "cors";
 import LoginHandler from "./Handlers/LoginHandler";
 import { prepareTemplates } from "./Services/TemplateService";
@@ -35,6 +35,7 @@ const onBeforeInit = async (app: App) => {
 
         callback(new Error("Not allowed by CORS"));
       },
+      credentials: true,
     })
   );
   app.post("/api/v1/login", LoginHandler);

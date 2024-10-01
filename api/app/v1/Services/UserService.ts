@@ -25,7 +25,13 @@ const incrementUserPostCount = async (userId: number) => {
   await db.table("users").where("id", userId).increment({ stats_post: 1 });
 };
 
+const getCookieContent = (token: string) => {
+  // 1 week long
+  return `token=${token}; SameSite=Strict; Max-Age=604800; Secure; HttpOnly`;
+};
+
 export default {
   getUserByEmailOrUsername,
   incrementUserPostCount,
+  getCookieContent,
 };

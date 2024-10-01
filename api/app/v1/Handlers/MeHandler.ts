@@ -1,7 +1,5 @@
 import { AxeRequest, AxeResponse, IoCService } from "axe-api";
 import { Knex } from "knex";
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
 import { getUserAvatar } from "../Services/UserService";
 
 export default async (req: AxeRequest, res: AxeResponse) => {

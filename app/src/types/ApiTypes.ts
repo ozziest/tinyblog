@@ -24,5 +24,4 @@ export interface IUserApi {
 
 export interface ILoginResponseApi {
   user: IUserApi;
-  token: string;
 }

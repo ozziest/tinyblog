@@ -3,7 +3,6 @@ import { ILoginResponseApi, IUserApi } from "@/types/ApiTypes";
 
 export interface AuthStoreState {
   isLoggedIn: boolean;
-  token: string;
   user: IUserApi;
 }
 
@@ -27,7 +26,6 @@ const DEFAULT_STATE: AuthStoreState = {
     follower: 0,
     following: 0,
   },
-  token: "",
 };
 
 export const getDefaultStore = (): AuthStoreState => {
@@ -45,7 +43,6 @@ const useAuthStore = create<AuthState>()((set) => ({
   init: (response: ILoginResponseApi) => {
     const value: AuthStoreState = {
       isLoggedIn: true,
-      token: response.token,
       user: response.user,
     };
     sessionStorage.setItem("useAuthStore", JSON.stringify(value));
