@@ -51,8 +51,8 @@ We have an exciting vision for tinyblog, and we’re working hard to bring new f
 - [ ] User Settings (Update Profile, Change Password)
 - [ ] Notifications for follows, likes, and comments
 - [x] Private Messaging between users
-- [ ] Hashtags and tagging system for posts
-- [ ] Link system on posts
+- [x] Hashtags and tagging system for posts
+- [x] Link system on posts
 - [ ] Search functionality for posts and users
 - [ ] User Analytics (Followers count, post engagement stats)
 - [ ] Multi-language support
