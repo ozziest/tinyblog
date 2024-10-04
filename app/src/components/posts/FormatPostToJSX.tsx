@@ -1,4 +1,5 @@
 import { ExtendedPost } from "@/stores/postStore";
+import { Link } from "react-router-dom";
 
 export interface Props {
   data: ExtendedPost;
@@ -20,14 +21,14 @@ const render = ({ data }: Props) => {
     );
     if (mentions) {
       return (
-        <a
+        <Link
           key={index}
-          href={`/u/${part.slice(1)}`}
+          to={`/u/${part.slice(1)}`}
           className="transition-colors font-semibold text-neutral-800 hover:underline hover:text-neutral-900"
           onClick={(event) => event.stopPropagation()}
         >
           {part}
-        </a>
+        </Link>
       );
     }
 
