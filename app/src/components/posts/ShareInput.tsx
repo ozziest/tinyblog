@@ -17,7 +17,7 @@ const ShareInput = ({ store, parent, onShared }: Props) => {
   return (
     <div
       className={classNames(
-        "border-b border-neutral-100 p-4 pb-3 sticky top-[40px]  z-50",
+        "border-b border-neutral-100 p-4 pb-3 sticky top-[40px] z-50",
         { "bg-white": !parent, "bg-neutral-100": !!parent },
       )}
     >

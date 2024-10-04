@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import api from "@/api";
 import Avatar from "@/components/user/Avatar";
 import { IUserApi } from "@/types/ApiTypes";
+import InfiniteScroll from "@/components/layout/InfiniteScroll";
 
 const ProfileView = () => {
   const store = useProfilePostsStore();
@@ -28,9 +29,37 @@ const ProfileView = () => {
     setUser(data[0]);
   };
 
+  const fetchPosts = async (userId: number) => {
+    store.setLoading(true);
+    const response = await api.post.paginate({ userId });
+    store.setPosts(response.data);
+    store.setLoading(false);
+  };
+
+  const loadMore = async () => {
+    if (store.state.hasMore) {
+      store.setLoading(true);
+      const { minId } = store.state;
+      const response = await api.post.paginate({ userId: user?.id, minId });
+      store.addMorePosts(response.data);
+      store.setLoading(false);
+    }
+  };
+
   useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+
     fetch();
-  }, []);
+  }, [username]);
+
+  useEffect(() => {
+    if (user) {
+      fetchPosts(user.id);
+    }
+  }, [user]);
 
   if (!user) {
     return;
@@ -38,8 +67,8 @@ const ProfileView = () => {
 
   return (
     <>
-      <div className="bg-white sticky top-[44px] pt-4">
-        <div className="flex gap-4 outline outline-neutral-700  rounded p-4 mb-1 justify-between">
+      <div className="bg-white sticky top-[44px] pt-4 z-50">
+        <div className="flex gap-4 outline outline-neutral-700  rounded p-4 mb-1 justify-between ">
           <div>
             <Avatar user={user} size={20} />
           </div>
@@ -61,6 +90,7 @@ const ProfileView = () => {
       <div className="">
         <PostContainer>
           <Posts store={store} />
+          <InfiniteScroll store={store} loadMore={loadMore} />
         </PostContainer>
       </div>
     </>

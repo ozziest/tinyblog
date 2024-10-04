@@ -9,16 +9,25 @@ const LINKS = "links{link{code,link}}";
 
 const POST_DETAIL = `${HASHTAGS},${MENTIONS},${LINKS}`;
 
+interface PaginateProps {
+  minId?: number;
+  userId?: number;
+}
+
 const store = async (data: IStorePost) => {
   return resource("posts").post(data);
 };
 
-const paginate = async (minId?: number) => {
+const paginate = async ({ userId, minId }: PaginateProps = {}) => {
   const query = resource("posts")
     .with(
       `${USER},parent{${USER},${POST_DETAIL}},reshare{${USER}},${POST_DETAIL}`,
     )
     .sort("id", "DESC");
+
+  if (userId) {
+    query.where("user_id", userId);
+  }
 
   if (minId) {
     query.where("id", "<", minId);

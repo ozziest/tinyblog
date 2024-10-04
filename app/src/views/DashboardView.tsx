@@ -19,7 +19,8 @@ const DashboardView = () => {
   const loadMore = async () => {
     if (store.state.hasMore) {
       store.setLoading(true);
-      const response = await api.post.paginate(store.state.minId);
+      const { minId } = store.state;
+      const response = await api.post.paginate({ minId });
       store.addMorePosts(response.data);
       store.setLoading(false);
     }

@@ -15,6 +15,7 @@ export default async (req: AxeRequest, res: AxeResponse) => {
   }
 
   return res.json({
+    id: user.id,
     username: user.username,
     name: user.name,
     stats_post: user.stats_post,
