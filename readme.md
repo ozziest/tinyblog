@@ -45,7 +45,7 @@ We have an exciting vision for tinyblog, and we’re working hard to bring new f
 - [x] User Authentication (Sign-up, Login, Logout)
 - [x] Basic User Profiles
 - [x] Create, Edit, Delete Posts (up to 240 characters)
-- [ ] Follow/Unfollow Users
+- [x] Follow/Unfollow Users
 - [ ] View Feed with posts from followed users
 - [x] Like and Comment on posts
 - [ ] User Settings (Update Profile, Change Password)
