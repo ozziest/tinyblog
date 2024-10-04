@@ -17,9 +17,9 @@ export default async (req: AxeRequest, res: AxeResponse) => {
   return res.json({
     username: user.username,
     name: user.name,
-    post: user.stats_post,
-    follower: user.stats_follower,
-    following: user.stats_following,
+    stats_post: user.stats_post,
+    stats_follower: user.stats_follower,
+    stats_following: user.stats_following,
     avatar: getUserAvatar(user.email),
   });
 };

@@ -117,7 +117,7 @@ function Editor({ store, parent, onShared }: Props) {
     });
     const post = await response.json();
 
-    authStore.increase("post");
+    authStore.increase("stats_post");
     clearState();
 
     const newPost: IPostApi = {

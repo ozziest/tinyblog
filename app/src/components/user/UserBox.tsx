@@ -13,9 +13,9 @@ const UserBox = () => {
         </div>
       </div>
       <div className="flex justify-between gap-2 pt-4">
-        <Stats title="Shares" count={state.user.post} />
-        <Stats title="Followers" count={state.user.follower} />
-        <Stats title="Following" count={state.user.following} />
+        <Stats title="Shares" count={state.user.stats_post} />
+        <Stats title="Followers" count={state.user.stats_follower} />
+        <Stats title="Following" count={state.user.stats_following} />
       </div>
     </div>
   );

@@ -20,9 +20,10 @@ export interface IUserApi {
   name: string;
   username: string;
   avatar: string;
-  post: number;
-  follower: number;
-  following: number;
+  bio?: string;
+  stats_post: number;
+  stats_follower: number;
+  stats_following: number;
 }
 
 export interface IPostHashtagApi {

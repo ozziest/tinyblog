@@ -6,7 +6,7 @@ export interface AuthStoreState {
   user: IUserApi;
 }
 
-type IncreaseType = "post" | "following";
+type IncreaseType = "stats_post" | "stats_follower" | "stats_following";
 
 interface AuthState {
   state: AuthStoreState;
@@ -22,9 +22,9 @@ const DEFAULT_STATE: AuthStoreState = {
     name: "",
     username: "",
     avatar: "",
-    post: 0,
-    follower: 0,
-    following: 0,
+    stats_post: 0,
+    stats_follower: 0,
+    stats_following: 0,
   },
 };
 

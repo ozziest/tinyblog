@@ -44,11 +44,18 @@ const getMyself = async () => {
   return resource("me").get();
 };
 
-const getByUsername = async (search: string) => {
+const searchByUsername = async (search: string) => {
   return resource("users")
     .fields("username")
     .whereLike("username", `${search}*`)
     .paginate();
+};
+
+const findByUsername = async (username: string) => {
+  return resource("users")
+    .fields("name", "email", "bio", "stats_follower", "stats_following")
+    .where("username", username)
+    .get();
 };
 
 export default {
@@ -60,5 +67,6 @@ export default {
   passwordReset,
   changePassword,
   getMyself,
-  getByUsername,
+  searchByUsername,
+  findByUsername,
 };

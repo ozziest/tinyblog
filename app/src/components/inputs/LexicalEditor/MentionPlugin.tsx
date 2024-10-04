@@ -79,7 +79,7 @@ const mentionsCache = new Map();
 
 const dummyLookupService = {
   search(string: string, callback: (results: Array<string>) => void): void {
-    api.user.getByUsername(string).then((response) => {
+    api.user.searchByUsername(string).then((response) => {
       const usernames = response.data.map(
         (item) => `@${item.username.toLowerCase()}`,
       );
