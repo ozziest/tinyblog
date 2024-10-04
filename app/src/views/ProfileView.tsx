@@ -1,6 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
 import PostContainer from "@/components/posts/PostContainer";
-import ShareInput from "@/components/posts/ShareInput";
 import Button from "@/components/inputs/Button";
 import Posts from "@/components/posts/Posts";
 import { useProfilePostsStore } from "@/stores/postStore";
@@ -83,9 +82,6 @@ const ProfileView = () => {
             <Button>Follow</Button>
           </div>
         </div>
-        <PostContainer>
-          <ShareInput store={store} />
-        </PostContainer>
       </div>
       <div className="">
         <PostContainer>
