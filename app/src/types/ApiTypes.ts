@@ -25,6 +25,7 @@ export interface IUserApi {
   stats_post: number;
   stats_follower: number;
   stats_following: number;
+  following_id?: number;
 }
 
 export interface IPostHashtagApi {

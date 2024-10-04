@@ -3,7 +3,7 @@ import SessionMiddleware from "../Middlewares/SessionMiddleware";
 
 class UserFollower extends Model {
   get handlers() {
-    return [HandlerTypes.INSERT];
+    return [HandlerTypes.INSERT, HandlerTypes.DELETE];
   }
 
   get middlewares(): ModelMiddleware {

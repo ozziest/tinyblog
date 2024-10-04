@@ -47,7 +47,22 @@ const ProfileView = () => {
 
   const handleFollow = async () => {
     if (user) {
-      await api.user.follow(user?.id);
+      const response = await api.user.follow(user?.id);
+      const { id } = await response.json();
+      setUser({
+        ...user,
+        following_id: id,
+      });
+    }
+  };
+
+  const handleUnfollow = async () => {
+    if (user?.id && user.following_id) {
+      await api.user.unfollow(user?.id, user.following_id);
+      setUser({
+        ...user,
+        following_id: undefined,
+      });
     }
   };
 
@@ -85,7 +100,14 @@ const ProfileView = () => {
             )}
           </div>
           <div>
-            <Button onClick={handleFollow}>Follow</Button>
+            {user.following_id && (
+              <Button onClick={handleUnfollow} variant="secondary">
+                Unfollow
+              </Button>
+            )}
+            {!user.following_id && (
+              <Button onClick={handleFollow}>Follow</Button>
+            )}
           </div>
         </div>
       </div>

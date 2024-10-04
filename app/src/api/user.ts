@@ -59,7 +59,11 @@ const findByUsername = async (username: string) => {
 };
 
 const follow = async (userId: number) => {
-  return resource(`users/${userId}/followers`).post();
+  return await resource(`users/${userId}/followers`).post();
+};
+
+const unfollow = async (userId: number, id: number) => {
+  return resource(`users/${userId}/followers/${id}`).delete();
 };
 
 export default {
@@ -74,4 +78,5 @@ export default {
   searchByUsername,
   findByUsername,
   follow,
+  unfollow,
 };
