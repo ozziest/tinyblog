@@ -14,6 +14,7 @@ interface AuthState {
   update: (user: IUserApi) => void;
   logout: () => void;
   increase: (type: IncreaseType) => void;
+  decrease: (type: IncreaseType) => void;
 }
 
 const DEFAULT_STATE: AuthStoreState = {
@@ -25,6 +26,7 @@ const DEFAULT_STATE: AuthStoreState = {
     stats_post: 0,
     stats_follower: 0,
     stats_following: 0,
+    id: 0,
   },
 };
 
@@ -52,6 +54,12 @@ const useAuthStore = create<AuthState>()((set) => ({
   increase(type: IncreaseType) {
     const newState = { ...this.state };
     newState.user[type] = newState.user[type] + 1;
+    set(() => ({ state: newState }));
+  },
+
+  decrease(type: IncreaseType) {
+    const newState = { ...this.state };
+    newState.user[type] = newState.user[type] - 1;
     set(() => ({ state: newState }));
   },
 

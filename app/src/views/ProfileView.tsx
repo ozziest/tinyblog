@@ -8,12 +8,14 @@ import api from "@/api";
 import Avatar from "@/components/user/Avatar";
 import { IUserApi } from "@/types/ApiTypes";
 import InfiniteScroll from "@/components/layout/InfiniteScroll";
+import useAuthStore from "@/stores/authStore";
 
 const ProfileView = () => {
   const store = useProfilePostsStore();
   const navigate = useNavigate();
   const { username } = useParams();
   const [user, setUser] = useState<IUserApi>();
+  const authStore = useAuthStore();
 
   const fetch = async () => {
     if (!username) {
@@ -53,6 +55,7 @@ const ProfileView = () => {
         ...user,
         following_id: id,
       });
+      authStore.increase("stats_following");
     }
   };
 
@@ -63,6 +66,7 @@ const ProfileView = () => {
         ...user,
         following_id: undefined,
       });
+      authStore.decrease("stats_following");
     }
   };
 
