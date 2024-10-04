@@ -1,7 +1,12 @@
 import { IStorePost } from "@/interfaces";
 import { resource } from "axe-api-client";
 
-const USER_RELATION = "user{id,name,username,email}";
+const USER = "user{id,name,username,email}";
+const HASHTAGS = "hashtags{hashtag}";
+const MENTIONS = "mentions{username}";
+const LINKS = "links{link{code,link}}";
+
+const POST_DETAIL = `${HASHTAGS},${MENTIONS},${LINKS}`;
 
 const store = async (data: IStorePost) => {
   return resource("posts").post(data);
@@ -9,7 +14,9 @@ const store = async (data: IStorePost) => {
 
 const paginate = async () => {
   return resource("posts")
-    .with(`${USER_RELATION},parent{${USER_RELATION}},reshare{${USER_RELATION}}`)
+    .with(
+      `${USER},parent{${USER},${POST_DETAIL}},reshare{${USER}},${POST_DETAIL}`,
+    )
     .sort("id", "DESC")
     .paginate({ perPage: 30, page: 1 });
 };
@@ -21,7 +28,7 @@ const setViewed = async (postId: number) => {
 const getPost = async (id: number) => {
   return resource(`posts/${id}`)
     .with(
-      `${USER_RELATION},parent{parent{id,${USER_RELATION}},${USER_RELATION}}`,
+      `${USER},parent{${POST_DETAIL},parent{id,${USER}},${USER}},${POST_DETAIL}`,
     )
     .get();
 };
@@ -29,7 +36,7 @@ const getPost = async (id: number) => {
 const getReplies = async (parentId: number) => {
   return resource("posts")
     .where("parent_id", parentId)
-    .with(`${USER_RELATION}`)
+    .with(`${USER},${POST_DETAIL}`)
     .sort("id", "DESC")
     .paginate({ perPage: 50, page: 1 });
 };

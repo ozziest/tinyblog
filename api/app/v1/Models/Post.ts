@@ -11,7 +11,7 @@ import SessionMiddleware from "../Middlewares/SessionMiddleware";
 class Post extends Model {
   get fillable() {
     return {
-      POST: ["parent_id", "content"],
+      POST: ["parent_id", "content", "lexical"],
     };
   }
 
@@ -20,6 +20,7 @@ class Post extends Model {
       POST: {
         parent_id: "numeric",
         content: "required|min:1|max:240",
+        lexical: "required|min:1|max:3000",
       },
     };
   }
@@ -34,6 +35,10 @@ class Post extends Model {
 
   get limits(): IQueryLimitConfig[][] {
     return [deny(QueryFeature.WithHasMany, ["views", "likes"])];
+  }
+
+  get hiddens() {
+    return ["lexical"];
   }
 
   user() {
@@ -54,6 +59,18 @@ class Post extends Model {
 
   likes() {
     return this.hasMany("PostLike", "id", "post_id");
+  }
+
+  hashtags() {
+    return this.hasMany("PostHashtag", "id", "post_id");
+  }
+
+  mentions() {
+    return this.hasMany("PostMention", "id", "post_id");
+  }
+
+  links() {
+    return this.hasMany("PostLink", "id", "post_id");
   }
 }
 

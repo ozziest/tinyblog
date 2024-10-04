@@ -15,13 +15,13 @@ const ActionButton = ({ icon, count, isSelected, onClick }: Props) => {
         "flex gap-[6px] items-center text-sm hover:bg-neutral-700 hover:text-white rounded-full px-2 py-1 transition-all",
         {
           "text-neutral-900": isSelected,
-          "text-neutral-200": !isSelected,
+          "text-neutral-300": !isSelected,
         },
       )}
       onClick={onClick}
     >
       <span>{icon}</span>
-      <span className="text-neutral-300 text-xs font-semibold">{count}</span>
+      <span className="text-neutral-400 text-xs font-semibold">{count}</span>
     </button>
   );
 };

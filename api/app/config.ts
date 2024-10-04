@@ -171,7 +171,7 @@ const config: IApplicationConfig = {
      *
      * @link https://axe-api.com/reference/cache-configs.html#ttl
      */
-    ttl: 300,
+    ttl: 10,
 
     /**
      * The cache invalidation strategy.

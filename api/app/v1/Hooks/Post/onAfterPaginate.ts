@@ -25,6 +25,15 @@ export default async ({ req, result }: IAfterPaginateContext) => {
       if (item.reshare) {
         item.reshare.is_liked_by_you = myLikedPostIds.includes(item.reshare.id);
       }
+
+      item.links = (item?.links || []).map((postLink: any) => {
+        return {
+          code: postLink.link.code,
+          link: postLink.link.link,
+        };
+      });
+
+      console.log(item.links);
     });
   }
 };

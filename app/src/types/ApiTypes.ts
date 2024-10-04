@@ -11,6 +11,9 @@ export interface IPostApi {
   is_liked_by_you: boolean;
   parent?: IPostApi;
   reshare?: IPostApi;
+  hashtags?: IPostHashtagApi[];
+  mentions?: IPostMentionApi[];
+  links?: IPostLinkApi[];
 }
 
 export interface IUserApi {
@@ -20,6 +23,21 @@ export interface IUserApi {
   post: number;
   follower: number;
   following: number;
+}
+
+export interface IPostHashtagApi {
+  id: number;
+  hashtag: string;
+}
+
+export interface IPostMentionApi {
+  id: number;
+  username: string;
+}
+
+export interface IPostLinkApi {
+  code: string;
+  link: string;
 }
 
 export interface ILoginResponseApi {

@@ -39,8 +39,16 @@ const passwordReset = async (data: IPasswordResetPost) => {
 const changePassword = async (data: IChangePasswordPost) => {
   return resource("changePassword").post(data);
 };
+
 const getMyself = async () => {
   return resource("me").get();
+};
+
+const getByUsername = async (search: string) => {
+  return resource("users")
+    .fields("username")
+    .whereLike("username", `${search}*`)
+    .paginate();
 };
 
 export default {
@@ -52,4 +60,5 @@ export default {
   passwordReset,
   changePassword,
   getMyself,
+  getByUsername,
 };

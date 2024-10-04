@@ -3,8 +3,21 @@ import { captureError } from "../../Services/ErrorService";
 import UserService from "../../Services/UserService";
 import PostService from "../../Services/PostService";
 
-export default async ({ item }: IBeforeInsertContext) => {
+export default async ({ item, req }: IBeforeInsertContext) => {
   try {
+    // Add hashtags to db
+    if (req.original.post?.hashtags) {
+      await PostService.addHashtags(item.id, req.original.post.hashtags);
+    }
+
+    if (req.original.post?.mentions) {
+      await PostService.addMentions(item.id, req.original.post.mentions);
+    }
+
+    if (req.original.post?.links) {
+      await PostService.addLinks(item.id, req.original.post.links);
+    }
+
     // Upgrading the user's post count
     await UserService.incrementUserPostCount(item.user_id);
 

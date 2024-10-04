@@ -1,5 +1,6 @@
-import { App } from "axe-api";
+import { App, IoCService } from "axe-api";
 import cors from "cors";
+import { Knex } from "knex";
 import LoginHandler from "./Handlers/LoginHandler";
 import { prepareTemplates } from "./Services/TemplateService";
 import ProfileCheckHandler from "./Handlers/ProfileCheckHandler";
@@ -15,6 +16,11 @@ import ShareHandler from "./Handlers/ShareHandler";
 const CORS_WHITE_LIST = ["http://localhost:5173", "http://localhost:3005"];
 
 const onBeforeInit = async (app: App) => {
+  const database = await IoCService.use<Knex>("Database");
+  database.on("query", (queryData) => {
+    // console.log(`Executing query: ${queryData.sql}`);
+  });
+
   // Setting the default locale
   setLocales(en);
 
