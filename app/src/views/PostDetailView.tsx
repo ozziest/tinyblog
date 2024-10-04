@@ -7,6 +7,7 @@ import Post from "@/components/posts/Post";
 import Posts from "@/components/posts/Posts";
 import { ExtendedPost, usePostDetailStore } from "@/stores/postStore";
 import { toExtendedPost } from "@/helpers/posts";
+import InfiniteScroll from "@/components/layout/InfiniteScroll";
 
 const PostDetailView = () => {
   const navigate = useNavigate();
@@ -40,6 +41,22 @@ const PostDetailView = () => {
     store.setExtendedPosts(items);
   };
 
+  const loadMore = async () => {
+    if (!postId) {
+      navigate("/");
+      return;
+    }
+
+    if (store.state.hasMore) {
+      store.setLoading(true);
+      const id = parseInt(postId);
+      const response = await api.post.getReplies(id, store.state.minId);
+      const items = toExtendedPost(response.data);
+      store.addMoreExtendedPosts(items);
+      store.setLoading(false);
+    }
+  };
+
   useEffect(() => {
     fetch();
   }, [postId]);
@@ -61,6 +78,7 @@ const PostDetailView = () => {
       <div className="">
         <PostContainer>
           <Posts store={store} />
+          <InfiniteScroll store={store} loadMore={loadMore} />
         </PostContainer>
       </div>
     </>

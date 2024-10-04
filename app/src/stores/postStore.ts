@@ -8,8 +8,10 @@ import {
   likeMap,
   resolvePosts,
   setViewedMap,
+  toExtendedPost,
   unlikeMap,
 } from "@/helpers/posts";
+import { PER_PAGE } from "@/consts";
 
 export interface ExtendedPost extends IPostApi {
   isViewed: boolean;
@@ -20,6 +22,8 @@ export interface ExtendedPost extends IPostApi {
 
 export interface IState {
   type: StoreType;
+  isLoading: boolean;
+  hasMore: boolean;
   posts: ExtendedPost[];
   minId: number;
   maxId: number;
@@ -27,8 +31,11 @@ export interface IState {
 
 export interface IPostStore {
   state: IState;
+  setLoading: (loading: boolean) => void;
   setPosts: (posts: IPostApi[]) => void;
+  addMorePosts: (posts: IPostApi[]) => void;
   setExtendedPosts: (posts: ExtendedPost[]) => void;
+  addMoreExtendedPosts: (posts: ExtendedPost[]) => void;
   pushPost: (post: IPostApi) => void;
   setViewed: (id: number, isAlreadyViewed: boolean) => void;
   like: (id: number) => void;
@@ -39,17 +46,37 @@ export const createStore = (type: StoreType) =>
   create<IPostStore>()((set) => ({
     state: {
       type,
+      isLoading: false,
+      hasMore: true,
       post: undefined,
       posts: [],
       minId: 0,
       maxId: 0,
     },
 
+    setLoading(isLoading: boolean) {
+      set((current) => ({
+        state: { ...current.state, isLoading },
+      }));
+    },
+
     setPosts(posts: IPostApi[]) {
       const { items, minId, maxId } = resolvePosts(posts);
 
+      const hasMore = posts.length >= PER_PAGE;
+
       set((current) => ({
-        state: { ...current.state, posts: items, minId, maxId },
+        state: { ...current.state, posts: items, minId, maxId, hasMore },
+      }));
+    },
+
+    addMorePosts(posts: IPostApi[]) {
+      const hasMore = posts.length >= PER_PAGE;
+      const newPosts = [...this.state.posts, ...toExtendedPost(posts)];
+      const { items, minId, maxId } = resolvePosts(newPosts);
+
+      set((current) => ({
+        state: { ...current.state, posts: items, minId, maxId, hasMore },
       }));
     },
 
@@ -60,6 +87,18 @@ export const createStore = (type: StoreType) =>
 
       set((current) => ({
         state: { ...current.state, posts, minId, maxId },
+      }));
+    },
+
+    addMoreExtendedPosts(posts: ExtendedPost[]) {
+      const hasMore = posts.length >= PER_PAGE;
+      const newPosts: ExtendedPost[] = [...this.state.posts, ...posts];
+      const replies = posts.filter((item) => item.isRootPost === false);
+      const minId = getMinId(replies);
+      const maxId = getMaxId(replies);
+
+      set((current) => ({
+        state: { ...current.state, posts: newPosts, minId, maxId, hasMore },
       }));
     },
 

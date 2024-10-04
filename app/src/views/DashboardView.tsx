@@ -4,13 +4,25 @@ import api from "@/api";
 import PostContainer from "@/components/posts/PostContainer";
 import Posts from "@/components/posts/Posts";
 import { useDashboardStore } from "@/stores/postStore";
+import InfiniteScroll from "@/components/layout/InfiniteScroll";
 
 const DashboardView = () => {
   const store = useDashboardStore();
 
   const fetchPosts = async () => {
+    store.setLoading(true);
     const response = await api.post.paginate();
     store.setPosts(response.data);
+    store.setLoading(false);
+  };
+
+  const loadMore = async () => {
+    if (store.state.hasMore) {
+      store.setLoading(true);
+      const response = await api.post.paginate(store.state.minId);
+      store.addMorePosts(response.data);
+      store.setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -21,6 +33,7 @@ const DashboardView = () => {
     <PostContainer>
       <ShareInput store={store} />
       <Posts store={store} />
+      <InfiniteScroll store={store} loadMore={loadMore} />
     </PostContainer>
   );
 };
