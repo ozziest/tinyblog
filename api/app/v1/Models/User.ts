@@ -52,6 +52,14 @@ class User extends Model {
   get hiddens() {
     return ["password"];
   }
+
+  followers() {
+    return this.hasMany("UserFollower", "id", "user_id");
+  }
+
+  following() {
+    return this.hasMany("UserFollower", "id", "follower_id");
+  }
 }
 
 export default User;
