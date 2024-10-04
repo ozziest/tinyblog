@@ -45,6 +45,12 @@ const ProfileView = () => {
     }
   };
 
+  const handleFollow = async () => {
+    if (user) {
+      await api.user.follow(user?.id);
+    }
+  };
+
   useEffect(() => {
     window.scrollTo({
       top: 0,
@@ -79,7 +85,7 @@ const ProfileView = () => {
             )}
           </div>
           <div>
-            <Button>Follow</Button>
+            <Button onClick={handleFollow}>Follow</Button>
           </div>
         </div>
       </div>

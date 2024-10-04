@@ -58,6 +58,10 @@ const findByUsername = async (username: string) => {
     .get();
 };
 
+const follow = async (userId: number) => {
+  return resource(`users/${userId}/followers`).post();
+};
+
 export default {
   createUser,
   login,
@@ -69,4 +73,5 @@ export default {
   getMyself,
   searchByUsername,
   findByUsername,
+  follow,
 };
