@@ -25,7 +25,7 @@ describe("PostService", () => {
     const content = `This is a content`;
     const data = await PostService.toPostContent(content);
     expect(data.content).toBe(content);
-    expect(data.usernames.length).toBe(0);
+    expect(data.mentions.length).toBe(0);
     expect(data.hashtags.length).toBe(0);
     expect(data.links.length).toBe(0);
   });
@@ -34,8 +34,8 @@ describe("PostService", () => {
     const content = `This is a content! @iozguradem`;
     const data = await PostService.toPostContent(content);
     expect(data.content).toBe(content);
-    expect(data.usernames.length).toBe(1);
-    expect(data.usernames[0]).toBe("@iozguradem");
+    expect(data.mentions.length).toBe(1);
+    expect(data.mentions[0]).toBe("@iozguradem");
     expect(data.hashtags.length).toBe(0);
     expect(data.links.length).toBe(0);
   });
@@ -44,7 +44,7 @@ describe("PostService", () => {
     const content = `This is an email! test@mail.com`;
     const data = await PostService.toPostContent(content);
     expect(data.content).toBe(content);
-    expect(data.usernames.length).toBe(0);
+    expect(data.mentions.length).toBe(0);
     expect(data.hashtags.length).toBe(0);
     expect(data.links.length).toBe(0);
   });
@@ -53,14 +53,14 @@ describe("PostService", () => {
     const content = `Hej @iozguradem!`;
     const data = await PostService.toPostContent(content);
     expect(data.content).toBe(content);
-    expect(data.usernames.length).toBe(1);
+    expect(data.mentions.length).toBe(1);
   });
 
   test("toPostContent() simple hashtag", async () => {
     const content = `This is a content! #tinyblog`;
     const data = await PostService.toPostContent(content);
     expect(data.content).toBe(content);
-    expect(data.usernames.length).toBe(0);
+    expect(data.mentions.length).toBe(0);
     expect(data.hashtags.length).toBe(1);
     expect(data.hashtags[0].original).toBe("#tinyblog");
     expect(data.hashtags[0].cleaned).toBe("#tinyblog");
@@ -72,7 +72,7 @@ describe("PostService", () => {
     const content = `This is a content! #TinyBlog`;
     const data = await PostService.toPostContent(content);
     expect(data.content).toBe(content);
-    expect(data.usernames.length).toBe(0);
+    expect(data.mentions.length).toBe(0);
     expect(data.hashtags.length).toBe(1);
     expect(data.hashtags[0].original).toBe("#TinyBlog");
     expect(data.hashtags[0].cleaned).toBe("#tinyblog");
@@ -93,7 +93,7 @@ describe("PostService", () => {
     const content = `This is a content! #tinyblog #rest`;
     const data = await PostService.toPostContent(content);
     expect(data.content).toBe(content);
-    expect(data.usernames.length).toBe(0);
+    expect(data.mentions.length).toBe(0);
     expect(data.hashtags.length).toBe(2);
     expect(data.links.length).toBe(0);
   });
@@ -102,7 +102,7 @@ describe("PostService", () => {
     const content = `This is a content! https://tinyblog.space/profile#123`;
     const data = await PostService.toPostContent(content);
     expect(data.content).toBe(content);
-    expect(data.usernames.length).toBe(0);
+    expect(data.mentions.length).toBe(0);
     expect(data.hashtags.length).toBe(0);
     expect(data.links.length).toBe(1);
   });
@@ -111,7 +111,7 @@ describe("PostService", () => {
     const content = `#tinyblog #api #axeapi Hey!`;
     const data = await PostService.toPostContent(content);
     expect(data.content).toBe(content);
-    expect(data.usernames.length).toBe(0);
+    expect(data.mentions.length).toBe(0);
     expect(data.hashtags.length).toBe(3);
     expect(data.links.length).toBe(0);
   });
@@ -120,7 +120,7 @@ describe("PostService", () => {
     const content = `Hey #tinyblog #api #axeapi`;
     const data = await PostService.toPostContent(content);
     expect(data.content).toBe(content);
-    expect(data.usernames.length).toBe(0);
+    expect(data.mentions.length).toBe(0);
     expect(data.hashtags.length).toBe(3);
     expect(data.links.length).toBe(0);
   });
@@ -129,7 +129,7 @@ describe("PostService", () => {
     const content = `This is a content! https://tinyblog.space`;
     const data = await PostService.toPostContent(content);
     expect(data.content).toBe(content);
-    expect(data.usernames.length).toBe(0);
+    expect(data.mentions.length).toBe(0);
     expect(data.hashtags.length).toBe(0);
     expect(data.links.length).toBe(1);
     expect(data.links[0].link).toBe("https://tinyblog.space");
@@ -144,7 +144,7 @@ describe("PostService", () => {
       https://tinyblog.space https://axe-api.com`;
     const data = await PostService.toPostContent(content);
     expect(data.content).toBe(content);
-    expect(data.usernames.length).toBe(2);
+    expect(data.mentions.length).toBe(2);
     expect(data.hashtags.length).toBe(4);
     expect(data.links.length).toBe(2);
   });
@@ -157,7 +157,7 @@ describe("PostService", () => {
     `;
     const data = await PostService.toPostContent(content);
     expect(data.content).toBe("This is a simple content!");
-    expect(data.usernames.length).toBe(0);
+    expect(data.mentions.length).toBe(0);
     expect(data.hashtags.length).toBe(0);
     expect(data.links.length).toBe(0);
   });

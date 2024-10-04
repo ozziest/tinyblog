@@ -32,8 +32,6 @@ export default async ({ req, result }: IAfterPaginateContext) => {
           link: postLink.link.link,
         };
       });
-
-      console.log(item.links);
     });
   }
 };
