@@ -25,6 +25,26 @@ const incrementUserPostCount = async (userId: number) => {
   await db.table("users").where("id", userId).increment({ stats_post: 1 });
 };
 
+const incrementFollowerCount = async (userId: number) => {
+  const db = await IoCService.use<Knex>("Database");
+  await db.table("users").where("id", userId).increment({ stats_follower: 1 });
+};
+
+const incrementFollowingCount = async (userId: number) => {
+  const db = await IoCService.use<Knex>("Database");
+  await db.table("users").where("id", userId).increment({ stats_following: 1 });
+};
+
+const decrementFollowerCount = async (userId: number) => {
+  const db = await IoCService.use<Knex>("Database");
+  await db.table("users").where("id", userId).decrement({ stats_follower: 1 });
+};
+
+const decrementFollowingCount = async (userId: number) => {
+  const db = await IoCService.use<Knex>("Database");
+  await db.table("users").where("id", userId).decrement({ stats_following: 1 });
+};
+
 const getCookieContent = (token: string) => {
   // 1 week long
   return `token=${token}; SameSite=Strict; Max-Age=604800; Secure; HttpOnly`;
@@ -33,5 +53,9 @@ const getCookieContent = (token: string) => {
 export default {
   getUserByEmailOrUsername,
   incrementUserPostCount,
+  incrementFollowerCount,
+  incrementFollowingCount,
+  decrementFollowerCount,
+  decrementFollowingCount,
   getCookieContent,
 };
