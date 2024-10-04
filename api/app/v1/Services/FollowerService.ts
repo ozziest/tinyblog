@@ -14,6 +14,11 @@ const getMyFollowings = async (authUserId: number) => {
   return followings;
 };
 
+const getMyFollowingIds = async (authUserId: number) => {
+  return (await getMyFollowings(authUserId)).map((item) => item.user_id);
+};
+
 export default {
   getMyFollowings,
+  getMyFollowingIds,
 };

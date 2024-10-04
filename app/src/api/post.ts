@@ -10,6 +10,7 @@ const LINKS = "links{link{code,link}}";
 const POST_DETAIL = `${HASHTAGS},${MENTIONS},${LINKS}`;
 
 interface PaginateProps {
+  feed?: boolean;
   minId?: number;
   userId?: number;
 }

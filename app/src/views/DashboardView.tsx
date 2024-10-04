@@ -11,7 +11,7 @@ const DashboardView = () => {
 
   const fetchPosts = async () => {
     store.setLoading(true);
-    const response = await api.post.paginate();
+    const response = await api.post.paginate({ feed: true });
     store.setPosts(response.data);
     store.setLoading(false);
   };
