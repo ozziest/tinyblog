@@ -88,6 +88,7 @@ const share = async (postId: number, userId: number) => {
     parent_id: null,
     user_id: userId,
     content: "",
+    lexical: "",
     stats_views: 0,
     stats_replies: 0,
     stats_likes: 0,
