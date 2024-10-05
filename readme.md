@@ -48,14 +48,15 @@ We have an exciting vision for tinyblog, and we’re working hard to bring new f
 - [x] Follow/Unfollow Users
 - [x] View Feed with posts from followed users
 - [x] Like and Comment on posts
-- [ ] User Settings (Update Profile, Change Password)
-- [ ] Notifications for follows, likes, and comments
 - [x] Private Messaging between users
 - [x] Hashtags and tagging system for posts
 - [x] Link system on posts
+- [x] User Analytics (Followers count, post engagement stats)
+- [ ] Bot protection
+- [ ] Rate limiting
+- [ ] Notifications for follows, likes, and comments
+- [ ] User Settings (Update Profile, Change Password)
 - [ ] Search functionality for posts and users
-- [ ] User Analytics (Followers count, post engagement stats)
 - [ ] Multi-language support
-- [ ] Real-time post updates and activity feed
 - [ ] Advanced moderation tools (content flagging, spam detection)
 - [ ] Progressive Web App (PWA) support
