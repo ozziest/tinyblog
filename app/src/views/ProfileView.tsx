@@ -92,6 +92,8 @@ const ProfileView = () => {
     return;
   }
 
+  const isMyself = user.id === authStore.state.user.id;
+
   return (
     <>
       <div className="bg-white sticky top-[44px] pt-4 z-50">
@@ -107,12 +109,12 @@ const ProfileView = () => {
             )}
           </div>
           <div>
-            {user.following_id && (
+            {!isMyself && user.following_id && (
               <Button onClick={handleUnfollow} variant="secondary">
                 Unfollow
               </Button>
             )}
-            {!user.following_id && (
+            {!isMyself && !user.following_id && (
               <Button onClick={handleFollow}>Follow</Button>
             )}
           </div>
