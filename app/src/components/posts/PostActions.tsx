@@ -43,7 +43,7 @@ const PostActions = ({ store, post }: Props) => {
     } else {
       const response = await api.post.unshare(post.id);
       if (response.status === 201) {
-        store.unshare(post.id);
+        store.unshare(post.id, authStore.state.user.id);
       }
     }
   };

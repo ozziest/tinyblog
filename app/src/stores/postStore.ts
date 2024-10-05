@@ -43,7 +43,7 @@ export interface IPostStore {
   like: (id: number) => void;
   unlike: (id: number) => void;
   share: (id: number) => void;
-  unshare: (id: number) => void;
+  unshare: (postId: number, userId: number) => void;
 }
 
 export const createStore = (type: StoreType) =>
@@ -153,11 +153,18 @@ export const createStore = (type: StoreType) =>
       }));
     },
 
-    unshare(id: number) {
-      const mapper = (post: ExtendedPost) => unshareMap(post, id);
+    unshare(postId: number, userId: number) {
+      const mapper = (post: ExtendedPost) => unshareMap(post, postId);
 
       set((current) => ({
-        state: { ...current.state, posts: current.state.posts.map(mapper) },
+        state: {
+          ...current.state,
+          posts: current.state.posts
+            .filter(
+              (post) => post.reshare?.id !== postId || post.user.id !== userId,
+            )
+            .map(mapper),
+        },
       }));
     },
   }));
