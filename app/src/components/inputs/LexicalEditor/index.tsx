@@ -131,6 +131,7 @@ function Editor({ store, parent, onShared }: Props) {
       stats_replies: 0,
       user: authStore.state.user,
       is_liked_by_you: false,
+      is_shared_by_you: false,
       hashtags: post.hashtags,
       mentions: post.mentions,
       links: post.links,

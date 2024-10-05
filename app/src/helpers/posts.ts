@@ -114,6 +114,16 @@ export const shareMap = (post: ExtendedPost, id: number) => {
     post.stats_shares++;
   }
 
+  if (post.parent?.id === id) {
+    post.parent.is_shared_by_you = false;
+    post.parent.stats_shares++;
+  }
+
+  if (post.reshare?.id === id) {
+    post.reshare.is_shared_by_you = false;
+    post.reshare.stats_shares++;
+  }
+
   return post;
 };
 
@@ -121,6 +131,16 @@ export const unshareMap = (post: ExtendedPost, id: number) => {
   if (post.id === id) {
     post.is_shared_by_you = false;
     post.stats_shares--;
+  }
+
+  if (post.parent?.id === id) {
+    post.parent.is_shared_by_you = false;
+    post.parent.stats_shares--;
+  }
+
+  if (post.reshare?.id === id) {
+    post.reshare.is_shared_by_you = false;
+    post.reshare.stats_shares--;
   }
 
   return post;

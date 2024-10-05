@@ -29,11 +29,15 @@ export default async ({ req, result }: IAfterPaginateContext) => {
       // Set the like status for the parent if there is any
       if (item.parent) {
         item.parent.is_liked_by_you = myLikedPostIds.includes(item.parent.id);
+        item.parent.is_shared_by_you = mySharedPostIds.includes(item.parent.id);
       }
 
       // Set the like status for the parent if there is any
       if (item.reshare) {
         item.reshare.is_liked_by_you = myLikedPostIds.includes(item.reshare.id);
+        item.reshare.is_shared_by_you = mySharedPostIds.includes(
+          item.reshare.id
+        );
       }
 
       item.links = (item?.links || []).map((postLink: any) => {

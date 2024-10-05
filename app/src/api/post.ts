@@ -7,7 +7,11 @@ const HASHTAGS = "hashtags{hashtag}";
 const MENTIONS = "mentions{username}";
 const LINKS = "links{link{code,link}}";
 
-const POST_DETAIL = `${HASHTAGS},${MENTIONS},${LINKS}`;
+const POST_DETAIL = `${USER},${HASHTAGS},${MENTIONS},${LINKS}`;
+
+const POST_ROW = `${POST_DETAIL},reshare{${POST_DETAIL},parent{${POST_DETAIL}}}`;
+
+const FULL_POST = `${POST_ROW},parent{${POST_ROW}}`;
 
 interface PaginateProps {
   feed?: boolean;
@@ -20,11 +24,7 @@ const store = async (data: IStorePost) => {
 };
 
 const paginate = async ({ feed, userId, minId }: PaginateProps = {}) => {
-  const query = resource("posts")
-    .with(
-      `${USER},parent{${USER},${POST_DETAIL}},reshare{${USER}},${POST_DETAIL}`,
-    )
-    .sort("id", "DESC");
+  const query = resource("posts").with(FULL_POST).sort("id", "DESC");
 
   if (feed) {
     query.searchParams({ feed: "true" });
@@ -46,11 +46,7 @@ const setViewed = async (postId: number) => {
 };
 
 const getPost = async (id: number) => {
-  return resource(`posts/${id}`)
-    .with(
-      `${USER},parent{${POST_DETAIL},parent{id,${USER}},${USER}},${POST_DETAIL}`,
-    )
-    .get();
+  return resource(`posts/${id}`).with(FULL_POST).get();
 };
 
 const getReplies = async (parentId: number, minId?: number) => {
