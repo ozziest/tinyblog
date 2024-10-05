@@ -28,6 +28,7 @@ const CaptchaInput = ({ name, validation, error, ...rest }: Props) => {
         <button
           type="button"
           className="transition text-neutral-600 cursor-pointer hover:underline hover:text-neutral-900 text-xs font-medium"
+          tabIndex={-1}
           onClick={handleReset}
         >
           Reset captcha code
