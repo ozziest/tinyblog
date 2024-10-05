@@ -62,7 +62,7 @@ const PostActions = ({ store, post }: Props) => {
         <ActionButton
           icon={<ShareIcon size={20} />}
           count={post.stats_shares}
-          isSelected={false}
+          isSelected={post.is_shared_by_you}
           onClick={handleShareClick}
         />
       )}
