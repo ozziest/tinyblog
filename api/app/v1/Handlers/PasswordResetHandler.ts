@@ -8,10 +8,12 @@ import { getTemplate } from "../Services/TemplateService";
 import { EmailTemplates } from "../../enums";
 import { sendEmail } from "../Services/MailService";
 import { captureError } from "../Services/ErrorService";
+import HTTPService from "../Services/HTTPService";
 
 export default async (req: AxeRequest, res: AxeResponse) => {
   try {
     const validation = await validate(req.body, {
+      cfToken: "required",
       email: "required|email",
     });
 
@@ -19,7 +21,20 @@ export default async (req: AxeRequest, res: AxeResponse) => {
       return res.status(400).json(validation);
     }
 
-    const { email } = req.body;
+    const { cfToken, email } = req.body;
+
+    // Let's verify the user with CF
+    const isVerifiedByCF = await HTTPService.verifyCFToken(
+      cfToken,
+      HTTPService.getIpAddress(req.original)
+    );
+    if (!isVerifiedByCF) {
+      return res.status(400).json({
+        error:
+          "We couldn't be sure your are a real user. Please try again later.",
+      });
+    }
+
     const db = (await IoCService.use("Database")) as Knex;
 
     const user = await db

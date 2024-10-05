@@ -36,6 +36,7 @@ export interface IProfilCheckResponse {
 }
 
 export interface IPasswordResetPost {
+  cfToken: string | null;
   email: string;
 }
 

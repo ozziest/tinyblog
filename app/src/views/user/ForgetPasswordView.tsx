@@ -6,6 +6,7 @@ import { IPasswordResetPost } from "@/interfaces";
 import api from "@/api";
 import { IValidationResult, validate } from "robust-validator";
 import { notification } from "@/helpers/notication";
+import CFTurnstile from "@/components/security/CFTurnstile";
 
 const RULES = {
   email: "required|email|min:3",
@@ -15,6 +16,7 @@ const LoginView = () => {
   const [validation, setValidation] = useState<IValidationResult>();
 
   const [state, setState] = useState<IPasswordResetPost>({
+    cfToken: null,
     email: "",
   });
 
@@ -48,6 +50,18 @@ const LoginView = () => {
       [field]: event.target.value,
     });
   };
+
+  const handleCFToken = (cfToken: string) => {
+    setState((newState) => ({ ...newState, cfToken }));
+  };
+
+  if (!state.cfToken) {
+    return (
+      <div className="p-8 rounded w-[500px]">
+        <CFTurnstile onVerify={handleCFToken} />
+      </div>
+    );
+  }
 
   return (
     <div className="border border-neutral-200 p-8 rounded w-[500px]">
