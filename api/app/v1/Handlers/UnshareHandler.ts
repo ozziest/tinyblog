@@ -38,12 +38,12 @@ export default async (req: AxeRequest, res: AxeResponse) => {
       userId
     );
 
-    if (isAlreadyShared) {
-      return res.status(500).json({ error: "You already shared the post." });
+    if (!isAlreadyShared) {
+      return res.status(404).json({ error: "The shared post can not found" });
     }
 
-    await PostService.share(postId, userId);
-    await PostService.incrementPostShare(postId);
+    await PostService.unshare(postId, userId);
+    await PostService.decrementPostShare(postId);
     return res.status(201).json({});
   } catch (error) {
     res.status(500).json({ error: "An error occurred" });

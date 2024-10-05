@@ -38,7 +38,7 @@ const Post = ({ store, post, autoView = true }: Props) => {
         <PostAuthor post={root} />
         <PostContent post={root} />
         {post.reshare && <PostReshare post={post} />}
-        <PostActions store={store} post={root} />
+        <PostActions store={store} post={root} reshare={post.reshare} />
       </PostArticle>
     </div>
   );

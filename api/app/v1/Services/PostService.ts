@@ -23,6 +23,20 @@ const getMyLikedPostIds = async (userId: number, postIds: number[]) => {
   return myLikes.map((item) => item.post_id).flat();
 };
 
+const getMySharedPostIds = async (userId: number, postIds: number[]) => {
+  const db = await IoCService.use<Knex>("Database");
+
+  // Fetch my related likes
+  const myShares = await db
+    .table("posts")
+    .select("reshare_id")
+    .where("user_id", userId)
+    .whereIn("reshare_id", postIds);
+
+  // The posts that I liked
+  return myShares.map((item) => item.reshare_id).flat();
+};
+
 const getPostLike = async (userId?: number, postId?: number) => {
   const db = await IoCService.use<Knex>("Database");
   return await db
@@ -86,6 +100,11 @@ const incrementPostShare = async (postId: number) => {
   await db.table("posts").where("id", postId).increment({ stats_shares: 1 });
 };
 
+const decrementPostShare = async (postId: number) => {
+  const db = await IoCService.use<Knex>("Database");
+  await db.table("posts").where("id", postId).decrement({ stats_shares: 1 });
+};
+
 const share = async (postId: number, userId: number) => {
   const db = await IoCService.use<Knex>("Database");
   await db.table("posts").insert({
@@ -101,6 +120,28 @@ const share = async (postId: number, userId: number) => {
     created_at: new Date(),
     updated_at: new Date(),
   });
+};
+
+const isAlreadySharedByUser = async (
+  postId: number,
+  userId: number
+): Promise<boolean> => {
+  const db = await IoCService.use<Knex>("Database");
+  const item = await db
+    .table("posts")
+    .where("reshare_id", postId)
+    .where("user_id", userId)
+    .first();
+  return !!item;
+};
+
+const unshare = async (postId: number, userId: number) => {
+  const db = await IoCService.use<Knex>("Database");
+  await db
+    .table("posts")
+    .where("reshare_id", postId)
+    .where("user_id", userId)
+    .delete();
 };
 
 const getMentions = async (content: string): Promise<IMentionMap[]> => {
@@ -310,9 +351,11 @@ const addLinks = async (postId: number, links: IShortLinkMap[]) => {
 
 export default {
   getMyLikedPostIds,
+  getMySharedPostIds,
   getPostLike,
   deletePostLike,
   decrementPostLike,
+  decrementPostShare,
   getPostView,
   incrementPostReplies,
   addPostView,
@@ -321,6 +364,8 @@ export default {
   incrementPostShare,
   getPost,
   share,
+  unshare,
+  isAlreadySharedByUser,
   toPostContent,
   addHashtags,
   addMentions,

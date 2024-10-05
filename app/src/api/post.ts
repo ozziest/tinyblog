@@ -74,6 +74,10 @@ const share = async (postId: number) => {
   return resource(`posts/${postId}/shares`).post();
 };
 
+const unshare = async (postId: number) => {
+  return resource(`posts/${postId}/unshares`).post();
+};
+
 export default {
   store,
   paginate,
@@ -82,4 +86,5 @@ export default {
   getReplies,
   like,
   share,
+  unshare,
 };

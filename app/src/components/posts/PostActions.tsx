@@ -12,6 +12,7 @@ import useAuthStore from "@/stores/authStore";
 interface Props {
   store: IPostStore;
   post: ExtendedPost;
+  reshare?: ExtendedPost;
 }
 
 const PostActions = ({ store, post }: Props) => {
@@ -34,12 +35,17 @@ const PostActions = ({ store, post }: Props) => {
     event.preventDefault();
     event.stopPropagation();
 
-    const response = await api.post.share(post.id);
-    if (response.status === 201) {
-      console.log("here");
-      store.share(post.id);
+    if (!post.is_shared_by_you) {
+      const response = await api.post.share(post.id);
+      if (response.status === 201) {
+        store.share(post.id);
+      }
+    } else {
+      await api.post.unshare(post.id);
     }
   };
+
+  const isSharable = authStore.state.user.username !== post.user.username;
 
   return (
     <div className="flex gap-6 mt-2">
@@ -49,7 +55,7 @@ const PostActions = ({ store, post }: Props) => {
         isSelected={post.is_liked_by_you}
         onClick={handleLikeClick}
       />
-      {authStore.state.user.username !== post.user.username && (
+      {isSharable && (
         <ActionButton
           icon={<ShareIcon size={20} />}
           count={post.stats_shares}

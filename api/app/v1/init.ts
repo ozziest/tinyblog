@@ -12,6 +12,7 @@ import ChangePasswordHandler from "./Handlers/ChangePasswordHandler";
 import MeHandler from "./Handlers/MeHandler";
 import SessionMiddleware from "./Middlewares/SessionMiddleware";
 import ShareHandler from "./Handlers/ShareHandler";
+import UnshareHandler from "./Handlers/UnshareHandler";
 
 const CORS_WHITE_LIST = ["http://localhost:5173", "http://localhost:3005"];
 
@@ -52,6 +53,7 @@ const onBeforeInit = async (app: App) => {
   app.post("/api/v1/changePassword", ChangePasswordHandler);
   app.get("/api/v1/me", SessionMiddleware, MeHandler);
   app.post("/api/v1/posts/:postId/shares", SessionMiddleware, ShareHandler);
+  app.post("/api/v1/posts/:postId/unshares", SessionMiddleware, UnshareHandler);
 };
 
 const onAfterInit = async (app: App) => {};
