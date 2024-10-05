@@ -25,5 +25,5 @@
       "@/*": ["src/*"] // Replace 'src' with the folder where your code is located
     }
   },
-  "include": ["src"]
+  "include": ["src", "types/index.d.ts"]
 }

@@ -9,6 +9,7 @@ import { IValidationResult, validate } from "robust-validator";
 import { notification } from "@/helpers/notication";
 import PasswordStrengthMeter from "@/components/inputs/PasswordStrengthMeter";
 import CaptchaInput from "@/components/inputs/CaptchaInput";
+import CFTurnstile from "@/components/security/CFTurnstile";
 
 const RULES = {
   email: "required|email|max:320",
@@ -22,6 +23,7 @@ const RegisterView = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [state, setState] = useState<IUserPost>({
+    cfToken: null,
     csrf: "",
     captcha: "",
     email: "",
@@ -79,9 +81,21 @@ const RegisterView = () => {
     setState({ ...state, csrf });
   };
 
+  const handleCFToken = (cfToken: string) => {
+    setState({ ...state, cfToken });
+  };
+
   useEffect(() => {
     prepare();
   }, []);
+
+  if (!state.cfToken) {
+    return (
+      <div className="p-8 rounded w-[500px]">
+        <CFTurnstile onVerify={handleCFToken} />
+      </div>
+    );
+  }
 
   return (
     <div className="border border-neutral-200 p-8 rounded w-[500px]">
@@ -148,6 +162,11 @@ const RegisterView = () => {
           onChange={(event) => handleChange(event, "captcha")}
           validation={validation}
         />
+        <div
+          className="cf-turnstile"
+          data-sitekey="yourSitekey"
+          data-callback="javascriptCallback"
+        ></div>
         <Button type="button" onClick={handleCreate}>
           {t("register.button")}
         </Button>

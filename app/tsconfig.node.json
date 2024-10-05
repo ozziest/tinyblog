@@ -23,5 +23,5 @@
       "@/*": ["src/*"] // Replace 'src' with the folder where your code is located
     }
   },
-  "include": ["vite.config.ts"]
+  "include": ["vite.config.ts", "types/index.d.ts"]
 }
