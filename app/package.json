@@ -18,7 +18,7 @@
     "@algolia/autocomplete-preset-algolia": "^1.17.4",
     "@lexical/hashtag": "^0.18.0",
     "@lexical/react": "^0.18.0",
-    "axe-api-client": "^3.0.0-rc-1",
+    "axe-api-client": "^3.0.0-rc-2",
     "classnames": "^2.5.1",
     "i18next": "^23.15.1",
     "lexical": "^0.18.0",

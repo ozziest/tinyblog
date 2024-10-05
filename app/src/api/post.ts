@@ -19,12 +19,16 @@ const store = async (data: IStorePost) => {
   return resource("posts").post(data);
 };
 
-const paginate = async ({ userId, minId }: PaginateProps = {}) => {
+const paginate = async ({ feed, userId, minId }: PaginateProps = {}) => {
   const query = resource("posts")
     .with(
       `${USER},parent{${USER},${POST_DETAIL}},reshare{${USER}},${POST_DETAIL}`,
     )
     .sort("id", "DESC");
+
+  if (feed) {
+    query.searchParams({ feed: "true" });
+  }
 
   if (userId) {
     query.where("user_id", userId);
