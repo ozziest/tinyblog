@@ -52,7 +52,7 @@ We have an exciting vision for tinyblog, and we’re working hard to bring new f
 - [x] Hashtags and tagging system for posts
 - [x] Link system on posts
 - [x] User Analytics (Followers count, post engagement stats)
-- [ ] Bot protection
+- [x] Bot protection (Cloudflare turnstile)
 - [ ] Rate limiting
 - [ ] Notifications for follows, likes, and comments
 - [ ] User Settings (Update Profile, Change Password)

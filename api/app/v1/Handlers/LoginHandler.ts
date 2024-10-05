@@ -4,10 +4,35 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import UserService, { getUserAvatar } from "../Services/UserService";
 import { captureError } from "../Services/ErrorService";
+import HTTPService from "../Services/HTTPService";
+import { validate } from "robust-validator";
 
 export default async (req: AxeRequest, res: AxeResponse) => {
   try {
-    const { email, password } = req.body;
+    const validation = await validate(req.body, {
+      cfToken: "required",
+      email: "required",
+      password: "required",
+    });
+
+    if (validation.isInvalid) {
+      return res.status(400).json(validation);
+    }
+
+    const { email, password, cfToken } = req.body;
+
+    // Let's verify the user with CF
+    const isVerifiedByCF = await HTTPService.verifyCFToken(
+      cfToken,
+      HTTPService.getIpAddress(req.original)
+    );
+    if (!isVerifiedByCF) {
+      return res.status(400).json({
+        error:
+          "We couldn't be sure your are a real user. Please try again later.",
+      });
+    }
+
     const db = (await IoCService.use("Database")) as Knex;
 
     const user = await db

@@ -35,13 +35,11 @@ export default async ({
     return res.status(400).json(validation);
   }
 
-  // We need the ip address of the user
-  const ip: string =
-    (req.original.headers["x-forwarded-for"] as string) ||
-    (req.original.socket.remoteAddress as string);
-
   // Let's verify the user with CF
-  const isVerifiedByCF = await HTTPService.verifyCFToken(cfToken, ip);
+  const isVerifiedByCF = await HTTPService.verifyCFToken(
+    cfToken,
+    HTTPService.getIpAddress(req.original)
+  );
   if (!isVerifiedByCF) {
     return res.status(400).json({
       error:

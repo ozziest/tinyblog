@@ -10,6 +10,7 @@ export interface IUserPost {
 }
 
 export interface ILoginPost {
+  cfToken: string | null;
   email: string;
   password: string;
 }

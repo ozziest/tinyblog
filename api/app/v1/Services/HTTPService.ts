@@ -36,7 +36,15 @@ const verifyCFToken = async (token: string, ip: string) => {
   return false;
 };
 
+const getIpAddress = (req: IncomingMessage): string => {
+  return (
+    (req.headers["x-forwarded-for"] as string) ||
+    (req.socket.remoteAddress as string)
+  );
+};
+
 export default {
   parseCookies,
   verifyCFToken,
+  getIpAddress,
 };
