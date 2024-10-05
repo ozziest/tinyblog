@@ -8,15 +8,16 @@ import {
 import ActionButton from "./ActionButton";
 import { ExtendedPost, IPostStore } from "@/stores/postStore";
 import useAuthStore from "@/stores/authStore";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   store: IPostStore;
   post: ExtendedPost;
-  reshare?: ExtendedPost;
 }
 
 const PostActions = ({ store, post }: Props) => {
   const authStore = useAuthStore();
+  const navigate = useNavigate();
 
   const handleLikeClick = async (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
@@ -48,6 +49,12 @@ const PostActions = ({ store, post }: Props) => {
     }
   };
 
+  const handleDetailClick = (event: React.MouseEvent<HTMLElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
+    navigate(`/${post.id}`);
+  };
+
   const isSharable = authStore.state.user.username !== post.user.username;
 
   return (
@@ -70,13 +77,13 @@ const PostActions = ({ store, post }: Props) => {
         icon={<ReplyIcon size={20} />}
         count={post.stats_replies}
         isSelected={false}
-        onClick={handleLikeClick}
+        onClick={handleDetailClick}
       />
       <ActionButton
         icon={<ViewCountIcon size={20} />}
         count={post.stats_views}
         isSelected={false}
-        onClick={handleLikeClick}
+        onClick={handleDetailClick}
       />
     </div>
   );
