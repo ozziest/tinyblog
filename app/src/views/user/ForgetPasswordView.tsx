@@ -28,7 +28,8 @@ const LoginView = () => {
       return;
     }
 
-    const { error } = await api.user.passwordReset(state);
+    const response = await api.user.passwordReset(state);
+    const { error } = await response.json();
     if (error) {
       notification.error(error);
     } else {

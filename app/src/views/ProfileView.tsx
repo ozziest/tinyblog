@@ -22,7 +22,8 @@ const ProfileView = () => {
       return navigate("/");
     }
 
-    const { data } = await api.user.findByUsername(username);
+    const response = await api.user.findByUsername(username);
+    const { data } = await response.json();
     if (data.length === 0) {
       return navigate("/404");
     }
@@ -33,7 +34,8 @@ const ProfileView = () => {
   const fetchPosts = async (userId: number) => {
     store.setLoading(true);
     const response = await api.post.paginate({ userId });
-    store.setPosts(response.data);
+    const { data } = await response.json();
+    store.setPosts(data);
     store.setLoading(false);
   };
 
@@ -42,7 +44,8 @@ const ProfileView = () => {
       store.setLoading(true);
       const { minId } = store.state;
       const response = await api.post.paginate({ userId: user?.id, minId });
-      store.addMorePosts(response.data);
+      const { data } = await response.json();
+      store.addMorePosts(data);
       store.setLoading(false);
     }
   };

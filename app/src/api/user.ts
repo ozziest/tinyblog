@@ -21,7 +21,8 @@ const login = async (data: ILoginPost) => {
 const profileCheck = async (
   data: IProfilCheckPost,
 ): Promise<IProfilCheckResponse> => {
-  return resource("profileCheck").post(data);
+  const response = await resource("profileCheck").post(data);
+  return await response.json();
 };
 
 const confirmation = async (data: IConfirmationPost) => {

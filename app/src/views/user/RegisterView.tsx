@@ -37,7 +37,8 @@ const RegisterView = () => {
       return;
     }
 
-    const { error } = await api.user.createUser(state);
+    const response = await api.user.createUser(state);
+    const { error } = await response.json();
     if (error) {
       notification.error(error);
     } else {

@@ -31,7 +31,8 @@ const ResetPasswordView = () => {
       return;
     }
 
-    const { error } = await api.user.changePassword(state);
+    const response = await api.user.changePassword(state);
+    const { error } = await response.json();
     if (error) {
       notification.error(error);
     } else {

@@ -36,7 +36,8 @@ const LoginView = () => {
       return;
     }
 
-    const { error, ...data } = await api.user.login(state);
+    const response = await api.user.login(state);
+    const { error, ...data } = await response.json();
     if (error) {
       notification.error(error);
     } else {

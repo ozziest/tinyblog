@@ -11,6 +11,7 @@ import * as ReactDOM from "react-dom";
 
 import { $createMentionNode } from "./MentionNode";
 import api from "@/api";
+import { IUserApi } from "@/types/ApiTypes";
 
 const PUNCTUATION =
   "\\.,\\+\\*\\?\\$\\@\\|#{}\\(\\)\\^\\-\\[\\]\\\\/!%'\"~=<>_:;";
@@ -79,9 +80,10 @@ const mentionsCache = new Map();
 
 const dummyLookupService = {
   search(string: string, callback: (results: Array<string>) => void): void {
-    api.user.searchByUsername(string).then((response) => {
-      const usernames = response.data.map(
-        (item) => `@${item.username.toLowerCase()}`,
+    api.user.searchByUsername(string).then(async (response) => {
+      const { data } = await response.json();
+      const usernames = data.map(
+        (item: IUserApi) => `@${item.username.toLowerCase()}`,
       );
       callback(usernames);
     });

@@ -23,9 +23,11 @@ const EmailConfirmation = () => {
       return;
     }
 
-    const { error } = await api.user.confirmationReset({
+    const response = await api.user.confirmationReset({
       email,
     });
+
+    const { error } = await response.json();
 
     if (error) {
       notification.error(error);

@@ -17,10 +17,11 @@ const EmailConfirmation = () => {
   const [validation, setValidation] = useState<IValidationResult>();
 
   const confirm = async () => {
-    const { error } = await api.user.confirmation({
+    const response = await api.user.confirmation({
       secret: secret || "",
       code: code || "",
     });
+    const { error } = await response.json();
     if (error) {
       setStatus("error");
     } else {
@@ -41,9 +42,11 @@ const EmailConfirmation = () => {
       return;
     }
 
-    const { error } = await api.user.confirmationReset({
+    const response = await api.user.confirmationReset({
       email,
     });
+
+    const { error } = await response.json();
 
     if (error) {
       notification.error(error);

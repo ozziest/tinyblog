@@ -6,7 +6,7 @@ import { initReactI18next } from "react-i18next";
 import en from "./translations/en.json";
 import router from "./router";
 import { setLocales, en as validationEn } from "robust-validator";
-import { setConfig, interceptors, IRequest } from "axe-api-client";
+import { setConfig, interceptors } from "axe-api-client";
 import ErrorMessageComponent from "./components/messages/ErrorMessage";
 import SuccessMessage from "./components/messages/SuccessMessage";
 
@@ -15,8 +15,9 @@ setConfig({
   baseURL: "http://localhost:3005/api/v1",
 });
 
-interceptors.addRequest((request: IRequest) => {
-  (request as RequestInit).credentials = "include";
+interceptors.addRequest((request: RequestInit) => {
+  // It should send the cookies on each requests
+  request.credentials = "include";
 
   return request;
 });

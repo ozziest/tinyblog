@@ -12,7 +12,8 @@ const DashboardView = () => {
   const fetchPosts = async () => {
     store.setLoading(true);
     const response = await api.post.paginate({ feed: true });
-    store.setPosts(response.data);
+    const { data } = await response.json();
+    store.setPosts(data);
     store.setLoading(false);
   };
 
@@ -21,7 +22,8 @@ const DashboardView = () => {
       store.setLoading(true);
       const { minId } = store.state;
       const response = await api.post.paginate({ minId });
-      store.addMorePosts(response.data);
+      const { data } = await response.json();
+      store.addMorePosts(data);
       store.setLoading(false);
     }
   };
