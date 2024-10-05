@@ -1,6 +1,7 @@
 import { IBeforeInsertContext, IoCService, RedisAdaptor } from "axe-api";
 import bcrypt from "bcrypt";
 import UserService from "../../Services/UserService";
+import { validate } from "robust-validator";
 
 export default async ({
   req,
@@ -18,6 +19,19 @@ export default async ({
 
   const { csrf, captcha } = req.body;
   const { agentId } = req.original;
+
+  const validation = await validate(
+    { csrf, captcha, agentId },
+    {
+      csrf: "required|min:40",
+      captcha: "required|min:8",
+      agentId: "required",
+    }
+  );
+
+  if (validation.isInvalid) {
+    return res.status(400).json(validation);
+  }
 
   const savedCSRF = await redis.get(`LastCSRF:${agentId}`);
   const savedCaptcha = await redis.get(`LastCaptchaCode:${agentId}`);
