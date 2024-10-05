@@ -171,7 +171,7 @@ describe("PostService", () => {
   test("toPostContent() should remove script tags", async () => {
     const content = `This is a simple content!
     
-    <script>console.log('XSS')</script>
+    <script>alert('XSS')</script>
     `;
     const data = await PostService.toPostContent(content);
     expect(data.content).toBe("This is a simple content!");

@@ -58,7 +58,9 @@ class User extends Model {
   }
 
   following() {
-    return this.hasMany("UserFollower", "id", "follower_id");
+    return this.hasMany("UserFollower", "id", "follower_id", {
+      autoRouting: false,
+    });
   }
 }
 
