@@ -3,10 +3,10 @@ import LogoFull from "./LogoFull";
 
 const AuthLayout = () => {
   return (
-    <div className="w-screen h-screen flex justify-center items-center">
+    <div className="w-screen h-screen flex justify-center overflow-scroll p-20">
       <div>
         <LogoFull />
-        <div>
+        <div className="pb-20">
           <Outlet />
         </div>
       </div>
