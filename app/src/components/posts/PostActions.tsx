@@ -35,7 +35,10 @@ const PostActions = ({ store, post }: Props) => {
     event.stopPropagation();
 
     const response = await api.post.share(post.id);
-    console.log(response);
+    if (response.status === 201) {
+      console.log("here");
+      store.share(post.id);
+    }
   };
 
   return (

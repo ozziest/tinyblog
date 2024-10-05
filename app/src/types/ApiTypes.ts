@@ -9,6 +9,7 @@ export interface IPostApi {
   stats_replies: number;
   user: IUserApi;
   is_liked_by_you: boolean;
+  is_shared_by_you: boolean;
   parent?: IPostApi;
   reshare?: IPostApi;
   hashtags?: IPostHashtagApi[];

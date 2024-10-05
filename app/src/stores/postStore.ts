@@ -8,8 +8,10 @@ import {
   likeMap,
   resolvePosts,
   setViewedMap,
+  shareMap,
   toExtendedPost,
   unlikeMap,
+  unshareMap,
 } from "@/helpers/posts";
 import { PER_PAGE } from "@/consts";
 
@@ -40,6 +42,8 @@ export interface IPostStore {
   setViewed: (id: number, isAlreadyViewed: boolean) => void;
   like: (id: number) => void;
   unlike: (id: number) => void;
+  share: (id: number) => void;
+  unshare: (id: number) => void;
 }
 
 export const createStore = (type: StoreType) =>
@@ -135,6 +139,22 @@ export const createStore = (type: StoreType) =>
 
     unlike(id: number) {
       const mapper = (post: ExtendedPost) => unlikeMap(post, id);
+
+      set((current) => ({
+        state: { ...current.state, posts: current.state.posts.map(mapper) },
+      }));
+    },
+
+    share(id: number) {
+      const mapper = (post: ExtendedPost) => shareMap(post, id);
+
+      set((current) => ({
+        state: { ...current.state, posts: current.state.posts.map(mapper) },
+      }));
+    },
+
+    unshare(id: number) {
+      const mapper = (post: ExtendedPost) => unshareMap(post, id);
 
       set((current) => ({
         state: { ...current.state, posts: current.state.posts.map(mapper) },
