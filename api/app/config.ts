@@ -1,5 +1,4 @@
 import { CacheStrategies, IApplicationConfig } from "axe-api";
-import path from "path";
 import errorHandler from "./v1/Handlers/ErrorHandler";
 
 const config: IApplicationConfig = {
