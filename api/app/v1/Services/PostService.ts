@@ -81,6 +81,11 @@ const incrementPostLike = async (postId: number) => {
   await db.table("posts").where("id", postId).increment({ stats_likes: 1 });
 };
 
+const incrementPostShare = async (postId: number) => {
+  const db = await IoCService.use<Knex>("Database");
+  await db.table("posts").where("id", postId).increment({ stats_shares: 1 });
+};
+
 const share = async (postId: number, userId: number) => {
   const db = await IoCService.use<Knex>("Database");
   await db.table("posts").insert({
@@ -313,6 +318,7 @@ export default {
   addPostView,
   incrementPostView,
   incrementPostLike,
+  incrementPostShare,
   getPost,
   share,
   toPostContent,

@@ -35,6 +35,8 @@ export default async (req: AxeRequest, res: AxeResponse) => {
 
     await PostService.share(postId, userId);
 
+    await PostService.incrementPostShare(postId);
+
     return res.status(201).json({});
   } catch (error) {
     res.status(500).json({ error: "An error occurred" });
