@@ -78,11 +78,11 @@ const RegisterView = () => {
   const prepare = async () => {
     const response = await api.shared.csrf();
     const { csrf } = await response.json();
-    setState({ ...state, csrf });
+    setState((newState) => ({ ...newState, csrf }));
   };
 
   const handleCFToken = (cfToken: string) => {
-    setState({ ...state, cfToken });
+    setState((newState) => ({ ...newState, cfToken }));
   };
 
   useEffect(() => {
