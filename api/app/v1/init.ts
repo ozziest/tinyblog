@@ -1,4 +1,4 @@
-import { App, IoCService } from "axe-api";
+import { App, IoCService, RedisAdaptor } from "axe-api";
 import cors from "cors";
 import { Knex } from "knex";
 import LoginHandler from "./Handlers/LoginHandler";
@@ -13,11 +13,15 @@ import MeHandler from "./Handlers/MeHandler";
 import SessionMiddleware from "./Middlewares/SessionMiddleware";
 import ShareHandler from "./Handlers/ShareHandler";
 import UnshareHandler from "./Handlers/UnshareHandler";
+import CaptchaHandler from "./Handlers/CaptchaHandler";
+import AgentMiddleware from "./Middlewares/AgentMiddleware";
+import CSRFHandler from "./Handlers/CSRFHandler";
 
 const CORS_WHITE_LIST = ["http://localhost:5173", "http://localhost:3005"];
 
 const onBeforeInit = async (app: App) => {
   const database = await IoCService.use<Knex>("Database");
+
   database.on("query", (queryData) => {
     // console.log(`Executing query: ${queryData.sql}`);
   });
@@ -54,6 +58,8 @@ const onBeforeInit = async (app: App) => {
   app.get("/api/v1/me", SessionMiddleware, MeHandler);
   app.post("/api/v1/posts/:postId/shares", SessionMiddleware, ShareHandler);
   app.post("/api/v1/posts/:postId/unshares", SessionMiddleware, UnshareHandler);
+  app.get("/api/v1/captcha", AgentMiddleware, CaptchaHandler);
+  app.get("/api/v1/csrf", AgentMiddleware, CSRFHandler);
 };
 
 const onAfterInit = async (app: App) => {};

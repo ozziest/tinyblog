@@ -1,6 +1,7 @@
 import md5 from "md5";
 import { IoCService } from "axe-api";
 import { Knex } from "knex";
+import { nanoid } from "nanoid";
 
 export const getUserAvatar = (email: string) => {
   if (!email) {
@@ -50,6 +51,10 @@ const getCookieContent = (token: string) => {
   return `token=${token}; SameSite=Strict; Max-Age=604800; Secure; HttpOnly`;
 };
 
+const getNewAgentId = () => {
+  return `agentId=${nanoid(40)}; SameSite=Strict; Secure; HttpOnly`;
+};
+
 export default {
   getUserByEmailOrUsername,
   incrementUserPostCount,
@@ -58,4 +63,5 @@ export default {
   decrementFollowerCount,
   decrementFollowingCount,
   getCookieContent,
+  getNewAgentId,
 };

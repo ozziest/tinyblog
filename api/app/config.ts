@@ -111,7 +111,7 @@ const config: IApplicationConfig = {
      *
      * @link https://axe-api.com/reference/rate-limit-configs.html#adaptor
      */
-    adaptor: "memory",
+    adaptor: "redis",
 
     /**
      * It is an option to be able to trust the X-Forwarded-For HTTP header

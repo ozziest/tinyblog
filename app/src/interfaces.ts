@@ -1,4 +1,6 @@
 export interface IUserPost {
+  csrf: string;
+  captcha: string;
   email: string;
   password: string;
   password_confirmed: string;

@@ -1,10 +1,32 @@
-import { IBeforeInsertContext } from "axe-api";
+import { IBeforeInsertContext, IoCService, RedisAdaptor } from "axe-api";
 import bcrypt from "bcrypt";
 import UserService from "../../Services/UserService";
 
-export default async ({ formData, database, res }: IBeforeInsertContext) => {
+export default async ({
+  req,
+  formData,
+  database,
+  res,
+}: IBeforeInsertContext) => {
+  const redis = await IoCService.use<RedisAdaptor>("Redis");
+  if (redis.isReady() === false) {
+    await redis.connect();
+  }
+
   formData.email = formData.email.trim().toLowerCase();
   formData.username = formData.username.trim().toLowerCase();
+
+  const { csrf, captcha } = req.body;
+  const { agentId } = req.original;
+
+  const savedCSRF = await redis.get(`LastCSRF:${agentId}`);
+  const savedCaptcha = await redis.get(`LastCaptchaCode:${agentId}`);
+
+  if (savedCSRF !== csrf || savedCaptcha !== captcha) {
+    return res.status(400).json({
+      error: "Unacceptable request! Please check your captcha code.",
+    });
+  }
 
   const user = await UserService.getUserByEmailOrUsername(
     formData.email,

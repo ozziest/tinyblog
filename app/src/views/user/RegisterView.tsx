@@ -1,16 +1,18 @@
 import { Link, useNavigate } from "react-router-dom";
 import Button from "@/components/inputs/Button";
 import TextInput from "@/components/inputs/TextInput";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IProfilCheckResponse, IUserPost } from "@/interfaces";
 import api from "@/api";
 import { useTranslation } from "react-i18next";
 import { IValidationResult, validate } from "robust-validator";
 import { notification } from "@/helpers/notication";
 import PasswordStrengthMeter from "@/components/inputs/PasswordStrengthMeter";
+import CaptchaInput from "@/components/inputs/CaptchaInput";
 
 const RULES = {
   email: "required|email|max:320",
+  captcha: "required",
   username: "required|alpha_dash|min:3|max:30",
   password: "required|min:8|max:50|confirmed",
   name: "required|min:3|max:50",
@@ -20,6 +22,8 @@ const RegisterView = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [state, setState] = useState<IUserPost>({
+    csrf: "",
+    captcha: "",
     email: "",
     username: "",
     name: "",
@@ -68,6 +72,16 @@ const RegisterView = () => {
       setProfile(data);
     }
   };
+
+  const prepare = async () => {
+    const response = await api.shared.csrf();
+    const { csrf } = await response.json();
+    setState({ ...state, csrf });
+  };
+
+  useEffect(() => {
+    prepare();
+  }, []);
 
   return (
     <div className="border border-neutral-200 p-8 rounded w-[500px]">
@@ -127,6 +141,11 @@ const RegisterView = () => {
           placeholder={t("register.passwordRetry.placeholder")}
           value={state.password_confirmed}
           onChange={(event) => handleChange(event, "password_confirmed")}
+          validation={validation}
+        />
+        <CaptchaInput
+          value={state.captcha}
+          onChange={(event) => handleChange(event, "captcha")}
           validation={validation}
         />
         <Button type="button" onClick={handleCreate}>

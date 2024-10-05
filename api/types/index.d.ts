@@ -6,5 +6,6 @@ declare module "http" {
   interface IncomingMessage {
     auth?: IAuth;
     post?: IPostContent;
+    agentId: string;
   }
 }

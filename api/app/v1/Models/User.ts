@@ -8,6 +8,7 @@ import {
   QueryFeature,
 } from "axe-api";
 import SessionMiddleware from "../Middlewares/SessionMiddleware";
+import AgentMiddleware from "../Middlewares/AgentMiddleware";
 
 class User extends Model {
   get fillable() {
@@ -33,6 +34,7 @@ class User extends Model {
 
   get middlewares() {
     return [
+      AgentMiddleware,
       {
         handler: [HandlerTypes.PAGINATE],
         middleware: SessionMiddleware,
