@@ -1,5 +1,5 @@
 import { IncomingMessage, ServerResponse } from "http";
-import { NextFunction } from "axe-api";
+import { NextFunction, rateLimit } from "axe-api";
 import UserService from "../Services/UserService";
 import HTTPService from "../Services/HTTPService";
 

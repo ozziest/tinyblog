@@ -1,6 +1,7 @@
 import { CacheStrategies, IApplicationConfig } from "axe-api";
 import errorHandler from "./v1/Handlers/ErrorHandler";
-import IPAddressKeyGenerator from "./v1/Middlewares/RateLimitters/IPAddressKeyGenerator";
+import { IncomingMessage } from "http";
+import HTTPService from "./v1/Services/HTTPService";
 
 const config: IApplicationConfig = {
   /**
@@ -145,7 +146,9 @@ const config: IApplicationConfig = {
      *
      * @link https://axe-api.com/reference/rate-limit-configs.html#keygenerator
      */
-    keyGenerator: IPAddressKeyGenerator,
+    keyGenerator: (req: IncomingMessage): string => {
+      return HTTPService.getIpAddress(req);
+    },
   },
 
   /**

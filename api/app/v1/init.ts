@@ -1,5 +1,13 @@
-import { App, IoCService, RedisAdaptor } from "axe-api";
+import {
+  App,
+  createRateLimitter,
+  IContext,
+  IoCService,
+  rateLimit,
+  RedisAdaptor,
+} from "axe-api";
 import cors from "cors";
+import { IncomingMessage, ServerResponse } from "http";
 import { Knex } from "knex";
 import LoginHandler from "./Handlers/LoginHandler";
 import { prepareTemplates } from "./Services/TemplateService";
@@ -17,6 +25,8 @@ import CaptchaHandler from "./Handlers/CaptchaHandler";
 import AgentMiddleware from "./Middlewares/AgentMiddleware";
 import CSRFHandler from "./Handlers/CSRFHandler";
 import { LogService } from "axe-api/build/src/Services";
+import UserAgentBasedRateLimitter from "./Middlewares/RateLimitters/UserAgentBasedRateLimitter";
+import UserBasedRateLimitter from "./Middlewares/RateLimitters/UserBasedRateLimitter";
 
 const CORS_WHITE_LIST = ["http://localhost:5173", "http://localhost:3005"];
 
@@ -34,7 +44,6 @@ const onBeforeInit = async (app: App) => {
   prepareTemplates();
 
   // Setting CORS
-  app.use(AgentMiddleware);
   app.use(
     cors({
       origin: function (url, callback) {
@@ -51,15 +60,29 @@ const onBeforeInit = async (app: App) => {
       credentials: true,
     })
   );
+
+  app.use(AgentMiddleware);
+  app.use(UserAgentBasedRateLimitter);
+
   app.post("/api/v1/login", LoginHandler);
   app.post("/api/v1/profileCheck", ProfileCheckHandler);
   app.post("/api/v1/confirm", ConfirmHandler);
   app.post("/api/v1/confirmReset", ConfirmResetHandler);
   app.post("/api/v1/passwordReset", PasswordResetHandler);
   app.post("/api/v1/changePassword", ChangePasswordHandler);
-  app.get("/api/v1/me", SessionMiddleware, MeHandler);
-  app.post("/api/v1/posts/:postId/shares", SessionMiddleware, ShareHandler);
-  app.post("/api/v1/posts/:postId/unshares", SessionMiddleware, UnshareHandler);
+  app.get("/api/v1/me", SessionMiddleware, UserBasedRateLimitter, MeHandler);
+  app.post(
+    "/api/v1/posts/:postId/shares",
+    SessionMiddleware,
+    UserBasedRateLimitter,
+    ShareHandler
+  );
+  app.post(
+    "/api/v1/posts/:postId/unshares",
+    SessionMiddleware,
+    UserBasedRateLimitter,
+    UnshareHandler
+  );
   app.get("/api/v1/captcha", AgentMiddleware, CaptchaHandler);
   app.get("/api/v1/csrf", AgentMiddleware, CSRFHandler);
 };

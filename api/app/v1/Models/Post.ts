@@ -7,6 +7,7 @@ import {
   QueryFeature,
 } from "axe-api";
 import SessionMiddleware from "../Middlewares/SessionMiddleware";
+import UserBasedRateLimitter from "../Middlewares/RateLimitters/UserBasedRateLimitter";
 
 class Post extends Model {
   get fillable() {
@@ -26,7 +27,7 @@ class Post extends Model {
   }
 
   get middlewares(): ModelMiddleware {
-    return [SessionMiddleware];
+    return [SessionMiddleware, UserBasedRateLimitter];
   }
 
   get handlers() {
