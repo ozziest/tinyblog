@@ -12,7 +12,7 @@ import SuccessMessage from "./components/messages/SuccessMessage";
 
 setLocales(validationEn);
 setConfig({
-  baseURL: "http://localhost:3005/api/v1",
+  baseURL: import.meta.env.VITE_API_URL,
 });
 
 interceptors.addRequest((request: RequestInit) => {
