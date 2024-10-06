@@ -2,6 +2,7 @@ import { CacheStrategies, IApplicationConfig } from "axe-api";
 import errorHandler from "./v1/Handlers/ErrorHandler";
 import { IncomingMessage } from "http";
 import HTTPService from "./v1/Services/HTTPService";
+import { DEFAULT_RATE_LIMITTER_WINDOW } from "./consts";
 
 const config: IApplicationConfig = {
   /**
@@ -138,7 +139,7 @@ const config: IApplicationConfig = {
      *
      * @link https://axe-api.com/reference/rate-limit-configs.html#windowinseconds
      */
-    windowInSeconds: 15 * 60,
+    windowInSeconds: DEFAULT_RATE_LIMITTER_WINDOW,
 
     /**
      * You can define your custom keyGenerator() function to specify the HTTP

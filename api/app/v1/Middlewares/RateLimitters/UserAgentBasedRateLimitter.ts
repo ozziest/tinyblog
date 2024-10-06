@@ -1,13 +1,16 @@
 import { IncomingMessage, ServerResponse } from "http";
 import { createRateLimitter, IRateLimitIdentifier } from "axe-api";
+import { DEFAULT_RATE_LIMITTER_WINDOW } from "../../../consts";
 
 const getIdentifier = (req: IncomingMessage): IRateLimitIdentifier => {
+  const clientKey = `UserAgent:${req.agentId}`;
+
   return {
     name: "UserAgent",
-    clientKey: req.agentId,
+    clientKey: clientKey,
     setResponseHeaders: process.env.NODE_ENV !== "production",
     maxRequests: 1200,
-    windowInSeconds: 15 * 60,
+    windowInSeconds: DEFAULT_RATE_LIMITTER_WINDOW,
   };
 };
 

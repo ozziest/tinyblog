@@ -8,6 +8,8 @@ import {
 } from "axe-api";
 import SessionMiddleware from "../Middlewares/SessionMiddleware";
 import UserBasedRateLimitter from "../Middlewares/RateLimitters/UserBasedRateLimitter";
+import { DATA_MANIPULATION_HANDLERS } from "../../consts";
+import MaxRequestRateLimitter from "../Middlewares/RateLimitters/MaxRequestRateLimitter";
 
 class Post extends Model {
   get fillable() {
@@ -27,7 +29,14 @@ class Post extends Model {
   }
 
   get middlewares(): ModelMiddleware {
-    return [SessionMiddleware, UserBasedRateLimitter];
+    return [
+      SessionMiddleware,
+      UserBasedRateLimitter,
+      {
+        handler: DATA_MANIPULATION_HANDLERS,
+        middleware: MaxRequestRateLimitter("PostCud", 50),
+      },
+    ];
   }
 
   get handlers() {

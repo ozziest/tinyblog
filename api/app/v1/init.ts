@@ -83,8 +83,8 @@ const onBeforeInit = async (app: App) => {
     UserBasedRateLimitter,
     UnshareHandler
   );
-  app.get("/api/v1/captcha", AgentMiddleware, CaptchaHandler);
-  app.get("/api/v1/csrf", AgentMiddleware, CSRFHandler);
+  app.get("/api/v1/captcha", CaptchaHandler);
+  app.get("/api/v1/csrf", CSRFHandler);
 };
 
 const onAfterInit = async (app: App) => {
