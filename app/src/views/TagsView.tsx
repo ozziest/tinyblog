@@ -13,6 +13,7 @@ const TagsView = () => {
   const store = useTagStore();
   const { tag } = useParams();
   const [tagItem, setTagItem] = useState<IHashtagApi>();
+  const initialTextState = `#${tag}`;
 
   const fetchTag = async () => {
     if (!tag) {
@@ -79,7 +80,7 @@ const TagsView = () => {
           <h1 className="text-neutral-900 font-bold text-2xl px-4 pt-6">
             {tagItem.hashtag}
           </h1>
-          <ShareInput store={store} />
+          <ShareInput store={store} initialState={initialTextState} />
         </PostContainer>
       </div>
       <div className="">

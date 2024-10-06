@@ -16,6 +16,8 @@ import {
 } from "@lexical/react/LexicalAutoLinkPlugin";
 import { ClickableLinkPlugin } from "@lexical/react/LexicalClickableLinkPlugin";
 import {
+  $createParagraphNode,
+  $createTextNode,
   $getRoot,
   EditorState,
   EditorThemeClasses,
@@ -66,19 +68,31 @@ function onError(error: any) {
 }
 
 interface Props {
+  initialState?: string;
   store: IPostStore;
   parent?: ExtendedPost;
   onShared?: (post: IPostApi) => void;
 }
 
-function Editor({ store, parent, onShared }: Props) {
+function Editor({ initialState = undefined, store, parent, onShared }: Props) {
   const authStore = useAuthStore();
   const [content, setContent] = useState<string>("");
   const [lexical, setLexical] = useState<object>({});
   const [editor, setEditor] = useState<LexicalEditor>();
 
   const initialConfig = {
-    editorState: () => content,
+    editorState: (editor: LexicalEditor) => {
+      const root = $getRoot();
+      root.clear();
+      const p = $createParagraphNode();
+      p.append($createTextNode(initialState));
+      root.append(p);
+
+      const timeout = setTimeout(() => {
+        clearTimeout(timeout);
+        onChange(editor.getEditorState(), editor);
+      });
+    },
     namespace: "TinyBlog",
     theme: TinyBlogEditorTheme,
     nodes: [HashtagNode, MentionNode, AutoLinkNode, LinkNode, OverflowNode],

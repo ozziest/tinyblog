@@ -6,12 +6,18 @@ import classNames from "classnames";
 import LexicalEditor from "../inputs/LexicalEditor";
 
 interface Props {
+  initialState?: string;
   store: IPostStore;
   parent?: ExtendedPost;
   onShared?: (post: IPostApi) => void;
 }
 
-const ShareInput = ({ store, parent, onShared }: Props) => {
+const ShareInput = ({
+  initialState = undefined,
+  store,
+  parent,
+  onShared,
+}: Props) => {
   const authStore = useAuthStore();
 
   return (
@@ -25,7 +31,12 @@ const ShareInput = ({ store, parent, onShared }: Props) => {
         <div className="flex gap-2">
           <Avatar user={authStore.state.user} size={12} />
           <div className="flex-grow">
-            <LexicalEditor store={store} parent={parent} onShared={onShared} />
+            <LexicalEditor
+              store={store}
+              parent={parent}
+              onShared={onShared}
+              initialState={initialState}
+            />
           </div>
         </div>
       </form>
