@@ -5,6 +5,7 @@ import { DEFAULT_RATE_LIMITTER_WINDOW } from "../../../consts";
 const getIdentifier = (
   name: string,
   maxRequests: number,
+  windowInSeconds: number,
   req: IncomingMessage
 ): IRateLimitIdentifier => {
   const userId = req.auth?.userId.toString() || "";
@@ -15,15 +16,24 @@ const getIdentifier = (
     clientKey,
     setResponseHeaders: process.env.NODE_ENV !== "production",
     maxRequests,
-    windowInSeconds: DEFAULT_RATE_LIMITTER_WINDOW,
+    windowInSeconds,
   };
 };
 
-export default (name: string, maxRequests: number) =>
+export default (
+    name: string,
+    maxRequests: number,
+    windowInSeconds = DEFAULT_RATE_LIMITTER_WINDOW
+  ) =>
   (req: IncomingMessage, res: ServerResponse, next: any) => {
     if (!req.auth) {
       return next();
     }
 
-    createRateLimitter(getIdentifier(name, maxRequests, req), req, res, next);
+    createRateLimitter(
+      getIdentifier(name, maxRequests, windowInSeconds, req),
+      req,
+      res,
+      next
+    );
   };
