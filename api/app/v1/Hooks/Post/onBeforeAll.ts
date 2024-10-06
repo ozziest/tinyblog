@@ -22,4 +22,11 @@ export default async ({ query, req, res }: IBeforePaginateContext) => {
     // Get me the only the posts of the people that I follow. But also, my posts
     query.whereIn("user_id", [...followingIds, req.original.auth.userId]);
   }
+
+  const tagId = req.query.get("tagId");
+  if (tagId) {
+    query.innerJoin("post_hashtags", "post_hashtags.post_id", "posts.id");
+    query.innerJoin("hashtags", "hashtags.id", "post_hashtags.hashtag_id");
+    query.where("hashtags.id", tagId);
+  }
 };

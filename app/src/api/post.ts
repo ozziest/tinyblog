@@ -16,17 +16,22 @@ interface PaginateProps {
   feed?: boolean;
   minId?: number;
   userId?: number;
+  tagId?: number;
 }
 
 const store = async (data: IStorePost) => {
   return resource("posts").post(data);
 };
 
-const paginate = async ({ feed, userId, minId }: PaginateProps = {}) => {
+const paginate = async ({ feed, userId, minId, tagId }: PaginateProps = {}) => {
   const query = resource("posts/all").with(FULL_POST).sort("id", "DESC");
 
   if (feed) {
     query.searchParams({ feed: "true" });
+  }
+
+  if (tagId) {
+    query.searchParams({ tagId: tagId.toString() });
   }
 
   if (userId) {

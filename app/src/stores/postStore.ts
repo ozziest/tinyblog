@@ -172,3 +172,4 @@ export const createStore = (type: StoreType) =>
 export const useDashboardStore = createStore(StoreType.Dashboard);
 export const usePostDetailStore = createStore(StoreType.PostDetail);
 export const useProfilePostsStore = createStore(StoreType.UserProfile);
+export const useTagStore = createStore(StoreType.TagStore);

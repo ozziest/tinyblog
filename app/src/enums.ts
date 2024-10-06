@@ -7,4 +7,5 @@ export enum StoreType {
   Dashboard = "Dashboard",
   PostDetail = "PostDetail",
   UserProfile = "UserProfile",
+  TagStore = "TagStore",
 }

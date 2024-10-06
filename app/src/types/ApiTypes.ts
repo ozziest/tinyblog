@@ -29,6 +29,11 @@ export interface IUserApi {
   following_id?: number;
 }
 
+export interface IHashtagApi {
+  id: number;
+  hashtag: string;
+}
+
 export interface IPostHashtagApi {
   id: number;
   hashtag: string;

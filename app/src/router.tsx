@@ -11,6 +11,7 @@ import EmailConfirmationView from "./views/user/EmailConfirmationView";
 import EmailConfirmationResetView from "./views/user/EmailConfirmationResetView";
 import ForgetPasswordView from "./views/user/ForgetPasswordView";
 import ResetPasswordView from "./views/user/ResetPasswordView";
+import TagsView from "./views/TagsView";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
       {
         path: "/u/:username",
         element: <ProfileView />,
+      },
+      {
+        path: "/tags/:tag",
+        element: <TagsView />,
       },
       {
         path: "/:postId",
