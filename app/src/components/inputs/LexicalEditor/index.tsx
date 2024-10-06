@@ -177,8 +177,9 @@ function Editor({ initialState = undefined, store, parent, onShared }: Props) {
           <CharacterLimitPlugin charset={"UTF-16"} maxLength={240} />
           <button
             type="button"
-            className=" px-3 py-1 border bg-gray-200 hover:bg-gray-300 rounded font-semibold text-sm"
+            className="px-3 py-1 border bg-gray-200 hover:bg-gray-300 rounded font-semibold text-sm disabled:text-neutral-300"
             onClick={handleShare}
+            disabled={content.trim().length === 0}
           >
             Share
           </button>
