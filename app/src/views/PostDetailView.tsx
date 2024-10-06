@@ -49,7 +49,7 @@ const PostDetailView = () => {
       return;
     }
 
-    if (store.state.hasMore) {
+    if (store.state.hasMore && store.state.minId !== Infinity) {
       store.setLoading(true);
       const id = parseInt(postId);
       const response = await api.post.getReplies(id, store.state.minId);
