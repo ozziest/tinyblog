@@ -1,3 +1,3 @@
 import SessionRateLimitter from "./SessionRateLimitter";
 
-export default SessionRateLimitter("Session", 800);
+export default SessionRateLimitter("Session", 600);

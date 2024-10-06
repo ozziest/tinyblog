@@ -62,7 +62,7 @@ const onBeforeInit = async (app: App) => {
   );
 
   app.use(AgentMiddleware);
-  app.use(UserAgentRateLimitter("UserAgent", 1200));
+  app.use(UserAgentRateLimitter("UserAgent", 1000));
 
   app.post("/api/v1/login", LoginHandler);
   app.post("/api/v1/profileCheck", ProfileCheckHandler);

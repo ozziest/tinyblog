@@ -132,7 +132,7 @@ const config: IApplicationConfig = {
      *
      * @link https://axe-api.com/reference/rate-limit-configs.html#maxrequests
      */
-    maxRequests: 4000,
+    maxRequests: 2000,
 
     /**
      * The request time window. The value must be specified in seconds.
