@@ -1,5 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import useAuthStore from "@/stores/authStore";
+import NavigationButton from "../buttons/NavigationButton";
+import { DailyIcon, HashtagIcon, HomeIcon, LogoutIcon } from "../Icons";
 
 const Navigation = () => {
   const authStore = useAuthStore();
@@ -11,14 +13,35 @@ const Navigation = () => {
   };
 
   return (
-    <div className="py-4">
-      <button
-        type="button"
-        className="font-semibold text-sm text-neutral-900"
+    <div className="mt-4 flex flex-col justify-between gap-1">
+      <NavigationButton
+        icon={<HomeIcon size={24} />}
+        isActive={true}
+        onClick={() => navigate("/")}
+      >
+        Home
+      </NavigationButton>
+      <NavigationButton
+        icon={<DailyIcon size={24} />}
+        isActive={false}
+        onClick={() => navigate("/")}
+      >
+        Daily
+      </NavigationButton>
+      <NavigationButton
+        icon={<HashtagIcon size={22} />}
+        isActive={false}
+        onClick={() => navigate("/")}
+      >
+        Hashtags
+      </NavigationButton>
+      <NavigationButton
+        icon={<LogoutIcon size={24} />}
+        isActive={false}
         onClick={handleLogout}
       >
         Logout
-      </button>
+      </NavigationButton>
     </div>
   );
 };

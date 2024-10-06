@@ -1,15 +1,27 @@
 import useAuthStore from "@/stores/authStore";
 import Stats from "./Stats";
+import Avatar from "./Avatar";
+import { Link } from "react-router-dom";
 
 const UserBox = () => {
   const state = useAuthStore((store) => store.state);
 
+  const profileLink = `/u/${state.user.username}`;
+
   return (
     <div className="border border-neutral-100 p-4 rounded  bg-white">
-      <div className="flex flex-col">
-        <div className="text-xl font-semibold">{state.user.name}</div>
-        <div className="text-neutral-500 font-semibold text-sm">
-          @{state.user.username}
+      <div className=" flex justify-between gap-3">
+        <Avatar user={state.user} size={14} />
+        <div className="flex-grow flex flex-col">
+          <Link to={profileLink} className="text-xl font-semibold">
+            {state.user.name}
+          </Link>
+          <Link
+            to={profileLink}
+            className="text-neutral-500 font-semibold text-sm"
+          >
+            @{state.user.username}
+          </Link>
         </div>
       </div>
       <div className="flex justify-between gap-2 pt-4">

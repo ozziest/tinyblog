@@ -37,10 +37,10 @@ const SessionLayout = () => {
       <Header />
       <div className="max-w-screen-lg mx-auto mt-2 ">
         <div className="flex justify-between">
-          <div className="w-8/12 ">
+          <div className="w-8/12">
             <Outlet />
           </div>
-          <div className="w-4/12 min-w-4/12 px-4">
+          <div className="w-4/12 min-w-4/12 pl-4">
             <div className="sticky top-[40px]">
               <UserBox />
               <Navigation />

@@ -180,3 +180,65 @@ export const ViewCountIcon = ({ size }: { size: number }) => {
     </svg>
   );
 };
+
+export const HomeIcon = ({ size }: { size: number }) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      width={size}
+      height={size}
+    >
+      <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+    </svg>
+  );
+};
+
+export const LogoutIcon = ({ size }: { size: number }) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="currentColor"
+    >
+      <path d="M10 17l1.41-1.41L7.83 12H20v-2H7.83l3.58-3.59L10 5l-6 6 6 6zm9-14H5c-1.1 0-2 .9-2 2v10h2V5h14v14H5v-2H3v2c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z" />
+    </svg>
+  );
+};
+
+export const DailyIcon = ({ size }: { size: number }) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      width={size}
+      height={size}
+    >
+      <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+      <path d="M7 2v2M17 2v2M3 8h18" />
+      <rect x="8" y="11" width="8" height="8" rx="1" ry="1" />
+    </svg>
+  );
+};
+
+export const HashtagIcon = ({ size }: { size: number }) => {
+  return (
+    <svg
+      fill="currentColor"
+      height={size}
+      width={size}
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 490 490"
+    >
+      <path
+        d="M64.333,490h58.401l33.878-137.69h122.259L245.39,490h58.401l33.878-137.69h119.92v-48.162h-108.24l29.2-117.324h79.04
+	v-48.162H390.23L424.108,0H365.31l-33.878,138.661H208.79L242.668,0h-58.415l-33.864,138.661H32.411v48.162h106.298l-28.818,117.324
+	h-77.48v48.162h65.8L64.333,490z M197.11,186.824h122.642l-29.2,117.324H168.292L197.11,186.824z"
+      />
+    </svg>
+  );
+};
