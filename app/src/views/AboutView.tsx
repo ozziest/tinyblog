@@ -1,4 +1,5 @@
 import { LogoIcon } from "@/components/Icons";
+import { Link } from "react-router-dom";
 
 const FEATURES: Record<string, string> = {
   "📜 Microblogging":
@@ -49,9 +50,20 @@ const AboutView = () => {
           <b className="font-bold">tinyblog</b> is a lightweight, open-source
           microblogging platform that allows users to engage people!
         </p>
-        <button className="bg-indigo-900 font-semibold text-white py-3 px-6 rounded-full hover:bg-indigo-700 transition duration-300">
-          Get Started
-        </button>
+        <div className="flex gap-2">
+          <Link
+            to="/auth/register"
+            className="bg-indigo-900 font-semibold text-white py-3 px-6 rounded-full hover:bg-indigo-700 transition duration-300"
+          >
+            Join network
+          </Link>
+          <Link
+            to="/auth/login"
+            className="bg-neutral-200 font-semibold text-black py-3 px-6 rounded-full hover:bg-neutral-300 transition duration-300"
+          >
+            Login
+          </Link>
+        </div>
       </section>
 
       {/* Features Section */}
