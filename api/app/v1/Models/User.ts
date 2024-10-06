@@ -2,11 +2,9 @@ import {
   allow,
   deny,
   HandlerTypes,
-  IHandlerBasedTransactionConfig,
   IQueryLimitConfig,
   Model,
   QueryFeature,
-  rateLimit,
 } from "axe-api";
 import SessionMiddleware from "../Middlewares/SessionMiddleware";
 import MaxRequestRateLimitter from "../Middlewares/RateLimitters/MaxRequestRateLimitter";
@@ -35,9 +33,10 @@ class User extends Model {
 
   get middlewares() {
     return [
+      SessionMiddleware,
       {
         handler: [HandlerTypes.PAGINATE],
-        middleware: SessionMiddleware,
+        middleware: MaxRequestRateLimitter("UserPaginate", 200),
       },
       {
         handler: [HandlerTypes.INSERT],
