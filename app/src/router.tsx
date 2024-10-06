@@ -12,6 +12,7 @@ import EmailConfirmationResetView from "./views/user/EmailConfirmationResetView"
 import ForgetPasswordView from "./views/user/ForgetPasswordView";
 import ResetPasswordView from "./views/user/ResetPasswordView";
 import TagsView from "./views/TagsView";
+import AboutView from "./views/AboutView";
 
 const router = createBrowserRouter([
   {
@@ -72,6 +73,7 @@ const router = createBrowserRouter([
       },
     ],
   },
+  { path: "/about", element: <AboutView /> },
   { path: "*", element: <PageNotFoundView /> },
 ]);
 
