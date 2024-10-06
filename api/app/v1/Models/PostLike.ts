@@ -1,7 +1,7 @@
 import { HandlerTypes, Model, ModelMiddleware, rateLimit } from "axe-api";
 import SessionMiddleware from "../Middlewares/SessionMiddleware";
-import UserBasedRateLimitter from "../Middlewares/RateLimitters/UserBasedRateLimitter";
-import MaxRequestRateLimitter from "../Middlewares/RateLimitters/MaxRequestRateLimitter";
+import DefaultSessionRateLimitter from "../Middlewares/RateLimitters/DefaultSessionRateLimitter";
+import SessionRateLimitter from "../Middlewares/RateLimitters/SessionRateLimitter";
 
 class PostLike extends Model {
   get handlers() {
@@ -11,11 +11,11 @@ class PostLike extends Model {
   get middlewares(): ModelMiddleware {
     return [
       SessionMiddleware,
-      UserBasedRateLimitter,
+      DefaultSessionRateLimitter,
       {
         handler: [HandlerTypes.INSERT],
         // 500 likes per day
-        middleware: MaxRequestRateLimitter("PostLike", 500, 60 * 60 * 24),
+        middleware: SessionRateLimitter("PostLike", 500, 60 * 60 * 24),
       },
     ];
   }

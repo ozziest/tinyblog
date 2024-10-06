@@ -25,8 +25,8 @@ import CaptchaHandler from "./Handlers/CaptchaHandler";
 import AgentMiddleware from "./Middlewares/AgentMiddleware";
 import CSRFHandler from "./Handlers/CSRFHandler";
 import { LogService } from "axe-api/build/src/Services";
-import UserAgentBasedRateLimitter from "./Middlewares/RateLimitters/UserAgentBasedRateLimitter";
-import UserBasedRateLimitter from "./Middlewares/RateLimitters/UserBasedRateLimitter";
+import DefaultSessionRateLimitter from "./Middlewares/RateLimitters/DefaultSessionRateLimitter";
+import UserAgentRateLimitter from "./Middlewares/RateLimitters/UserAgentRateLimitter";
 
 const CORS_WHITE_LIST = ["http://localhost:5173", "http://localhost:3005"];
 
@@ -62,7 +62,7 @@ const onBeforeInit = async (app: App) => {
   );
 
   app.use(AgentMiddleware);
-  app.use(UserAgentBasedRateLimitter);
+  app.use(UserAgentRateLimitter("UserAgent", 1200));
 
   app.post("/api/v1/login", LoginHandler);
   app.post("/api/v1/profileCheck", ProfileCheckHandler);
@@ -70,21 +70,30 @@ const onBeforeInit = async (app: App) => {
   app.post("/api/v1/confirmReset", ConfirmResetHandler);
   app.post("/api/v1/passwordReset", PasswordResetHandler);
   app.post("/api/v1/changePassword", ChangePasswordHandler);
-  app.get("/api/v1/me", SessionMiddleware, UserBasedRateLimitter, MeHandler);
+  app.get(
+    "/api/v1/me",
+    SessionMiddleware,
+    DefaultSessionRateLimitter,
+    MeHandler
+  );
   app.post(
     "/api/v1/posts/:postId/shares",
     SessionMiddleware,
-    UserBasedRateLimitter,
+    DefaultSessionRateLimitter,
     ShareHandler
   );
   app.post(
     "/api/v1/posts/:postId/unshares",
     SessionMiddleware,
-    UserBasedRateLimitter,
+    DefaultSessionRateLimitter,
     UnshareHandler
   );
-  app.get("/api/v1/captcha", CaptchaHandler);
-  app.get("/api/v1/csrf", CSRFHandler);
+  app.get(
+    "/api/v1/captcha",
+    UserAgentRateLimitter("CaptchaCreation", 10),
+    CaptchaHandler
+  );
+  app.get("/api/v1/csrf", UserAgentRateLimitter("CSRF", 100), CSRFHandler);
 };
 
 const onAfterInit = async (app: App) => {

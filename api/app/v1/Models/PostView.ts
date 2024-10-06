@@ -1,8 +1,8 @@
 import { HandlerTypes, Model, ModelMiddleware, rateLimit } from "axe-api";
 import SessionMiddleware from "../Middlewares/SessionMiddleware";
-import UserBasedRateLimitter from "../Middlewares/RateLimitters/UserBasedRateLimitter";
+import DefaultSessionRateLimitter from "../Middlewares/RateLimitters/DefaultSessionRateLimitter";
 import { DATA_MANIPULATION_HANDLERS } from "../../consts";
-import MaxRequestRateLimitter from "../Middlewares/RateLimitters/MaxRequestRateLimitter";
+import SessionRateLimitter from "../Middlewares/RateLimitters/SessionRateLimitter";
 
 class PostView extends Model {
   get handlers() {
@@ -12,10 +12,10 @@ class PostView extends Model {
   get middlewares(): ModelMiddleware {
     return [
       SessionMiddleware,
-      UserBasedRateLimitter,
+      DefaultSessionRateLimitter,
       {
         handler: DATA_MANIPULATION_HANDLERS,
-        middleware: MaxRequestRateLimitter("PostView", 500),
+        middleware: SessionRateLimitter("PostView", 500),
       },
     ];
   }

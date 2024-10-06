@@ -1,6 +1,7 @@
 import { HandlerTypes, Model } from "axe-api";
 import SessionMiddleware from "../Middlewares/SessionMiddleware";
-import MaxRequestRateLimitter from "../Middlewares/RateLimitters/MaxRequestRateLimitter";
+import SessionRateLimitter from "../Middlewares/RateLimitters/SessionRateLimitter";
+import DefaultSessionRateLimitter from "../Middlewares/RateLimitters/DefaultSessionRateLimitter";
 
 class UserFollower extends Model {
   get handlers() {
@@ -9,13 +10,11 @@ class UserFollower extends Model {
 
   get middlewares() {
     return [
+      SessionMiddleware,
+      DefaultSessionRateLimitter,
       {
-        handler: [HandlerTypes.PAGINATE],
-        middleware: SessionMiddleware,
-      },
-      {
-        handler: [HandlerTypes.INSERT],
-        middleware: MaxRequestRateLimitter("UserFollower", 100),
+        handler: [HandlerTypes.INSERT, HandlerTypes.DELETE],
+        middleware: SessionRateLimitter("UserFollower", 100),
       },
     ];
   }

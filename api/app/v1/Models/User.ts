@@ -7,7 +7,8 @@ import {
   QueryFeature,
 } from "axe-api";
 import SessionMiddleware from "../Middlewares/SessionMiddleware";
-import MaxRequestRateLimitter from "../Middlewares/RateLimitters/MaxRequestRateLimitter";
+import SessionRateLimitter from "../Middlewares/RateLimitters/SessionRateLimitter";
+import DefaultSessionRateLimitter from "../Middlewares/RateLimitters/DefaultSessionRateLimitter";
 
 class User extends Model {
   get fillable() {
@@ -34,13 +35,14 @@ class User extends Model {
   get middlewares() {
     return [
       SessionMiddleware,
+      DefaultSessionRateLimitter,
       {
         handler: [HandlerTypes.PAGINATE],
-        middleware: MaxRequestRateLimitter("UserPaginate", 200),
+        middleware: SessionRateLimitter("UserPaginate", 200),
       },
       {
         handler: [HandlerTypes.INSERT],
-        middleware: MaxRequestRateLimitter("UserInsert", 50),
+        middleware: SessionRateLimitter("UserInsert", 50),
       },
     ];
   }
