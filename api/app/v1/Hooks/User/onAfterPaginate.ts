@@ -8,7 +8,7 @@ export default async ({ result, req }: IAfterPaginateContext) => {
     );
 
     result.data.map((item: any) => {
-      const following = followings.find((i) => i.user_id === item.id);
+      const following = followings.find((i: any) => i.user_id === item.id);
       if (following) {
         item.following_id = following.id;
       }

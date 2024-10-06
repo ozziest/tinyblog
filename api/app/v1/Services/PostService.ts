@@ -1,4 +1,4 @@
-import { IoCService, RedisAdaptor } from "axe-api";
+import { IoCService } from "axe-api";
 import sanitizeHtml from "sanitize-html";
 import { Knex } from "knex";
 import {
@@ -8,19 +8,8 @@ import {
   IMentionMap,
 } from "../../interfaces";
 import { nanoid } from "nanoid";
-import CacheService from "./CacheService";
 
 const getMyLikedPostIds = async (userId: number, postIds: number[]) => {
-  const redis = await IoCService.use<RedisAdaptor>("Redis");
-  const key = CacheService.toKeys("PostService.getMyLikedPostIds", {
-    userId,
-    postIds,
-  });
-  const data = await redis.get(key);
-  if (data) {
-    return JSON.parse(data);
-  }
-
   const db = await IoCService.use<Knex>("Database");
 
   // Fetch my related likes
@@ -33,23 +22,10 @@ const getMyLikedPostIds = async (userId: number, postIds: number[]) => {
   // The posts that I liked
   const result = myLikes.map((item) => item.post_id).flat();
 
-  // Set the value to the redis
-  await redis.set(key, JSON.stringify(result), 60);
-
   return result;
 };
 
 const getMySharedPostIds = async (userId: number, postIds: number[]) => {
-  const redis = await IoCService.use<RedisAdaptor>("Redis");
-  const key = CacheService.toKeys("PostService.getMySharedPostIds", {
-    userId,
-    postIds,
-  });
-  const data = await redis.get(key);
-  if (data) {
-    return JSON.parse(data);
-  }
-
   const db = await IoCService.use<Knex>("Database");
 
   // Fetch my related likes
@@ -62,30 +38,16 @@ const getMySharedPostIds = async (userId: number, postIds: number[]) => {
   // The posts that I liked
   const result = myShares.map((item) => item.reshare_id).flat();
 
-  await redis.set(key, JSON.stringify(result), 60);
-
   return result;
 };
 
 const getPostLike = async (userId?: number, postId?: number) => {
-  const redis = await IoCService.use<RedisAdaptor>("Redis");
-  const key = CacheService.toKeys("PostService.getPostLike", {
-    userId,
-    postId,
-  });
-  const data = await redis.get(key);
-  if (data) {
-    return JSON.parse(data);
-  }
-
   const db = await IoCService.use<Knex>("Database");
   const result = await db
     .table("post_likes")
     .where("user_id", userId)
     .where("post_id", postId)
     .first();
-
-  await redis.set(key, JSON.stringify(result), 60);
 
   return result;
 };
@@ -106,24 +68,12 @@ const decrementPostLike = async (postId: number) => {
 };
 
 const getPostView = async (userId?: number, postId?: number) => {
-  const redis = await IoCService.use<RedisAdaptor>("Redis");
-  const key = CacheService.toKeys("PostService.getPostView", {
-    userId,
-    postId,
-  });
-  const data = await redis.get(key);
-  if (data) {
-    return JSON.parse(data);
-  }
-
   const db = await IoCService.use<Knex>("Database");
   const result = await db
     .table("post_views")
     .where("user_id", userId)
     .where("post_id", postId)
     .first();
-
-  await redis.set(key, JSON.stringify(result), 60);
 
   return result;
 };
