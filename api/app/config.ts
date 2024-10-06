@@ -1,5 +1,6 @@
 import { CacheStrategies, IApplicationConfig } from "axe-api";
 import errorHandler from "./v1/Handlers/ErrorHandler";
+import IPAddressKeyGenerator from "./v1/Middlewares/RateLimitters/IPAddressKeyGenerator";
 
 const config: IApplicationConfig = {
   /**
@@ -104,7 +105,7 @@ const config: IApplicationConfig = {
      *
      * @link https://axe-api.com/reference/rate-limit-configs.html#enabled
      */
-    enabled: false,
+    enabled: true,
 
     /**
      * The data storing adaptor. You can select memory or redis.
@@ -129,14 +130,22 @@ const config: IApplicationConfig = {
      *
      * @link https://axe-api.com/reference/rate-limit-configs.html#maxrequests
      */
-    maxRequests: 100,
+    maxRequests: 4000,
 
     /**
      * The request time window. The value must be specified in seconds.
      *
      * @link https://axe-api.com/reference/rate-limit-configs.html#windowinseconds
      */
-    windowInSeconds: 10,
+    windowInSeconds: 15 * 60,
+
+    /**
+     * You can define your custom keyGenerator() function to specify the HTTP
+     * client authentication.
+     *
+     * @link https://axe-api.com/reference/rate-limit-configs.html#keygenerator
+     */
+    keyGenerator: IPAddressKeyGenerator,
   },
 
   /**
