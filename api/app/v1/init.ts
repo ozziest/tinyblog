@@ -16,6 +16,7 @@ import UnshareHandler from "./Handlers/UnshareHandler";
 import CaptchaHandler from "./Handlers/CaptchaHandler";
 import AgentMiddleware from "./Middlewares/AgentMiddleware";
 import CSRFHandler from "./Handlers/CSRFHandler";
+import { LogService } from "axe-api/build/src/Services";
 
 const CORS_WHITE_LIST = ["http://localhost:5173", "http://localhost:3005"];
 
@@ -23,7 +24,7 @@ const onBeforeInit = async (app: App) => {
   const database = await IoCService.use<Knex>("Database");
 
   database.on("query", (queryData) => {
-    console.log(`Executing query: ${queryData.sql}`);
+    // console.log(`Executing query: ${queryData.sql}`);
   });
 
   // Setting the default locale
@@ -33,6 +34,7 @@ const onBeforeInit = async (app: App) => {
   prepareTemplates();
 
   // Setting CORS
+  app.use(AgentMiddleware);
   app.use(
     cors({
       origin: function (url, callback) {
@@ -62,6 +64,12 @@ const onBeforeInit = async (app: App) => {
   app.get("/api/v1/csrf", AgentMiddleware, CSRFHandler);
 };
 
-const onAfterInit = async (app: App) => {};
+const onAfterInit = async (app: App) => {
+  const redis = await IoCService.use<RedisAdaptor>("Redis");
+  if (!redis.isReady()) {
+    await redis.connect();
+    LogService.info("Redis connection in done!");
+  }
+};
 
 export { onBeforeInit, onAfterInit };

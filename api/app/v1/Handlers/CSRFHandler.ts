@@ -5,9 +5,6 @@ import { nanoid } from "nanoid";
 export default async (req: AxeRequest, res: AxeResponse) => {
   try {
     const redis = await IoCService.use<RedisAdaptor>("Redis");
-    if (redis.isReady() === false) {
-      await redis.connect();
-    }
 
     const csrf = nanoid(40);
     redis.set(`LastCSRF:${req.original.agentId}`, csrf, 60 * 10);

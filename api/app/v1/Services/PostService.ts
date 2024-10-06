@@ -1,4 +1,4 @@
-import { IoCService } from "axe-api";
+import { IoCService, RedisAdaptor } from "axe-api";
 import sanitizeHtml from "sanitize-html";
 import { Knex } from "knex";
 import {
@@ -10,6 +10,10 @@ import {
 import { nanoid } from "nanoid";
 
 const getMyLikedPostIds = async (userId: number, postIds: number[]) => {
+  console.log("getMyLikedPostIds", userId, postIds);
+  // const redis = await IoCService.use<RedisAdaptor>("Redis");
+  // console.log(await redis.get("TEST"));
+
   const db = await IoCService.use<Knex>("Database");
 
   // Fetch my related likes
@@ -353,21 +357,21 @@ export default {
   getMyLikedPostIds,
   getMySharedPostIds,
   getPostLike,
-  deletePostLike,
-  decrementPostLike,
-  decrementPostShare,
   getPostView,
+  getPost,
+  isAlreadySharedByUser,
+  deletePostLike,
+  toPostContent,
   incrementPostReplies,
-  addPostView,
   incrementPostView,
   incrementPostLike,
   incrementPostShare,
-  getPost,
-  share,
-  unshare,
-  isAlreadySharedByUser,
-  toPostContent,
+  decrementPostLike,
+  decrementPostShare,
+  addPostView,
   addHashtags,
   addMentions,
   addLinks,
+  share,
+  unshare,
 };

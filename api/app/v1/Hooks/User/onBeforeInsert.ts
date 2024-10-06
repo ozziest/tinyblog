@@ -4,16 +4,8 @@ import UserService from "../../Services/UserService";
 import { validate } from "robust-validator";
 import HTTPService from "../../Services/HTTPService";
 
-export default async ({
-  req,
-  formData,
-  database,
-  res,
-}: IBeforeInsertContext) => {
+export default async ({ req, formData, res }: IBeforeInsertContext) => {
   const redis = await IoCService.use<RedisAdaptor>("Redis");
-  if (redis.isReady() === false) {
-    await redis.connect();
-  }
 
   formData.email = formData.email.trim().toLowerCase();
   formData.username = formData.username.trim().toLowerCase();

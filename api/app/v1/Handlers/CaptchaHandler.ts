@@ -34,9 +34,6 @@ const getRandomInt = (min: number, max: number) => {
 export default async (req: AxeRequest, res: AxeResponse) => {
   try {
     const redis = await IoCService.use<RedisAdaptor>("Redis");
-    if (redis.isReady() === false) {
-      await redis.connect();
-    }
 
     const width = 300;
     const height = 80;
