@@ -122,7 +122,7 @@ const config: IApplicationConfig = {
      *
      * @link https://axe-api.com/reference/rate-limit-configs.html#trustproxyip
      */
-    trustProxyIP: false,
+    trustProxyIP: true,
 
     /**
      * The maximum acceptable request count during the time window for the
