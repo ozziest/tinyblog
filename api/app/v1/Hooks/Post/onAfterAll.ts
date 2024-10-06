@@ -1,6 +1,5 @@
 import { IAfterPaginateContext } from "axe-api";
 import PostService from "../../Services/PostService";
-import Post from "../../Models/Post";
 
 export default async ({ req, result }: IAfterPaginateContext) => {
   // Who am I?
@@ -8,7 +7,11 @@ export default async ({ req, result }: IAfterPaginateContext) => {
 
   if (userId) {
     // Which posts should I check?
-    const postIds = result.data.map((item: any) => item.id);
+    const postIds = [
+      ...result.map((item: any) => item.id),
+      ...result.map((item: any) => item.parent?.id),
+      ...result.map((item: any) => item.reshare?.id),
+    ].filter((id) => id);
 
     // The posts that I liked
     const myLikedPostIds = await PostService.getMyLikedPostIds(userId, postIds);
@@ -19,7 +22,7 @@ export default async ({ req, result }: IAfterPaginateContext) => {
       postIds
     );
 
-    result.data.forEach((item: any) => {
+    result.forEach((item: any) => {
       // Set the like status for the pot
       item.is_liked_by_you = myLikedPostIds.includes(item.id);
 

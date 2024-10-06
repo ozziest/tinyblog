@@ -7,7 +7,10 @@ export default async ({ req, item }: IAfterShowContext) => {
 
   if (userId) {
     // Which posts should I check?
-    const postIds = [item.id, item.parent_id || -1];
+    // Which posts should I check?
+    const postIds = [item.id, item.parent?.id, item.reshare?.id].filter(
+      (id) => id
+    );
 
     // The posts that I liked
     const myLikedPostIds = await PostService.getMyLikedPostIds(userId, postIds);

@@ -23,7 +23,7 @@ const onBeforeInit = async (app: App) => {
   const database = await IoCService.use<Knex>("Database");
 
   database.on("query", (queryData) => {
-    // console.log(`Executing query: ${queryData.sql}`);
+    console.log(`Executing query: ${queryData.sql}`);
   });
 
   // Setting the default locale

@@ -1,4 +1,3 @@
-import { PER_PAGE } from "@/consts";
 import { IStorePost } from "@/interfaces";
 import { resource } from "axe-api-client";
 
@@ -24,7 +23,7 @@ const store = async (data: IStorePost) => {
 };
 
 const paginate = async ({ feed, userId, minId }: PaginateProps = {}) => {
-  const query = resource("posts").with(FULL_POST).sort("id", "DESC");
+  const query = resource("posts/all").with(FULL_POST).sort("id", "DESC");
 
   if (feed) {
     query.searchParams({ feed: "true" });
@@ -38,7 +37,7 @@ const paginate = async ({ feed, userId, minId }: PaginateProps = {}) => {
     query.where("id", "<", minId);
   }
 
-  return query.paginate({ perPage: PER_PAGE, page: 1 });
+  return query.get();
 };
 
 const setViewed = async (postId: number) => {
@@ -50,7 +49,7 @@ const getPost = async (id: number) => {
 };
 
 const getReplies = async (parentId: number, minId?: number) => {
-  const query = resource("posts")
+  const query = resource("posts/all")
     .where("parent_id", parentId)
     .with(`${USER},${POST_DETAIL}`)
     .sort("id", "DESC");
@@ -59,7 +58,7 @@ const getReplies = async (parentId: number, minId?: number) => {
     query.where("id", "<", minId);
   }
 
-  return query.paginate({ perPage: PER_PAGE, page: 1 });
+  return query.get();
 };
 
 const like = async (postId: number) => {

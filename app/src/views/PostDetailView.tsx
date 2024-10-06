@@ -32,7 +32,7 @@ const PostDetailView = () => {
     const [postResponse, repliesResponse] = results;
     const post = await postResponse.json();
     const replies = await repliesResponse.json();
-    const items: ExtendedPost[] = toExtendedPost([post, ...replies.data]);
+    const items: ExtendedPost[] = toExtendedPost([post, ...replies]);
 
     // The first post should be the root post
     if (items.length > 0) {
@@ -53,7 +53,7 @@ const PostDetailView = () => {
       store.setLoading(true);
       const id = parseInt(postId);
       const response = await api.post.getReplies(id, store.state.minId);
-      const { data } = await response.json();
+      const data = await response.json();
       const items = toExtendedPost(data);
       store.addMoreExtendedPosts(items);
       store.setLoading(false);
