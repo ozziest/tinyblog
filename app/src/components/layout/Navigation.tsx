@@ -36,6 +36,7 @@ const Navigation = () => {
       >
         #{dailyHashtag}
       </NavigationButton>
+      <hr className="my-5 border-neutral-200" />
       <NavigationButton
         icon={<HashtagIcon size={22} />}
         isActive={false}
