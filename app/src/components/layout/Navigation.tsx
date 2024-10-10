@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import useAuthStore from "@/stores/authStore";
 import NavigationButton from "../buttons/NavigationButton";
-import { DailyIcon, HashtagIcon, HomeIcon, LogoutIcon } from "../Icons";
+import { DailyIcon, HomeIcon, LogoutIcon } from "../Icons";
 import { format } from "date-fns";
 import * as locales from "date-fns/locale";
 import { DEFAULT_LANG } from "@/consts";
