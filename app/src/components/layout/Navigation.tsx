@@ -51,13 +51,22 @@ const Navigation = () => {
       >
         #{dailyHashtag}
       </NavigationButton>
-      <hr className="my-5 border-neutral-200" />
-      <h4 className="font-bold px-4">Trends</h4>
-      {hashtags.map((hashtag) => (
-        <NavigationLink key={hashtag} to={`/tags/${hashtag.replace("#", "")}`}>
-          {hashtag}
-        </NavigationLink>
-      ))}
+      {hashtags.length > 0 && (
+        <>
+          <hr className="my-5 border-neutral-200" />
+          <h4 className="font-bold px-4">Trends</h4>
+          <div className="px-4 flex flex-col gap-2">
+            {hashtags.map((hashtag) => (
+              <NavigationLink
+                key={hashtag}
+                to={`/tags/${hashtag.replace("#", "")}`}
+              >
+                {hashtag}
+              </NavigationLink>
+            ))}
+          </div>
+        </>
+      )}
       <hr className="my-5 border-neutral-200" />
       <NavigationButton
         icon={<LogoutIcon size={24} />}

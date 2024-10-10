@@ -11,7 +11,7 @@ const NavigationLink = ({ to, children }: Props) => {
     <Link
       to={to}
       className={classNames(
-        "font-medium text-sm text-left rounded p-4 text-neutral-800 transition-colors hover:bg-indigo-50/50 flex items-center gap-2",
+        "font-medium text-left rounded text-neutral-600 transition-colors hover:underline hover:text-neutral-900",
       )}
     >
       {children}
