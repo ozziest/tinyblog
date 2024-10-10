@@ -11,7 +11,8 @@ export default [
   pluginReact.configs.flat.recommended,
   {
     rules: {
-      "react/react-in-jsx-scope": "off", // Bu kuralı devre dışı bırakır
+      "react/react-in-jsx-scope": "off",
+      "react/no-unescaped-entities": "off",
     },
   },
 ];

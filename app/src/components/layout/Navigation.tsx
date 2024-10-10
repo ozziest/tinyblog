@@ -9,7 +9,7 @@ const Navigation = () => {
 
   const handleLogout = () => {
     authStore.logout();
-    navigate("/auth/login");
+    navigate("/about");
   };
 
   return (

@@ -41,7 +41,7 @@ const AboutView = () => {
   return (
     <main className="bg-white text-gray-900">
       {/* Hero Section */}
-      <section className="flex flex-col items-center justify-center min-h-screen bg-gray-100 px-4">
+      <section className="flex flex-col items-center justify-center min-h-screen bg-indigo-50 px-4">
         <div className="text-indigo-800">
           <LogoIcon size={100} />
         </div>
@@ -76,6 +76,116 @@ const AboutView = () => {
               <p className="text-gray-600">{FEATURES[feature]}</p>
             </div>
           ))}
+        </div>
+      </section>
+
+      <section className="py-20 bg-indigo-50 px-4">
+        <div className="max-w-6xl mx-auto text-center">
+          <h2 className="text-3xl font-bold mb-6">
+            Social media should not feel like a casino
+          </h2>
+          <p className="text-lg text-gray-600 mb-12">
+            Ethical design prioritizes user well-being over profits. Social
+            platforms should empower, not exploit.
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Feature 1 */}
+            <div className="bg-white p-8 rounded-lg shadow-lg text-center">
+              <div className="mb-4">
+                {/* SVG Icon */}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-12 w-12 mx-auto text-gray-700"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M12 8c-1.104 0-2-.896-2-2 0-1.104.896-2 2-2s2 .896 2 2-.896 2-2 2z"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M14 13H9m0 0a3 3 0 11-6 0m6 0a3 3 0 110 6m0-6v-2a3 3 0 00-3-3H6"
+                  />
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold mb-2">No Manipulation</h3>
+              <p className="text-gray-600">
+                Social apps should not be designed to keep users hooked for
+                endless hours.
+              </p>
+            </div>
+
+            {/* Feature 2 */}
+            <div className="bg-white p-8 rounded-lg shadow-lg text-center">
+              <div className="mb-4">
+                {/* SVG Icon */}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-12 w-12 mx-auto text-gray-700"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M12 6v6l4 2"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M4 16a8 8 0 018 8"
+                  />
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold mb-2">No Time Theft</h3>
+              <p className="text-gray-600">
+                Your time is valuable. Platforms should not steal it just to
+                increase engagement.
+              </p>
+            </div>
+
+            {/* Feature 3 */}
+            <div className="bg-white p-8 rounded-lg shadow-lg text-center">
+              <div className="mb-4">
+                {/* SVG Icon */}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-12 w-12 mx-auto text-gray-700"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M9.75 6.75a1.5 1.5 0 011.5-1.5h.5a1.5 1.5 0 011.5 1.5V15a1.5 1.5 0 01-1.5 1.5h-.5a1.5 1.5 0 01-1.5-1.5V6.75z"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M12 20.25v-4.5"
+                  />
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold mb-2">No Exploitation</h3>
+              <p className="text-gray-600">
+                Social media should not exploit users' emotions and behaviors
+                for profit.
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 

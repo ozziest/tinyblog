@@ -24,7 +24,7 @@ const SessionLayout = () => {
       setReady(true);
       getMeData();
     } else {
-      navigate("/auth/login");
+      navigate("/about");
     }
   }, []);
 
