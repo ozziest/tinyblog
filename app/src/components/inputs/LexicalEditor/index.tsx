@@ -115,10 +115,14 @@ function Editor({ initialState = undefined, store, parent, onShared }: Props) {
 
   const clearState = () => {
     if (editor) {
-      setContent("");
+      // onChange(editor.getEditorState(), editor);
+      setContent(initialState || "");
       editor.update(() => {
         const root = $getRoot();
         root.clear();
+        const p = $createParagraphNode();
+        p.append($createTextNode(initialState));
+        root.append(p);
       });
     }
   };
