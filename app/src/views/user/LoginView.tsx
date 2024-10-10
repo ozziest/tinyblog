@@ -118,13 +118,6 @@ const LoginView = () => {
         >
           Forget password
         </Link>
-        |
-        <Link
-          to="/confirm/email"
-          className="text-neutral-600 hover:underline hover:text-neutral-950"
-        >
-          E-mail confirmation
-        </Link>
       </div>
     </div>
   );
