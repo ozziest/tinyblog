@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import useAuthStore from "@/stores/authStore";
 import NavigationButton from "../buttons/NavigationButton";
 import { DailyIcon, HomeIcon, LogoutIcon } from "../Icons";
@@ -12,6 +12,7 @@ import NavigationLink from "../buttons/NavigationLink";
 const Navigation = () => {
   const authStore = useAuthStore();
   const navigate = useNavigate();
+  const location = useLocation();
   const [hashtags, setHashtags] = useState<string[]>([]);
 
   const handleLogout = () => {
@@ -31,6 +32,8 @@ const Navigation = () => {
     locale: (locales as any)[DEFAULT_LANG],
   });
 
+  const dailyLink = `/tags/${dailyHashtag}`;
+
   useEffect(() => {
     getReports();
   }, []);
@@ -39,15 +42,15 @@ const Navigation = () => {
     <div className="mt-4 flex flex-col justify-between gap-1">
       <NavigationButton
         icon={<HomeIcon size={24} />}
-        isActive={true}
+        isActive={location.pathname === "/"}
         onClick={() => navigate("/")}
       >
         Home
       </NavigationButton>
       <NavigationButton
         icon={<DailyIcon size={24} />}
-        isActive={false}
-        onClick={() => navigate(`/tags/${dailyHashtag}`)}
+        isActive={location.pathname === dailyLink}
+        onClick={() => navigate(dailyLink)}
       >
         #{dailyHashtag}
       </NavigationButton>
