@@ -12,7 +12,17 @@ import DefaultSessionRateLimitter from "../Middlewares/RateLimitters/DefaultSess
 
 class Hashtag extends Model {
   get handlers() {
-    return [HandlerTypes.ALL];
+    return [HandlerTypes.ALL, HandlerTypes.INSERT];
+  }
+
+  get fillable() {
+    return ["hashtag"];
+  }
+
+  get validations() {
+    return {
+      hashtag: "required|max:34",
+    };
   }
 
   get limits(): IQueryLimitConfig[][] {

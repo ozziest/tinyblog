@@ -2,6 +2,9 @@ import { useNavigate } from "react-router-dom";
 import useAuthStore from "@/stores/authStore";
 import NavigationButton from "../buttons/NavigationButton";
 import { DailyIcon, HashtagIcon, HomeIcon, LogoutIcon } from "../Icons";
+import { format } from "date-fns";
+import * as locales from "date-fns/locale";
+import { DEFAULT_LANG } from "@/consts";
 
 const Navigation = () => {
   const authStore = useAuthStore();
@@ -11,6 +14,11 @@ const Navigation = () => {
     authStore.logout();
     navigate("/about");
   };
+
+  const dailyHashtag = format(new Date(), "ddMMMMyyyy", {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    locale: (locales as any)[DEFAULT_LANG],
+  });
 
   return (
     <div className="mt-4 flex flex-col justify-between gap-1">
@@ -24,9 +32,9 @@ const Navigation = () => {
       <NavigationButton
         icon={<DailyIcon size={24} />}
         isActive={false}
-        onClick={() => navigate("/")}
+        onClick={() => navigate(`/tags/${dailyHashtag}`)}
       >
-        Daily
+        #{dailyHashtag}
       </NavigationButton>
       <NavigationButton
         icon={<HashtagIcon size={22} />}

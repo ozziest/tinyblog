@@ -15,21 +15,49 @@ const TagsView = () => {
   const [tagItem, setTagItem] = useState<IHashtagApi>();
   const initialTextState = `#${tag}`;
 
-  const fetchTag = async () => {
+  const getTheDefinedTag = async () => {
     if (!tag) {
-      navigate("/");
-      return;
+      return null;
     }
 
     const response = await api.hashtag.findByTag(tag);
     if (response.status !== 200) {
-      navigate("/");
+      return null;
     }
 
     const [item] = await response.json();
 
     if (!item) {
+      return null;
+    }
+
+    return item;
+  };
+
+  const createANewTag = async () => {
+    if (!tag) {
+      return null;
+    }
+
+    const response = await api.hashtag.create(tag);
+
+    if ([200, 201].includes(response.status) === false) {
       return navigate("/");
+    }
+
+    return await response.json();
+  };
+
+  const fetchTag = async () => {
+    let item = await getTheDefinedTag();
+
+    if (!item) {
+      item = await createANewTag();
+    }
+
+    if (!item) {
+      navigate("/");
+      return;
     }
 
     setTagItem(item);
