@@ -27,6 +27,8 @@ import CSRFHandler from "./Handlers/CSRFHandler";
 import { LogService } from "axe-api/build/src/Services";
 import DefaultSessionRateLimitter from "./Middlewares/RateLimitters/DefaultSessionRateLimitter";
 import UserAgentRateLimitter from "./Middlewares/RateLimitters/UserAgentRateLimitter";
+import SessionRateLimitter from "./Middlewares/RateLimitters/SessionRateLimitter";
+import HashtagReportHandler from "./Handlers/HashtagReportHandler";
 
 const CORS_WHITE_LIST = ["http://localhost:5173", "http://localhost:3005"];
 
@@ -87,6 +89,12 @@ const onBeforeInit = async (app: App) => {
     SessionMiddleware,
     DefaultSessionRateLimitter,
     UnshareHandler
+  );
+  app.get(
+    "/api/v1/hashtags/report",
+    SessionMiddleware,
+    DefaultSessionRateLimitter,
+    HashtagReportHandler
   );
   app.get(
     "/api/v1/captcha",

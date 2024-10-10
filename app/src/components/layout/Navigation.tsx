@@ -5,20 +5,35 @@ import { DailyIcon, HashtagIcon, HomeIcon, LogoutIcon } from "../Icons";
 import { format } from "date-fns";
 import * as locales from "date-fns/locale";
 import { DEFAULT_LANG } from "@/consts";
+import { useEffect, useState } from "react";
+import api from "@/api";
+import NavigationLink from "../buttons/NavigationLink";
 
 const Navigation = () => {
   const authStore = useAuthStore();
   const navigate = useNavigate();
+  const [hashtags, setHashtags] = useState<string[]>([]);
 
   const handleLogout = () => {
     authStore.logout();
     navigate("/about");
   };
 
+  const getReports = async () => {
+    const response = await api.hashtag.report();
+    if (response.status === 200) {
+      setHashtags(await response.json());
+    }
+  };
+
   const dailyHashtag = format(new Date(), "ddMMMMyyyy", {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     locale: (locales as any)[DEFAULT_LANG],
   });
+
+  useEffect(() => {
+    getReports();
+  }, []);
 
   return (
     <div className="mt-4 flex flex-col justify-between gap-1">
@@ -37,13 +52,13 @@ const Navigation = () => {
         #{dailyHashtag}
       </NavigationButton>
       <hr className="my-5 border-neutral-200" />
-      <NavigationButton
-        icon={<HashtagIcon size={22} />}
-        isActive={false}
-        onClick={() => navigate("/")}
-      >
-        Hashtags
-      </NavigationButton>
+      <h4 className="font-bold px-4">Trends</h4>
+      {hashtags.map((hashtag) => (
+        <NavigationLink key={hashtag} to={`/tags/${hashtag.replace("#", "")}`}>
+          {hashtag}
+        </NavigationLink>
+      ))}
+      <hr className="my-5 border-neutral-200" />
       <NavigationButton
         icon={<LogoutIcon size={24} />}
         isActive={false}
