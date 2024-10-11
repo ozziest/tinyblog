@@ -48,11 +48,11 @@ const decrementFollowingCount = async (userId: number) => {
 
 const getCookieContent = (token: string) => {
   // 1 week long
-  return `token=${token}; SameSite=Strict; Max-Age=604800; Secure; HttpOnly`;
+  return `token=${token}; SameSite=Strict; Max-Age=604800; Path=/; Secure; HttpOnly`;
 };
 
 const getNewAgentId = () => {
-  return `agentId=${nanoid(40)}; SameSite=Strict; Secure; HttpOnly`;
+  return `agentId=${nanoid(40)}; SameSite=Strict; Path=/; Secure; HttpOnly`;
 };
 
 export default {
