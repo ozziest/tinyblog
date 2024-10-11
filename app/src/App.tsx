@@ -10,7 +10,7 @@ const App = () => {
   const [isReady, setReady] = useState(false);
   const authStore = useAuthStore();
 
-  const prepare = () => {
+  const prepare = async () => {
     interceptors.addRequest((request: RequestInit) => {
       // It should send the cookies on each requests
       request.credentials = "include";
@@ -26,6 +26,8 @@ const App = () => {
       }
       return response;
     });
+
+    await authStore.check();
 
     setReady(true);
   };

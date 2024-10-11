@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { ILoginResponseApi, IUserApi } from "@/types/ApiTypes";
+import api from "@/api";
 
 export interface AuthStoreState {
   isLoggedIn: boolean;
@@ -10,6 +11,7 @@ type IncreaseType = "stats_post" | "stats_follower" | "stats_following";
 
 interface AuthState {
   state: AuthStoreState;
+  check: () => Promise<void>;
   init: (response: ILoginResponseApi) => void;
   update: (user: IUserApi) => void;
   logout: () => void;
@@ -41,6 +43,15 @@ export const getDefaultStore = (): AuthStoreState => {
 
 const useAuthStore = create<AuthState>()((set) => ({
   state: getDefaultStore(),
+
+  async check() {
+    const response = await api.user.getMyself();
+
+    if (response.status === 200) {
+      const user = await response.json();
+      this.init({ user });
+    }
+  },
 
   init: (response: ILoginResponseApi) => {
     const value: AuthStoreState = {
