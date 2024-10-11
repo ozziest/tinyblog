@@ -1,6 +1,7 @@
 import { useCallback, useEffect } from "react";
 import throttle from "lodash/throttle"; // Import the throttle function from lodash
 import { IPostStore } from "@/stores/postStore";
+import LoadingSpinner from "./LoadingSpinner";
 
 interface Props {
   store: IPostStore;
@@ -28,7 +29,7 @@ const InfiniteScroll = ({ store, loadMore }: Props) => {
     };
   }, [handleScroll]);
 
-  return <div>{store.state.isLoading && <p>Loading...</p>}</div>;
+  return <div>{store.state.isLoading && <LoadingSpinner />}</div>;
 };
 
 export default InfiniteScroll;
