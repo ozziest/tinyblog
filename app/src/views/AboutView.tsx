@@ -45,21 +45,21 @@ const AboutView = () => {
         <div className="text-indigo-800">
           <LogoIcon size={100} />
         </div>
-        <h1 className="text-5xl font-bold mb-4">tinyblog.space</h1>
+        <h1 className="text-3xl font-bold mb-4 md:text-5xl">tinyblog.space</h1>
         <p className="text-lg text-gray-600 max-w-lg text-center mb-8">
           <b className="font-bold">tinyblog</b> is a lightweight, open-source
           microblogging platform that allows users to engage people!
         </p>
-        <div className="flex gap-2">
+        <div className="flex flex-col gap-2 md:flex-row">
           <Link
             to="/auth/register"
-            className="bg-indigo-900 font-semibold text-white py-3 px-6 rounded-full hover:bg-indigo-700 transition duration-300"
+            className="bg-indigo-900 font-semibold text-white py-3 px-6 rounded-full hover:bg-indigo-700 transition duration-300 text-center"
           >
             Join network
           </Link>
           <Link
             to="/auth/login"
-            className="bg-neutral-200 font-semibold text-black py-3 px-6 rounded-full hover:bg-neutral-300 transition duration-300"
+            className="bg-neutral-200 font-semibold text-black py-3 px-6 rounded-full hover:bg-neutral-300 transition duration-300 text-center"
           >
             Login
           </Link>
