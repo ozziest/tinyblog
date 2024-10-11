@@ -54,9 +54,9 @@ We have an exciting vision for tinyblog, and we’re working hard to bring new f
 - [x] User Analytics (Followers count, post engagement stats)
 - [x] Bot protection (Cloudflare turnstile)
 - [x] Rate limiting
+- [x] Progressive Web App (PWA) support
 - [ ] Notifications for follows, likes, and comments
 - [ ] User Settings (Update Profile, Change Password)
 - [ ] Search functionality for posts and users
 - [ ] Advanced moderation tools (content flagging, spam detection)
 - [ ] Multi-language support
-- [ ] Progressive Web App (PWA) support
