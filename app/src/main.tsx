@@ -1,25 +1,15 @@
 import { createRoot } from "react-dom/client";
 import "./index.css";
-import { RouterProvider } from "react-router-dom";
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import en from "./translations/en.json";
-import router from "./router";
 import { setLocales, en as validationEn } from "robust-validator";
-import { setConfig, interceptors } from "axe-api-client";
-import ErrorMessageComponent from "./components/messages/ErrorMessage";
-import SuccessMessage from "./components/messages/SuccessMessage";
+import { setConfig } from "axe-api-client";
+import App from "./App";
 
 setLocales(validationEn);
 setConfig({
   baseURL: import.meta.env.VITE_API_URL,
-});
-
-interceptors.addRequest((request: RequestInit) => {
-  // It should send the cookies on each requests
-  request.credentials = "include";
-
-  return request;
 });
 
 i18n.use(initReactI18next).init({
@@ -35,10 +25,4 @@ i18n.use(initReactI18next).init({
   },
 });
 
-createRoot(document.getElementById("root")!).render(
-  <>
-    <RouterProvider router={router} />
-    <ErrorMessageComponent />
-    <SuccessMessage />
-  </>,
-);
+createRoot(document.getElementById("root")!).render(<App />);
