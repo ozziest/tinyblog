@@ -21,11 +21,13 @@ const AuthLayout = () => {
   }
 
   return (
-    <div className="w-screen h-screen flex justify-center overflow-scroll p-20">
-      <div>
+    <div className="w-screen h-screen flex justify-center overflow-scroll lg:p-20">
+      <div className=" w-full">
         <LogoFull />
-        <div className="pb-20">
-          <Outlet />
+        <div className="pb-40 flex justify-center">
+          <div className="p-4 md:p-8 rounded w-full md:border md:border-neutral-200 md:w-[500px]">
+            <Outlet />
+          </div>
         </div>
       </div>
     </div>

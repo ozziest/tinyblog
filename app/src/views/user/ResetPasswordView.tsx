@@ -52,7 +52,7 @@ const ResetPasswordView = () => {
   };
 
   return (
-    <div className="border border-neutral-200 p-8 rounded w-[500px]">
+    <div>
       <h2 className="font-semibold text-lg text-neutral-800 text-center">
         Reset your password
       </h2>

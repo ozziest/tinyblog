@@ -63,15 +63,11 @@ const LoginView = () => {
   };
 
   if (!state.cfToken) {
-    return (
-      <div className="p-8 rounded w-[500px]">
-        <CFTurnstile onVerify={handleCFToken} />
-      </div>
-    );
+    return <CFTurnstile onVerify={handleCFToken} />;
   }
 
   return (
-    <div className="border border-neutral-200 p-8 rounded w-[500px]">
+    <div>
       <h2 className="font-semibold text-lg text-neutral-800 text-center">
         {t("login.title")}
       </h2>

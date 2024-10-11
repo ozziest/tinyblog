@@ -37,7 +37,7 @@ const EmailConfirmation = () => {
   };
 
   return (
-    <div className="border border-neutral-200 p-8 rounded w-[500px]">
+    <div>
       <div className="py-10 flex justify-center text-neutral-600">
         {status === "resetSuccess" && (
           <div className="text-green-700 flex flex-col gap-3">
