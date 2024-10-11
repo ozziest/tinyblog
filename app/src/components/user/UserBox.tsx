@@ -2,11 +2,11 @@ import useAuthStore from "@/stores/authStore";
 import Stats from "./Stats";
 import Avatar from "./Avatar";
 import { Link } from "react-router-dom";
+import useProfileLink from "@/composables/useProfileLink";
 
 const UserBox = () => {
   const state = useAuthStore((store) => store.state);
-
-  const profileLink = `/u/${state.user.username}`;
+  const profileLink = useProfileLink();
 
   return (
     <div className="border border-neutral-100 p-4 rounded  bg-white">

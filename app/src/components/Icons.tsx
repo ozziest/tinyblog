@@ -242,3 +242,21 @@ export const HashtagIcon = ({ size }: { size: number }) => {
     </svg>
   );
 };
+
+export const ProfileIcon = ({ size }: { size: number }) => {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 64 64"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <circle cx="32" cy="20" r="12" fill="currentColor" />
+
+      <path
+        d="M32 36c-12 0-22 7-22 16v4h44v-4c0-9-10-16-22-16z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+};

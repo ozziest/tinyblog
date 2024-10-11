@@ -1,17 +1,18 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import useAuthStore from "@/stores/authStore";
 import NavigationButton from "../buttons/NavigationButton";
-import { DailyIcon, HomeIcon, LogoutIcon } from "../Icons";
-import { format } from "date-fns";
-import * as locales from "date-fns/locale";
-import { DEFAULT_LANG } from "@/consts";
+import { DailyIcon, HomeIcon, LogoutIcon, ProfileIcon } from "../Icons";
 import { useEffect, useState } from "react";
 import api from "@/api";
 import NavigationLink from "../buttons/NavigationLink";
+import useDailyLink from "@/composables/useDailyLink";
+import useProfileLink from "@/composables/useProfileLink";
 
 const Navigation = () => {
   const authStore = useAuthStore();
   const navigate = useNavigate();
+  const { dailyLink, dailyHashtag } = useDailyLink();
+  const profileLink = useProfileLink();
   const location = useLocation();
   const [hashtags, setHashtags] = useState<string[]>([]);
 
@@ -26,13 +27,6 @@ const Navigation = () => {
       setHashtags(await response.json());
     }
   };
-
-  const dailyHashtag = format(new Date(), "ddMMMMyyyy", {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    locale: (locales as any)[DEFAULT_LANG],
-  });
-
-  const dailyLink = `/tags/${dailyHashtag}`;
 
   useEffect(() => {
     getReports();
@@ -71,6 +65,13 @@ const Navigation = () => {
         </>
       )}
       <hr className="my-5 border-neutral-200" />
+      <NavigationButton
+        icon={<ProfileIcon size={24} />}
+        isActive={location.pathname === profileLink}
+        onClick={() => navigate(profileLink)}
+      >
+        Profile
+      </NavigationButton>
       <NavigationButton
         icon={<LogoutIcon size={24} />}
         isActive={false}

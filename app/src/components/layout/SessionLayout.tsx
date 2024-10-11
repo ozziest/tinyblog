@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import useAuthStore from "@/stores/authStore";
 import api from "@/api";
 import { IUserApi } from "@/types/ApiTypes";
+import MobileNavigation from "./MobileNavigation";
 
 const SessionLayout = () => {
   const authStore = useAuthStore();
@@ -37,10 +38,10 @@ const SessionLayout = () => {
       <Header />
       <div className="max-w-screen-lg mx-auto mt-2 ">
         <div className="flex justify-between">
-          <div className="w-8/12">
+          <div className="w-full lg:w-8/12">
             <Outlet />
           </div>
-          <div className="w-4/12 min-w-4/12 pl-4">
+          <div className="w-0 lg:w-4/12 lg:min-w-4/12 lg:pl-4">
             <div className="sticky top-[40px]">
               <UserBox />
               <Navigation />
@@ -49,6 +50,7 @@ const SessionLayout = () => {
           </div>
         </div>
       </div>
+      <MobileNavigation />
     </div>
   );
 };
