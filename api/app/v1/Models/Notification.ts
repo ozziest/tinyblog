@@ -14,6 +14,10 @@ class Notification extends Model {
   post() {
     return this.hasOne("Post", "id", "post_id");
   }
+
+  triggers() {
+    return this.hasMany("NotificationTrigger", "id", "notification_id");
+  }
 }
 
 export default Notification;

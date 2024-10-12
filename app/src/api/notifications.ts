@@ -9,7 +9,7 @@ interface PaginateProps {
 
 const paginate = async ({ minId }: PaginateProps = {}) => {
   const query = resource("notifications/all")
-    .with("post{user,parent{user},reshare{user}}")
+    .with("post{user,parent{user},reshare{user}},triggers{user}")
     .sort("id", "DESC");
 
   if (minId) {
