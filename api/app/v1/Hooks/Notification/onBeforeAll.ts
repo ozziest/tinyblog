@@ -6,7 +6,7 @@ export default async ({ query, req, res }: IBeforeAllContext) => {
     return res.status(401).json({ error: "Authentication error" });
   }
 
-  query.where("user_id", req.original.auth.userId);
+  query.where("user_id", req.original.auth.userId).where("count", ">", 0);
 
   // Clients can not fetch all items. We have to apply a limit all the time.
   // But we can not allow clients decide the limit via frontend queries due to
