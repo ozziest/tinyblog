@@ -1,8 +1,8 @@
 export const up = function (knex) {
-  return knex.schema.createTable("notifications_repetitions", function (table) {
+  return knex.schema.createTable("notifications_triggers", function (table) {
     table.increments();
     table.integer("notification_id").unsigned().notNullable();
-    table.integer("source_user_id").unsigned().notNullable();
+    table.integer("trigger_user_id").unsigned().notNullable();
     table.timestamps();
 
     table
@@ -12,7 +12,7 @@ export const up = function (knex) {
       .onUpdate("CASCADE");
 
     table
-      .foreign("source_user_id")
+      .foreign("trigger_user_id")
       .references("users.id")
       .onDelete("CASCADE")
       .onUpdate("CASCADE");
@@ -20,5 +20,5 @@ export const up = function (knex) {
 };
 
 export const down = function (knex) {
-  return knex.schema.dropTable("notifications_repetitions");
+  return knex.schema.dropTable("notifications_triggers");
 };
