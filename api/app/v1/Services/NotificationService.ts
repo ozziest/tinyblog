@@ -13,13 +13,11 @@ const getTargetUserIds = async (postId: number) => {
 const createNotification = async (
   type: NotificationTypes,
   targetUserId: number,
-  sourceUserId: number,
   postId?: number
 ) => {
   const db = await IoCService.use<Knex>("Database");
-  await db.table("notifications").insert({
-    target_user_id: targetUserId,
-    source_user_id: sourceUserId,
+  return await db.table("notifications").insert({
+    user_id: targetUserId,
     type,
     post_id: postId,
     count: 1,
@@ -29,14 +27,14 @@ const createNotification = async (
   });
 };
 
-const createNotificationRepetition = async (
+const createNotificationTrigger = async (
   notificationId: number,
-  sourceUserId: number
+  triggerUserId: number
 ) => {
   const db = await IoCService.use<Knex>("Database");
-  await db.table("notifications_repetitions").insert({
+  await db.table("notifications_triggers").insert({
     notification_id: notificationId,
-    source_user_id: sourceUserId,
+    trigger_user_id: triggerUserId,
     created_at: new Date(),
     updated_at: new Date(),
   });
@@ -50,13 +48,16 @@ const create = async (
   type: NotificationTypes,
   notification: any,
   targetUserId: number,
-  sourceUserId: number,
+  triggerUserId: number,
   postId?: number
 ) => {
-  if (notification) {
-    return await createNotificationRepetition(notification.id, sourceUserId);
+  let notificationId = notification?.id;
+  if (!notification) {
+    const [id] = await createNotification(type, targetUserId, postId);
+    notificationId = id;
   }
-  await createNotification(type, targetUserId, sourceUserId, postId);
+
+  return await createNotificationTrigger(notificationId, triggerUserId);
 };
 
 const getPreviousNotificationByPost = async (
@@ -67,13 +68,13 @@ const getPreviousNotificationByPost = async (
   const sixHoursBefore = subHours(new Date(), 6);
   return await db
     .table("notifications")
-    .where("target_user_id", targetUserId)
+    .where("user_id", targetUserId)
     .where("post_id", postId)
     .where("created_at", ">", sixHoursBefore)
     .first();
 };
 
-const like = async (sourceUserId: number, postId: number) => {
+const like = async (triggerUserId: number, postId: number) => {
   const targetUserIds = await getTargetUserIds(postId);
 
   for (const targetUserId of targetUserIds) {
@@ -86,13 +87,13 @@ const like = async (sourceUserId: number, postId: number) => {
       NotificationTypes.Like,
       notification,
       targetUserId,
-      sourceUserId,
+      triggerUserId,
       postId
     );
   }
 };
 
-const unlike = async (sourceUserId: number, postId: number) => {};
+const unlike = async (triggerUserId: number, postId: number) => {};
 
 export default {
   like,
