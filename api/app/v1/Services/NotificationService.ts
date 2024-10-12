@@ -92,6 +92,9 @@ const like = async (sourceUserId: number, postId: number) => {
   }
 };
 
+const unlike = async (sourceUserId: number, postId: number) => {};
+
 export default {
   like,
+  unlike,
 };
