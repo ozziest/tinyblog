@@ -152,7 +152,7 @@ const unshare = async (postId: number, userId: number) => {
     .delete();
 };
 
-const getMentions = async (content: string): Promise<IMentionMap[]> => {
+const resolveMentions = async (content: string): Promise<IMentionMap[]> => {
   // Regular expression to match words starting with '@', containing alphanumeric characters and underscores
   // Username can only contain [a-zA-Z0-9_] but can be followed by punctuation like !,.,:; etc.
   const regex = /(?:^|\s)@([a-zA-Z0-9_]+)(?=\s|[!?.,:;\-]|$)/g;
@@ -191,7 +191,7 @@ const normalizeString = (str: string) => {
     .toLowerCase();
 };
 
-const getHashtags = async (content: string): Promise<IHashtagMap[]> => {
+const resolveHashtags = async (content: string): Promise<IHashtagMap[]> => {
   // Regular expression to find words starting with '#' and stop at the first non-alphanumeric character
   const regex = /(?:^|\s)#([\p{L}\p{N}_]+)(?=\s|$)/gu;
 
@@ -250,7 +250,7 @@ const getHashtags = async (content: string): Promise<IHashtagMap[]> => {
   return map;
 };
 
-const getLinks = async (content: string): Promise<IShortLinkMap[]> => {
+const resolveLinks = async (content: string): Promise<IShortLinkMap[]> => {
   // Regular expression to match common URL patterns
   const regex = /(https?:\/\/[^\s]+|www\.[^\s]+)/g;
 
@@ -296,9 +296,9 @@ const toPostContent = async (content: string): Promise<IPostContent> => {
 
   return {
     content,
-    mentions: await getMentions(content),
-    hashtags: await getHashtags(content),
-    links: await getLinks(content),
+    mentions: await resolveMentions(content),
+    hashtags: await resolveHashtags(content),
+    links: await resolveLinks(content),
   };
 };
 
@@ -331,12 +331,18 @@ const addMentions = async (postId: number, mentions: IMentionMap[]) => {
   const items = mentions.map((mentions) => {
     return {
       post_id: postId,
+      user_id: mentions.id,
       username: mentions.username,
       created_at: new Date(),
       updated_at: new Date(),
     };
   });
   await db.table("post_mentions").insert(items);
+};
+
+const getMentions = async (postId: number) => {
+  const db = await IoCService.use<Knex>("Database");
+  return await db.table("post_mentions").where("post_id", postId);
 };
 
 const addLinks = async (postId: number, links: IShortLinkMap[]) => {
@@ -363,6 +369,7 @@ export default {
   getPostLike,
   getPostView,
   getPost,
+  getMentions,
   isAlreadySharedByUser,
   deletePostLike,
   toPostContent,

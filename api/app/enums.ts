@@ -4,3 +4,11 @@ export enum EmailTemplates {
   PasswordReset,
   AccountDeactivated,
 }
+
+export enum NotificationTypes {
+  Like = "Like",
+  Reshare = "Reshare",
+  Follow = "Follow",
+  Reply = "Reply",
+  Mention = "Mention",
+}
