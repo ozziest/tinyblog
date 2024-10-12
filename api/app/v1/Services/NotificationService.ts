@@ -20,7 +20,7 @@ const createNotification = async (
     user_id: targetUserId,
     type,
     post_id: postId,
-    count: 1,
+    count: 0,
     is_read: false,
     created_at: new Date(),
     updated_at: new Date(),
@@ -38,6 +38,7 @@ const createNotificationTrigger = async (
     created_at: new Date(),
     updated_at: new Date(),
   });
+
   await db
     .table("notifications")
     .where("id", notificationId)
@@ -93,7 +94,36 @@ const like = async (triggerUserId: number, postId: number) => {
   }
 };
 
-const unlike = async (triggerUserId: number, postId: number) => {};
+const unlike = async (triggerUserId: number, postId: number) => {
+  const db = await IoCService.use<Knex>("Database");
+
+  // Let's get the notification IDs
+  const notifications = await db
+    .table("notifications_triggers")
+    .select("notifications.id")
+    .leftJoin(
+      "notifications",
+      "notifications.id",
+      "notifications_triggers.notification_id"
+    )
+    .where("notifications.post_id", postId)
+    .where("notifications_triggers.trigger_user_id", triggerUserId);
+
+  const notificationIds = notifications.map((item) => item.id);
+
+  // Let's delete the user's triggers
+  await db
+    .table("notifications_triggers")
+    .whereIn("notification_id", notificationIds)
+    .where("trigger_user_id", triggerUserId)
+    .delete();
+
+  // Let's decrease the count of the notification
+  await db
+    .table("notifications")
+    .whereIn("id", notificationIds)
+    .decrement({ count: 1 });
+};
 
 export default {
   like,
