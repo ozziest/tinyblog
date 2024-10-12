@@ -9,3 +9,11 @@ export enum StoreType {
   UserProfile = "UserProfile",
   TagStore = "TagStore",
 }
+
+export enum NotificationTypes {
+  Like = "Like",
+  Reshare = "Reshare",
+  Follow = "Follow",
+  Reply = "Reply",
+  Mention = "Mention",
+}

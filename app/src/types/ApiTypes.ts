@@ -1,3 +1,5 @@
+import { NotificationTypes } from "@/enums";
+
 export interface IPostApi {
   id: number;
   content: string;
@@ -50,5 +52,27 @@ export interface IPostLinkApi {
 }
 
 export interface ILoginResponseApi {
+  user: IUserApi;
+}
+
+export interface INotificationApi {
+  id: number;
+  type: NotificationTypes;
+  user_id: number;
+  post_id?: number;
+  count: number;
+  is_read: boolean;
+  created_at: string;
+  updated_at: string;
+  post: IPostApi;
+  triggers: INotificationTriggerApi[];
+}
+
+export interface INotificationTriggerApi {
+  id: number;
+  notification_id: number;
+  trigger_user_id: number;
+  created_at: string;
+  updated_at: string;
   user: IUserApi;
 }
