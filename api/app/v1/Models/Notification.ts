@@ -1,8 +1,18 @@
-import { Model } from "axe-api";
+import { HandlerTypes, Model, ModelMiddleware } from "axe-api";
+import SessionMiddleware from "../Middlewares/SessionMiddleware";
+import DefaultSessionRateLimitter from "../Middlewares/RateLimitters/DefaultSessionRateLimitter";
 
 class Notification extends Model {
   get handlers() {
-    return [];
+    return [HandlerTypes.ALL];
+  }
+
+  get middlewares(): ModelMiddleware {
+    return [SessionMiddleware, DefaultSessionRateLimitter];
+  }
+
+  post() {
+    return this.hasOne("Post", "id", "post_id");
   }
 }
 

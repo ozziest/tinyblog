@@ -13,6 +13,7 @@ import ForgetPasswordView from "./views/user/ForgetPasswordView";
 import ResetPasswordView from "./views/user/ResetPasswordView";
 import TagsView from "./views/TagsView";
 import AboutView from "./views/AboutView";
+import NotificationView from "./views/NotificationView";
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <DashboardView />,
+      },
+      {
+        path: "/notifications",
+        element: <NotificationView />,
       },
       {
         path: "/u/:username",

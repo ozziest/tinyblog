@@ -1,7 +1,13 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import useAuthStore from "@/stores/authStore";
 import NavigationButton from "../buttons/NavigationButton";
-import { DailyIcon, HomeIcon, LogoutIcon, ProfileIcon } from "../Icons";
+import {
+  DailyIcon,
+  HomeIcon,
+  LogoutIcon,
+  NotificationIcon,
+  ProfileIcon,
+} from "../Icons";
 import { useEffect, useState } from "react";
 import api from "@/api";
 import NavigationLink from "../buttons/NavigationLink";
@@ -40,6 +46,13 @@ const Navigation = () => {
         onClick={() => navigate("/")}
       >
         Home
+      </NavigationButton>
+      <NavigationButton
+        icon={<NotificationIcon size={24} />}
+        isActive={location.pathname === "/notifications"}
+        onClick={() => navigate("/notifications")}
+      >
+        Notifications
       </NavigationButton>
       <NavigationButton
         icon={<DailyIcon size={24} />}

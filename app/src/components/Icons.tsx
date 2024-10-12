@@ -260,3 +260,24 @@ export const ProfileIcon = ({ size }: { size: number }) => {
     </svg>
   );
 };
+
+export const NotificationIcon = ({ size }: { size: number }) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={size}
+      height={size}
+      viewBox="0 0 48 48"
+      fill="none"
+    >
+      <path
+        d="M24 4C18.48 4 14 8.48 14 14V20C14 21.5 13.47 23.37 12.53 24.84L10 28H38L35.47 24.84C34.53 23.37 34 21.5 34 20V14C34 8.48 29.52 4 24 4Z"
+        fill="black"
+      />
+      <path
+        d="M20 38C20 39.66 21.34 41 23 41H25C26.66 41 28 39.66 28 38H20Z"
+        fill="black"
+      />
+    </svg>
+  );
+};
