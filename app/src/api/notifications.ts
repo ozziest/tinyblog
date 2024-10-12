@@ -7,9 +7,16 @@ interface PaginateProps {
   tagId?: number;
 }
 
+const USER = "user{id,name,username,email}";
+const HASHTAGS = "hashtags{hashtag}";
+const MENTIONS = "mentions{username}";
+const LINKS = "links{link{code,link}}";
+
+const POST_DETAIL = `post{${USER},${HASHTAGS},${MENTIONS},${LINKS}}`;
+
 const paginate = async ({ minId }: PaginateProps = {}) => {
   const query = resource("notifications/all")
-    .with("post{user,parent{user},reshare{user}},triggers{user}")
+    .with(`${POST_DETAIL},triggers{${USER}}`)
     .sort("id", "DESC");
 
   if (minId) {
