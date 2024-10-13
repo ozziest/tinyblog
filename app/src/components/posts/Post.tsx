@@ -45,8 +45,12 @@ const Post = ({ store, post, autoView = true }: Props) => {
     clearTimeout(timer);
   };
 
-  const handleClick = () => {
-    navigate(`/${post.id}`);
+  const handleClick = (clickedPost?: ExtendedPost) => {
+    if (!clickedPost) {
+      return;
+    }
+
+    navigate(`/${clickedPost.id}`);
   };
 
   return (
@@ -60,7 +64,7 @@ const Post = ({ store, post, autoView = true }: Props) => {
             isParent
             hadleMouseEnter={hadleMouseEnter}
             handleMouseLeave={handleMouseLeave}
-            handleClick={handleClick}
+            handleClick={() => handleClick(root.parent)}
           >
             <PostAuthor post={root.parent} />
             <PostContent post={root.parent} />
@@ -74,7 +78,7 @@ const Post = ({ store, post, autoView = true }: Props) => {
         showBorder
         hadleMouseEnter={hadleMouseEnter}
         handleMouseLeave={handleMouseLeave}
-        handleClick={handleClick}
+        handleClick={() => handleClick(root)}
       >
         <PostAuthor post={root} />
         <PostContent post={root} />
