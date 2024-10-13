@@ -22,14 +22,29 @@ export default async ({ item, req }: IBeforeInsertContext) => {
     // Upgrading the user's post count
     await UserService.incrementUserPostCount(item.user_id);
 
+    let notifiedUserIds: number[] = [];
+
     // If the new post a reply to another post
     if (item.parent_id) {
       // We should update the parent post's status
       await PostService.incrementPostReplies(item.parent_id);
 
       // We should create a notification
-      await NotificationService.reply(item.user_id, item.parent_id, item.id);
+      const ids = await NotificationService.reply(
+        item.user_id,
+        item.parent_id,
+        item.id
+      );
+      notifiedUserIds.push(...ids);
     }
+
+    // Let's inform the mentioned users. But we shouldn't send a notification
+    // to the user who is already notified because of replied.
+    const targetUserIds: number[] = (req.original.post?.mentions || [])
+      .filter((item) => !notifiedUserIds.includes(item.id || 0))
+      .map((item) => item.id as number)
+      .filter((id) => id);
+    await NotificationService.mention(item.user_id, targetUserIds, item.id);
   } catch (error) {
     captureError(error, {
       postId: item.id,

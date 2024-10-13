@@ -135,6 +135,10 @@ const like = async (triggerUserId: number, postId: number) => {
   const targetUserIds = await getTargetUserIds(postId);
 
   for (const targetUserId of targetUserIds) {
+    if (triggerUserId === targetUserId) {
+      continue;
+    }
+
     const notification = await getPreviousNotificationByPost(
       NotificationTypes.Like,
       targetUserId,
@@ -155,6 +159,10 @@ const reshare = async (triggerUserId: number, postId: number) => {
   const targetUserIds = await getTargetUserIds(postId);
 
   for (const targetUserId of targetUserIds) {
+    if (triggerUserId === targetUserId) {
+      continue;
+    }
+
     const notification = await getPreviousNotificationByPost(
       NotificationTypes.Reshare,
       targetUserId,
@@ -176,27 +184,31 @@ const reply = async (
   postId: number,
   replyId?: number
 ) => {
-  const targetUserIds = await getTargetUserIds(postId);
+  let targetUserIds = await getTargetUserIds(postId);
 
   for (const targetUserId of targetUserIds) {
-    const notification = await getPreviousNotificationByPost(
-      NotificationTypes.Reply,
-      targetUserId,
-      postId
-    );
+    if (triggerUserId === targetUserId) {
+      continue;
+    }
 
     create(
       NotificationTypes.Reply,
-      notification,
+      undefined, // Every each reply should create a new notification
       targetUserId,
       triggerUserId,
       postId,
       replyId
     );
   }
+
+  return targetUserIds;
 };
 
 const follow = async (triggerUserId: number, targetUserId: number) => {
+  if (triggerUserId === targetUserId) {
+    return;
+  }
+
   const notification = await getPreviousNotificationByPost(
     NotificationTypes.Follow,
     targetUserId
@@ -205,10 +217,33 @@ const follow = async (triggerUserId: number, targetUserId: number) => {
   create(NotificationTypes.Follow, notification, targetUserId, triggerUserId);
 };
 
+const mention = async (
+  triggerUserId: number,
+  targetUserIds: number[],
+  postId: number
+) => {
+  for (const targetUserId of targetUserIds) {
+    if (triggerUserId === targetUserId) {
+      continue;
+    }
+
+    create(
+      NotificationTypes.Mention,
+      undefined, // Every each reply should create a new notification
+      targetUserId,
+      triggerUserId,
+      postId
+    );
+  }
+
+  return targetUserIds;
+};
+
 export default {
   remove,
   like,
   reshare,
   reply,
   follow,
+  mention,
 };
