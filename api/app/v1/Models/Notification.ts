@@ -1,14 +1,6 @@
-import { AxeRequest, HandlerTypes, Model, ModelMiddleware } from "axe-api";
-import { Knex } from "knex";
+import { HandlerTypes, Model, ModelMiddleware } from "axe-api";
 import SessionMiddleware from "../Middlewares/SessionMiddleware";
 import DefaultSessionRateLimitter from "../Middlewares/RateLimitters/DefaultSessionRateLimitter";
-
-const onBeforeTriggerQuery = async (
-  req: AxeRequest,
-  query: Knex.QueryBuilder
-) => {
-  query.orderBy("id", "desc");
-};
 
 class Notification extends Model {
   get handlers() {
@@ -31,12 +23,6 @@ class Notification extends Model {
 
   post() {
     return this.hasOne("Post", "id", "post_id");
-  }
-
-  triggers() {
-    return this.hasMany("NotificationTrigger", "id", "notification_id", {
-      onBeforeQuery: onBeforeTriggerQuery,
-    });
   }
 }
 

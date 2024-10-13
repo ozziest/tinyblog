@@ -16,7 +16,7 @@ const POST_DETAIL = `post{${USER},${HASHTAGS},${MENTIONS},${LINKS}}`;
 
 const paginate = async ({ minId }: PaginateProps = {}) => {
   const query = resource("notifications/all")
-    .with(`${POST_DETAIL},triggers{${USER}}`)
+    .with(`${POST_DETAIL}`)
     .sort("id", "DESC");
 
   if (minId) {

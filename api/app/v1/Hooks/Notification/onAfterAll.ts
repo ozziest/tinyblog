@@ -1,20 +1,31 @@
 import { IAfterAllContext } from "axe-api";
-import UserSerialization from "../../Serialization/User";
+import { getUserAvatar } from "../../Services/UserService";
 
 export default async ({ result, database }: IAfterAllContext) => {
-  const notificationIds = result.map((item: any) => item.id);
+  for (const item of result) {
+    const triggers = await database
+      .table("notifications_triggers")
+      .select(
+        "notifications_triggers.id",
+        "users.name",
+        "users.email",
+        "users.username"
+      )
+      .leftJoin("users", "users.id", "notifications_triggers.trigger_user_id")
+      .where("notifications_triggers.notification_id", item.id)
+      .orderBy("notifications_triggers.id", "desc")
+      .limit(2);
 
-  // const triggers = await database
-  //   .table("notifications_triggers")
-  //   .select("notifications_triggers.notification_id", "users.*")
-  //   .whereIn("notifications_triggers.notification_id", notificationIds)
-  //   .leftJoin("users", "users.id", "notifications_triggers.trigger_user_id");
-
-  // for (const item of result) {
-  //   const users = triggers.filter(
-  //     (trigger) => trigger.notification_id === item.id
-  //   );
-  //   // TODO: This doesn't work. Because still we have hidden fields on the output!
-  //   item.users = users.map((user) => UserSerialization(user));
-  // }
+    item.triggers = triggers.map((trigger) => {
+      const email = trigger.email;
+      return {
+        id: trigger.id,
+        user: {
+          name: trigger.name,
+          username: trigger.username,
+          avatar: getUserAvatar(email),
+        },
+      };
+    });
+  }
 };
