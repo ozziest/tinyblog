@@ -17,13 +17,13 @@ const NotificationNames = ({ notification, handleMoreUsersClick }: Props) => {
   const extraUserCount = notification.count - 2;
 
   return (
-    <div className="flex">
+    <div className="flex pr-1">
       <UserLink user={first.user} />
       {extraUserCount > 0 && <span className="pr-1">,</span>}
-      {extraUserCount === 0 && <span className="px-1">and</span>}
+      {extraUserCount === 0 && <span className="pr-1">and</span>}
       <UserLink user={second.user} />
       {extraUserCount > 0 && (
-        <div className="px-1">
+        <div className="pl-1">
           and{" "}
           <XOthersButton
             count={extraUserCount}

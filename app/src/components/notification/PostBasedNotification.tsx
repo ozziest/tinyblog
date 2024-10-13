@@ -30,7 +30,7 @@ const PostBasedNotification = ({
           notification={notification}
           handleMoreUsersClick={handleMoreUsersClick}
         />
-        <span>{message}</span>
+        <span className="px-1">{message}</span>
       </div>
       {post && (
         <div className="opacity-50 pt-3">

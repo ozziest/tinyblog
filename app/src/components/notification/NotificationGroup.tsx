@@ -4,7 +4,7 @@ import PostBasedNotification, {
   PostBasedNotificationProps,
 } from "./PostBasedNotification";
 import { extendPost } from "@/helpers/posts";
-import { LikeIcon } from "../Icons";
+import { LikeIcon, ShareIcon } from "../Icons";
 import { useNavigate } from "react-router-dom";
 import classNames from "classnames";
 import { useState } from "react";
@@ -21,10 +21,18 @@ type NotificationDetailType = (
 
 const NOTIFICATION_ICON_MAP: Record<NotificationTypes, NotificationIconType> = {
   [NotificationTypes.Like]: LikeIcon,
-  [NotificationTypes.Reshare]: LikeIcon,
+  [NotificationTypes.Reshare]: ShareIcon,
   [NotificationTypes.Follow]: LikeIcon,
   [NotificationTypes.Reply]: LikeIcon,
   [NotificationTypes.Mention]: LikeIcon,
+};
+
+const NOTIFICATION_ICON_COLORS: Record<NotificationTypes, string> = {
+  [NotificationTypes.Like]: "text-red-300",
+  [NotificationTypes.Reshare]: "text-green-500",
+  [NotificationTypes.Follow]: "text-indigo-500",
+  [NotificationTypes.Reply]: "text-blue-500",
+  [NotificationTypes.Mention]: "text-purple-500",
 };
 
 const NOTIFICATION_TYPES_MAP: Record<
@@ -52,6 +60,7 @@ const NotificationGroup = ({ notification }: Props) => {
   const NotificationIcon = NOTIFICATION_ICON_MAP[notification.type];
   const NotificationDetail = NOTIFICATION_TYPES_MAP[notification.type];
   const message = NOTIFICATION_MESSAGES[notification.type];
+  const iconColor = NOTIFICATION_ICON_COLORS[notification.type];
 
   const post = notification?.post ? extendPost(notification.post) : null;
 
@@ -86,7 +95,7 @@ const NotificationGroup = ({ notification }: Props) => {
       onClick={handleClick}
       onMouseEnter={hadleMouseEnter}
     >
-      <div className="px-5 text-red-300">
+      <div className={classNames("px-5", iconColor)}>
         <NotificationIcon size={24} />
       </div>
       <div className="flex-grow pb-5">

@@ -11,7 +11,7 @@ interface Props {
 const NotificationAvatars = ({ notification, handleMoreUsersClick }: Props) => {
   if (notification.triggers.length === 1) {
     const [trigger] = notification.triggers;
-    return <UserLink user={trigger.user} />;
+    return <AvatarLink user={trigger.user} />;
   }
 
   const [first, second] = notification.triggers;
