@@ -44,7 +44,10 @@ const createNotificationTrigger = async (
   await db
     .table("notifications")
     .where("id", notificationId)
-    .increment({ count: 1 });
+    .update({
+      count: db.raw("?? + 1", ["count"]),
+      is_read: false,
+    });
 };
 
 const create = async (
@@ -67,17 +70,23 @@ const create = async (
 const getPreviousNotificationByPost = async (
   type: NotificationTypes,
   targetUserId: number,
-  postId: number
+  postId?: number
 ) => {
   const db = await IoCService.use<Knex>("Database");
   const sixHoursBefore = subHours(new Date(), 6);
-  return await db
+  const query = db
     .table("notifications")
     .where("user_id", targetUserId)
-    .where("post_id", postId)
     .where("type", type)
-    .where("created_at", ">", sixHoursBefore)
-    .first();
+    .where("created_at", ">", sixHoursBefore);
+
+  if (postId) {
+    query.where("post_id", postId);
+  } else {
+    query.whereNull("post_id");
+  }
+
+  return await query.first();
 };
 
 const remove = async (
@@ -187,9 +196,19 @@ const reply = async (
   }
 };
 
+const follow = async (triggerUserId: number, targetUserId: number) => {
+  const notification = await getPreviousNotificationByPost(
+    NotificationTypes.Follow,
+    targetUserId
+  );
+
+  create(NotificationTypes.Follow, notification, targetUserId, triggerUserId);
+};
+
 export default {
   remove,
   like,
   reshare,
   reply,
+  follow,
 };
