@@ -1,6 +1,6 @@
-import { IBeforeUpdateContext } from "axe-api";
+import { IBeforePatchQueryContext } from "axe-api";
 
-export default async ({ res, req, query }: IBeforeUpdateContext) => {
+export default async ({ res, req, query }: IBeforePatchQueryContext) => {
   if (!req.original.auth) {
     return res.status(401).json({ error: "Unauthorized" });
   }
