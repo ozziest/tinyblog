@@ -97,11 +97,15 @@ const like = async (triggerUserId: number, postId: number) => {
   }
 };
 
-const unlike = async (triggerUserId: number, postId: number) => {
+const remove = async (
+  type: NotificationTypes,
+  triggerUserId: number,
+  postId?: number
+) => {
   const db = await IoCService.use<Knex>("Database");
 
   // Let's get the notification IDs
-  const notifications = await db
+  const query = db
     .table("notifications_triggers")
     .select("notifications.id")
     .leftJoin(
@@ -109,9 +113,16 @@ const unlike = async (triggerUserId: number, postId: number) => {
       "notifications.id",
       "notifications_triggers.notification_id"
     )
-    .where("notifications.post_id", postId)
+    .where("notifications.type", type)
     .where("notifications_triggers.trigger_user_id", triggerUserId);
 
+  if (postId) {
+    query.where("notifications.post_id", postId);
+  } else {
+    query.whereNull("notifications.post_id");
+  }
+
+  const notifications = await query;
   const notificationIds = notifications.map((item) => item.id);
 
   // Let's delete the user's triggers
@@ -150,6 +161,6 @@ const reshare = async (triggerUserId: number, postId: number) => {
 
 export default {
   like,
-  unlike,
   reshare,
+  remove,
 };
