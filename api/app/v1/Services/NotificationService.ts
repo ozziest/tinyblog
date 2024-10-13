@@ -77,26 +77,6 @@ const getPreviousNotificationByPost = async (
     .first();
 };
 
-const like = async (triggerUserId: number, postId: number) => {
-  const targetUserIds = await getTargetUserIds(postId);
-
-  for (const targetUserId of targetUserIds) {
-    const notification = await getPreviousNotificationByPost(
-      NotificationTypes.Like,
-      targetUserId,
-      postId
-    );
-
-    create(
-      NotificationTypes.Like,
-      notification,
-      targetUserId,
-      triggerUserId,
-      postId
-    );
-  }
-};
-
 const remove = async (
   type: NotificationTypes,
   triggerUserId: number,
@@ -139,6 +119,26 @@ const remove = async (
     .decrement({ count: 1 });
 };
 
+const like = async (triggerUserId: number, postId: number) => {
+  const targetUserIds = await getTargetUserIds(postId);
+
+  for (const targetUserId of targetUserIds) {
+    const notification = await getPreviousNotificationByPost(
+      NotificationTypes.Like,
+      targetUserId,
+      postId
+    );
+
+    create(
+      NotificationTypes.Like,
+      notification,
+      targetUserId,
+      triggerUserId,
+      postId
+    );
+  }
+};
+
 const reshare = async (triggerUserId: number, postId: number) => {
   const targetUserIds = await getTargetUserIds(postId);
 
@@ -160,7 +160,7 @@ const reshare = async (triggerUserId: number, postId: number) => {
 };
 
 export default {
+  remove,
   like,
   reshare,
-  remove,
 };
