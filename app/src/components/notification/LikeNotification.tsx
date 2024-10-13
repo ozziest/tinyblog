@@ -12,8 +12,9 @@ const LikeNotification = ({ notification }: Props) => {
 
   return (
     <div>
-      <div>
-        <NotificationNames notification={notification} /> likes your post.
+      <div className="flex">
+        <NotificationNames notification={notification} />
+        <span>liked your post.</span>
       </div>
       <div className="opacity-50 pt-3">
         <FormatPostToJSX data={post} />

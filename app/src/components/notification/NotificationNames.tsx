@@ -1,34 +1,32 @@
-import { INotificationApi, IUserApi } from "@/types/ApiTypes";
-import { Link } from "react-router-dom";
+import { INotificationApi } from "@/types/ApiTypes";
+import UserLink from "./UserLink";
+import XOthersButton from "./XOthersButton";
 
 interface Props {
   notification: INotificationApi;
 }
 
-const UserLink = ({ user }: { user: IUserApi }) => {
-  return (
-    <Link
-      to={`/u/${user.username}`}
-      className="transition-colors font-semibold text-neutral-800 hover:underline hover:text-neutral-900"
-      onClick={(event) => event.stopPropagation()}
-    >
-      {user.name}
-    </Link>
-  );
-};
-
 const NotificationNames = ({ notification }: Props) => {
   if (notification.triggers.length === 1) {
     const [trigger] = notification.triggers;
-
     return <UserLink user={trigger.user} />;
   }
 
+  const [first, second] = notification.triggers;
+  const extraUserCount = notification.count - 2;
+
   return (
-    <div>
-      {notification.triggers.map((trigger) => (
-        <UserLink key={trigger.id} user={trigger.user} />
-      ))}
+    <div className="flex">
+      <UserLink user={first.user} />
+      {extraUserCount > 0 && <span className="pr-1">,</span>}
+      {extraUserCount === 0 && <span className="px-1">and</span>}
+      <UserLink user={second.user} />
+      {extraUserCount > 0 && (
+        <div className="px-1">
+          and{" "}
+          <XOthersButton count={extraUserCount} notification={notification} />
+        </div>
+      )}
     </div>
   );
 };
