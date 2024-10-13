@@ -2,6 +2,7 @@ import { AxeRequest, AxeResponse, IoCService } from "axe-api";
 import { validate } from "robust-validator";
 import PostService from "../Services/PostService";
 import { captureError } from "../Services/ErrorService";
+import NotificationService from "../Services/NotificationService";
 
 export default async (req: AxeRequest, res: AxeResponse) => {
   try {
@@ -44,6 +45,7 @@ export default async (req: AxeRequest, res: AxeResponse) => {
 
     await PostService.share(postId, userId);
     await PostService.incrementPostShare(postId);
+    await NotificationService.reshare(userId, postId);
     return res.status(201).json({});
   } catch (error) {
     res.status(500).json({ error: "An error occurred" });

@@ -62,6 +62,7 @@ const create = async (
 };
 
 const getPreviousNotificationByPost = async (
+  type: NotificationTypes,
   targetUserId: number,
   postId: number
 ) => {
@@ -71,6 +72,7 @@ const getPreviousNotificationByPost = async (
     .table("notifications")
     .where("user_id", targetUserId)
     .where("post_id", postId)
+    .where("type", type)
     .where("created_at", ">", sixHoursBefore)
     .first();
 };
@@ -80,6 +82,7 @@ const like = async (triggerUserId: number, postId: number) => {
 
   for (const targetUserId of targetUserIds) {
     const notification = await getPreviousNotificationByPost(
+      NotificationTypes.Like,
       targetUserId,
       postId
     );
@@ -125,7 +128,28 @@ const unlike = async (triggerUserId: number, postId: number) => {
     .decrement({ count: 1 });
 };
 
+const reshare = async (triggerUserId: number, postId: number) => {
+  const targetUserIds = await getTargetUserIds(postId);
+
+  for (const targetUserId of targetUserIds) {
+    const notification = await getPreviousNotificationByPost(
+      NotificationTypes.Reshare,
+      targetUserId,
+      postId
+    );
+
+    create(
+      NotificationTypes.Reshare,
+      notification,
+      targetUserId,
+      triggerUserId,
+      postId
+    );
+  }
+};
+
 export default {
   like,
   unlike,
+  reshare,
 };
