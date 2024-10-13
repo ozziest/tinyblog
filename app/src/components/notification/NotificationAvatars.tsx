@@ -8,18 +8,13 @@ interface Props {
 }
 
 const NotificationAvatars = ({ notification, handleMoreUsersClick }: Props) => {
-  if (notification.triggers.length === 1) {
-    const [trigger] = notification.triggers;
-    return <AvatarLink user={trigger.user} />;
-  }
-
   const [first, second] = notification.triggers;
   const extraUserCount = notification.count - 2;
 
   return (
     <div className="flex gap-1">
       <AvatarLink user={first.user} />
-      <AvatarLink user={second.user} />
+      {second && <AvatarLink user={second.user} />}
       {extraUserCount > 0 && (
         <div>
           <XOthersAvatar
