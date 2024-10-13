@@ -12,7 +12,17 @@ const onBeforeTriggerQuery = async (
 
 class Notification extends Model {
   get handlers() {
-    return [HandlerTypes.ALL];
+    return [HandlerTypes.ALL, HandlerTypes.PATCH];
+  }
+
+  get fillable() {
+    return ["is_read"];
+  }
+
+  get validations() {
+    return {
+      is_read: "numeric|min:1|max:1",
+    };
   }
 
   get middlewares(): ModelMiddleware {

@@ -6,6 +6,9 @@ import PostBasedNotification, {
 import { extendPost } from "@/helpers/posts";
 import { LikeIcon } from "../Icons";
 import { useNavigate } from "react-router-dom";
+import classNames from "classnames";
+import { useState } from "react";
+import api from "@/api";
 
 interface Props {
   notification: INotificationApi;
@@ -45,6 +48,7 @@ const NOTIFICATION_MESSAGES: Record<NotificationTypes, string> = {
 
 const NotificationGroup = ({ notification }: Props) => {
   const navigate = useNavigate();
+  const [isRead, setRead] = useState(notification.is_read);
   const NotificationIcon = NOTIFICATION_ICON_MAP[notification.type];
   const NotificationDetail = NOTIFICATION_TYPES_MAP[notification.type];
   const message = NOTIFICATION_MESSAGES[notification.type];
@@ -63,10 +67,24 @@ const NotificationGroup = ({ notification }: Props) => {
     console.log("handleMoreUsersClick", notification);
   };
 
+  const hadleMouseEnter = async () => {
+    // We don't need to set a timer
+    if (isRead === 1) {
+      return;
+    }
+
+    await api.notifications.setAsRead(notification.id);
+    setRead(1);
+  };
+
   return (
     <article
-      className="flex justify-between pt-5 cursor-pointer transition-all hover:bg-neutral-50"
+      className={classNames(
+        "flex justify-between pt-5 cursor-pointer transition-all hover:bg-neutral-50",
+        { "bg-indigo-50": isRead === 0 },
+      )}
       onClick={handleClick}
+      onMouseEnter={hadleMouseEnter}
     >
       <div className="px-5 text-red-300">
         <NotificationIcon size={24} />

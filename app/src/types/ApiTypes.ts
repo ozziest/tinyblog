@@ -61,7 +61,7 @@ export interface INotificationApi {
   user_id: number;
   post_id?: number;
   count: number;
-  is_read: boolean;
+  is_read: number;
   created_at: string;
   updated_at: string;
   post?: IPostApi;

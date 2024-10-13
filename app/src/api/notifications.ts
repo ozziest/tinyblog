@@ -26,6 +26,13 @@ const paginate = async ({ minId }: PaginateProps = {}) => {
   return query.get();
 };
 
+const setAsRead = async (id: number) => {
+  return await resource(`notifications/${id}`).patch({
+    is_read: 1,
+  });
+};
+
 export default {
   paginate,
+  setAsRead,
 };
