@@ -7,6 +7,7 @@ export const up = function (knex) {
 
     table.integer("user_id").unsigned().notNullable();
     table.integer("post_id").unsigned().nullable();
+    table.integer("reply_id").unsigned().nullable();
     table.integer("count").unsigned().notNullable().defaultTo(1);
     table.boolean("is_read").notNullable().defaultTo(false);
     table.timestamps();
@@ -18,6 +19,11 @@ export const up = function (knex) {
       .onUpdate("CASCADE");
     table
       .foreign("post_id")
+      .references("posts.id")
+      .onDelete("CASCADE")
+      .onUpdate("CASCADE");
+    table
+      .foreign("reply_id")
       .references("posts.id")
       .onDelete("CASCADE")
       .onUpdate("CASCADE");

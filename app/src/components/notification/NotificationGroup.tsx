@@ -4,7 +4,7 @@ import PostBasedNotification, {
   PostBasedNotificationProps,
 } from "./PostBasedNotification";
 import { extendPost } from "@/helpers/posts";
-import { LikeIcon, ShareIcon } from "../Icons";
+import { LikeIcon, ReplyIcon, ShareIcon } from "../Icons";
 import { useNavigate } from "react-router-dom";
 import classNames from "classnames";
 import { useState } from "react";
@@ -23,7 +23,7 @@ const NOTIFICATION_ICON_MAP: Record<NotificationTypes, NotificationIconType> = {
   [NotificationTypes.Like]: LikeIcon,
   [NotificationTypes.Reshare]: ShareIcon,
   [NotificationTypes.Follow]: LikeIcon,
-  [NotificationTypes.Reply]: LikeIcon,
+  [NotificationTypes.Reply]: ReplyIcon,
   [NotificationTypes.Mention]: LikeIcon,
 };
 

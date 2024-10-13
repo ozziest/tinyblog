@@ -13,13 +13,15 @@ const getTargetUserIds = async (postId: number) => {
 const createNotification = async (
   type: NotificationTypes,
   targetUserId: number,
-  postId?: number
+  postId?: number,
+  replyId?: number
 ) => {
   const db = await IoCService.use<Knex>("Database");
   return await db.table("notifications").insert({
     user_id: targetUserId,
     type,
     post_id: postId,
+    reply_id: replyId,
     count: 0,
     is_read: false,
     created_at: new Date(),
@@ -50,11 +52,12 @@ const create = async (
   notification: any,
   targetUserId: number,
   triggerUserId: number,
-  postId?: number
+  postId?: number,
+  replyId?: number
 ) => {
   let notificationId = notification?.id;
   if (!notification) {
-    const [id] = await createNotification(type, targetUserId, postId);
+    const [id] = await createNotification(type, targetUserId, postId, replyId);
     notificationId = id;
   }
 
@@ -159,8 +162,34 @@ const reshare = async (triggerUserId: number, postId: number) => {
   }
 };
 
+const reply = async (
+  triggerUserId: number,
+  postId: number,
+  replyId?: number
+) => {
+  const targetUserIds = await getTargetUserIds(postId);
+
+  for (const targetUserId of targetUserIds) {
+    const notification = await getPreviousNotificationByPost(
+      NotificationTypes.Reply,
+      targetUserId,
+      postId
+    );
+
+    create(
+      NotificationTypes.Reply,
+      notification,
+      targetUserId,
+      triggerUserId,
+      postId,
+      replyId
+    );
+  }
+};
+
 export default {
   remove,
   like,
   reshare,
+  reply,
 };

@@ -2,6 +2,7 @@ import { IBeforeInsertContext } from "axe-api";
 import { captureError } from "../../Services/ErrorService";
 import UserService from "../../Services/UserService";
 import PostService from "../../Services/PostService";
+import NotificationService from "../../Services/NotificationService";
 
 export default async ({ item, req }: IBeforeInsertContext) => {
   try {
@@ -21,10 +22,13 @@ export default async ({ item, req }: IBeforeInsertContext) => {
     // Upgrading the user's post count
     await UserService.incrementUserPostCount(item.user_id);
 
-    // If the new post a reply to another post, we should update the parent
-    // post's status
+    // If the new post a reply to another post
     if (item.parent_id) {
+      // We should update the parent post's status
       await PostService.incrementPostReplies(item.parent_id);
+
+      // We should create a notification
+      await NotificationService.reply(item.user_id, item.parent_id, item.id);
     }
   } catch (error) {
     captureError(error, {
