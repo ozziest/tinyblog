@@ -1,13 +1,14 @@
 import { INotificationApi } from "@/types/ApiTypes";
 import UserLink from "./UserLink";
-import XOthersButton from "./XOthersButton";
+import AvatarLink from "../user/AvatarLink";
+import XOthersAvatar from "./XOthersAvatar";
 
 interface Props {
   notification: INotificationApi;
   handleMoreUsersClick: (event: React.MouseEvent<HTMLElement>) => void;
 }
 
-const NotificationNames = ({ notification, handleMoreUsersClick }: Props) => {
+const NotificationAvatars = ({ notification, handleMoreUsersClick }: Props) => {
   if (notification.triggers.length === 1) {
     const [trigger] = notification.triggers;
     return <UserLink user={trigger.user} />;
@@ -17,22 +18,19 @@ const NotificationNames = ({ notification, handleMoreUsersClick }: Props) => {
   const extraUserCount = notification.count - 2;
 
   return (
-    <div className="flex">
-      <UserLink user={first.user} />
-      {extraUserCount > 0 && <span className="pr-1">,</span>}
-      {extraUserCount === 0 && <span className="px-1">and</span>}
-      <UserLink user={second.user} />
+    <div className="flex gap-1">
+      <AvatarLink user={first.user} />
+      <AvatarLink user={second.user} />
       {extraUserCount > 0 && (
-        <div className="px-1">
-          and{" "}
-          <XOthersButton
+        <div>
+          <XOthersAvatar
             count={extraUserCount}
             handleClick={handleMoreUsersClick}
-          />
+          />{" "}
         </div>
       )}
     </div>
   );
 };
 
-export default NotificationNames;
+export default NotificationAvatars;

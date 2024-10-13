@@ -1,17 +1,9 @@
-import { INotificationApi } from "@/types/ApiTypes";
-
 interface Props {
-  notification: INotificationApi;
   count: number;
+  handleClick: (event: React.MouseEvent<HTMLElement>) => void;
 }
 
-const XOthersButton = ({ notification, count }: Props) => {
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-    event.preventDefault();
-    event.stopPropagation();
-    console.log("showAllUsers", notification);
-  };
-
+const XOthersButton = ({ count, handleClick }: Props) => {
   return (
     <button
       type="button"
