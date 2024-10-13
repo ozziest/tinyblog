@@ -4,11 +4,15 @@ import FormatPostToJSX from "../posts/FormatPostToJSX";
 import { extendPost } from "@/helpers/posts";
 import NotificationAvatars from "./NotificationAvatars";
 
-interface Props {
+export interface PostBasedNotificationProps {
   notification: INotificationApi;
+  message: string;
 }
 
-const LikeNotification = ({ notification }: Props) => {
+const PostBasedNotification = ({
+  notification,
+  message,
+}: PostBasedNotificationProps) => {
   const post = extendPost(notification.post);
 
   const handleMoreUsersClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -30,7 +34,7 @@ const LikeNotification = ({ notification }: Props) => {
           notification={notification}
           handleMoreUsersClick={handleMoreUsersClick}
         />
-        <span>liked your post.</span>
+        <span>{message}</span>
       </div>
       <div className="opacity-50 pt-3">
         <FormatPostToJSX data={post} />
@@ -39,4 +43,4 @@ const LikeNotification = ({ notification }: Props) => {
   );
 };
 
-export default LikeNotification;
+export default PostBasedNotification;

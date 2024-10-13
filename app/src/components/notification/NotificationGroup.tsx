@@ -1,6 +1,8 @@
 import { NotificationTypes } from "@/enums";
 import { INotificationApi } from "@/types/ApiTypes";
-import LikeNotification from "./LikeNotification";
+import PostBasedNotification, {
+  PostBasedNotificationProps,
+} from "./PostBasedNotification";
 import { extendPost } from "@/helpers/posts";
 import { LikeIcon } from "../Icons";
 import { useNavigate } from "react-router-dom";
@@ -10,7 +12,9 @@ interface Props {
 }
 
 type NotificationIconType = ({ size }: { size: number }) => JSX.Element;
-type NotificationDetailType = ({ notification }: Props) => JSX.Element;
+type NotificationDetailType = (
+  props: PostBasedNotificationProps,
+) => JSX.Element;
 
 const NOTIFICATION_ICON_MAP: Record<NotificationTypes, NotificationIconType> = {
   [NotificationTypes.Like]: LikeIcon,
@@ -24,17 +28,26 @@ const NOTIFICATION_TYPES_MAP: Record<
   NotificationTypes,
   NotificationDetailType
 > = {
-  [NotificationTypes.Like]: LikeNotification,
-  [NotificationTypes.Reshare]: LikeNotification,
-  [NotificationTypes.Follow]: LikeNotification,
-  [NotificationTypes.Reply]: LikeNotification,
-  [NotificationTypes.Mention]: LikeNotification,
+  [NotificationTypes.Like]: PostBasedNotification,
+  [NotificationTypes.Reshare]: PostBasedNotification,
+  [NotificationTypes.Follow]: PostBasedNotification,
+  [NotificationTypes.Reply]: PostBasedNotification,
+  [NotificationTypes.Mention]: PostBasedNotification,
+};
+
+const NOTIFICATION_MESSAGES: Record<NotificationTypes, string> = {
+  [NotificationTypes.Like]: "liked your post.",
+  [NotificationTypes.Reshare]: "reshared your post.",
+  [NotificationTypes.Follow]: "started following you.",
+  [NotificationTypes.Reply]: "replied to your post.",
+  [NotificationTypes.Mention]: "mentioned you in a post.",
 };
 
 const NotificationGroup = ({ notification }: Props) => {
   const navigate = useNavigate();
   const NotificationIcon = NOTIFICATION_ICON_MAP[notification.type];
   const NotificationDetail = NOTIFICATION_TYPES_MAP[notification.type];
+  const message = NOTIFICATION_MESSAGES[notification.type];
 
   const post = extendPost(notification.post);
 
@@ -51,7 +64,7 @@ const NotificationGroup = ({ notification }: Props) => {
         <NotificationIcon size={24} />
       </div>
       <div className="flex-grow pb-5">
-        <NotificationDetail notification={notification} />
+        <NotificationDetail notification={notification} message={message} />
       </div>
     </article>
   );
