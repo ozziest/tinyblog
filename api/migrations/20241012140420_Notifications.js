@@ -9,6 +9,8 @@ export const up = function (knex) {
     table.integer("post_id").unsigned().nullable();
     table.integer("count").unsigned().notNullable().defaultTo(1);
     table.boolean("is_read").notNullable().defaultTo(false);
+    table.integer("first_trigger_id").unsigned().nullable();
+    table.integer("second_trigger_id").unsigned().nullable();
     table.timestamps();
 
     table
@@ -19,6 +21,16 @@ export const up = function (knex) {
     table
       .foreign("post_id")
       .references("posts.id")
+      .onDelete("CASCADE")
+      .onUpdate("CASCADE");
+    table
+      .foreign("first_trigger_id")
+      .references("users.id")
+      .onDelete("CASCADE")
+      .onUpdate("CASCADE");
+    table
+      .foreign("second_trigger_id")
+      .references("users.id")
       .onDelete("CASCADE")
       .onUpdate("CASCADE");
   });
