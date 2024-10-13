@@ -1,5 +1,6 @@
 import api from "@/api";
 import NotificationGroup from "@/components/notification/NotificationGroup";
+import PostContainer from "@/components/posts/PostContainer";
 import { INotificationApi } from "@/types/ApiTypes";
 import { useEffect, useState } from "react";
 
@@ -16,11 +17,11 @@ const NotificationView = () => {
   }, []);
   return (
     <>
-      <div>
+      <PostContainer>
         {items.map((item) => (
           <NotificationGroup notification={item} key={item.id} />
         ))}
-      </div>
+      </PostContainer>
     </>
   );
 };

@@ -1,64 +1,32 @@
-import React, { useState } from "react";
+import React from "react";
 import Avatar from "@/components/user/Avatar";
-import { useNavigate } from "react-router-dom";
-import api from "@/api";
 import classNames from "classnames";
-import { ExtendedPost, IPostStore } from "@/stores/postStore";
+import { ExtendedPost } from "@/stores/postStore";
 
 interface Props {
-  store: IPostStore;
   post: ExtendedPost;
-  autoView?: boolean;
   showBorder?: boolean;
   isParent?: boolean;
   children: React.ReactNode;
+  hadleMouseEnter?: () => void;
+  handleMouseLeave?: () => void;
+  handleClick?: () => void;
 }
 
 const PostArticle = ({
-  store,
   post,
-  autoView,
   showBorder,
   isParent,
   children,
+  hadleMouseEnter,
+  handleMouseLeave,
+  handleClick,
 }: Props) => {
-  const navigate = useNavigate();
-  const [timer, setTimer] = useState<number | undefined>();
-
-  const setAsViewed = async () => {
-    // We don't need to send another request
-    if (post.isViewed || autoView === false) {
-      return;
-    }
-
-    const response = await api.post.setViewed(post.id);
-    const data = await response.json();
-    store.setViewed(post.id, data.isAlreadyViewed);
-  };
-
-  const hadleMouseEnter = () => {
-    // We don't need to set a timer
-    if (post.isViewed || autoView === false) {
-      return;
-    }
-
-    // Set a timer to set as viewed
-    setTimer(window.setTimeout(setAsViewed, 1000));
-  };
-
-  const handleMouseLeave = () => {
-    clearTimeout(timer);
-  };
-
-  const handleClick = () => {
-    navigate(`/${post.id}`);
-  };
-
   return (
     <>
       <article
         className={classNames(
-          "p-4 flex gap-2 justify-between transition-colors duration-300 cursor-pointer transition-all hover:bg-neutral-50",
+          "p-4 flex gap-2 justify-between duration-300 cursor-pointer transition-all hover:bg-neutral-50",
           {
             "border-b border-neutral-200": showBorder,
           },

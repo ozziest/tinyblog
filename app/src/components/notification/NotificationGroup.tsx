@@ -1,12 +1,10 @@
 import { NotificationTypes } from "@/enums";
 import { INotificationApi } from "@/types/ApiTypes";
 import LikeNotification from "./LikeNotification";
-import PostArticle from "../posts/PostArticle";
-import PostAuthor from "../posts/PostAuthor";
-import PostContent from "../posts/PostContent";
-import PostActions from "../posts/PostActions";
-import { useDashboardStore } from "@/stores/postStore";
 import { extendPost } from "@/helpers/posts";
+import { LikeIcon } from "../Icons";
+import FormatPostToJSX from "../posts/FormatPostToJSX";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   notification: INotificationApi;
@@ -23,21 +21,30 @@ const NOTIFICATION_MAP: Record<NotificationTypes, CustomNotificationType> = {
 };
 
 const NotificationGroup = ({ notification }: Props) => {
-  const store = useDashboardStore();
-
+  const navigate = useNavigate();
   const Explanation = NOTIFICATION_MAP[notification.type];
 
   const post = extendPost(notification.post);
 
+  const handleClick = () => {
+    navigate(`/${post.id}`);
+  };
+
   return (
-    <div className="flex flex-col gap-1">
-      <Explanation notification={notification} />
-      <PostArticle store={store} post={post} autoView={false} showBorder>
-        <PostAuthor post={post} />
-        <PostContent post={post} />
-        <PostActions store={store} post={post} />
-      </PostArticle>
-    </div>
+    <article
+      className="flex justify-between pt-5 cursor-pointer transition-all hover:bg-neutral-50"
+      onClick={handleClick}
+    >
+      <div className="px-5 text-red-300">
+        <LikeIcon size={28} />
+      </div>
+      <div className="flex-grow flex flex-col gap-1 pb-5">
+        <Explanation notification={notification} />
+        <div className="opacity-50">
+          <FormatPostToJSX data={post} />
+        </div>
+      </div>
+    </article>
   );
 };
 
