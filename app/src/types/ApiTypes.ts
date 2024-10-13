@@ -65,6 +65,7 @@ export interface INotificationApi {
   created_at: string;
   updated_at: string;
   post?: IPostApi;
+  reply?: IPostApi;
   triggers: INotificationTriggerApi[];
 }
 

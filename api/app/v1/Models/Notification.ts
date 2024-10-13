@@ -24,6 +24,10 @@ class Notification extends Model {
   post() {
     return this.hasOne("Post", "id", "post_id");
   }
+
+  reply() {
+    return this.hasOne("Post", "id", "reply_id");
+  }
 }
 
 export default Notification;

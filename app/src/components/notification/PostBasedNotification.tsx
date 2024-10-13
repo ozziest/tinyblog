@@ -1,11 +1,13 @@
 import { INotificationApi } from "@/types/ApiTypes";
 import NotificationNames from "./NotificationNames";
 import FormatPostToJSX from "../posts/FormatPostToJSX";
-import { extendPost } from "@/helpers/posts";
 import NotificationAvatars from "./NotificationAvatars";
+import classNames from "classnames";
+import { ExtendedPost } from "@/stores/postStore";
 
 export interface PostBasedNotificationProps {
   notification: INotificationApi;
+  post?: ExtendedPost | null;
   message: string;
   handleMoreUsersClick: (event: React.MouseEvent<HTMLElement>) => void;
 }
@@ -13,10 +15,9 @@ export interface PostBasedNotificationProps {
 const PostBasedNotification = ({
   notification,
   message,
+  post,
   handleMoreUsersClick,
 }: PostBasedNotificationProps) => {
-  const post = notification?.post ? extendPost(notification.post) : null;
-
   return (
     <div>
       <div className="pb-3">
@@ -33,7 +34,9 @@ const PostBasedNotification = ({
         <span className="px-1">{message}</span>
       </div>
       {post && (
-        <div className="opacity-50 pt-3">
+        <div
+          className={classNames("pt-3", { "opacity-40": !notification.reply })}
+        >
           <FormatPostToJSX data={post} />
         </div>
       )}

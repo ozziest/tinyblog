@@ -54,6 +54,18 @@ const NOTIFICATION_MESSAGES: Record<NotificationTypes, string> = {
   [NotificationTypes.Mention]: "mentioned you in a post.",
 };
 
+const getPostContent = (notification: INotificationApi) => {
+  if (notification.reply) {
+    return extendPost(notification.reply);
+  }
+
+  if (notification.post) {
+    return extendPost(notification.post);
+  }
+
+  return null;
+};
+
 const NotificationGroup = ({ notification }: Props) => {
   const navigate = useNavigate();
   const [isRead, setRead] = useState(notification.is_read);
@@ -61,8 +73,7 @@ const NotificationGroup = ({ notification }: Props) => {
   const NotificationDetail = NOTIFICATION_TYPES_MAP[notification.type];
   const message = NOTIFICATION_MESSAGES[notification.type];
   const iconColor = NOTIFICATION_ICON_COLORS[notification.type];
-
-  const post = notification?.post ? extendPost(notification.post) : null;
+  const post = getPostContent(notification);
 
   const handleClick = () => {
     if (post) {
@@ -102,6 +113,7 @@ const NotificationGroup = ({ notification }: Props) => {
         <NotificationDetail
           notification={notification}
           message={message}
+          post={post}
           handleMoreUsersClick={handleMoreUsersClick}
         />
       </div>

@@ -7,16 +7,16 @@ interface PaginateProps {
   tagId?: number;
 }
 
-const USER = "user{id,name,username,email}";
 const HASHTAGS = "hashtags{hashtag}";
 const MENTIONS = "mentions{username}";
 const LINKS = "links{link{code,link}}";
 
-const POST_DETAIL = `post{${USER},${HASHTAGS},${MENTIONS},${LINKS}}`;
+const POST_DETAIL = `post{${HASHTAGS},${MENTIONS},${LINKS}}`;
+const REPLY_DETAIL = `reply{${HASHTAGS},${MENTIONS},${LINKS}}`;
 
 const paginate = async ({ minId }: PaginateProps = {}) => {
   const query = resource("notifications/all")
-    .with(`${POST_DETAIL}`)
+    .with(`${POST_DETAIL},${REPLY_DETAIL}`)
     .sort("id", "DESC");
 
   if (minId) {
