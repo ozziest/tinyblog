@@ -49,10 +49,18 @@ const NotificationGroup = ({ notification }: Props) => {
   const NotificationDetail = NOTIFICATION_TYPES_MAP[notification.type];
   const message = NOTIFICATION_MESSAGES[notification.type];
 
-  const post = extendPost(notification.post);
+  const post = notification?.post ? extendPost(notification.post) : null;
 
   const handleClick = () => {
-    navigate(`/${post.id}`);
+    if (post) {
+      navigate(`/${post.id}`);
+    }
+  };
+
+  const handleMoreUsersClick = (event: React.MouseEvent<HTMLElement>) => {
+    event.stopPropagation();
+    event.preventDefault();
+    console.log("handleMoreUsersClick", notification);
   };
 
   return (
@@ -64,7 +72,11 @@ const NotificationGroup = ({ notification }: Props) => {
         <NotificationIcon size={24} />
       </div>
       <div className="flex-grow pb-5">
-        <NotificationDetail notification={notification} message={message} />
+        <NotificationDetail
+          notification={notification}
+          message={message}
+          handleMoreUsersClick={handleMoreUsersClick}
+        />
       </div>
     </article>
   );

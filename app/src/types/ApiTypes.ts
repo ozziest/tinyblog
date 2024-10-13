@@ -64,7 +64,7 @@ export interface INotificationApi {
   is_read: boolean;
   created_at: string;
   updated_at: string;
-  post: IPostApi;
+  post?: IPostApi;
   triggers: INotificationTriggerApi[];
 }
 

@@ -7,19 +7,15 @@ import NotificationAvatars from "./NotificationAvatars";
 export interface PostBasedNotificationProps {
   notification: INotificationApi;
   message: string;
+  handleMoreUsersClick: (event: React.MouseEvent<HTMLElement>) => void;
 }
 
 const PostBasedNotification = ({
   notification,
   message,
+  handleMoreUsersClick,
 }: PostBasedNotificationProps) => {
-  const post = extendPost(notification.post);
-
-  const handleMoreUsersClick = (event: React.MouseEvent<HTMLElement>) => {
-    event.stopPropagation();
-    event.preventDefault();
-    console.log("handleMoreUsersClick", notification);
-  };
+  const post = notification?.post ? extendPost(notification.post) : null;
 
   return (
     <div>
@@ -36,9 +32,11 @@ const PostBasedNotification = ({
         />
         <span>{message}</span>
       </div>
-      <div className="opacity-50 pt-3">
-        <FormatPostToJSX data={post} />
-      </div>
+      {post && (
+        <div className="opacity-50 pt-3">
+          <FormatPostToJSX data={post} />
+        </div>
+      )}
     </div>
   );
 };
