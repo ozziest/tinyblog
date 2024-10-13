@@ -1,5 +1,4 @@
 import { INotificationApi } from "@/types/ApiTypes";
-import UserLink from "./UserLink";
 import AvatarLink from "../user/AvatarLink";
 import XOthersAvatar from "./XOthersAvatar";
 
