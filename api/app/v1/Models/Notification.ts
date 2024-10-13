@@ -7,7 +7,7 @@ const onBeforeTriggerQuery = async (
   req: AxeRequest,
   query: Knex.QueryBuilder
 ) => {
-  query.orderBy("id", "desc").limit(3);
+  query.orderBy("id", "desc");
 };
 
 class Notification extends Model {

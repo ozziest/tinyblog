@@ -1,13 +1,5 @@
-import {
-  App,
-  createRateLimitter,
-  IContext,
-  IoCService,
-  rateLimit,
-  RedisAdaptor,
-} from "axe-api";
+import { App, IoCService, RedisAdaptor } from "axe-api";
 import cors from "cors";
-import { IncomingMessage, ServerResponse } from "http";
 import { Knex } from "knex";
 import LoginHandler from "./Handlers/LoginHandler";
 import { prepareTemplates } from "./Services/TemplateService";
@@ -27,7 +19,6 @@ import CSRFHandler from "./Handlers/CSRFHandler";
 import { LogService } from "axe-api/build/src/Services";
 import DefaultSessionRateLimitter from "./Middlewares/RateLimitters/DefaultSessionRateLimitter";
 import UserAgentRateLimitter from "./Middlewares/RateLimitters/UserAgentRateLimitter";
-import SessionRateLimitter from "./Middlewares/RateLimitters/SessionRateLimitter";
 import HashtagReportHandler from "./Handlers/HashtagReportHandler";
 
 const CORS_WHITE_LIST = ["http://localhost:5173", "http://localhost:3005"];
@@ -36,7 +27,7 @@ const onBeforeInit = async (app: App) => {
   const database = await IoCService.use<Knex>("Database");
 
   database.on("query", (queryData) => {
-    // console.log(`Executing query: ${queryData.sql}`);
+    // console.log(`Executing query: ${queryData.sql}`, queryData.bindings);
   });
 
   // Setting the default locale
