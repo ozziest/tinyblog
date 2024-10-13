@@ -11,10 +11,21 @@ const DashboardView = () => {
 
   const fetchPosts = async () => {
     store.setLoading(true);
-    const response = await api.post.paginate({ feed: true });
-    const data = await response.json();
-    store.setPosts(data);
-    store.setLoading(false);
+    let response = await api.post.paginate({ feed: true });
+    let data = await response.json();
+
+    // If there is any data, we can set the store
+    if (data.length > 0) {
+      store.setPosts(data);
+      store.setLoading(false);
+    } else {
+      // Otherwise, that means the user doesn't follow anyone. In that case
+      // we can fetch just the latest posts.
+      response = await api.post.paginate();
+      data = await response.json();
+      store.setPosts(data);
+      store.setLoading(false);
+    }
   };
 
   const loadMore = async () => {
