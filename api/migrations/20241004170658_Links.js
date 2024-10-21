@@ -1,6 +1,6 @@
 export const up = function (knex) {
   return knex.schema.createTable("links", function (table) {
-    table.increments();
+    table.bigIncrements();
     table.string("code", 30).notNullable().unique();
     table.string("link", 240).notNullable();
     table.timestamps();

@@ -1,6 +1,6 @@
 export const up = function (knex) {
   return knex.schema.createTable("users", function (table) {
-    table.increments();
+    table.bigIncrements();
     table.string("email").notNullable().unique().index();
     table.string("username").notNullable().unique().index();
     table.string("password").notNullable();

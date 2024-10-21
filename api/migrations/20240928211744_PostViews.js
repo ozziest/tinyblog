@@ -1,8 +1,8 @@
 export const up = function (knex) {
   return knex.schema.createTable("post_views", function (table) {
-    table.increments();
-    table.integer("user_id").unsigned().notNullable();
-    table.integer("post_id").unsigned().notNullable();
+    table.bigIncrements();
+    table.bigInteger("user_id").unsigned().notNullable();
+    table.bigInteger("post_id").unsigned().notNullable();
     table.timestamps();
 
     table

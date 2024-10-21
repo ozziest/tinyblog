@@ -1,8 +1,8 @@
 export const up = function (knex) {
   return knex.schema.createTable("post_links", function (table) {
-    table.increments();
-    table.integer("post_id").unsigned().notNullable();
-    table.integer("link_id").unsigned().notNullable();
+    table.bigIncrements();
+    table.bigInteger("post_id").unsigned().notNullable();
+    table.bigInteger("link_id").unsigned().notNullable();
     table.timestamps();
 
     table

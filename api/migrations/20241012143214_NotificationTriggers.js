@@ -1,8 +1,8 @@
 export const up = function (knex) {
   return knex.schema.createTable("notifications_triggers", function (table) {
-    table.increments();
-    table.integer("notification_id").unsigned().notNullable();
-    table.integer("trigger_user_id").unsigned().notNullable();
+    table.bigIncrements();
+    table.bigInteger("notification_id").unsigned().notNullable();
+    table.bigInteger("trigger_user_id").unsigned().notNullable();
     table.timestamps();
 
     table

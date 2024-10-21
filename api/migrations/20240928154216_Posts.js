@@ -1,9 +1,9 @@
 export const up = function (knex) {
   return knex.schema.createTable("posts", function (table) {
-    table.increments();
-    table.integer("reshare_id").unsigned().nullable();
-    table.integer("parent_id").unsigned().nullable();
-    table.integer("user_id").unsigned().notNullable();
+    table.bigIncrements();
+    table.bigInteger("reshare_id").unsigned().nullable();
+    table.bigInteger("parent_id").unsigned().nullable();
+    table.bigInteger("user_id").unsigned().notNullable();
     table.string("content", 400).notNullable();
     table.text("lexical").notNullable();
     table.integer("stats_views").notNullable().defaultTo(0);

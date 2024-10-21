@@ -1,7 +1,7 @@
 export const up = function (knex) {
   return knex.schema.createTable("confirmations", function (table) {
-    table.increments();
-    table.integer("user_id").unsigned().notNullable();
+    table.bigIncrements();
+    table.bigInteger("user_id").unsigned().notNullable();
     table
       .enu("confirmation_type", ["email", "phone", "password-reset"])
       .notNullable();

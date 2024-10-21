@@ -1,8 +1,8 @@
 export const up = function (knex) {
   return knex.schema.createTable("post_hashtags", function (table) {
-    table.increments();
-    table.integer("post_id").unsigned().notNullable();
-    table.integer("hashtag_id").unsigned().notNullable();
+    table.bigIncrements();
+    table.bigInteger("post_id").unsigned().notNullable();
+    table.bigInteger("hashtag_id").unsigned().notNullable();
     table.string("hashtag", 35).notNullable();
     table.timestamps();
 
