@@ -1,11 +1,10 @@
-FROM --platform=linux/amd64 node:18
+FROM node:20-alpine
 
 # Create app directory
 WORKDIR /home
 
 # Install app dependencies
 COPY package*.json ./
-RUN npm install
 
 # Building for a production
 RUN npm ci --only=production
