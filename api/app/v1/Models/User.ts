@@ -57,7 +57,7 @@ class User extends Model {
   }
 
   get hiddens() {
-    return ["password"];
+    return ["password", "deleted_at"];
   }
 
   followers() {
