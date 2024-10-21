@@ -11,6 +11,7 @@ export const up = function (knex) {
     table.integer("stats_following").notNullable().defaultTo(0);
     table.boolean("is_email_confirmed").notNullable().defaultTo(false);
     table.timestamps();
+    table.datetime("deleted_at").nullable();
   });
 };
 
