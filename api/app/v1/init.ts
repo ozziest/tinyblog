@@ -21,7 +21,11 @@ import DefaultSessionRateLimitter from "./Middlewares/RateLimitters/DefaultSessi
 import UserAgentRateLimitter from "./Middlewares/RateLimitters/UserAgentRateLimitter";
 import HashtagReportHandler from "./Handlers/HashtagReportHandler";
 
-const CORS_WHITE_LIST = ["http://localhost:5173", "http://localhost:3005"];
+const CORS_WHITE_LIST = [
+  "http://localhost:5173",
+  "http://localhost:3005",
+  "https://staging.tinyblog.space",
+];
 
 const onBeforeInit = async (app: App) => {
   const database = await IoCService.use<Knex>("Database");
