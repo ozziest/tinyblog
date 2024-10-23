@@ -1,3 +1,4 @@
+import { env } from "@/env";
 import { useEffect, useRef } from "react";
 
 interface Props {
@@ -17,7 +18,7 @@ const CFTurnstile = ({ onVerify }: Props) => {
 
         // Render Turnstile widget
         window.turnstile.render(turnstileRef.current, {
-          sitekey: import.meta.env.VITE_TURNSTILE_SITEKEY,
+          sitekey: env("TurnstileSiteKey"),
           callback: (newToken) => {
             onVerify(newToken);
           },
