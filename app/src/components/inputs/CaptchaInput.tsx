@@ -1,17 +1,20 @@
 import { IValidationResult } from "robust-validator";
 import FormGroup from "./FormGroup";
 import { useState } from "react";
+import { env } from "@/env";
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   validation?: IValidationResult;
   error?: string;
 }
 
+const domain = env("ApiURL");
+
 const CaptchaInput = ({ name, validation, error, ...rest }: Props) => {
-  const [url, setURL] = useState("http://localhost:3005/api/v1/captcha");
+  const [url, setURL] = useState(`${domain}/captcha`);
 
   const handleReset = () => {
-    setURL(`http://localhost:3005/api/v1/captcha?v=${Date.now()}`);
+    setURL(`${domain}/captcha?v=${Date.now()}`);
   };
 
   return (

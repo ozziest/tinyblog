@@ -5,7 +5,7 @@ on:
       - "staging"
 jobs:
   dockerize:
-    name: Dockerize
+    name: staging-api
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -30,3 +30,31 @@ jobs:
           cd build
           docker build -t tinyblogspace/api:latest .
           docker push tinyblogspace/api:latest
+      - name: Deployment
+        env:
+          SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}
+          SERVER_IP: ${{ secrets.SERVER_IP }}
+        run: sshpass -p "$SERVER_PASSWORD" ssh -o StrictHostKeyChecking=no -o PreferredAuthentications=password -o LogLevel=ERROR root@$SERVER_IP 'cd /home/docker && sh restart-tinyblog-staging.sh && docker system prune --force'
+
+  build:
+    name: staging-app
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: app
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Node.js ⚙️
+        uses: actions/setup-node@v2
+        with:
+          node-version: "20.x"
+      - name: Install Dependencies
+        run: |
+          npm install
+          npm run build
+      - name: Deploy
+        env:
+          SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}
+          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
+        run: |
+          sshpass -p "$SERVER_PASSWORD" scp -o StrictHostKeyChecking=no -o PreferredAuthentications=password -o LogLevel=ERROR -r ./dist/* $DEPLOY_PATH
