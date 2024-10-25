@@ -6,11 +6,10 @@ import en from "./translations/en.json";
 import { setLocales, en as validationEn } from "robust-validator";
 import { setConfig } from "axe-api-client";
 import App from "./App";
-import { env } from "./env";
 
 setLocales(validationEn);
 setConfig({
-  baseURL: env("ApiURL"),
+  baseURL: import.meta.env.VITE_API_URL,
 });
 
 i18n.use(initReactI18next).init({
