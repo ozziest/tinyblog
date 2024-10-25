@@ -84,7 +84,7 @@ export default async (req: AxeRequest, res: AxeResponse) => {
     const imgBuffer = Buffer.from(base64Image, "base64");
 
     res.original.setHeader("Content-Type", "image/png");
-    res.original.setHeader("x-code", code);
+    res.original.setHeader("x-code", `code:${code}`);
     res.original.end(imgBuffer);
   } catch (error) {
     res.status(500).json({ error: "An error occurred" });
