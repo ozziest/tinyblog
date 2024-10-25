@@ -93,7 +93,7 @@ const onBeforeInit = async (app: App) => {
   );
   app.get(
     "/api/v1/captcha",
-    UserAgentRateLimitter("CaptchaCreation", 10),
+    UserAgentRateLimitter("CaptchaCreation", 100),
     CaptchaHandler
   );
   app.get("/api/v1/csrf", UserAgentRateLimitter("CSRF", 100), CSRFHandler);
