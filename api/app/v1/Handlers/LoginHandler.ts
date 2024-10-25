@@ -1,6 +1,6 @@
 import { AxeRequest, AxeResponse, IoCService } from "axe-api";
 import { Knex } from "knex";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import UserService, { getUserAvatar } from "../Services/UserService";
 import { captureError } from "../Services/ErrorService";

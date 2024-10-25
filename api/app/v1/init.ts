@@ -116,7 +116,6 @@ const onAfterInit = async (app: App) => {
   const redis = await IoCService.use<RedisAdaptor>("Redis");
   if (!redis.isReady()) {
     await redis.connect();
-    LogService.info("Redis connection in done!");
   }
 };
 
