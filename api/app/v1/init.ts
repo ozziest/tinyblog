@@ -1,6 +1,8 @@
 import { App, IoCService, RedisAdaptor } from "axe-api";
 import cors from "cors";
 import { Knex } from "knex";
+import * as Sentry from "@sentry/node";
+import { nodeProfilingIntegration } from "@sentry/profiling-node";
 import LoginHandler from "./Handlers/LoginHandler";
 import { prepareTemplates } from "./Services/TemplateService";
 import ProfileCheckHandler from "./Handlers/ProfileCheckHandler";
@@ -21,6 +23,15 @@ import DefaultSessionRateLimitter from "./Middlewares/RateLimitters/DefaultSessi
 import UserAgentRateLimitter from "./Middlewares/RateLimitters/UserAgentRateLimitter";
 import HashtagReportHandler from "./Handlers/HashtagReportHandler";
 import LogoutHandler from "./Handlers/LogoutHandler";
+
+if (process.env.NODE_ENV === "production") {
+  Sentry.init({
+    dsn: process.env.SENTRY_DSN_KEY,
+    integrations: [nodeProfilingIntegration()],
+    tracesSampleRate: 1.0,
+    profilesSampleRate: 1.0,
+  });
+}
 
 const CORS_WHITE_LIST = [
   "http://localhost:5173",

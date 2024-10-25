@@ -14,6 +14,8 @@
   },
   "dependencies": {
     "@elastic/elasticsearch": "^8.15.0",
+    "@sentry/node": "^8.35.0",
+    "@sentry/profiling-node": "^8.35.0",
     "axe-api": "1.5.0-rc-6",
     "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
@@ -26,11 +28,11 @@
     "mysql": "^2.18.1",
     "mysql2": "^3.11.3",
     "nanoid": "^3.3.7",
+    "node-cache": "^5.1.2",
+    "redis": "^4.7.0",
     "robust-validator": "^2.0.0-rc-1",
     "sanitize-html": "^2.13.0",
-    "svg2img": "^1.0.0-beta.2",
-    "node-cache": "^5.1.2",
-    "redis": "^4.7.0"
+    "svg2img": "^1.0.0-beta.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.25.6",

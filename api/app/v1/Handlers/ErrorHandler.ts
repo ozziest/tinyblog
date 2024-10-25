@@ -1,6 +1,7 @@
 import { IncomingMessage, ServerResponse } from "http";
 import { NextFunction } from "axe-api";
 import "dotenv/config";
+import * as Sentry from "@sentry/node";
 
 const ErrorHandler = (
   err: any,
@@ -15,6 +16,7 @@ const ErrorHandler = (
   };
 
   if (process.env.NODE_ENV === "production") {
+    Sentry.captureException(error);
     error = {
       message: "An error occurred!",
     };
