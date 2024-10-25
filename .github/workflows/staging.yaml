@@ -49,6 +49,9 @@ jobs:
         with:
           node-version: "20.x"
       - name: Install Dependencies
+        env:
+          VITE_TURNSTILE_SITE_KEY: 1x00000000000000000000AA
+          VITE_API_URL: https://api-staging.tinyblog.space/api/v1
         run: |
           npm install
           npm run build
@@ -56,7 +59,5 @@ jobs:
         env:
           SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}
           DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
-          VITE_TURNSTILE_SITE_KEY: 1x00000000000000000000AA
-          VITE_API_URL: https://api-staging.tinyblog.space/api/v1
         run: |
           sshpass -p "$SERVER_PASSWORD" scp -o StrictHostKeyChecking=no -o PreferredAuthentications=password -o LogLevel=ERROR -r ./dist/* $DEPLOY_PATH
