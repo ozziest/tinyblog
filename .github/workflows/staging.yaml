@@ -50,7 +50,7 @@ jobs:
           node-version: "20.x"
       - name: Install Dependencies
         env:
-          VITE_TURNSTILE_SITE_KEY: 1x00000000000000000000AA
+          VITE_TURNSTILE_SITE_KEY: ${{ secrets.VITE_TURNSTILE_SITE_KEY }}
           VITE_API_URL: https://api-staging.tinyblog.space/api/v1
         run: |
           npm install
