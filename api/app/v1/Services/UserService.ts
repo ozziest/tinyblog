@@ -55,6 +55,11 @@ const getNewAgentId = () => {
   return `agentId=${nanoid(40)}; SameSite=Strict; Path=/; Secure; HttpOnly`;
 };
 
+const getDeleteCookieContent = () => {
+  // 1 week long
+  return `token=; SameSite=Strict; Max-Age=0; Path=/; Secure; HttpOnly`;
+};
+
 export default {
   getUserByEmailOrUsername,
   incrementUserPostCount,
@@ -64,4 +69,5 @@ export default {
   decrementFollowingCount,
   getCookieContent,
   getNewAgentId,
+  getDeleteCookieContent,
 };

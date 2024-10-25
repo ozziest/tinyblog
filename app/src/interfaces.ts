@@ -1,7 +1,6 @@
 export interface IUserPost {
   cfToken: string | null;
   csrf: string;
-  captcha: string;
   email: string;
   password: string;
   password_confirmed: string;

@@ -8,12 +8,10 @@ import { useTranslation } from "react-i18next";
 import { IValidationResult, validate } from "robust-validator";
 import { notification } from "@/helpers/notication";
 import PasswordStrengthMeter from "@/components/inputs/PasswordStrengthMeter";
-import CaptchaInput from "@/components/inputs/CaptchaInput";
 import CFTurnstile from "@/components/security/CFTurnstile";
 
 const RULES = {
   email: "required|email|max:320",
-  captcha: "required",
   username: "required|alpha_dash|min:3|max:30",
   password: "required|min:8|max:50|confirmed",
   name: "required|min:3|max:50",
@@ -25,7 +23,6 @@ const RegisterView = () => {
   const [state, setState] = useState<IUserPost>({
     cfToken: null,
     csrf: "",
-    captcha: "",
     email: "",
     username: "",
     name: "",
@@ -151,11 +148,6 @@ const RegisterView = () => {
           placeholder={t("register.passwordRetry.placeholder")}
           value={state.password_confirmed}
           onChange={(event) => handleChange(event, "password_confirmed")}
-          validation={validation}
-        />
-        <CaptchaInput
-          value={state.captcha}
-          onChange={(event) => handleChange(event, "captcha")}
           validation={validation}
         />
         <div

@@ -22,7 +22,8 @@ const Navigation = () => {
   const location = useLocation();
   const [hashtags, setHashtags] = useState<string[]>([]);
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    await api.user.logout();
     authStore.logout();
     navigate("/about");
   };

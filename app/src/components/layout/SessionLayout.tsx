@@ -15,9 +15,11 @@ const SessionLayout = () => {
   const [isReady, setReady] = useState(false);
 
   const getMeData = async () => {
-    const response = await api.user.getMyself();
-    const user: IUserApi = await response.json();
-    authStore.update(user);
+    if (authStore.state.isLoggedIn) {
+      const response = await api.user.getMyself();
+      const user: IUserApi = await response.json();
+      authStore.update(user);
+    }
   };
 
   useEffect(() => {

@@ -34,7 +34,6 @@ class User extends Model {
 
   get middlewares() {
     return [
-      SessionMiddleware,
       DefaultSessionRateLimitter,
       {
         handler: [HandlerTypes.PAGINATE],

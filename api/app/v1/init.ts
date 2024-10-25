@@ -20,6 +20,7 @@ import { LogService } from "axe-api/build/src/Services";
 import DefaultSessionRateLimitter from "./Middlewares/RateLimitters/DefaultSessionRateLimitter";
 import UserAgentRateLimitter from "./Middlewares/RateLimitters/UserAgentRateLimitter";
 import HashtagReportHandler from "./Handlers/HashtagReportHandler";
+import LogoutHandler from "./Handlers/LogoutHandler";
 
 const CORS_WHITE_LIST = [
   "http://localhost:5173",
@@ -62,6 +63,7 @@ const onBeforeInit = async (app: App) => {
   app.use(UserAgentRateLimitter("UserAgent", 1000));
 
   app.post("/api/v1/login", LoginHandler);
+  app.get("/api/v1/logout", SessionMiddleware, LogoutHandler);
   app.post("/api/v1/profileCheck", ProfileCheckHandler);
   app.post("/api/v1/confirm", ConfirmHandler);
   app.post("/api/v1/confirmReset", ConfirmResetHandler);

@@ -10,14 +10,13 @@ export default async ({ req, formData, res }: IBeforeInsertContext) => {
   formData.email = formData.email.trim().toLowerCase();
   formData.username = formData.username.trim().toLowerCase();
 
-  const { csrf, captcha, cfToken } = req.body;
+  const { csrf, cfToken } = req.body;
   const { agentId } = req.original;
 
   const validation = await validate(
-    { csrf, captcha, agentId, cfToken },
+    { csrf, agentId, cfToken },
     {
       csrf: "required|min:40",
-      captcha: "required|min:8",
       agentId: "required",
       cfToken: "required",
     }
@@ -41,8 +40,7 @@ export default async ({ req, formData, res }: IBeforeInsertContext) => {
 
   // Let's check the CSRF and captcha
   const savedCSRF = await redis.get(`LastCSRF:${agentId}`);
-  const savedCaptcha = await redis.get(`LastCaptchaCode:${agentId}`);
-  if (savedCSRF !== csrf || savedCaptcha !== captcha) {
+  if (savedCSRF !== csrf) {
     return res.status(400).json({
       error: "Unacceptable request! Please check your captcha code.",
     });

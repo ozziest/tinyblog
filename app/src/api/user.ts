@@ -18,6 +18,10 @@ const login = async (data: ILoginPost) => {
   return resource("login").post(data);
 };
 
+const logout = async () => {
+  return resource("logout").get();
+};
+
 const profileCheck = async (
   data: IProfilCheckPost,
 ): Promise<IProfilCheckResponse> => {
@@ -70,6 +74,7 @@ const unfollow = async (userId: number, id: number) => {
 export default {
   createUser,
   login,
+  logout,
   profileCheck,
   confirmation,
   confirmationReset,
