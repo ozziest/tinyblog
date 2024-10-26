@@ -14,7 +14,7 @@ class User extends Model {
   get fillable() {
     return {
       POST: ["email", "username", "password", "name"],
-      PATCH: ["bio"],
+      PATCH: ["bio", "location"],
     };
   }
 
@@ -28,6 +28,7 @@ class User extends Model {
       },
       PATCH: {
         bio: "max:240",
+        location: "required|in:WW,TR",
       },
     };
   }

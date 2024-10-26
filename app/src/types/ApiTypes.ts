@@ -25,6 +25,7 @@ export interface IUserApi {
   email: string;
   username: string;
   avatar: string;
+  location: string;
   bio?: string;
   stats_post: number;
   stats_follower: number;

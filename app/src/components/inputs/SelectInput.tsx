@@ -4,11 +4,11 @@ import { IValidationResult } from "robust-validator";
 import { ArrowDownIcon } from "../Icons";
 import { IOption } from "@/interfaces";
 
-type ModelType = IOption | IOption[] | null;
+export type SelectInputModelType = IOption | IOption[] | null;
 
 interface Props {
-  value: ModelType;
-  setValue: (value: ModelType) => void;
+  value: SelectInputModelType;
+  setValue: (value: SelectInputModelType) => void;
   options: IOption[];
   placeholder?: string;
   onChange: (value: IOption | IOption[] | null) => void;

@@ -6,7 +6,7 @@ import TextareaInput from "../inputs/TextareaInput";
 import Button from "../inputs/Button";
 import api from "@/api";
 import useAuthStore from "@/stores/authStore";
-import SelectInput from "../inputs/SelectInput";
+import SelectInput, { SelectInputModelType } from "../inputs/SelectInput";
 import { SUPPORTED_LOCATIONS } from "@/consts";
 import { IOption } from "@/interfaces";
 
@@ -16,13 +16,18 @@ interface ModalProps {
   onClose: () => void;
 }
 
+type LocationType = IOption | null;
+
 const UserEditModal = ({ user, isOpen, onClose }: ModalProps) => {
   const authStore = useAuthStore();
   const [state, setState] = useState<IUserApi>({
     ...user,
     email: authStore.state.user.email,
+    location: authStore.state.user.location,
   });
-  const [location, setLocation] = useState<IOption | IOption[] | null>(null);
+  const [location, setLocation] = useState<LocationType>(
+    SUPPORTED_LOCATIONS.find((item) => item.value === state.location) || null,
+  );
 
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -36,7 +41,7 @@ const UserEditModal = ({ user, isOpen, onClose }: ModalProps) => {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    await api.user.patch(state.id, state.bio);
+    await api.user.patch(state.id, location?.value || "WW", state.bio);
     onClose();
   };
 
@@ -53,7 +58,9 @@ const UserEditModal = ({ user, isOpen, onClose }: ModalProps) => {
         <SelectInput
           name="location"
           value={location}
-          setValue={setLocation}
+          setValue={(value: SelectInputModelType) =>
+            setLocation(value as LocationType)
+          }
           label="Default location"
           options={SUPPORTED_LOCATIONS}
           onChange={() => console.log("here")}
