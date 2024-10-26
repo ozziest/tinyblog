@@ -7,6 +7,7 @@ import api from "@/api";
 import { IUserApi } from "@/types/ApiTypes";
 import InfiniteScroll from "@/components/layout/InfiniteScroll";
 import UserProfileBox from "@/components/user/UserProfileBox";
+import EmptyData from "@/components/layout/EmptyData";
 
 const ProfileView = () => {
   const store = useProfilePostsStore();
@@ -66,6 +67,8 @@ const ProfileView = () => {
     return;
   }
 
+  const isEmptyData = store.state.posts.length == 0;
+
   return (
     <>
       <div className="bg-white sticky top-[44px] pt-4 z-50">
@@ -73,8 +76,18 @@ const ProfileView = () => {
       </div>
       <div className="">
         <PostContainer>
-          <Posts store={store} />
-          <InfiniteScroll store={store} loadMore={loadMore} />
+          {isEmptyData && (
+            <EmptyData
+              title="No posts!"
+              description="The user hasn't posted anything yet!"
+            />
+          )}
+          {!isEmptyData && (
+            <>
+              <Posts store={store} />
+              <InfiniteScroll store={store} loadMore={loadMore} />
+            </>
+          )}
         </PostContainer>
       </div>
     </>
