@@ -6,6 +6,9 @@ import TextareaInput from "../inputs/TextareaInput";
 import Button from "../inputs/Button";
 import api from "@/api";
 import useAuthStore from "@/stores/authStore";
+import SelectInput from "../inputs/SelectInput";
+import { SUPPORTED_LOCATIONS } from "@/consts";
+import { IOption } from "@/interfaces";
 
 interface ModalProps {
   user: IUserApi;
@@ -19,6 +22,7 @@ const UserEditModal = ({ user, isOpen, onClose }: ModalProps) => {
     ...user,
     email: authStore.state.user.email,
   });
+  const [location, setLocation] = useState<IOption | IOption[] | null>(null);
 
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -45,6 +49,14 @@ const UserEditModal = ({ user, isOpen, onClose }: ModalProps) => {
           label="Username"
           value={state.username}
           disabled
+        />
+        <SelectInput
+          name="location"
+          value={location}
+          setValue={setLocation}
+          label="Default location"
+          options={SUPPORTED_LOCATIONS}
+          onChange={() => console.log("here")}
         />
         <TextareaInput
           name="bio"

@@ -57,3 +57,8 @@ export interface IResolvedList<T> {
   maxId: number;
   items: T[];
 }
+
+export interface IOption {
+  label: string;
+  value: string;
+}
