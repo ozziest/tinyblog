@@ -7,6 +7,12 @@ import { captureError } from "../../Services/ErrorService";
 
 export default async ({ req, formData, res }: IBeforeInsertContext) => {
   try {
+    if (formData.username.toLowerCase().includes("tinyblog")) {
+      return res.status(400).json({
+        error: "You can not use 'tinyblog' in your username!",
+      });
+    }
+
     const redis = await IoCService.use<RedisAdaptor>("Redis");
 
     formData.email = formData.email.trim().toLowerCase();
