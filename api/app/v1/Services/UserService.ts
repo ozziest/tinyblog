@@ -9,7 +9,7 @@ export const getUserAvatar = (email: string) => {
   }
 
   const hash = md5(email);
-  return `https://gravatar.com/avatar/${hash}?s=400`;
+  return `https://gravatar.com/avatar/${hash}?s=240`;
 };
 
 const getUserByEmailOrUsername = async (email: string, username: string) => {
