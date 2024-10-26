@@ -43,6 +43,10 @@ class User extends Model {
         handler: [HandlerTypes.INSERT],
         middleware: SessionRateLimitter("UserInsert", 50),
       },
+      {
+        handler: [HandlerTypes.PAGINATE],
+        middleware: SessionMiddleware,
+      },
     ];
   }
 
