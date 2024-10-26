@@ -38,14 +38,14 @@ const render = ({ data }: Props) => {
     );
     if (hashtag) {
       return (
-        <a
+        <Link
           key={index}
-          href={`/tags/${part.slice(1)}`}
+          to={`/tags/${part.slice(1)}`}
           className="transition-colors font-semibold text-neutral-800 hover:underline hover:text-neutral-900"
           onClick={(event) => event.stopPropagation()}
         >
           {part}
-        </a>
+        </Link>
       );
     }
 
