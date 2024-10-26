@@ -18,7 +18,6 @@ import UnshareHandler from "./Handlers/UnshareHandler";
 import CaptchaHandler from "./Handlers/CaptchaHandler";
 import AgentMiddleware from "./Middlewares/AgentMiddleware";
 import CSRFHandler from "./Handlers/CSRFHandler";
-import { LogService } from "axe-api/build/src/Services";
 import DefaultSessionRateLimitter from "./Middlewares/RateLimitters/DefaultSessionRateLimitter";
 import UserAgentRateLimitter from "./Middlewares/RateLimitters/UserAgentRateLimitter";
 import HashtagReportHandler from "./Handlers/HashtagReportHandler";
