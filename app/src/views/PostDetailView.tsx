@@ -1,18 +1,20 @@
 import { useNavigate, useParams } from "react-router-dom";
 import PostContainer from "@/components/posts/PostContainer";
 import ShareInput from "@/components/posts/ShareInput";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import api from "@/api";
 import Post from "@/components/posts/Post";
 import Posts from "@/components/posts/Posts";
 import { ExtendedPost, usePostDetailStore } from "@/stores/postStore";
 import { toExtendedPost } from "@/helpers/posts";
 import InfiniteScroll from "@/components/layout/InfiniteScroll";
+import LoadingSpinner from "@/components/layout/LoadingSpinner";
 
 const PostDetailView = () => {
   const navigate = useNavigate();
   const store = usePostDetailStore();
   const { postId } = useParams();
+  const [loading, setLoading] = useState(true);
 
   const fetch = async () => {
     if (!postId) {
@@ -20,6 +22,7 @@ const PostDetailView = () => {
       return;
     }
 
+    setLoading(true);
     const id = parseInt(postId);
 
     // Fetching the parent post and the replies together
@@ -41,6 +44,7 @@ const PostDetailView = () => {
 
     // Set the post on the store
     store.setExtendedPosts(items);
+    setLoading(false);
   };
 
   const loadMore = async () => {
@@ -66,8 +70,8 @@ const PostDetailView = () => {
 
   const rootPost = store.state.posts.find((item) => item.isRootPost);
 
-  if (!rootPost) {
-    return <div>loading</div>;
+  if (!rootPost || loading) {
+    return <LoadingSpinner />;
   }
 
   return (
