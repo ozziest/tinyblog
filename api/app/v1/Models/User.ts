@@ -14,6 +14,7 @@ class User extends Model {
   get fillable() {
     return {
       POST: ["email", "username", "password", "name"],
+      PATCH: ["bio"],
     };
   }
 
@@ -25,11 +26,14 @@ class User extends Model {
         password: "required|min:8|max:50",
         name: "required|min:3|max:50",
       },
+      PATCH: {
+        bio: "max:240",
+      },
     };
   }
 
   get handlers() {
-    return [HandlerTypes.INSERT, HandlerTypes.PAGINATE];
+    return [HandlerTypes.INSERT, HandlerTypes.PAGINATE, HandlerTypes.PATCH];
   }
 
   get middlewares() {
@@ -44,7 +48,11 @@ class User extends Model {
         middleware: SessionRateLimitter("UserInsert", 50),
       },
       {
-        handler: [HandlerTypes.PAGINATE],
+        handler: [HandlerTypes.PATCH],
+        middleware: SessionRateLimitter("UserPatch", 100),
+      },
+      {
+        handler: [HandlerTypes.PAGINATE, HandlerTypes.PATCH],
         middleware: SessionMiddleware,
       },
     ];

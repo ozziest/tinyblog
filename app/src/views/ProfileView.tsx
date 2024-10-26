@@ -72,7 +72,7 @@ const ProfileView = () => {
   return (
     <>
       <div className="bg-white sticky top-[44px] pt-4 z-50">
-        <UserProfileBox user={user} setUser={setUser} />
+        <UserProfileBox user={user} setUser={setUser} refetch={fetch} />
       </div>
       <div className="">
         <PostContainer>

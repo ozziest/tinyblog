@@ -79,6 +79,12 @@ const unfollow = async (userId: number, id: number) => {
   return resource(`users/${userId}/followers/${id}`).delete();
 };
 
+const patch = async (userId: number, bio?: string) => {
+  return resource(`users/${userId}`).patch({
+    bio,
+  });
+};
+
 export default {
   createUser,
   login,
@@ -93,4 +99,5 @@ export default {
   findByUsername,
   follow,
   unfollow,
+  patch,
 };

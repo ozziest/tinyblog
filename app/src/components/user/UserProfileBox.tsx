@@ -3,14 +3,20 @@ import Avatar from "./Avatar";
 import useAuthStore from "@/stores/authStore";
 import Button from "../inputs/Button";
 import api from "@/api";
+import UserEditModal from "../modals/UserEditModal";
+import { useState } from "react";
 
 interface Props {
   user: IUserApi;
   setUser: (user: IUserApi) => void;
+  refetch: () => void;
 }
 
-const UserProfileBox = ({ user, setUser }: Props) => {
+const UserProfileBox = ({ user, setUser, refetch }: Props) => {
   const authStore = useAuthStore();
+  const [isEditModalOpen, setEditModalOpen] = useState(false);
+
+  const isMyself = user.id === authStore.state.user.id;
 
   const handleFollow = async () => {
     if (user) {
@@ -35,31 +41,46 @@ const UserProfileBox = ({ user, setUser }: Props) => {
     }
   };
 
-  const isMyself = user.id === authStore.state.user.id;
+  const handleEditModalClose = async () => {
+    if (isMyself) {
+      refetch();
+    }
+    setEditModalOpen(false);
+  };
 
   return (
-    <div className="flex gap-4 outline outline-neutral-700  rounded p-4 mb-1 justify-between ">
-      <div>
-        <Avatar user={user} size={20} />
+    <>
+      <div className="flex gap-4 outline outline-neutral-700  rounded p-4 mb-1 justify-between ">
+        <div>
+          <Avatar user={user} size={20} />
+        </div>
+        <div className="flex-grow ">
+          <h1 className="font-bold text-2xl">{user.name}</h1>
+          <div className="text-neutral-600 font-semibold">@{user.username}</div>
+          {user.bio && (
+            <div className="pt-1 text-sm text-neutral-700">{user.bio}</div>
+          )}
+        </div>
+        <div>
+          {!isMyself && user.following_id && (
+            <Button onClick={handleUnfollow} variant="secondary">
+              Unfollow
+            </Button>
+          )}
+          {!isMyself && !user.following_id && (
+            <Button onClick={handleFollow}>Follow</Button>
+          )}
+          {isMyself && (
+            <Button onClick={() => setEditModalOpen(true)}>Edit</Button>
+          )}
+        </div>
       </div>
-      <div className="flex-grow ">
-        <h1 className="font-bold text-2xl">{user.name}</h1>
-        <div className="text-neutral-600 font-semibold">@{user.username}</div>
-        {user.bio && (
-          <div className="pt-1 text-sm text-neutral-700">{user.bio}</div>
-        )}
-      </div>
-      <div>
-        {!isMyself && user.following_id && (
-          <Button onClick={handleUnfollow} variant="secondary">
-            Unfollow
-          </Button>
-        )}
-        {!isMyself && !user.following_id && (
-          <Button onClick={handleFollow}>Follow</Button>
-        )}
-      </div>
-    </div>
+      <UserEditModal
+        isOpen={isEditModalOpen}
+        onClose={handleEditModalClose}
+        user={user}
+      />
+    </>
   );
 };
 

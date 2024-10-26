@@ -22,6 +22,7 @@ export interface IPostApi {
 export interface IUserApi {
   id: number;
   name: string;
+  email: string;
   username: string;
   avatar: string;
   bio?: string;
