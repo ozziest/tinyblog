@@ -41,7 +41,6 @@ export default async (req: AxeRequest, res: AxeResponse) => {
       .orWhere("username", email.trim().toLowerCase())
       .first();
 
-    console.log(user);
     if (!user) {
       return res.status(404).json({
         error: "User not found [hKpz7]",

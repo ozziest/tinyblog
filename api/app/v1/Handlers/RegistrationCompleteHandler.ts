@@ -3,6 +3,7 @@ import { captureError } from "../Services/ErrorService";
 import { Knex } from "knex";
 import { subMinutes } from "date-fns";
 import { validate } from "robust-validator";
+import * as Sentry from "@sentry/node";
 
 export default async (req: AxeRequest, res: AxeResponse) => {
   try {
@@ -42,8 +43,8 @@ export default async (req: AxeRequest, res: AxeResponse) => {
       .where("username", tinyblogUsername)
       .first();
     if (!tinyblogUser) {
-      captureError(
-        new Error(`Tinyblog account not found: ${tinyblogUsername}`)
+      Sentry.captureException(
+        `Tinyblog account not found: ${tinyblogUsername}`
       );
     }
 
@@ -56,7 +57,7 @@ export default async (req: AxeRequest, res: AxeResponse) => {
       location: registration.location,
       stats_post: 0,
       stats_follower: 0,
-      stats_following: 1,
+      stats_following: tinyblogUser ? 1 : 0,
       is_email_confirmed: 1,
       created_at: new Date(),
       updated_at: new Date(),
