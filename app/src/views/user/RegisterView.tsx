@@ -7,6 +7,7 @@ import CFTurnstile from "@/components/security/CFTurnstile";
 import RegisterEmailStep from "@/components/register/RegisterEmailStep";
 import RegisterEmailConfirmationStep from "@/components/register/RegisterEmailConfirmationStep";
 import RegisterUsernameStep from "@/components/register/RegisterUsernameStep";
+import RegisterPasswordStep from "@/components/register/RegisterPasswordStep";
 
 // const RULES = {
 //   email: "required|email|max:320",
@@ -29,7 +30,7 @@ const STEPS: Record<Steps, StepCompoent | undefined> = {
   Email: RegisterEmailStep,
   Confirmation: RegisterEmailConfirmationStep,
   Username: RegisterUsernameStep,
-  Password: undefined,
+  Password: RegisterPasswordStep,
   Bio: undefined,
   Sucess: undefined,
 };
