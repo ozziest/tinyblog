@@ -43,7 +43,7 @@ const SessionLayout = () => {
           <div className="w-full lg:w-8/12">
             <Outlet />
           </div>
-          <div className="w-0 lg:w-4/12 lg:min-w-4/12 lg:pl-4">
+          <div className="w-0 hidden lg:block lg:w-4/12 lg:min-w-4/12 lg:pl-4">
             <div className="sticky top-[40px]">
               <UserBox />
               <Navigation />
