@@ -69,7 +69,7 @@ class User extends Model {
   }
 
   get hiddens() {
-    return ["password", "deleted_at"];
+    return ["password", "deleted_at", "is_email_confirmed"];
   }
 
   followers() {

@@ -46,7 +46,7 @@ const UserEditModal = ({ user, isOpen, onClose }: ModalProps) => {
   };
 
   return (
-    <BaseModal title="Edit profile options" isOpen={isOpen} onClose={onClose}>
+    <BaseModal title="Edit profile" isOpen={isOpen} onClose={onClose}>
       <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
         <TextInput
           name="email"
@@ -71,7 +71,6 @@ const UserEditModal = ({ user, isOpen, onClose }: ModalProps) => {
           label="Default location"
           description="Choose your default location to tag your posts. This location helps others see where you're posting from and customizes your feed to show posts from selected regions."
           options={SUPPORTED_LOCATIONS}
-          onChange={() => console.log("here")}
         />
         <TextareaInput
           name="bio"

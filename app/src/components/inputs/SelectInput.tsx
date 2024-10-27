@@ -11,7 +11,6 @@ interface Props {
   setValue: (value: SelectInputModelType) => void;
   options: IOption[];
   placeholder?: string;
-  onChange: (value: IOption | IOption[] | null) => void;
   isMulti?: boolean;
   label?: string;
   description?: string;
@@ -25,7 +24,6 @@ const SelectInput = ({
   setValue,
   options,
   placeholder = "Select...",
-  onChange,
   isMulti = false,
   label,
   description,
@@ -45,10 +43,8 @@ const SelectInput = ({
       } else {
         setValue([...newSelected, option]);
       }
-      onChange(value);
     } else {
       setValue(option);
-      onChange(option);
       setIsOpen(false);
     }
   };
