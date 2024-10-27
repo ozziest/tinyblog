@@ -52,7 +52,7 @@ const decrementFollowingCount = async (userId: number) => {
 };
 
 const getCookieDomain = () => {
-  if (process.env.NODE_ENV === "production") {
+  if (process.env.NODE_ENV !== "development") {
     return "Domain=.tinyblog.space;";
   }
 
