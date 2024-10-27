@@ -43,13 +43,13 @@ export default async (req: AxeRequest, res: AxeResponse) => {
 
     if (!user) {
       return res.status(404).json({
-        error: "User not found [hKpz7]",
+        error: "User not found",
       });
     }
 
     if (bcrypt.compareSync(password, user.password) === false) {
       return res.status(404).json({
-        error: "User not found [X4qwz]",
+        error: "User not found",
       });
     }
 
