@@ -47,11 +47,18 @@ const UserEditModal = ({ user, isOpen, onClose }: ModalProps) => {
 
   return (
     <BaseModal title="Edit profile options" isOpen={isOpen} onClose={onClose}>
-      <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
-        <TextInput name="email" label="E-mail" value={state.email} disabled />
+      <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
+        <TextInput
+          name="email"
+          label="E-mail"
+          description="You can not change your e-mail address."
+          value={state.email}
+          disabled
+        />
         <TextInput
           name="username"
           label="Username"
+          description="You can not change your username."
           value={state.username}
           disabled
         />
@@ -62,12 +69,14 @@ const UserEditModal = ({ user, isOpen, onClose }: ModalProps) => {
             setLocation(value as LocationType)
           }
           label="Default location"
+          description="Choose your default location to tag your posts. This location helps others see where you're posting from and customizes your feed to show posts from selected regions."
           options={SUPPORTED_LOCATIONS}
           onChange={() => console.log("here")}
         />
         <TextareaInput
           name="bio"
           label="Biography"
+          description="You can describe your account in 240 characters."
           value={state.bio}
           placeholder="You may write something about yourself..."
           onChange={(event) => handleChange(event, "bio")}

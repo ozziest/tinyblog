@@ -14,6 +14,7 @@ interface Props {
   onChange: (value: IOption | IOption[] | null) => void;
   isMulti?: boolean;
   label?: string;
+  description?: string;
   validation?: IValidationResult;
   error?: string;
   name: string;
@@ -27,6 +28,7 @@ const SelectInput = ({
   onChange,
   isMulti = false,
   label,
+  description,
   validation,
   error,
   name,
@@ -61,7 +63,13 @@ const SelectInput = ({
   };
 
   return (
-    <FormGroup label={label} validation={validation} name={name} error={error}>
+    <FormGroup
+      label={label}
+      description={description}
+      validation={validation}
+      name={name}
+      error={error}
+    >
       <div className="relative w-full">
         <button
           type="button"
