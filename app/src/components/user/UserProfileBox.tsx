@@ -5,12 +5,21 @@ import Button from "../inputs/Button";
 import api from "@/api";
 import UserEditModal from "../modals/UserEditModal";
 import { useState } from "react";
+import DropdownButton, { IDropdownItem } from "../buttons/DropdownButton";
+import { OptionsIcon } from "../Icons";
 
 interface Props {
   user: IUserApi;
   setUser: (user: IUserApi) => void;
   refetch: () => void;
 }
+
+const SETTINGS_MENU: IDropdownItem[] = [
+  {
+    value: "edit",
+    title: "Edit profile",
+  },
+];
 
 const UserProfileBox = ({ user, setUser, refetch }: Props) => {
   const authStore = useAuthStore();
@@ -48,6 +57,12 @@ const UserProfileBox = ({ user, setUser, refetch }: Props) => {
     setEditModalOpen(false);
   };
 
+  const handleSettingMenuClicked = (menu: IDropdownItem) => {
+    if (menu.value === "edit") {
+      setEditModalOpen(true);
+    }
+  };
+
   return (
     <>
       <div className="flex gap-4 outline outline-neutral-700  rounded p-4 mb-1 justify-between ">
@@ -71,7 +86,12 @@ const UserProfileBox = ({ user, setUser, refetch }: Props) => {
             <Button onClick={handleFollow}>Follow</Button>
           )}
           {isMyself && (
-            <Button onClick={() => setEditModalOpen(true)}>Edit</Button>
+            <DropdownButton
+              icon={<OptionsIcon size={18} />}
+              buttonText="Options"
+              items={SETTINGS_MENU}
+              onSelect={handleSettingMenuClicked}
+            ></DropdownButton>
           )}
         </div>
       </div>

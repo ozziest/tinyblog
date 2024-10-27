@@ -341,3 +341,33 @@ export const ArrowDownIcon = () => {
     </svg>
   );
 };
+
+export const OptionsIcon = ({ size }: { size: number }) => {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 48 48"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M8 16H26M34 16H40M22 32H40M8 32H14"
+        stroke="currentColor"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M18 36C20.2091 36 22 34.2091 22 32C22 29.7909 20.2091 28 18 28C15.7909 28 14 29.7909 14 32C14 34.2091 15.7909 36 18 36Z"
+        stroke="currentColor"
+        strokeWidth="2.5"
+      />
+      <path
+        d="M30 20C32.2091 20 34 18.2091 34 16C34 13.7909 32.2091 12 30 12C27.7909 12 26 13.7909 26 16C26 18.2091 27.7909 20 30 20Z"
+        stroke="currentColor"
+        strokeWidth="2.5"
+      />
+    </svg>
+  );
+};
