@@ -45,9 +45,6 @@ export default async (req: AxeRequest, res: AxeResponse) => {
       captureError(
         new Error(`Tinyblog account not found: ${tinyblogUsername}`)
       );
-      return res.status(400).json({
-        error: "The registration is not completed",
-      });
     }
 
     const [id] = await db.table("users").insert({
@@ -65,12 +62,15 @@ export default async (req: AxeRequest, res: AxeResponse) => {
       updated_at: new Date(),
     });
 
-    await db.table("user_followers").insert({
-      user_id: tinyblogUser.id,
-      follower_id: id,
-      created_at: new Date(),
-      updated_at: new Date(),
-    });
+    // Let's create a new follower of tinyblog account
+    if (tinyblogUser) {
+      await db.table("user_followers").insert({
+        user_id: tinyblogUser.id,
+        follower_id: id,
+        created_at: new Date(),
+        updated_at: new Date(),
+      });
+    }
 
     // Let's delete the dummy data
     await db.table("registrations").where("id", registerId).delete();
