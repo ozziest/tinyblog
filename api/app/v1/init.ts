@@ -23,7 +23,7 @@ import LogoutHandler from "./Handlers/LogoutHandler";
 import EmailConfirmationHandler from "./Handlers/EmailConfirmationHandler";
 import RegistrationCompleteHandler from "./Handlers/RegistrationCompleteHandler";
 
-if (process.env.NODE_ENV === "production") {
+if (process.env.NODE_ENV !== "development") {
   Sentry.init({
     dsn: process.env.SENTRY_DSN_KEY,
     integrations: [nodeProfilingIntegration()],

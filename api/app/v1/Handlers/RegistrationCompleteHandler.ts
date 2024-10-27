@@ -37,7 +37,7 @@ export default async (req: AxeRequest, res: AxeResponse) => {
       return res.status(400).json(validation);
     }
 
-    const tinyblogUsername = `tinyblog_${registration.location}`;
+    const tinyblogUsername = `tinyblog_${registration.location.toLowerCase()}`;
     const tinyblogUser = await db
       .table("users")
       .where("username", tinyblogUsername)
