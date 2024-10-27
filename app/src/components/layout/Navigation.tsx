@@ -40,7 +40,7 @@ const Navigation = () => {
   }, []);
 
   return (
-    <div className="mt-4 flex flex-col justify-between gap-1">
+    <div className="mt-4 flex flex-col justify-between gap-[2px]">
       <NavigationButton
         icon={<HomeIcon size={24} />}
         isActive={location.pathname === "/"}
