@@ -7,15 +7,19 @@ interface Props {
 }
 
 export const RegisterStep = ({ onNext, children }: Props) => {
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    onNext();
+  };
+
   return (
     <>
-      <div className="flex flex-col gap-4 py-4">
+      <form className="flex flex-col gap-4 py-4" onSubmit={handleSubmit}>
         <div>{children}</div>
-
         <Button type="button" onClick={onNext}>
           Next
         </Button>
-      </div>
+      </form>
     </>
   );
 };
