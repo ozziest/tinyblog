@@ -39,10 +39,10 @@ export default async (req: AxeRequest, res: AxeResponse) => {
     // Let's update the code
     await db
       .table("registrations")
-      .where("id", "id")
+      .where("id", id)
       .where("agent_id", req.original.agentId)
       .update({
-        confirmation_code: "",
+        confirmation_code: null,
       });
 
     res.status(200).json({ status: true });

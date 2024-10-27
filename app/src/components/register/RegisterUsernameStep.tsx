@@ -59,7 +59,7 @@ export const RegisterUsernameStep = ({ state, next }: IRegisterStep) => {
     }
 
     setUsernameFound(data.username);
-    if (isUsernameFound) {
+    if (data.username) {
       return;
     }
 

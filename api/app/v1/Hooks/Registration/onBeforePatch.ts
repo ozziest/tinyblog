@@ -18,8 +18,9 @@ export default async ({
     });
   }
 
-  // Let's hash the password
-  if (formData.password) {
-    formData.password = bcrypt.hashSync(formData.password, 10);
+  // Let's hash the password. We shouldn't use formData. We only hash it
+  // when a new password has been set
+  if (req.body.password) {
+    formData.password = bcrypt.hashSync(req.body.password, 10);
   }
 };

@@ -63,7 +63,7 @@ export const RegisterEmailStep = ({ state, setState, next }: IRegisterStep) => {
     }
 
     setEmailFound(data.email);
-    if (isEmailFound) {
+    if (data.email) {
       return;
     }
 

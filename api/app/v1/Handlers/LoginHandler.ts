@@ -41,15 +41,16 @@ export default async (req: AxeRequest, res: AxeResponse) => {
       .orWhere("username", email.trim().toLowerCase())
       .first();
 
+    console.log(user);
     if (!user) {
       return res.status(404).json({
-        error: "User not found",
+        error: "User not found [hKpz7]",
       });
     }
 
     if (bcrypt.compareSync(password, user.password) === false) {
       return res.status(404).json({
-        error: "User not found",
+        error: "User not found [X4qwz]",
       });
     }
 

@@ -19,8 +19,13 @@ const patch = async (id: string, data: IRegistrationRequest) => {
   return resource(`registrations/${id}`).patch(data);
 };
 
+const complete = async (id: string) => {
+  return resource(`registrations/${id}/complete`).post();
+};
+
 export default {
   setEmail,
   confirm,
+  complete,
   patch,
 };
