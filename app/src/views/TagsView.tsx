@@ -7,6 +7,7 @@ import Posts from "@/components/posts/Posts";
 import { useTagStore } from "@/stores/postStore";
 import InfiniteScroll from "@/components/layout/InfiniteScroll";
 import { IHashtagApi } from "@/types/ApiTypes";
+import EmptyData from "@/components/layout/EmptyData";
 
 const TagsView = () => {
   const navigate = useNavigate();
@@ -101,6 +102,8 @@ const TagsView = () => {
     return null;
   }
 
+  const isEmptyData = store.state.posts.length == 0;
+
   return (
     <>
       <div className="bg-white sticky top-[40px]">
@@ -113,8 +116,19 @@ const TagsView = () => {
       </div>
       <div className="">
         <PostContainer>
-          <Posts store={store} />
-          <InfiniteScroll store={store} loadMore={loadMore} />
+          {isEmptyData && (
+            <EmptyData
+              title="Be the first!"
+              description="Nothing has been posted with this hashtag yet. Would you like to start a discussion?"
+            />
+          )}
+
+          {!isEmptyData && (
+            <>
+              <Posts store={store} />
+              <InfiniteScroll store={store} loadMore={loadMore} />
+            </>
+          )}
         </PostContainer>
       </div>
     </>
