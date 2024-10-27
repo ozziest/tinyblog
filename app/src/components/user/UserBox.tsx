@@ -11,7 +11,9 @@ const UserBox = () => {
   return (
     <div className="border border-neutral-100 p-4 rounded  bg-white">
       <div className=" flex justify-between gap-3">
-        <Avatar user={state.user} size={14} />
+        <Link to={profileLink}>
+          <Avatar user={state.user} size={14} />
+        </Link>
         <div className="flex-grow flex flex-col">
           <Link to={profileLink} className="text-xl font-semibold">
             {state.user.name}
