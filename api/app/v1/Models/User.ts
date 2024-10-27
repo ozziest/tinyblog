@@ -13,20 +13,13 @@ import DefaultSessionRateLimitter from "../Middlewares/RateLimitters/DefaultSess
 class User extends Model {
   get fillable() {
     return {
-      POST: ["email", "username", "password", "name"],
-      PATCH: ["bio", "location"],
+      PUT: ["bio", "location"],
     };
   }
 
   get validations() {
     return {
-      POST: {
-        email: "required|email|max:320",
-        username: "required|alpha_dash|min:3|max:30",
-        password: "required|min:8|max:50",
-        name: "required|min:3|max:50",
-      },
-      PATCH: {
+      PUT: {
         bio: "max:240",
         location: "required|in:WW,TR",
       },
@@ -34,7 +27,7 @@ class User extends Model {
   }
 
   get handlers() {
-    return [HandlerTypes.INSERT, HandlerTypes.PAGINATE, HandlerTypes.PATCH];
+    return [HandlerTypes.PAGINATE, HandlerTypes.PATCH];
   }
 
   get middlewares() {
@@ -43,10 +36,6 @@ class User extends Model {
       {
         handler: [HandlerTypes.PAGINATE],
         middleware: SessionRateLimitter("UserPaginate", 200),
-      },
-      {
-        handler: [HandlerTypes.INSERT],
-        middleware: SessionRateLimitter("UserInsert", 50),
       },
       {
         handler: [HandlerTypes.PATCH],

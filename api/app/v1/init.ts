@@ -6,8 +6,6 @@ import { nodeProfilingIntegration } from "@sentry/profiling-node";
 import LoginHandler from "./Handlers/LoginHandler";
 import { prepareTemplates } from "./Services/TemplateService";
 import ProfileCheckHandler from "./Handlers/ProfileCheckHandler";
-import ConfirmHandler from "./Handlers/ConfirmHandler";
-import ConfirmResetHandler from "./Handlers/ConfirmResetHandler";
 import { en, setLocales } from "robust-validator";
 import PasswordResetHandler from "./Handlers/PasswordResetHandler";
 import ChangePasswordHandler from "./Handlers/ChangePasswordHandler";
@@ -77,8 +75,6 @@ const onBeforeInit = async (app: App) => {
   app.post("/api/v1/login", LoginHandler);
   app.get("/api/v1/logout", SessionMiddleware, LogoutHandler);
   app.post("/api/v1/profileCheck", ProfileCheckHandler);
-  app.post("/api/v1/confirm", ConfirmHandler);
-  app.post("/api/v1/confirmReset", ConfirmResetHandler);
   app.post("/api/v1/passwordReset", PasswordResetHandler);
   app.post("/api/v1/changePassword", ChangePasswordHandler);
   app.get(
