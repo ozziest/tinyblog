@@ -84,7 +84,6 @@ const NotificationGroup = ({ notification }: Props) => {
   const handleMoreUsersClick = (event: React.MouseEvent<HTMLElement>) => {
     event.stopPropagation();
     event.preventDefault();
-    console.log("handleMoreUsersClick", notification);
   };
 
   const hadleMouseEnter = async () => {

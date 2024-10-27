@@ -22,6 +22,7 @@ import DefaultSessionRateLimitter from "./Middlewares/RateLimitters/DefaultSessi
 import UserAgentRateLimitter from "./Middlewares/RateLimitters/UserAgentRateLimitter";
 import HashtagReportHandler from "./Handlers/HashtagReportHandler";
 import LogoutHandler from "./Handlers/LogoutHandler";
+import EmailConfirmationHandler from "./Handlers/EmailConfirmationHandler";
 
 if (process.env.NODE_ENV === "production") {
   Sentry.init({
@@ -109,6 +110,11 @@ const onBeforeInit = async (app: App) => {
     CaptchaHandler
   );
   app.get("/api/v1/csrf", UserAgentRateLimitter("CSRF", 100), CSRFHandler);
+  app.patch(
+    "/api/v1/registrations/:id/confirm",
+    // UserAgentRateLimitter("EmailConfirmation", 50),
+    EmailConfirmationHandler
+  );
 };
 
 const onAfterInit = async (app: App) => {

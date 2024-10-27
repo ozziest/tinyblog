@@ -32,7 +32,8 @@
     "redis": "^4.7.0",
     "robust-validator": "^2.0.0-rc-1",
     "sanitize-html": "^2.13.0",
-    "svg2img": "^1.0.0-beta.2"
+    "svg2img": "^1.0.0-beta.2",
+    "uuid": "^10.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.25.6",

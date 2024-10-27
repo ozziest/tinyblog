@@ -8,6 +8,12 @@ export interface IUserPost {
   name: string;
 }
 
+export interface IRegistrationState {
+  cfToken: string | null;
+  csrf: string;
+  id: string;
+}
+
 export interface ILoginPost {
   cfToken: string | null;
   email: string;
@@ -25,6 +31,14 @@ export interface IConfirmationResetPost {
 
 export interface IProfilCheckPost {
   email: string;
+  username: string;
+}
+
+export interface IEmailCheckPost {
+  email: string;
+}
+
+export interface IUsernameCheckPost {
   username: string;
 }
 
@@ -61,4 +75,18 @@ export interface IResolvedList<T> {
 export interface IOption {
   label: string;
   value: string;
+}
+
+export interface IRegisterStep {
+  state: IRegistrationState;
+  setState: (patch: Partial<IRegistrationState>) => void;
+  next: () => void;
+}
+
+export interface IRegistrationRequest {
+  bio?: string;
+  location?: string;
+  username?: string;
+  password?: string;
+  name?: string;
 }

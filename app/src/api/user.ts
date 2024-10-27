@@ -2,10 +2,12 @@ import {
   IChangePasswordPost,
   IConfirmationPost,
   IConfirmationResetPost,
+  IEmailCheckPost,
   ILoginPost,
   IPasswordResetPost,
   IProfilCheckPost,
   IProfilCheckResponse,
+  IUsernameCheckPost,
   IUserPost,
 } from "@/interfaces";
 import { resource } from "axe-api-client";
@@ -24,6 +26,20 @@ const logout = async () => {
 
 const profileCheck = async (
   data: IProfilCheckPost,
+): Promise<IProfilCheckResponse> => {
+  const response = await resource("profileCheck").post(data);
+  return await response.json();
+};
+
+const emailCheck = async (
+  data: IEmailCheckPost,
+): Promise<IProfilCheckResponse> => {
+  const response = await resource("profileCheck").post(data);
+  return await response.json();
+};
+
+const usernameCheck = async (
+  data: IUsernameCheckPost,
 ): Promise<IProfilCheckResponse> => {
   const response = await resource("profileCheck").post(data);
   return await response.json();
@@ -91,6 +107,8 @@ export default {
   login,
   logout,
   profileCheck,
+  emailCheck,
+  usernameCheck,
   confirmation,
   confirmationReset,
   passwordReset,

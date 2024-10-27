@@ -1,74 +1,111 @@
-import { Link, useNavigate } from "react-router-dom";
-import Button from "@/components/inputs/Button";
-import TextInput from "@/components/inputs/TextInput";
+import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { IProfilCheckResponse, IUserPost } from "@/interfaces";
+import { IRegisterStep, IRegistrationState } from "@/interfaces";
 import api from "@/api";
 import { useTranslation } from "react-i18next";
-import { IValidationResult, validate } from "robust-validator";
-import { notification } from "@/helpers/notication";
-import PasswordStrengthMeter from "@/components/inputs/PasswordStrengthMeter";
 import CFTurnstile from "@/components/security/CFTurnstile";
+import RegisterEmailStep from "@/components/register/RegisterEmailStep";
+import RegisterEmailConfirmationStep from "@/components/register/RegisterEmailConfirmationStep";
+import RegisterUsernameStep from "@/components/register/RegisterUsernameStep";
 
-const RULES = {
-  email: "required|email|max:320",
-  username: "required|alpha_dash|min:3|max:30",
-  password: "required|min:8|max:50|confirmed",
-  name: "required|min:3|max:50",
+// const RULES = {
+//   email: "required|email|max:320",
+//   username: "required|alpha_dash|min:3|max:30",
+//   password: "required|min:8|max:50|confirmed",
+//   name: "required|min:3|max:50",
+// };
+
+type Steps =
+  | "Email"
+  | "Confirmation"
+  | "Username"
+  | "Password"
+  | "Bio"
+  | "Sucess";
+
+type StepCompoent = ({ next }: IRegisterStep) => JSX.Element;
+
+const STEPS: Record<Steps, StepCompoent | undefined> = {
+  Email: RegisterEmailStep,
+  Confirmation: RegisterEmailConfirmationStep,
+  Username: RegisterUsernameStep,
+  Password: undefined,
+  Bio: undefined,
+  Sucess: undefined,
+};
+
+const NEXT_STEPS: Record<Steps, Steps | null> = {
+  Email: "Confirmation",
+  Confirmation: "Username",
+  Username: "Password",
+  Password: "Bio",
+  Bio: "Sucess",
+  Sucess: null,
 };
 
 const RegisterView = () => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
-  const [state, setState] = useState<IUserPost>({
+  // const navigate = useNavigate();
+  const [step, setStep] = useState<Steps>("Email");
+  const [state, setState] = useState<IRegistrationState>({
     cfToken: null,
     csrf: "",
-    email: "",
-    username: "",
-    name: "",
-    password: "",
-    password_confirmed: "",
+    id: "",
   });
-  const [validation, setValidation] = useState<IValidationResult>();
-  const [profile, setProfile] = useState<IProfilCheckResponse>();
+  // const [validation, setValidation] = useState<IValidationResult>();
+  // const [profile, setProfile] = useState<IProfilCheckResponse>();
 
-  const handleCreate = async () => {
-    setValidation(undefined);
-    const result = await validate(state, RULES);
-    setValidation(result);
-    if (result.isInvalid) {
-      return;
-    }
+  // const handleCreate = async () => {
+  //   setValidation(undefined);
+  //   const result = await validate(state, RULES);
+  //   setValidation(result);
+  //   if (result.isInvalid) {
+  //     return;
+  //   }
 
-    const response = await api.user.createUser(state);
-    const { error } = await response.json();
-    if (error) {
-      notification.error(error);
-    } else {
-      navigate("/auth/login");
-    }
-  };
+  //   const response = await api.user.createUser(state);
+  //   const { error } = await response.json();
+  //   if (error) {
+  //     notification.error(error);
+  //   } else {
+  //     navigate("/auth/login");
+  //   }
+  // };
 
-  const handleChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    field: string,
-  ) => {
+  // const handleChange = (
+  //   event: React.ChangeEvent<HTMLInputElement>,
+  //   field: string,
+  // ) => {
+  //   setState({
+  //     ...state,
+  //     [field]: event.target.value,
+  //   });
+  // };
+
+  // const handleProfileCheck = async () => {
+  //   const { error, ...data } = await api.user.profileCheck({
+  //     email: state.email,
+  //     username: state.username,
+  //   });
+
+  //   if (error) {
+  //     notification.error(error);
+  //   } else {
+  //     setProfile(data);
+  //   }
+  // };
+
+  const handleSetState = (patch: Partial<IRegistrationState>) => {
     setState({
       ...state,
-      [field]: event.target.value,
+      ...patch,
     });
   };
 
-  const handleProfileCheck = async () => {
-    const { error, ...data } = await api.user.profileCheck({
-      email: state.email,
-      username: state.username,
-    });
-
-    if (error) {
-      notification.error(error);
-    } else {
-      setProfile(data);
+  const handleNextState = () => {
+    const nextStep = NEXT_STEPS[step];
+    if (nextStep) {
+      setStep(nextStep);
     }
   };
 
@@ -90,13 +127,24 @@ const RegisterView = () => {
     return <CFTurnstile onVerify={handleCFToken} />;
   }
 
+  const CurrentStep = STEPS[step];
+  if (!CurrentStep) {
+    return undefined;
+  }
+
   return (
     <div>
-      <h2 className="font-semibold text-lg text-neutral-800 text-center">
-        Create a new account
+      <h2 className="font-semibold text-lg text-neutral-700 text-center">
+        Create new account
       </h2>
 
-      <form className="py-8 flex flex-col gap-4">
+      <CurrentStep
+        next={handleNextState}
+        state={state}
+        setState={handleSetState}
+      />
+
+      {/* <form className="py-8 flex flex-col gap-4">
         <TextInput
           name="email"
           label={t("register.email.label")}
@@ -158,7 +206,7 @@ const RegisterView = () => {
         <Button type="button" onClick={handleCreate}>
           {t("register.button")}
         </Button>
-      </form>
+      </form> */}
 
       <div className="text-center">
         <Link

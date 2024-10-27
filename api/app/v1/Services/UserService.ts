@@ -12,6 +12,11 @@ export const getUserAvatar = (email: string) => {
   return `https://gravatar.com/avatar/${hash}?s=240`;
 };
 
+const getUserByEmail = async (email: string) => {
+  const db = await IoCService.use<Knex>("Database");
+  return db.table("users").where("email", email).first();
+};
+
 const getUserByEmailOrUsername = async (email: string, username: string) => {
   const db = await IoCService.use<Knex>("Database");
   return db
@@ -70,6 +75,7 @@ const getDeleteCookieContent = () => {
 };
 
 export default {
+  getUserByEmail,
   getUserByEmailOrUsername,
   incrementUserPostCount,
   incrementFollowerCount,

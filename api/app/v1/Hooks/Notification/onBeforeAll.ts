@@ -3,7 +3,7 @@ import { FEED_ITEMS_PER_PAGE } from "../../../consts";
 
 export default async ({ query, req, res }: IBeforeAllContext) => {
   if (!req.original.auth) {
-    return res.status(401).json({ error: "Authentication error" });
+    return res.status(403).json({ error: "Authentication error" });
   }
 
   query.where("user_id", req.original.auth.userId).where("count", ">", 0);
