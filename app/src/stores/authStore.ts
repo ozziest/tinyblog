@@ -26,6 +26,7 @@ const DEFAULT_STATE: AuthStoreState = {
     username: "",
     avatar: "",
     email: "",
+    location: "WW",
     stats_post: 0,
     stats_follower: 0,
     stats_following: 0,
