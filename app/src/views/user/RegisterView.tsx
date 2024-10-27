@@ -8,6 +8,7 @@ import RegisterEmailStep from "@/components/register/RegisterEmailStep";
 import RegisterEmailConfirmationStep from "@/components/register/RegisterEmailConfirmationStep";
 import RegisterUsernameStep from "@/components/register/RegisterUsernameStep";
 import RegisterPasswordStep from "@/components/register/RegisterPasswordStep";
+import RegisterBioStep from "@/components/register/RegisterBioStep";
 
 // const RULES = {
 //   email: "required|email|max:320",
@@ -31,7 +32,7 @@ const STEPS: Record<Steps, StepCompoent | undefined> = {
   Confirmation: RegisterEmailConfirmationStep,
   Username: RegisterUsernameStep,
   Password: RegisterPasswordStep,
-  Bio: undefined,
+  Bio: RegisterBioStep,
   Sucess: undefined,
 };
 
