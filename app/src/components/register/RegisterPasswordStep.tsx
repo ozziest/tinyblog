@@ -7,6 +7,7 @@ import { IValidationResult, validate } from "robust-validator";
 import api from "@/api";
 import { notification } from "@/helpers/notication";
 import PasswordStrengthMeter from "../inputs/PasswordStrengthMeter";
+import { loading } from "@/helpers/layout";
 
 export const RegisterPasswordStep = ({ state, next }: IRegisterStep) => {
   const { t } = useTranslation();
@@ -27,9 +28,11 @@ export const RegisterPasswordStep = ({ state, next }: IRegisterStep) => {
   };
 
   const patchData = async () => {
+    loading(true);
     const response = await api.registration.patch(state.id, {
       password: internalState.password,
     });
+    loading(false);
 
     if (response.status === 200) {
       return next();

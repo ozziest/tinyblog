@@ -6,6 +6,7 @@ import { useState } from "react";
 import { IValidationResult, validate } from "robust-validator";
 import api from "@/api";
 import { notification } from "@/helpers/notication";
+import { loading } from "@/helpers/layout";
 
 export const RegisterUsernameStep = ({ state, next }: IRegisterStep) => {
   const { t } = useTranslation();
@@ -32,6 +33,8 @@ export const RegisterUsernameStep = ({ state, next }: IRegisterStep) => {
       username,
     });
 
+    loading(false);
+
     if (response.status === 200) {
       return next();
     } else if (response.status === 400) {
@@ -53,13 +56,16 @@ export const RegisterUsernameStep = ({ state, next }: IRegisterStep) => {
       return;
     }
 
+    loading(true);
     const data = await handleProfileCheck();
     if (!data) {
+      loading(false);
       return;
     }
 
     setUsernameFound(data.username);
     if (data.username) {
+      loading(false);
       return;
     }
 

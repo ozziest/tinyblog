@@ -4,6 +4,8 @@ import TextInput from "../inputs/TextInput";
 import { useState } from "react";
 import { IValidationResult, validate } from "robust-validator";
 import api from "@/api";
+import { loading } from "@/helpers/layout";
+import { notification } from "@/helpers/notication";
 
 export const RegisterEmailConfirmationStep = ({
   state,
@@ -25,9 +27,15 @@ export const RegisterEmailConfirmationStep = ({
       return;
     }
 
+    loading(true);
     const response = await api.registration.confirm(state.id, code);
+    loading(false);
+
     if (response.status === 200) {
       next();
+    } else if (response.status === 400) {
+      const { error } = await response.json();
+      notification.error(error);
     } else {
       setIsNotConfirmed(false);
     }

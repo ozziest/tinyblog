@@ -9,6 +9,7 @@ import { notification } from "@/helpers/notication";
 import TextareaInput from "../inputs/TextareaInput";
 import SelectInput, { SelectInputModelType } from "../inputs/SelectInput";
 import { SUPPORTED_LOCATIONS } from "@/consts";
+import { loading } from "@/helpers/layout";
 
 type LocationType = IOption | null;
 
@@ -39,11 +40,13 @@ export const RegisterBioStep = ({ state, next }: IRegisterStep) => {
   };
 
   const patchData = async () => {
+    loading(true);
     const response = await api.registration.patch(state.id, {
       name: internalState.name,
       bio: internalState.bio,
       location: internalState.location?.value || "WW",
     });
+    loading(false);
 
     if (response.status === 200) {
       return next();

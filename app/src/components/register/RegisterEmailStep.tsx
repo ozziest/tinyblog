@@ -6,6 +6,7 @@ import { useState } from "react";
 import { IValidationResult, validate } from "robust-validator";
 import api from "@/api";
 import { notification } from "@/helpers/notication";
+import { loading } from "@/helpers/layout";
 
 export const RegisterEmailStep = ({ state, setState, next }: IRegisterStep) => {
   const { t } = useTranslation();
@@ -34,6 +35,8 @@ export const RegisterEmailStep = ({ state, setState, next }: IRegisterStep) => {
         cfToken: state.cfToken,
       });
 
+      loading(false);
+
       if (response.status === 201) {
         const { id } = await response.json();
         setState({ id });
@@ -42,6 +45,7 @@ export const RegisterEmailStep = ({ state, setState, next }: IRegisterStep) => {
         notification.error("An error occurred");
       }
     } catch {
+      loading(false);
       notification.error("An error occurred");
     }
   };
@@ -57,13 +61,16 @@ export const RegisterEmailStep = ({ state, setState, next }: IRegisterStep) => {
       return;
     }
 
+    loading(true);
     const data = await handleProfileCheck();
     if (!data) {
+      loading(false);
       return;
     }
 
     setEmailFound(data.email);
     if (data.email) {
+      loading(false);
       return;
     }
 

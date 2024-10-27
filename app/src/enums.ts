@@ -1,6 +1,7 @@
 export enum MessageTypes {
   SimpleError = "SimpleError",
   SimpleSuccess = "SimpleSuccess",
+  Loading = "Loading",
 }
 
 export enum StoreType {
