@@ -46,18 +46,27 @@ const decrementFollowingCount = async (userId: number) => {
   await db.table("users").where("id", userId).decrement({ stats_following: 1 });
 };
 
+const getCookieDomain = () => {
+  if (process.env.NODE_ENV === "production") {
+    return "Domain=.tinyblog.space;";
+  }
+
+  return "Domain=localhost;";
+};
+
 const getCookieContent = (token: string) => {
   // 1 week long
-  return `token=${token}; SameSite=Strict; Max-Age=604800; Path=/; Secure; HttpOnly`;
+  return `token=${token}; ${getCookieDomain()} SameSite=Strict; Max-Age=604800; Path=/; Secure; HttpOnly`;
 };
 
 const getNewAgentId = () => {
-  return `agentId=${nanoid(40)}; SameSite=Strict; Path=/; Secure; HttpOnly`;
+  const agentId = nanoid(40);
+  return `agentId=${agentId}; ${getCookieDomain()} SameSite=Strict; Path=/; Secure; HttpOnly`;
 };
 
 const getDeleteCookieContent = () => {
   // 1 week long
-  return `token=; SameSite=Strict; Max-Age=0; Path=/; Secure; HttpOnly`;
+  return `token=; ${getCookieDomain()} SameSite=Strict; Max-Age=0; Path=/; Secure; HttpOnly`;
 };
 
 export default {
