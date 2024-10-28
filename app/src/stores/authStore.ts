@@ -47,10 +47,6 @@ const useAuthStore = create<AuthState>()((set) => ({
   state: getDefaultStore(),
 
   async check() {
-    if (!this.state.isLoggedIn) {
-      return;
-    }
-
     const response = await api.user.getMyself();
 
     if (response.status === 200) {
