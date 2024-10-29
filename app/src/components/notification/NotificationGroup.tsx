@@ -99,7 +99,7 @@ const NotificationGroup = ({ notification }: Props) => {
   return (
     <article
       className={classNames(
-        "flex justify-between pt-5 cursor-pointer transition-all hover:bg-neutral-50",
+        "flex justify-between pt-5 cursor-pointer transition-all border-b border-neutral-100 hover:bg-neutral-50",
         { "bg-indigo-50": isRead === 0 },
       )}
       onClick={handleClick}
