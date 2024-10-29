@@ -67,7 +67,7 @@ const UserProfileBox = ({ user, setUser, refetch }: Props) => {
     <>
       <div className="flex gap-4 outline outline-neutral-700  rounded p-4 mb-1 justify-between ">
         <div>
-          <Avatar user={user} size={20} />
+          <Avatar user={user} size="lg" />
         </div>
         <div className="flex-grow ">
           <h1 className="font-bold text-2xl">{user.name}</h1>

@@ -29,7 +29,7 @@ const ShareInput = ({
     >
       <form>
         <div className="flex gap-2">
-          <Avatar user={authStore.state.user} size={12} />
+          <Avatar user={authStore.state.user} />
           <div className="flex-grow">
             <LexicalEditor
               store={store}
