@@ -16,14 +16,18 @@ const PostAuthor = ({ post }: Props) => {
   };
 
   return (
-    <div className="flex gap-2 justify-between items-center">
+    <div className="flex gap-2 justify-between md:items-center">
       <button
         type="button"
-        className="group text-neutral-600 font-semibold transition-colors duration-300 hover:text-neutral-950 flex gap-2 items-center"
+        className="group text-neutral-600 font-semibold transition-colors duration-300 hover:text-neutral-950 flex flex-col md:flex-row md:gap-2 items-center flex-grow"
         onClick={handleUserClick}
       >
-        <span className=" group-hover:underline">{post.user.name}</span>
-        <span className="text-neutral-400 text-sm">@{post.user.username}</span>
+        <div className="group-hover:underline text-left w-full md:w-auto">
+          {post.user.name}
+        </div>
+        <div className="text-neutral-400 text-sm font-medium text-left w-full md:w-auto">
+          @{post.user.username}
+        </div>
       </button>
       <div className="text-neutral-300 text-sm">
         {formatDistance(new Date(post.created_at), new Date())}
