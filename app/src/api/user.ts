@@ -95,10 +95,16 @@ const unfollow = async (userId: number, id: number) => {
   return resource(`users/${userId}/followers/${id}`).delete();
 };
 
-const patch = async (userId: number, location: string, bio?: string) => {
+const patch = async (
+  userId: number,
+  name: string,
+  location: string,
+  bio?: string,
+) => {
   return resource(`users/${userId}`).patch({
     location,
     bio,
+    name,
   });
 };
 

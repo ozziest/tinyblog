@@ -13,7 +13,7 @@ import DefaultSessionRateLimitter from "../Middlewares/RateLimitters/DefaultSess
 class User extends Model {
   get fillable() {
     return {
-      PUT: ["bio", "location"],
+      PATCH: ["bio", "location", "name"],
     };
   }
 
@@ -22,6 +22,7 @@ class User extends Model {
       PUT: {
         bio: "max:240",
         location: "required|min:2|max:2",
+        name: "required|min:3|max:50",
       },
     };
   }

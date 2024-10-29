@@ -10,7 +10,7 @@ const MobileNavigation = () => {
   const profileLink = useProfileLink();
 
   return (
-    <div className="fixed left-0 bottom-0 w-full bg-white border-t border-neutral-200 lg:hidden flex justify-between items-center z-50">
+    <div className="fixed left-0 bottom-0 w-full bg-white border-t border-neutral-200 lg:hidden flex justify-between items-center z-40">
       <MobileNavigationButton
         icon={<HomeIcon size={24} />}
         isActive={location.pathname === "/"}
