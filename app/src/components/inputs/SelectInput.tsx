@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import FormGroup from "./FormGroup";
 import { IValidationResult } from "robust-validator";
 import { ArrowDownIcon } from "../Icons";
@@ -32,8 +32,8 @@ const SelectInput = ({
   name,
 }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
-
   const toggleDropdown = () => setIsOpen(!isOpen);
+  const menuRef = useRef<HTMLDivElement>(null);
 
   const handleSelect = (option: IOption) => {
     if (isMulti) {
@@ -58,6 +58,19 @@ const SelectInput = ({
     return placeholder;
   };
 
+  const handleClickOutside = (event: MouseEvent) => {
+    if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+      setIsOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
     <FormGroup
       label={label}
@@ -79,7 +92,10 @@ const SelectInput = ({
         </button>
 
         {isOpen && (
-          <div className="absolute mt-1 w-full bg-white border border-gray-400 rounded-md shadow-lg z-10 max-h-60 overflow-auto">
+          <div
+            className="absolute mt-1 w-full bg-white border border-gray-400 rounded-md shadow-lg z-10 max-h-60 overflow-auto"
+            ref={menuRef}
+          >
             {options.map((option) => (
               <div
                 key={option.value}
