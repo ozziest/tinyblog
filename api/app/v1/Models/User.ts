@@ -21,7 +21,7 @@ class User extends Model {
     return {
       PUT: {
         bio: "max:240",
-        location: "required|in:WW,TR",
+        location: "required|min:2|max:2",
       },
     };
   }
