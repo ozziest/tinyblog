@@ -4,7 +4,7 @@ interface Props {
 
 const PostContainer = ({ children }: Props) => {
   return (
-    <div className="flex flex-col border border-neutral-100 rounded mb-20">
+    <div className="flex flex-col border border-neutral-100 rounded">
       {children}
     </div>
   );

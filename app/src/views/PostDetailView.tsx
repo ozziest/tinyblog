@@ -57,7 +57,7 @@ const PostDetailView = () => {
           <ShareInput store={store} parent={rootPost} />
         </PostContainer>
       </div>
-      <div className="">
+      <div className="mb-20">
         <PostContainer>
           <Posts store={store} />
           <InfiniteScroll store={store} loadMore={loadMore} />
