@@ -1,10 +1,10 @@
 import { useEffect } from "react";
-import ShareInput from "@/components/posts/ShareInput";
 import api from "@/api";
 import PostContainer from "@/components/posts/PostContainer";
 import Posts from "@/components/posts/Posts";
 import { useDashboardStore } from "@/stores/postStore";
 import InfiniteScroll from "@/components/layout/InfiniteScroll";
+import StickyShareInput from "@/components/posts/StickyShareInput";
 
 const DashboardView = () => {
   const store = useDashboardStore();
@@ -45,7 +45,7 @@ const DashboardView = () => {
 
   return (
     <PostContainer>
-      <ShareInput store={store} />
+      <StickyShareInput store={store} />
       <Posts store={store} />
       <InfiniteScroll store={store} loadMore={loadMore} />
     </PostContainer>
