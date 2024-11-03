@@ -1,5 +1,6 @@
 import { createRoot } from "react-dom/client";
 import "./index.css";
+import { addSentry } from "./sentry";
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import en from "./translations/en.json";
@@ -11,6 +12,7 @@ setLocales(validationEn);
 setConfig({
   baseURL: import.meta.env.VITE_API_URL,
 });
+addSentry();
 
 i18n.use(initReactI18next).init({
   resources: {
