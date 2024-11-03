@@ -27,6 +27,7 @@ const usePostDetail = (store: IPostStore, postId: string | undefined) => {
       return;
     }
 
+    setError(undefined);
     setLoading(true);
     const id = parseInt(postId);
 

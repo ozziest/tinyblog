@@ -1,33 +1,21 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import PostContainer from "@/components/posts/PostContainer";
 import Posts from "@/components/posts/Posts";
 import { useProfilePostsStore } from "@/stores/postStore";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import api from "@/api";
-import { IUserApi } from "@/types/ApiTypes";
 import InfiniteScroll from "@/components/layout/InfiniteScroll";
 import UserProfileBox from "@/components/user/UserProfileBox";
 import EmptyData from "@/components/layout/EmptyData";
+import useUserDetail from "@/composables/useUserDetail";
+import NotFound from "@/components/layout/NotFound";
+import LoadingSpinner from "@/components/layout/LoadingSpinner";
+import ServerError from "@/components/layout/ServerError";
 
 const ProfileView = () => {
   const store = useProfilePostsStore();
-  const navigate = useNavigate();
   const { username } = useParams();
-  const [user, setUser] = useState<IUserApi>();
-
-  const fetch = async () => {
-    if (!username) {
-      return navigate("/");
-    }
-
-    const response = await api.user.findByUsername(username);
-    const { data } = await response.json();
-    if (data.length === 0) {
-      return navigate("/404");
-    }
-
-    setUser(data[0]);
-  };
+  const { loading, error, user, setUser, refetch } = useUserDetail(username);
 
   const fetchPosts = async (userId: number) => {
     store.setLoading(true);
@@ -49,22 +37,21 @@ const ProfileView = () => {
   };
 
   useEffect(() => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-
-    fetch();
-  }, [username]);
-
-  useEffect(() => {
     if (user) {
       fetchPosts(user.id);
     }
   }, [user]);
 
-  if (!user) {
-    return;
+  if (error === "NotFound") {
+    return <NotFound message="The user not found." />;
+  }
+
+  if (error === "Error") {
+    return <ServerError />;
+  }
+
+  if (loading) {
+    return <LoadingSpinner />;
   }
 
   const isEmptyData = store.state.posts.length == 0;
@@ -72,7 +59,9 @@ const ProfileView = () => {
   return (
     <>
       <div className="bg-white sticky top-[50px] lg:top-[44px] pt-4 z-50">
-        <UserProfileBox user={user} setUser={setUser} refetch={fetch} />
+        {user && (
+          <UserProfileBox user={user} setUser={setUser} refetch={refetch} />
+        )}
       </div>
       <div className="">
         <PostContainer>

@@ -10,6 +10,7 @@ import InfiniteScroll from "@/components/layout/InfiniteScroll";
 import LoadingSpinner from "@/components/layout/LoadingSpinner";
 import usePostDetail from "@/composables/usePostDetail";
 import NotFound from "@/components/layout/NotFound";
+import ServerError from "@/components/layout/ServerError";
 
 const PostDetailView = () => {
   const navigate = useNavigate();
@@ -41,7 +42,7 @@ const PostDetailView = () => {
   }
 
   if (error === "Error") {
-    return <div>Fucked!</div>;
+    return <ServerError />;
   }
 
   if (!rootPost || loading) {
