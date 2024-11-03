@@ -5,6 +5,7 @@ import Posts from "@/components/posts/Posts";
 import { useDashboardStore } from "@/stores/postStore";
 import InfiniteScroll from "@/components/layout/InfiniteScroll";
 import StickyShareInput from "@/components/posts/StickyShareInput";
+import MobileShareButton from "@/components/posts/MobileShareButton";
 
 const DashboardView = () => {
   const store = useDashboardStore();
@@ -46,6 +47,7 @@ const DashboardView = () => {
   return (
     <PostContainer>
       <StickyShareInput store={store} />
+      <MobileShareButton store={store} />
       <Posts store={store} />
       <InfiniteScroll store={store} loadMore={loadMore} />
     </PostContainer>

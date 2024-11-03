@@ -27,7 +27,7 @@ const ShareInput = ({
         "bg-neutral-100": !!parent,
       })}
     >
-      <div className="flex gap-2">
+      <div className={classNames("flex gap-2")}>
         <Avatar user={authStore.state.user} />
         <div className="flex-grow">
           <LexicalEditor

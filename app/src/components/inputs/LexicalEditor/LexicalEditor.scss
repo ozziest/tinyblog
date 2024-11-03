@@ -14,6 +14,14 @@
   }
 }
 
+@media (max-width: 768px) {
+  .editor-shell {
+    & div:not(.button-bar) {
+      min-height: 140px;
+    }
+  }
+}
+
 .TinyBlogEditorTheme__ltr {
   text-align: left;
 }

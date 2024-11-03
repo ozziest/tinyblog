@@ -157,9 +157,9 @@ function Editor({ initialState = undefined, store, parent, onShared }: Props) {
 
     if (onShared) {
       onShared(newPost);
-    } else {
-      store.pushPost(newPost);
     }
+
+    store.pushPost(newPost);
   };
 
   return (
