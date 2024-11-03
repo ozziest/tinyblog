@@ -1,51 +1,21 @@
 import { useNavigate, useParams } from "react-router-dom";
 import PostContainer from "@/components/posts/PostContainer";
 import ShareInput from "@/components/posts/ShareInput";
-import { useEffect, useState } from "react";
 import api from "@/api";
 import Post from "@/components/posts/Post";
 import Posts from "@/components/posts/Posts";
-import { ExtendedPost, usePostDetailStore } from "@/stores/postStore";
+import { usePostDetailStore } from "@/stores/postStore";
 import { toExtendedPost } from "@/helpers/posts";
 import InfiniteScroll from "@/components/layout/InfiniteScroll";
 import LoadingSpinner from "@/components/layout/LoadingSpinner";
+import usePostDetail from "@/composables/usePostDetail";
+import NotFound from "@/components/layout/NotFound";
 
 const PostDetailView = () => {
   const navigate = useNavigate();
   const store = usePostDetailStore();
   const { postId } = useParams();
-  const [loading, setLoading] = useState(true);
-
-  const fetch = async () => {
-    if (!postId) {
-      navigate("/");
-      return;
-    }
-
-    setLoading(true);
-    const id = parseInt(postId);
-
-    // Fetching the parent post and the replies together
-    const results = await Promise.all([
-      api.post.getPost(id),
-      api.post.getReplies(id),
-    ]);
-
-    // Create the extended post array all together
-    const [postResponse, repliesResponse] = results;
-    const post = await postResponse.json();
-    const replies = await repliesResponse.json();
-    const items: ExtendedPost[] = toExtendedPost([post, ...replies]);
-
-    // The first post should be the root post
-    if (items.length > 0) {
-      items[0].isRootPost = true;
-    }
-
-    // Set the post on the store
-    store.setExtendedPosts(items);
-    setLoading(false);
-  };
+  const { loading, error } = usePostDetail(store, postId);
 
   const loadMore = async () => {
     if (!postId) {
@@ -64,11 +34,15 @@ const PostDetailView = () => {
     }
   };
 
-  useEffect(() => {
-    fetch();
-  }, [postId]);
-
   const rootPost = store.state.posts.find((item) => item.isRootPost);
+
+  if (error === "NotFound") {
+    return <NotFound message="The post is not found anymore." />;
+  }
+
+  if (error === "Error") {
+    return <div>Fucked!</div>;
+  }
 
   if (!rootPost || loading) {
     return <LoadingSpinner />;
