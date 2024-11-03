@@ -3,6 +3,8 @@ import Avatar from "@/components/user/Avatar";
 import classNames from "classnames";
 import { ExtendedPost } from "@/stores/postStore";
 import { useNavigate } from "react-router-dom";
+import useTailwindBreakpoint from "@/composables/useTailwindBreakpoint";
+import { Breakpoints } from "@/enums";
 
 interface Props {
   post: ExtendedPost;
@@ -24,6 +26,7 @@ const PostArticle = ({
   handleClick,
 }: Props) => {
   const navigate = useNavigate();
+  const breakpoint = useTailwindBreakpoint();
 
   const handleUserClick = (event: React.MouseEvent<HTMLElement>) => {
     event.stopPropagation();
@@ -46,7 +49,10 @@ const PostArticle = ({
       >
         <div className="flex flex-col items-center">
           <button type="button" onClick={handleUserClick}>
-            <Avatar user={post.user} />
+            <Avatar
+              user={post.user}
+              size={breakpoint < Breakpoints.sm ? "sm" : "md"}
+            />
           </button>
           {isParent && (
             <div className="bg-neutral-100 h-full w-[3px] rounded mt-1 -mb-[28px] z-10"></div>

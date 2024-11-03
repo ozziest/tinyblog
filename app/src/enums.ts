@@ -18,3 +18,12 @@ export enum NotificationTypes {
   Reply = "Reply",
   Mention = "Mention",
 }
+
+export enum Breakpoints {
+  xs = 0,
+  sm = 1,
+  md = 2,
+  lg = 3,
+  xl = 4,
+  "2xl" = 5,
+}
