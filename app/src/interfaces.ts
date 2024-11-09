@@ -61,6 +61,7 @@ export interface IChangePasswordPost {
 }
 
 export interface IStorePost {
+  location: string;
   content: string;
   lexical: string;
   parent_id?: number;

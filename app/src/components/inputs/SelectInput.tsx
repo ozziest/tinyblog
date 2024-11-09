@@ -93,7 +93,7 @@ const SelectInput = ({
 
         {isOpen && (
           <div
-            className="absolute mt-1 w-full bg-white border border-gray-400 rounded-md shadow-lg z-10 max-h-60 overflow-auto"
+            className="absolute mt-1 w-full bg-white border border-gray-400 rounded-md shadow-lg z-50 max-h-60 overflow-auto"
             ref={menuRef}
           >
             {options.map((option) => (

@@ -33,7 +33,7 @@ const BaseModal = ({
           </div>
         )}
 
-        <div className="p-6 overflow-auto" style={{ maxHeight: "70dvh" }}>
+        <div className="p-6 " style={{ maxHeight: "70dvh" }}>
           {children}
         </div>
 

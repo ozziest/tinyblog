@@ -35,6 +35,7 @@ const ShareInput = ({
             parent={parent}
             onShared={onShared}
             initialState={initialState}
+            initialLocation={authStore.state.user.location || "WW"}
           />
         </div>
       </div>

@@ -49,6 +49,7 @@ const MobileShareButton = ({
                   parent={parent}
                   onShared={handleShared}
                   initialState={initialState}
+                  initialLocation={authStore.state.user.location || "WW"}
                 />
               </div>
             </div>

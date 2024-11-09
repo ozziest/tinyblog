@@ -13,13 +13,14 @@ import SessionRateLimitter from "../Middlewares/RateLimitters/SessionRateLimitte
 class Post extends Model {
   get fillable() {
     return {
-      POST: ["parent_id", "content", "lexical"],
+      POST: ["location", "parent_id", "content", "lexical"],
     };
   }
 
   get validations() {
     return {
       POST: {
+        location: "required|min:2|max:2",
         parent_id: "numeric",
         content: "required|min:1|max:240",
         lexical: "required|min:1|max:3000",

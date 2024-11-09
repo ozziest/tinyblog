@@ -34,6 +34,9 @@ import api from "@/api";
 import useAuthStore from "@/stores/authStore";
 import { IPostApi } from "@/types/ApiTypes";
 import { ExtendedPost, IPostStore } from "@/stores/postStore";
+import { LocationIcon } from "@/components/Icons";
+import { SUPPORTED_LOCATIONS } from "@/consts";
+import LocationEditModal from "@/components/modals/LocationEditModal";
 
 const TinyBlogEditorTheme: EditorThemeClasses = {
   hashtag: "hashtag",
@@ -69,16 +72,25 @@ function onError(error: any) {
 
 interface Props {
   initialState?: string;
+  initialLocation: string;
   store: IPostStore;
   parent?: ExtendedPost;
   onShared?: (post: IPostApi) => void;
 }
 
-function Editor({ initialState = undefined, store, parent, onShared }: Props) {
+function Editor({
+  initialState = undefined,
+  initialLocation,
+  store,
+  parent,
+  onShared,
+}: Props) {
   const authStore = useAuthStore();
   const [content, setContent] = useState<string>("");
   const [lexical, setLexical] = useState<object>({});
   const [editor, setEditor] = useState<LexicalEditor>();
+  const [location, setLocation] = useState<string>(initialLocation);
+  const [isLocationModalOpen, setLocationModalOpen] = useState(false);
 
   const initialConfig = {
     editorState: (editor: LexicalEditor) => {
@@ -132,6 +144,7 @@ function Editor({ initialState = undefined, store, parent, onShared }: Props) {
       content: content,
       lexical: JSON.stringify(lexical),
       parent_id: parent?.id,
+      location,
     });
     const post = await response.json();
 
@@ -162,34 +175,55 @@ function Editor({ initialState = undefined, store, parent, onShared }: Props) {
     store.pushPost(newPost);
   };
 
+  const currentLocation = SUPPORTED_LOCATIONS.find(
+    (item) => item.value === location,
+  );
+
   return (
-    <div className="editor-shell">
-      <LexicalComposer initialConfig={initialConfig}>
-        <RichTextPlugin
-          contentEditable={<ContentEditable />}
-          ErrorBoundary={LexicalErrorBoundary}
-        />
-        <AutoLinkPlugin matchers={MATCHERS} />
-        <LinkPlugin validateUrl={validateUrl} />
-        <HashtagPlugin />
-        <MentionPlugin />
-        <ClickableLinkPlugin />
-        <OnChangePlugin onChange={onChange} />
-        <HistoryPlugin />
-        <AutoFocusPlugin />
-        <div className="button-bar flex justify-between items-center py-2">
-          <CharacterLimitPlugin charset={"UTF-16"} maxLength={240} />
-          <button
-            type="button"
-            className="px-3 py-1 border bg-gray-200 hover:bg-gray-300 rounded font-semibold text-sm disabled:text-neutral-300"
-            onClick={handleShare}
-            disabled={content.trim().length === 0}
-          >
-            Share
-          </button>
-        </div>
-      </LexicalComposer>
-    </div>
+    <>
+      <div className="editor-shell">
+        <LexicalComposer initialConfig={initialConfig}>
+          <RichTextPlugin
+            contentEditable={<ContentEditable />}
+            ErrorBoundary={LexicalErrorBoundary}
+          />
+          <AutoLinkPlugin matchers={MATCHERS} />
+          <LinkPlugin validateUrl={validateUrl} />
+          <HashtagPlugin />
+          <MentionPlugin />
+          <ClickableLinkPlugin />
+          <OnChangePlugin onChange={onChange} />
+          <HistoryPlugin />
+          <AutoFocusPlugin />
+          <div className="no-editor flex justify-between items-center gap-2 py-2">
+            <CharacterLimitPlugin charset={"UTF-16"} maxLength={240} />
+            <button
+              type="button"
+              className="no-editor grow flex justify-end items-center text-sm opacity-20 transition-all text-neutral-800 hover:opacity-100"
+              onClick={() => setLocationModalOpen(true)}
+            >
+              <LocationIcon size={16} />
+              {currentLocation?.label}
+            </button>
+            <button
+              type="button"
+              className="px-3 py-1 border bg-gray-200 hover:bg-gray-300 rounded font-semibold text-sm disabled:text-neutral-300"
+              onClick={handleShare}
+              disabled={content.trim().length === 0}
+            >
+              Share
+            </button>
+          </div>
+        </LexicalComposer>
+      </div>
+
+      <LocationEditModal
+        isOpen={isLocationModalOpen}
+        location={location}
+        setLocation={setLocation}
+        onClose={() => setLocationModalOpen(false)}
+      />
+    </>
   );
 }
 
