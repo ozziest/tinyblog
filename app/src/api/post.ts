@@ -14,6 +14,7 @@ const FULL_POST = `${POST_ROW},parent{${POST_ROW}}`;
 
 interface PaginateProps {
   feed?: boolean;
+  locations?: string[];
   minId?: number;
   userId?: number;
   tagId?: number;
@@ -23,7 +24,13 @@ const store = async (data: IStorePost) => {
   return resource("posts").post(data);
 };
 
-const paginate = async ({ feed, userId, minId, tagId }: PaginateProps = {}) => {
+const paginate = async ({
+  feed,
+  locations,
+  userId,
+  minId,
+  tagId,
+}: PaginateProps = {}) => {
   const query = resource("posts/all").with(FULL_POST).sort("id", "DESC");
 
   if (feed) {
@@ -40,6 +47,10 @@ const paginate = async ({ feed, userId, minId, tagId }: PaginateProps = {}) => {
 
   if (minId) {
     query.where("id", "<", minId);
+  }
+
+  if (locations && locations.length > 0) {
+    query.whereIn("location", locations);
   }
 
   return query.get();

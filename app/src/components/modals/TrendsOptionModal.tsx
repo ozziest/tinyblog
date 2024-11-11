@@ -90,7 +90,8 @@ const TrendsOptionModal = () => {
           onSelect={handleOnSelect}
           isMulti
           label="Feed locations"
-          description="Choose locations that interest you. You can customize your feed to see posts from multiple locations."
+          description="Choose locations that interest you. You can customize your feed to see posts from multiple locations. If you do not select any locations, you will see posts from all locations."
+          placeholder="Any location"
           options={SUPPORTED_LOCATIONS}
         />
       </form>

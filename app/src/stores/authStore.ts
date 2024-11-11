@@ -22,6 +22,7 @@ interface AuthState {
   increase: (type: IncreaseType) => void;
   decrease: (type: IncreaseType) => void;
   setFeedLocations: (locations: IUserFeedLocationApi[]) => void;
+  getFeedLocations: () => string[];
 }
 
 const DEFAULT_STATE: AuthStoreState = {
@@ -90,6 +91,10 @@ const useAuthStore = create<AuthState>()((set) => ({
   setFeedLocations(locations: IUserFeedLocationApi[]) {
     const newState = { ...this.state, user: { ...this.state.user, locations } };
     set(() => ({ state: newState }));
+  },
+
+  getFeedLocations() {
+    return this.state.user.locations.map((item) => item.location);
   },
 
   logout() {

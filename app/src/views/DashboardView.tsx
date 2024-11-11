@@ -6,13 +6,18 @@ import { useDashboardStore } from "@/stores/postStore";
 import InfiniteScroll from "@/components/layout/InfiniteScroll";
 import StickyShareInput from "@/components/posts/StickyShareInput";
 import MobileShareButton from "@/components/posts/MobileShareButton";
+import useAuthStore from "@/stores/authStore";
 
 const DashboardView = () => {
   const store = useDashboardStore();
+  const authStore = useAuthStore();
 
   const fetchPosts = async () => {
     store.setLoading(true);
-    let response = await api.post.paginate({ feed: true });
+    let response = await api.post.paginate({
+      feed: true,
+      locations: authStore.getFeedLocations(),
+    });
     let data = await response.json();
 
     // If there is any data, we can set the store
@@ -33,12 +38,20 @@ const DashboardView = () => {
     if (store.state.hasMore && store.state.minId !== Infinity) {
       store.setLoading(true);
       const { minId } = store.state;
-      const response = await api.post.paginate({ feed: true, minId });
+      const response = await api.post.paginate({
+        feed: true,
+        locations: authStore.getFeedLocations(),
+        minId,
+      });
       const data = await response.json();
       store.addMorePosts(data);
       store.setLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchPosts();
+  }, [authStore.state.user.locations]);
 
   useEffect(() => {
     fetchPosts();
