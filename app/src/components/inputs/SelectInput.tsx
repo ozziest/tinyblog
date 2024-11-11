@@ -51,11 +51,18 @@ const SelectInput = ({
   };
 
   const renderSelectedText = () => {
-    if (value instanceof Array && value.length > 0) {
-      return value.map((opt) => opt.label).join(", ");
-    } else if (value) {
+    if (value instanceof Array) {
+      if (value.length > 0) {
+        return value.map((opt) => opt.label).join(", ");
+      }
+
+      return placeholder;
+    }
+
+    if (value) {
       return (value as IOption).label;
     }
+
     return placeholder;
   };
 
@@ -120,12 +127,12 @@ const SelectInput = ({
                   { "bg-indigo-100": isSelectedColor(option) },
                 )}
               >
-                {isSelected(option) && (
+                {isMulti && isSelected(option) && (
                   <div className="w-6 text-indigo-500">
                     <CheckIcon size={20} />
                   </div>
                 )}
-                {!isSelected(option) && <div className="w-6"></div>}
+                {isMulti && !isSelected(option) && <div className="w-6"></div>}
                 {option.label}
               </div>
             ))}
