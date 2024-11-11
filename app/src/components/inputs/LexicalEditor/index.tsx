@@ -34,9 +34,8 @@ import api from "@/api";
 import useAuthStore from "@/stores/authStore";
 import { IPostApi } from "@/types/ApiTypes";
 import { ExtendedPost, IPostStore } from "@/stores/postStore";
-import { LocationIcon } from "@/components/Icons";
 import { SUPPORTED_LOCATIONS } from "@/consts";
-import LocationEditModal from "@/components/modals/LocationEditModal";
+import LocationChanger from "./LocationChanger";
 
 const TinyBlogEditorTheme: EditorThemeClasses = {
   hashtag: "hashtag",
@@ -90,7 +89,6 @@ function Editor({
   const [lexical, setLexical] = useState<object>({});
   const [editor, setEditor] = useState<LexicalEditor>();
   const [location, setLocation] = useState<string>(initialLocation);
-  const [isLocationModalOpen, setLocationModalOpen] = useState(false);
 
   const initialConfig = {
     editorState: (editor: LexicalEditor) => {
@@ -197,14 +195,10 @@ function Editor({
           <AutoFocusPlugin />
           <div className="no-editor flex justify-between items-center gap-2 py-2">
             <CharacterLimitPlugin charset={"UTF-16"} maxLength={240} />
-            <button
-              type="button"
-              className="no-editor grow flex justify-end items-center text-sm opacity-20 transition-all text-neutral-800 hover:opacity-100"
-              onClick={() => setLocationModalOpen(true)}
-            >
-              <LocationIcon size={16} />
-              {currentLocation?.label}
-            </button>
+            <LocationChanger
+              currentLocation={currentLocation}
+              setLocation={setLocation}
+            />
             <button
               type="button"
               className="px-3 py-1 border bg-gray-200 hover:bg-gray-300 rounded font-semibold text-sm disabled:text-neutral-300"
@@ -216,13 +210,6 @@ function Editor({
           </div>
         </LexicalComposer>
       </div>
-
-      <LocationEditModal
-        isOpen={isLocationModalOpen}
-        location={location}
-        setLocation={setLocation}
-        onClose={() => setLocationModalOpen(false)}
-      />
     </>
   );
 }
