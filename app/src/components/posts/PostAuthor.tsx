@@ -1,3 +1,4 @@
+import { LOCATION_TITLES } from "@/consts";
 import { ExtendedPost } from "@/stores/postStore";
 import { formatDistance } from "date-fns";
 import { useNavigate } from "react-router-dom";
@@ -30,7 +31,8 @@ const PostAuthor = ({ post }: Props) => {
         </div>
       </button>
       <div className="text-neutral-300 text-sm">
-        {formatDistance(new Date(post.created_at), new Date())}
+        {formatDistance(new Date(post.created_at), new Date())} -{" "}
+        <span title={LOCATION_TITLES[post.location]}>{post.location}</span>
       </div>
     </div>
   );

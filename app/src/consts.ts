@@ -14,3 +14,8 @@ export const SUPPORTED_LOCATIONS: IOption[] = [
     value: "TR",
   },
 ];
+
+export const LOCATION_TITLES: Record<string, string> = {
+  WW: "World Wide",
+  TR: "Turkey",
+};

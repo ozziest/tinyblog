@@ -12,6 +12,7 @@ export interface IPostApi {
   user: IUserApi;
   is_liked_by_you: boolean;
   is_shared_by_you: boolean;
+  location: string;
   parent?: IPostApi;
   reshare?: IPostApi;
   hashtags?: IPostHashtagApi[];
