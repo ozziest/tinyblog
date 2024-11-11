@@ -58,7 +58,7 @@ const ProfileView = () => {
 
   return (
     <>
-      <div className="bg-white sticky top-[50px] lg:top-[44px] pt-4 z-50">
+      <div className="bg-white sticky top-[50px] lg:top-[44px] pt-4 z-40">
         {user && (
           <UserProfileBox user={user} setUser={setUser} refetch={refetch} />
         )}

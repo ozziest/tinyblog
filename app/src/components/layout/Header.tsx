@@ -3,7 +3,7 @@ import { LogoIcon } from "@/components/Icons";
 
 const Header = () => {
   return (
-    <div className="sticky top-0 border-b border-neutral-100 z-50 bg-white p-3 lg:p-0">
+    <div className="sticky top-0 border-b border-neutral-100 z-40 bg-white p-3 lg:p-0">
       <div className="block max-w-screen-lg mx-auto">
         <div className="flex items-center">
           <div className="text-indigo-800 -ml-[8px]">

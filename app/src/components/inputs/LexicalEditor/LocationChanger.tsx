@@ -32,7 +32,7 @@ const LocationChanger = ({ currentLocation, setLocation }: Props) => {
   }, []);
 
   return (
-    <div className="no-editor grow flex justify-end items-center relative text-sm z-50">
+    <div className="no-editor grow flex justify-end items-center relative text-sm z-40">
       <button
         type="button"
         className={classNames(
@@ -46,7 +46,7 @@ const LocationChanger = ({ currentLocation, setLocation }: Props) => {
       </button>
       {isOpen && (
         <div
-          className="no-editor absolute top-6 bg-white border rounded border-neutral-100 py-1 shadow flex flex-col z-50"
+          className="no-editor absolute top-6 bg-white border rounded border-neutral-100 py-1 shadow flex flex-col z-40"
           ref={menuRef}
         >
           {SUPPORTED_LOCATIONS.map((location) => (

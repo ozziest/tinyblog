@@ -10,7 +10,7 @@ const StickyShareInput = ({
   return (
     <div
       className={classNames(
-        "hidden md:block sticky top-[50px] lg:top-[40px] z-50",
+        "hidden md:block sticky top-[50px] lg:top-[40px] z-40",
       )}
     >
       <ShareInput

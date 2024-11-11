@@ -14,7 +14,7 @@ import api from "@/api";
 import NavigationLink from "../buttons/NavigationLink";
 import useDailyLink from "@/composables/useDailyLink";
 import useProfileLink from "@/composables/useProfileLink";
-import TrendsOptionModal from "../modals/TrendsOptionModal";
+import { emitter } from "@/helpers/events";
 
 const Navigation = () => {
   const authStore = useAuthStore();
@@ -23,7 +23,6 @@ const Navigation = () => {
   const profileLink = useProfileLink();
   const location = useLocation();
   const [hashtags, setHashtags] = useState<string[]>([]);
-  const [isTrendsOptionModalOpen, setTrendsOptionModalOpen] = useState(false);
 
   const handleLogout = async () => {
     await api.user.logout();
@@ -74,7 +73,7 @@ const Navigation = () => {
               <button
                 type="button"
                 className="bg-neutral-100 rounded-full p-1 transition hover:bg-neutral-200 duration-300"
-                onClick={() => setTrendsOptionModalOpen(true)}
+                onClick={() => emitter.emit("option-modal:on")}
               >
                 <OptionsIcon size={20} />
               </button>
@@ -107,10 +106,6 @@ const Navigation = () => {
           Logout
         </NavigationButton>
       </div>
-      <TrendsOptionModal
-        isOpen={isTrendsOptionModalOpen}
-        onClose={() => setTrendsOptionModalOpen(false)}
-      />
     </>
   );
 };

@@ -8,6 +8,7 @@ import useAuthStore from "@/stores/authStore";
 import api from "@/api";
 import { IUserApi } from "@/types/ApiTypes";
 import MobileNavigation from "./MobileNavigation";
+import TrendsOptionModal from "../modals/TrendsOptionModal";
 
 const SessionLayout = () => {
   const authStore = useAuthStore();
@@ -44,7 +45,7 @@ const SessionLayout = () => {
             <Outlet />
           </div>
           <div className="w-0 hidden lg:block lg:w-4/12 lg:min-w-4/12 lg:pl-4">
-            <div className="sticky top-[40px]">
+            <div className="sticky top-[40px] overflow-visible">
               <UserBox />
               <Navigation />
               <Footer />
@@ -53,6 +54,7 @@ const SessionLayout = () => {
         </div>
       </div>
       <MobileNavigation />
+      <TrendsOptionModal />
     </div>
   );
 };
