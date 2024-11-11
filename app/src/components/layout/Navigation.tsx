@@ -6,6 +6,7 @@ import {
   HomeIcon,
   LogoutIcon,
   NotificationIcon,
+  OptionsIcon,
   ProfileIcon,
 } from "../Icons";
 import { useEffect, useState } from "react";
@@ -13,6 +14,7 @@ import api from "@/api";
 import NavigationLink from "../buttons/NavigationLink";
 import useDailyLink from "@/composables/useDailyLink";
 import useProfileLink from "@/composables/useProfileLink";
+import TrendsOptionModal from "../modals/TrendsOptionModal";
 
 const Navigation = () => {
   const authStore = useAuthStore();
@@ -21,6 +23,7 @@ const Navigation = () => {
   const profileLink = useProfileLink();
   const location = useLocation();
   const [hashtags, setHashtags] = useState<string[]>([]);
+  const [isTrendsOptionModalOpen, setTrendsOptionModalOpen] = useState(false);
 
   const handleLogout = async () => {
     await api.user.logout();
@@ -40,60 +43,75 @@ const Navigation = () => {
   }, []);
 
   return (
-    <div className="mt-4 flex flex-col justify-between gap-[2px]">
-      <NavigationButton
-        icon={<HomeIcon size={24} />}
-        isActive={location.pathname === "/"}
-        onClick={() => navigate("/")}
-      >
-        Home
-      </NavigationButton>
-      <NavigationButton
-        icon={<NotificationIcon size={24} />}
-        isActive={location.pathname === "/notifications"}
-        onClick={() => navigate("/notifications")}
-      >
-        Notifications
-      </NavigationButton>
-      <NavigationButton
-        icon={<DailyIcon size={24} />}
-        isActive={location.pathname === dailyLink}
-        onClick={() => navigate(dailyLink)}
-      >
-        #{dailyHashtag}
-      </NavigationButton>
-      {hashtags.length > 0 && (
-        <>
-          <hr className="my-5 border-neutral-200" />
-          <h4 className="font-bold px-4">Trends</h4>
-          <div className="px-4 flex flex-col gap-2">
-            {hashtags.map((hashtag) => (
-              <NavigationLink
-                key={hashtag}
-                to={`/tags/${hashtag.replace("#", "")}`}
+    <>
+      <div className="mt-4 flex flex-col justify-between gap-[2px]">
+        <NavigationButton
+          icon={<HomeIcon size={24} />}
+          isActive={location.pathname === "/"}
+          onClick={() => navigate("/")}
+        >
+          Home
+        </NavigationButton>
+        <NavigationButton
+          icon={<NotificationIcon size={24} />}
+          isActive={location.pathname === "/notifications"}
+          onClick={() => navigate("/notifications")}
+        >
+          Notifications
+        </NavigationButton>
+        <NavigationButton
+          icon={<DailyIcon size={24} />}
+          isActive={location.pathname === dailyLink}
+          onClick={() => navigate(dailyLink)}
+        >
+          #{dailyHashtag}
+        </NavigationButton>
+        {hashtags.length > 0 && (
+          <>
+            <hr className="my-5 border-neutral-200" />
+            <h4 className="font-bold px-4 flex justify-between items-center">
+              Trends
+              <button
+                type="button"
+                className="bg-neutral-100 rounded-full p-1 transition hover:bg-neutral-200 duration-300"
+                onClick={() => setTrendsOptionModalOpen(true)}
               >
-                {hashtag}
-              </NavigationLink>
-            ))}
-          </div>
-        </>
-      )}
-      <hr className="my-5 border-neutral-200" />
-      <NavigationButton
-        icon={<ProfileIcon size={24} />}
-        isActive={location.pathname === profileLink}
-        onClick={() => navigate(profileLink)}
-      >
-        Profile
-      </NavigationButton>
-      <NavigationButton
-        icon={<LogoutIcon size={24} />}
-        isActive={false}
-        onClick={handleLogout}
-      >
-        Logout
-      </NavigationButton>
-    </div>
+                <OptionsIcon size={20} />
+              </button>
+            </h4>
+            <div className="px-4 flex flex-col gap-2">
+              {hashtags.map((hashtag) => (
+                <NavigationLink
+                  key={hashtag}
+                  to={`/tags/${hashtag.replace("#", "")}`}
+                >
+                  {hashtag}
+                </NavigationLink>
+              ))}
+            </div>
+          </>
+        )}
+        <hr className="my-5 border-neutral-200" />
+        <NavigationButton
+          icon={<ProfileIcon size={24} />}
+          isActive={location.pathname === profileLink}
+          onClick={() => navigate(profileLink)}
+        >
+          Profile
+        </NavigationButton>
+        <NavigationButton
+          icon={<LogoutIcon size={24} />}
+          isActive={false}
+          onClick={handleLogout}
+        >
+          Logout
+        </NavigationButton>
+      </div>
+      <TrendsOptionModal
+        isOpen={isTrendsOptionModalOpen}
+        onClose={() => setTrendsOptionModalOpen(false)}
+      />
+    </>
   );
 };
 

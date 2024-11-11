@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import FormGroup from "./FormGroup";
 import { IValidationResult } from "robust-validator";
-import { ArrowDownIcon } from "../Icons";
+import { ArrowDownIcon, CheckIcon } from "../Icons";
 import { IOption } from "@/interfaces";
+import classNames from "classnames";
 
 export type SelectInputModelType = IOption | IOption[] | null;
 
@@ -71,6 +72,20 @@ const SelectInput = ({
     };
   }, []);
 
+  const isSelected = (option: IOption) => {
+    return value instanceof Array
+      ? value.some((opt) => opt.value === option.value)
+      : value?.value === option.value;
+  };
+
+  const isSelectedColor = (option: IOption) => {
+    if (isMulti) {
+      return false;
+    }
+
+    return isSelected(option);
+  };
+
   return (
     <FormGroup
       label={label}
@@ -100,16 +115,17 @@ const SelectInput = ({
               <div
                 key={option.value}
                 onClick={() => handleSelect(option)}
-                className={`px-4 py-2 cursor-pointer hover:bg-indigo-100 ${
-                  (
-                    value instanceof Array
-                      ? value.some((opt) => opt.value === option.value)
-                      : value?.value === option.value
-                  )
-                    ? " bg-indigo-100"
-                    : ""
-                }`}
+                className={classNames(
+                  "px-4 py-2 cursor-pointer hover:bg-indigo-100 flex gap-1 items-center",
+                  { "bg-indigo-100": isSelectedColor(option) },
+                )}
               >
+                {isSelected(option) && (
+                  <div className="w-6 text-indigo-500">
+                    <CheckIcon size={20} />
+                  </div>
+                )}
+                {!isSelected(option) && <div className="w-6"></div>}
                 {option.label}
               </div>
             ))}

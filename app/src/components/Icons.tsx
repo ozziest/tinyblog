@@ -1,3 +1,7 @@
+interface IconProps {
+  size: number;
+}
+
 export const ErrorIcon = () => {
   return (
     <svg
@@ -90,7 +94,7 @@ export const SuccessIcon = () => {
   );
 };
 
-export const LogoIcon = ({ size }: { size: number }) => {
+export const LogoIcon = ({ size }: IconProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -117,7 +121,7 @@ export const LogoIcon = ({ size }: { size: number }) => {
   );
 };
 
-export const ReplyIcon = ({ size }: { size: number }) => {
+export const ReplyIcon = ({ size }: IconProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -133,7 +137,7 @@ export const ReplyIcon = ({ size }: { size: number }) => {
   );
 };
 
-export const LikeIcon = ({ size }: { size: number }) => {
+export const LikeIcon = ({ size }: IconProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -149,7 +153,7 @@ export const LikeIcon = ({ size }: { size: number }) => {
   );
 };
 
-export const ShareIcon = ({ size }: { size: number }) => {
+export const ShareIcon = ({ size }: IconProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -165,7 +169,7 @@ export const ShareIcon = ({ size }: { size: number }) => {
   );
 };
 
-export const ViewCountIcon = ({ size }: { size: number }) => {
+export const ViewCountIcon = ({ size }: IconProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -181,7 +185,7 @@ export const ViewCountIcon = ({ size }: { size: number }) => {
   );
 };
 
-export const HomeIcon = ({ size }: { size: number }) => {
+export const HomeIcon = ({ size }: IconProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -195,7 +199,7 @@ export const HomeIcon = ({ size }: { size: number }) => {
   );
 };
 
-export const LogoutIcon = ({ size }: { size: number }) => {
+export const LogoutIcon = ({ size }: IconProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -209,7 +213,7 @@ export const LogoutIcon = ({ size }: { size: number }) => {
   );
 };
 
-export const DailyIcon = ({ size }: { size: number }) => {
+export const DailyIcon = ({ size }: IconProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -225,7 +229,7 @@ export const DailyIcon = ({ size }: { size: number }) => {
   );
 };
 
-export const HashtagIcon = ({ size }: { size: number }) => {
+export const HashtagIcon = ({ size }: IconProps) => {
   return (
     <svg
       fill="currentColor"
@@ -243,7 +247,7 @@ export const HashtagIcon = ({ size }: { size: number }) => {
   );
 };
 
-export const ProfileIcon = ({ size }: { size: number }) => {
+export const ProfileIcon = ({ size }: IconProps) => {
   return (
     <svg
       width={size}
@@ -261,7 +265,7 @@ export const ProfileIcon = ({ size }: { size: number }) => {
   );
 };
 
-export const NotificationIcon = ({ size }: { size: number }) => {
+export const NotificationIcon = ({ size }: IconProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -282,7 +286,7 @@ export const NotificationIcon = ({ size }: { size: number }) => {
   );
 };
 
-export const MentionIcon = ({ size }: { size: number }) => {
+export const MentionIcon = ({ size }: IconProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -342,7 +346,7 @@ export const ArrowDownIcon = () => {
   );
 };
 
-export const OptionsIcon = ({ size }: { size: number }) => {
+export const OptionsIcon = ({ size }: IconProps) => {
   return (
     <svg
       width={size}
@@ -372,7 +376,7 @@ export const OptionsIcon = ({ size }: { size: number }) => {
   );
 };
 
-export const LocationIcon = ({ size }: { size: number }) => (
+export const LocationIcon = ({ size }: IconProps) => (
   <svg
     width={size}
     height={size}
@@ -386,3 +390,23 @@ export const LocationIcon = ({ size }: { size: number }) => (
     />
   </svg>
 );
+
+export const CheckIcon = ({ size }: IconProps) => {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M20 7L10 17L5 12"
+        stroke="currentColor"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+};
