@@ -6,10 +6,12 @@ import { IOption } from "@/interfaces";
 import classNames from "classnames";
 
 export type SelectInputModelType = IOption | IOption[] | null;
+export type SelectAction = "select" | "deselect";
 
 interface Props {
   value: SelectInputModelType;
   setValue: (value: SelectInputModelType) => void;
+  onSelect?: (value: IOption, action: SelectAction) => void;
   options: IOption[];
   placeholder?: string;
   isMulti?: boolean;
@@ -23,6 +25,7 @@ interface Props {
 const SelectInput = ({
   value,
   setValue,
+  onSelect,
   options,
   placeholder = "Select...",
   isMulti = false,
@@ -36,13 +39,24 @@ const SelectInput = ({
   const toggleDropdown = () => setIsOpen(!isOpen);
   const menuRef = useRef<HTMLDivElement>(null);
 
+  const emitSelection = (option: IOption, action: SelectAction) => {
+    if (onSelect) {
+      onSelect(option, action);
+    }
+  };
+
   const handleSelect = (option: IOption) => {
     if (isMulti) {
       const newSelected = value instanceof Array ? [...value] : [];
-      if (newSelected.find((opt) => opt.value === option.value)) {
+      const isAlreadySelected = newSelected.find(
+        (opt) => opt.value === option.value,
+      );
+      if (isAlreadySelected) {
         setValue(newSelected.filter((opt) => opt.value !== option.value));
+        emitSelection(option, "deselect");
       } else {
         setValue([...newSelected, option]);
+        emitSelection(option, "select");
       }
     } else {
       setValue(option);

@@ -11,6 +11,7 @@ import {
   IUserPost,
 } from "@/interfaces";
 import { resource } from "axe-api-client";
+import feedLocation from "./userFeedLocation";
 
 const createUser = async (data: IUserPost) => {
   return resource("users").post(data);
@@ -125,4 +126,5 @@ export default {
   follow,
   unfollow,
   patch,
+  feedLocation,
 };

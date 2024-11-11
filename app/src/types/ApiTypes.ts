@@ -31,6 +31,13 @@ export interface IUserApi {
   stats_follower: number;
   stats_following: number;
   following_id?: number;
+  locations: IUserFeedLocationApi[];
+}
+
+export interface IUserFeedLocationApi {
+  id: number;
+  user_id: number;
+  location: string;
 }
 
 export interface IHashtagApi {

@@ -1,5 +1,9 @@
 import { create } from "zustand";
-import { ILoginResponseApi, IUserApi } from "@/types/ApiTypes";
+import {
+  ILoginResponseApi,
+  IUserApi,
+  IUserFeedLocationApi,
+} from "@/types/ApiTypes";
 import api from "@/api";
 
 export interface AuthStoreState {
@@ -17,6 +21,7 @@ interface AuthState {
   logout: () => void;
   increase: (type: IncreaseType) => void;
   decrease: (type: IncreaseType) => void;
+  setFeedLocations: (locations: IUserFeedLocationApi[]) => void;
 }
 
 const DEFAULT_STATE: AuthStoreState = {
@@ -31,6 +36,7 @@ const DEFAULT_STATE: AuthStoreState = {
     stats_follower: 0,
     stats_following: 0,
     id: 0,
+    locations: [],
   },
 };
 
@@ -78,6 +84,11 @@ const useAuthStore = create<AuthState>()((set) => ({
 
   update(user: IUserApi) {
     const newState = { ...this.state, user };
+    set(() => ({ state: newState }));
+  },
+
+  setFeedLocations(locations: IUserFeedLocationApi[]) {
+    const newState = { ...this.state, user: { ...this.state.user, locations } };
     set(() => ({ state: newState }));
   },
 
