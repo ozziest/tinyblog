@@ -80,7 +80,7 @@ const TrendsOptionModal = () => {
       title="Trends options"
       isOpen={true}
       onClose={() => setOpen(false)}
-      footer={<Button>Apply</Button>}
+      footer={<Button onClick={() => setOpen(false)}>Close</Button>}
     >
       <form className="flex flex-col gap-5">
         <SelectInput
@@ -89,8 +89,8 @@ const TrendsOptionModal = () => {
           setValue={handleLocationSelection}
           onSelect={handleOnSelect}
           isMulti
-          label="Location"
-          description="Choose locations that interest you. You can customize your feed to see posts from multiple locations"
+          label="Feed locations"
+          description="Choose locations that interest you. You can customize your feed to see posts from multiple locations."
           options={SUPPORTED_LOCATIONS}
         />
       </form>
