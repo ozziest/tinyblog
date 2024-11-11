@@ -18,19 +18,27 @@ const PostAuthor = ({ post }: Props) => {
 
   return (
     <div className="flex gap-2 justify-between md:items-center">
-      <button
-        type="button"
-        className="group text-neutral-600 font-semibold transition-colors duration-300 hover:text-neutral-950 flex flex-col md:flex-row md:gap-2 items-center flex-grow"
-        onClick={handleUserClick}
-      >
-        <div className="group-hover:underline text-left w-full md:w-auto">
-          {post.user.name}
+      <div className="text-neutral-600 font-semibold flex flex-col md:flex-row md:gap-2 items-center flex-grow">
+        <div className="text-left w-full md:w-auto">
+          <button
+            type="button"
+            onClick={handleUserClick}
+            className="transition-colors hover:text-neutral-950 hover:underline"
+          >
+            {post.user.name}
+          </button>
         </div>
         <div className="text-neutral-400 text-sm font-medium text-left w-full md:w-auto">
-          @{post.user.username}
+          <button
+            type="button"
+            onClick={handleUserClick}
+            className="transition-colors hover:text-neutral-950 hover:underline"
+          >
+            @{post.user.username}
+          </button>
         </div>
-      </button>
-      <div className="text-neutral-300 text-sm">
+      </div>
+      <div className="text-neutral-300 text-sm grow text-right">
         {formatDistance(new Date(post.created_at), new Date())} -{" "}
         <span title={LOCATION_TITLES[post.location]}>{post.location}</span>
       </div>
