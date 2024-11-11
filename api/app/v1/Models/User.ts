@@ -71,6 +71,10 @@ class User extends Model {
       autoRouting: false,
     });
   }
+
+  locations() {
+    return this.hasMany("UserFeedLocation", "id", "user_id");
+  }
 }
 
 export default User;

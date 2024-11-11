@@ -65,6 +65,10 @@ export default async (req: AxeRequest, res: AxeResponse) => {
     );
     res.header("Set-Cookie", UserService.getCookieContent(token));
 
+    const locations = await db
+      .table("user_feed_locations")
+      .where("user_id", user.id);
+
     return res.json({
       user: {
         id: user.id,
@@ -75,6 +79,7 @@ export default async (req: AxeRequest, res: AxeResponse) => {
         stats_follower: user.stats_follower,
         stats_following: user.stats_following,
         avatar: getUserAvatar(user.email),
+        locations,
       },
     });
   } catch (error) {
