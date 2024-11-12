@@ -28,11 +28,13 @@ jobs:
         run: npm ci
       - name: Build
         run: npm run build
-      # - name: Build the image
-      #   run: |
-      #     cd build
-      #     docker build -t tinyblogspace/api:latest .
-      #     docker push tinyblogspace/api:latest
+
+      - name: Build the image
+        run: |
+          cd build
+          docker build -t tinyblog-staging .
+          docker tag tinyblog-staging:latest 459672519579.dkr.ecr.us-east-1.amazonaws.com/tinyblog-staging:latest
+          docker push 459672519579.dkr.ecr.us-east-1.amazonaws.com/tinyblog-staging:latest
       # - name: Deployment
       #   env:
       #     SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}
