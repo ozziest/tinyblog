@@ -9,12 +9,13 @@ import {
   OptionsIcon,
   ProfileIcon,
 } from "../Icons";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import api from "@/api";
 import NavigationLink from "../buttons/NavigationLink";
 import useDailyLink from "@/composables/useDailyLink";
 import useProfileLink from "@/composables/useProfileLink";
 import { emitter } from "@/helpers/events";
+import { throttle } from "lodash";
 
 const Navigation = () => {
   const authStore = useAuthStore();
@@ -37,12 +38,16 @@ const Navigation = () => {
     }
   };
 
+  const throttledGetReports = useRef(
+    throttle(getReports, 300, { leading: false, trailing: true }),
+  );
+
   useEffect(() => {
-    getReports();
+    throttledGetReports.current();
   }, [authStore.state.user.locations]);
 
   useEffect(() => {
-    getReports();
+    throttledGetReports.current();
   }, []);
 
   return (

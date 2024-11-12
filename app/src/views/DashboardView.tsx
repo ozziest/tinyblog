@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import api from "@/api";
 import PostContainer from "@/components/posts/PostContainer";
 import Posts from "@/components/posts/Posts";
@@ -7,6 +7,7 @@ import InfiniteScroll from "@/components/layout/InfiniteScroll";
 import StickyShareInput from "@/components/posts/StickyShareInput";
 import MobileShareButton from "@/components/posts/MobileShareButton";
 import useAuthStore from "@/stores/authStore";
+import { throttle } from "lodash";
 
 const DashboardView = () => {
   const store = useDashboardStore();
@@ -49,12 +50,16 @@ const DashboardView = () => {
     }
   };
 
+  const throttledFetchPosts = useRef(
+    throttle(fetchPosts, 300, { leading: false, trailing: true }),
+  );
+
   useEffect(() => {
-    fetchPosts();
+    throttledFetchPosts.current();
   }, [authStore.state.user.locations]);
 
   useEffect(() => {
-    fetchPosts();
+    throttledFetchPosts.current();
   }, []);
 
   return (
