@@ -113,9 +113,10 @@ const decrementPostShare = async (postId: number) => {
   await db.table("posts").where("id", postId).decrement({ stats_shares: 1 });
 };
 
-const share = async (postId: number, userId: number) => {
+const share = async (postId: number, userId: number, location: string) => {
   const db = await IoCService.use<Knex>("Database");
   await db.table("posts").insert({
+    location,
     reshare_id: postId,
     parent_id: null,
     user_id: userId,
