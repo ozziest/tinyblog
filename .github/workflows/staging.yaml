@@ -16,25 +16,28 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 20.x
-      - name: Log in to Docker Hub
-        uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
         with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+      - name: Login to AWS ECR
+        run: aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 459672519579.dkr.ecr.us-east-1.amazonaws.com
       - name: Dependencies
         run: npm ci
       - name: Build
         run: npm run build
-      - name: Build the image
-        run: |
-          cd build
-          docker build -t tinyblogspace/api:latest .
-          docker push tinyblogspace/api:latest
-      - name: Deployment
-        env:
-          SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}
-          SERVER_IP: ${{ secrets.SERVER_IP }}
-        run: sshpass -p "$SERVER_PASSWORD" ssh -o StrictHostKeyChecking=no -o PreferredAuthentications=password -o LogLevel=ERROR root@$SERVER_IP 'cd /home/docker && sh restart-tinyblog-staging.sh && docker system prune --force'
+      # - name: Build the image
+      #   run: |
+      #     cd build
+      #     docker build -t tinyblogspace/api:latest .
+      #     docker push tinyblogspace/api:latest
+      # - name: Deployment
+      #   env:
+      #     SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}
+      #     SERVER_IP: ${{ secrets.SERVER_IP }}
+      #   run: sshpass -p "$SERVER_PASSWORD" ssh -o StrictHostKeyChecking=no -o PreferredAuthentications=password -o LogLevel=ERROR root@$SERVER_IP 'cd /home/docker && sh restart-tinyblog-staging.sh && docker system prune --force'
 
   build:
     name: staging-app
