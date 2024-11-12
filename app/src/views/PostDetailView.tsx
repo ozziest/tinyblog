@@ -54,7 +54,11 @@ const PostDetailView = () => {
       <div className="bg-white sticky top-[40px]">
         <PostContainer>
           <Post store={store} post={rootPost} autoView={false} />
-          <ShareInput store={store} parent={rootPost} />
+          <ShareInput
+            store={store}
+            parent={rootPost}
+            showLocationChanger={false}
+          />
         </PostContainer>
       </div>
       <div className="mb-20">

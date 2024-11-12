@@ -10,6 +10,7 @@ export interface Props {
   store: IPostStore;
   parent?: ExtendedPost;
   onShared?: (post: IPostApi) => void;
+  showLocationChanger?: boolean;
 }
 
 const ShareInput = ({
@@ -17,6 +18,7 @@ const ShareInput = ({
   store,
   parent,
   onShared,
+  showLocationChanger = true,
 }: Props) => {
   const authStore = useAuthStore();
 
@@ -36,6 +38,7 @@ const ShareInput = ({
             onShared={onShared}
             initialState={initialState}
             initialLocation={authStore.state.user.location || "WW"}
+            showLocationChanger={showLocationChanger}
           />
         </div>
       </div>

@@ -75,6 +75,7 @@ interface Props {
   store: IPostStore;
   parent?: ExtendedPost;
   onShared?: (post: IPostApi) => void;
+  showLocationChanger?: boolean;
 }
 
 function Editor({
@@ -83,6 +84,7 @@ function Editor({
   store,
   parent,
   onShared,
+  showLocationChanger = true,
 }: Props) {
   const authStore = useAuthStore();
   const [content, setContent] = useState<string>("");
@@ -196,10 +198,12 @@ function Editor({
           <AutoFocusPlugin />
           <div className="no-editor flex justify-between items-center gap-2 py-2">
             <CharacterLimitPlugin charset={"UTF-16"} maxLength={240} />
-            <LocationChanger
-              currentLocation={currentLocation}
-              setLocation={setLocation}
-            />
+            {showLocationChanger && (
+              <LocationChanger
+                currentLocation={currentLocation}
+                setLocation={setLocation}
+              />
+            )}
             <button
               type="button"
               className="px-3 py-1 border bg-gray-200 hover:bg-gray-300 rounded font-semibold text-sm disabled:text-neutral-300"
