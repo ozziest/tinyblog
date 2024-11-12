@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import BaseModal from "./BaseModal";
 import TextInput from "../inputs/TextInput";
 import { IUserApi } from "@/types/ApiTypes";
@@ -10,21 +10,22 @@ import SelectInput, { SelectInputModelType } from "../inputs/SelectInput";
 import { SUPPORTED_LOCATIONS } from "@/consts";
 import { IOption } from "@/interfaces";
 import { IValidationResult, validate } from "robust-validator";
+import { emitter } from "@/helpers/events";
 
 interface ModalProps {
   user: IUserApi;
-  isOpen: boolean;
-  onClose: () => void;
 }
 
 type LocationType = IOption | null;
 
-const UserEditModal = ({ user, isOpen, onClose }: ModalProps) => {
+const UserEditModal = ({ user }: ModalProps) => {
   const authStore = useAuthStore();
+  const [isOpen, setOpen] = useState(false);
   const [state, setState] = useState<IUserApi>({
     ...user,
     email: authStore.state.user.email,
     location: authStore.state.user.location,
+    bio: authStore.state.user.bio,
   });
   const [location, setLocation] = useState<LocationType>(
     SUPPORTED_LOCATIONS.find((item) => item.value === state.location) || null,
@@ -60,15 +61,31 @@ const UserEditModal = ({ user, isOpen, onClose }: ModalProps) => {
       location?.value || "WW",
       state.bio,
     );
-    onClose();
+    handleClose();
   };
+
+  const handleClose = () => {
+    emitter.emit("user-edit-modal:off");
+    setOpen(false);
+  };
+
+  useEffect(() => {
+    const openHandler = () => setOpen(true);
+    emitter.on("user-edit-modal:on", openHandler);
+
+    return () => emitter.off("user-edit-modal:on", openHandler);
+  }, []);
 
   return (
     <BaseModal
       title="Edit profile"
       isOpen={isOpen}
-      onClose={onClose}
-      footer={<Button>Save</Button>}
+      onClose={handleClose}
+      footer={
+        <Button type="button" onClick={handleSubmit}>
+          Save
+        </Button>
+      }
     >
       <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
         <TextInput

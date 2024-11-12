@@ -24,6 +24,7 @@ export default async (req: AxeRequest, res: AxeResponse) => {
       id: user.id,
       username: user.username,
       name: user.name,
+      bio: user.bio,
       email: user.email,
       location: user.location,
       stats_post: user.stats_post,

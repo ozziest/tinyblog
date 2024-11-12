@@ -3,10 +3,10 @@ import Avatar from "./Avatar";
 import useAuthStore from "@/stores/authStore";
 import Button from "../inputs/Button";
 import api from "@/api";
-import UserEditModal from "../modals/UserEditModal";
-import { useState } from "react";
+import { useEffect } from "react";
 import DropdownButton, { IDropdownItem } from "../buttons/DropdownButton";
 import { OptionsIcon } from "../Icons";
+import { emitter } from "@/helpers/events";
 
 interface Props {
   user: IUserApi;
@@ -23,7 +23,6 @@ const SETTINGS_MENU: IDropdownItem[] = [
 
 const UserProfileBox = ({ user, setUser, refetch }: Props) => {
   const authStore = useAuthStore();
-  const [isEditModalOpen, setEditModalOpen] = useState(false);
 
   const isMyself = user.id === authStore.state.user.id;
 
@@ -54,14 +53,19 @@ const UserProfileBox = ({ user, setUser, refetch }: Props) => {
     if (isMyself) {
       refetch();
     }
-    setEditModalOpen(false);
   };
 
   const handleSettingMenuClicked = (menu: IDropdownItem) => {
     if (menu.value === "edit") {
-      setEditModalOpen(true);
+      emitter.emit("user-edit-modal:on");
     }
   };
+
+  useEffect(() => {
+    emitter.on("user-edit-modal:off", handleEditModalClose);
+
+    return () => emitter.off("user-edit-modal:off", handleEditModalClose);
+  }, []);
 
   return (
     <>
@@ -95,11 +99,6 @@ const UserProfileBox = ({ user, setUser, refetch }: Props) => {
           )}
         </div>
       </div>
-      <UserEditModal
-        isOpen={isEditModalOpen}
-        onClose={handleEditModalClose}
-        user={user}
-      />
     </>
   );
 };
