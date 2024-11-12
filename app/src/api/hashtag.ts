@@ -8,8 +8,10 @@ const create = async (hashtag: string) => {
   return resource("hashtags").insert({ hashtag });
 };
 
-const report = async () => {
-  return resource("hashtags/report").get();
+const report = async (locations: string[]) => {
+  return resource("hashtags/report")
+    .searchParams({ locations: locations.join(",") })
+    .get();
 };
 
 export default {

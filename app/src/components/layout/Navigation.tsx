@@ -31,11 +31,15 @@ const Navigation = () => {
   };
 
   const getReports = async () => {
-    const response = await api.hashtag.report();
+    const response = await api.hashtag.report(authStore.getFeedLocations());
     if (response.status === 200) {
       setHashtags(await response.json());
     }
   };
+
+  useEffect(() => {
+    getReports();
+  }, [authStore.state.user.locations]);
 
   useEffect(() => {
     getReports();
