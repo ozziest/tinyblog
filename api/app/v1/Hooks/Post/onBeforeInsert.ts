@@ -7,5 +7,9 @@ export default async ({ req, res, formData }: IBeforeInsertContext) => {
   req.original.post = await PostService.toPostContent(formData.content);
   formData.content = req.original.post.content;
 
-  // res.status(400).json({ ...req.original.post });
+  // If there is a parentId, the answer should use the parent's location
+  if (formData.parent_id) {
+    const parentPost = await PostService.getPost(formData.parent_id);
+    formData.location = parentPost.location;
+  }
 };
