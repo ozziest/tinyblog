@@ -1,0 +1,37 @@
+name: Production
+on:
+  push:
+    branches:
+      - "main"
+
+jobs:
+  dockerize:
+    name: production-api
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: api
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js 20.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.x
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-central-1
+      - name: Login to AWS ECR
+        run: aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin 459672519579.dkr.ecr.eu-central-1.amazonaws.com
+      - name: Dependencies
+        run: npm ci
+      - name: Build
+        run: npm run build
+      - name: Build the image
+        run: |
+          cd build
+          docker build -t tinyblog-production .
+          docker tag tinyblog-production:latest 459672519579.dkr.ecr.eu-central-1.amazonaws.com/tinyblog-production:latest
+          docker push 459672519579.dkr.ecr.eu-central-1.amazonaws.com/tinyblog-production:latest
