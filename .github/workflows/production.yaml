@@ -22,19 +22,14 @@ jobs:
       - name: Build
         run: npm run build
       - name: Build the image
-        env:
-          REGISTERY_URL: ${{ secrets.REGISTERY_URL }}
         run: |
           cd build
           docker build -t tinyblog-production .
-          docker tag tinyblog-production:latest $REGISTERY_URL/tinyblog-production:latest
+          docker tag tinyblog-production:latest registry.digitalocean.com/tinyblog-production:latest
       - name: Log in to Docker Hub
         uses: docker/login-action@v3
         with:
-          registry: ${{ secrets.REGISTERY_URL }}
           username: ${{ secrets.REGISTERY_USERNAME }}
           password: ${{ secrets.REGISTERY_ACCESS_TOKEN }}
       - name: Push the image to the registry
-        env:
-          REGISTERY_URL: ${{ secrets.REGISTERY_URL }}
-        run: docker push $REGISTERY_URL/tinyblog-production:latest
+        run: docker push registry.digitalocean.com/tinyblog-production:latest
