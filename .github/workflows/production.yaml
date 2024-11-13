@@ -23,13 +23,15 @@ jobs:
           registry: ${{ secrets.REGISTERY_URL }}
           username: ${{ secrets.REGISTERY_USERNAME }}
           password: ${{ secrets.REGISTERY_ACCESS_TOKEN }}
-      # - name: Dependencies
-      #   run: npm ci
-      # - name: Build
-      #   run: npm run build
-      # - name: Build the image
-      #   run: |
-      #     cd build
-      #     docker build -t tinyblog-production .
-      #     docker tag tinyblog-production:latest 459672519579.dkr.ecr.eu-central-1.amazonaws.com/tinyblog-production:latest
-      #     docker push 459672519579.dkr.ecr.eu-central-1.amazonaws.com/tinyblog-production:latest
+      - name: Dependencies
+        run: npm ci
+      - name: Build
+        run: npm run build
+      - name: Build the image
+        env:
+          REGISTERY_URL: ${{ secrets.REGISTERY_URL }}
+        run: |
+          cd build
+          docker build -t tinyblog-production .
+          docker tag tinyblog-production:latest $REGISTERY_URL/tinyblog-production:latest
+          docker push $REGISTERY_URL/tinyblog-production:latest
