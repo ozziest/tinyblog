@@ -4,7 +4,7 @@ import DefaultSessionRateLimitter from "../Middlewares/RateLimitters/DefaultSess
 
 class UserFeedLocation extends Model {
   get handlers() {
-    return [HandlerTypes.ALL, HandlerTypes.INSERT, HandlerTypes.DELETE];
+    return [HandlerTypes.INSERT, HandlerTypes.DELETE];
   }
 
   get fillable() {
