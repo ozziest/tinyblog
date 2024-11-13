@@ -29,6 +29,6 @@ jobs:
         run: |
           cd build
           doctl registry login
-          docker build -t tinyblog-production .
-          docker tag tinyblog-production:latest registry.digitalocean.com/tinyblog-production:latest
-          docker push registry.digitalocean.com/tinyblog-production:latest
+          docker build -t api .
+          docker tag api:latest registry.digitalocean.com/tinyblog/api:latest
+          docker push registry.digitalocean.com/tinyblog/api:latest
