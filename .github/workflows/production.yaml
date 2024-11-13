@@ -17,12 +17,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 20.x
-      - name: Log in to Docker Hub
-        uses: docker/login-action@v3
-        with:
-          registry: ${{ secrets.REGISTERY_URL }}
-          username: ${{ secrets.REGISTERY_USERNAME }}
-          password: ${{ secrets.REGISTERY_ACCESS_TOKEN }}
       - name: Dependencies
         run: npm ci
       - name: Build
@@ -34,4 +28,13 @@ jobs:
           cd build
           docker build -t tinyblog-production .
           docker tag tinyblog-production:latest $REGISTERY_URL/tinyblog-production:latest
-          docker push $REGISTERY_URL/tinyblog-production:latest
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ secrets.REGISTERY_URL }}
+          username: ${{ secrets.REGISTERY_USERNAME }}
+          password: ${{ secrets.REGISTERY_ACCESS_TOKEN }}
+      - name: Push the image to the registry
+        env:
+          REGISTERY_URL: ${{ secrets.REGISTERY_URL }}
+        run: docker push $REGISTERY_URL/tinyblog-production:latest
