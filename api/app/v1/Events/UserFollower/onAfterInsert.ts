@@ -4,7 +4,7 @@ import NotificationService from "../../Services/NotificationService";
 
 export default async ({ req, res, item }: IAfterInsertContext) => {
   if (!req.original.auth) {
-    return res.status(401).json({ error: "Unauthorized" });
+    return res.status(403).json({ error: "Unauthorized" });
   }
 
   const { userId: triggerUserId } = req.original.auth;

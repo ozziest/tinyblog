@@ -9,7 +9,12 @@ export const getUserAvatar = (email: string) => {
   }
 
   const hash = md5(email);
-  return `https://gravatar.com/avatar/${hash}?s=400`;
+  return `https://gravatar.com/avatar/${hash}?s=240`;
+};
+
+const getUserByEmail = async (email: string) => {
+  const db = await IoCService.use<Knex>("Database");
+  return db.table("users").where("email", email).first();
 };
 
 const getUserByEmailOrUsername = async (email: string, username: string) => {
@@ -46,16 +51,31 @@ const decrementFollowingCount = async (userId: number) => {
   await db.table("users").where("id", userId).decrement({ stats_following: 1 });
 };
 
+const getCookieDomain = () => {
+  if (process.env.NODE_ENV !== "development") {
+    return "Domain=.tinyblog.space;";
+  }
+
+  return "Domain=localhost;";
+};
+
 const getCookieContent = (token: string) => {
   // 1 week long
-  return `token=${token}; SameSite=Strict; Max-Age=604800; Path=/; Secure; HttpOnly`;
+  return `token=${token}; ${getCookieDomain()} SameSite=Strict; Max-Age=604800; Path=/; Secure; HttpOnly`;
 };
 
 const getNewAgentId = () => {
-  return `agentId=${nanoid(40)}; SameSite=Strict; Path=/; Secure; HttpOnly`;
+  const agentId = nanoid(40);
+  return `agentId=${agentId}; ${getCookieDomain()} SameSite=Strict; Path=/; Secure; HttpOnly`;
+};
+
+const getDeleteCookieContent = () => {
+  // 1 week long
+  return `token=; ${getCookieDomain()} SameSite=Strict; Max-Age=0; Path=/; Secure; HttpOnly`;
 };
 
 export default {
+  getUserByEmail,
   getUserByEmailOrUsername,
   incrementUserPostCount,
   incrementFollowerCount,
@@ -64,4 +84,5 @@ export default {
   decrementFollowingCount,
   getCookieContent,
   getNewAgentId,
+  getDeleteCookieContent,
 };

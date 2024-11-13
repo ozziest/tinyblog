@@ -34,6 +34,8 @@ import api from "@/api";
 import useAuthStore from "@/stores/authStore";
 import { IPostApi } from "@/types/ApiTypes";
 import { ExtendedPost, IPostStore } from "@/stores/postStore";
+import { SUPPORTED_LOCATIONS } from "@/consts";
+import LocationChanger from "./LocationChanger";
 
 const TinyBlogEditorTheme: EditorThemeClasses = {
   hashtag: "hashtag",
@@ -69,16 +71,26 @@ function onError(error: any) {
 
 interface Props {
   initialState?: string;
+  initialLocation: string;
   store: IPostStore;
   parent?: ExtendedPost;
   onShared?: (post: IPostApi) => void;
+  showLocationChanger?: boolean;
 }
 
-function Editor({ initialState = undefined, store, parent, onShared }: Props) {
+function Editor({
+  initialState = undefined,
+  initialLocation,
+  store,
+  parent,
+  onShared,
+  showLocationChanger = true,
+}: Props) {
   const authStore = useAuthStore();
   const [content, setContent] = useState<string>("");
   const [lexical, setLexical] = useState<object>({});
   const [editor, setEditor] = useState<LexicalEditor>();
+  const [location, setLocation] = useState<string>(initialLocation);
 
   const initialConfig = {
     editorState: (editor: LexicalEditor) => {
@@ -132,6 +144,7 @@ function Editor({ initialState = undefined, store, parent, onShared }: Props) {
       content: content,
       lexical: JSON.stringify(lexical),
       parent_id: parent?.id,
+      location,
     });
     const post = await response.json();
 
@@ -150,6 +163,7 @@ function Editor({ initialState = undefined, store, parent, onShared }: Props) {
       user: authStore.state.user,
       is_liked_by_you: false,
       is_shared_by_you: false,
+      location: post.location,
       hashtags: post.hashtags,
       mentions: post.mentions,
       links: post.links,
@@ -157,39 +171,51 @@ function Editor({ initialState = undefined, store, parent, onShared }: Props) {
 
     if (onShared) {
       onShared(newPost);
-    } else {
-      store.pushPost(newPost);
     }
+
+    store.pushPost(newPost);
   };
 
+  const currentLocation = SUPPORTED_LOCATIONS.find(
+    (item) => item.value === location,
+  );
+
   return (
-    <div className="editor-shell">
-      <LexicalComposer initialConfig={initialConfig}>
-        <RichTextPlugin
-          contentEditable={<ContentEditable />}
-          ErrorBoundary={LexicalErrorBoundary}
-        />
-        <AutoLinkPlugin matchers={MATCHERS} />
-        <LinkPlugin validateUrl={validateUrl} />
-        <HashtagPlugin />
-        <MentionPlugin />
-        <ClickableLinkPlugin />
-        <OnChangePlugin onChange={onChange} />
-        <HistoryPlugin />
-        <AutoFocusPlugin />
-        <div className="button-bar flex justify-between items-center py-2">
-          <CharacterLimitPlugin charset={"UTF-16"} maxLength={240} />
-          <button
-            type="button"
-            className="px-3 py-1 border bg-gray-200 hover:bg-gray-300 rounded font-semibold text-sm disabled:text-neutral-300"
-            onClick={handleShare}
-            disabled={content.trim().length === 0}
-          >
-            Share
-          </button>
-        </div>
-      </LexicalComposer>
-    </div>
+    <>
+      <div className="editor-shell">
+        <LexicalComposer initialConfig={initialConfig}>
+          <RichTextPlugin
+            contentEditable={<ContentEditable />}
+            ErrorBoundary={LexicalErrorBoundary}
+          />
+          <AutoLinkPlugin matchers={MATCHERS} />
+          <LinkPlugin validateUrl={validateUrl} />
+          <HashtagPlugin />
+          <MentionPlugin />
+          <ClickableLinkPlugin />
+          <OnChangePlugin onChange={onChange} />
+          <HistoryPlugin />
+          <AutoFocusPlugin />
+          <div className="no-editor flex justify-between items-center gap-2 py-2">
+            <CharacterLimitPlugin charset={"UTF-16"} maxLength={240} />
+            {showLocationChanger && (
+              <LocationChanger
+                currentLocation={currentLocation}
+                setLocation={setLocation}
+              />
+            )}
+            <button
+              type="button"
+              className="px-3 py-1 border bg-gray-200 hover:bg-gray-300 rounded font-semibold text-sm disabled:text-neutral-300"
+              onClick={handleShare}
+              disabled={content.trim().length === 0}
+            >
+              Share
+            </button>
+          </div>
+        </LexicalComposer>
+      </div>
+    </>
   );
 }
 

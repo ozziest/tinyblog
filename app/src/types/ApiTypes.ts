@@ -12,6 +12,7 @@ export interface IPostApi {
   user: IUserApi;
   is_liked_by_you: boolean;
   is_shared_by_you: boolean;
+  location: string;
   parent?: IPostApi;
   reshare?: IPostApi;
   hashtags?: IPostHashtagApi[];
@@ -22,13 +23,22 @@ export interface IPostApi {
 export interface IUserApi {
   id: number;
   name: string;
+  email: string;
   username: string;
   avatar: string;
+  location: string;
   bio?: string;
   stats_post: number;
   stats_follower: number;
   stats_following: number;
   following_id?: number;
+  locations: IUserFeedLocationApi[];
+}
+
+export interface IUserFeedLocationApi {
+  id: number;
+  user_id: number;
+  location: string;
 }
 
 export interface IHashtagApi {

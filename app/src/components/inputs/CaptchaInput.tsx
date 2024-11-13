@@ -7,11 +7,13 @@ interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   error?: string;
 }
 
+const domain = import.meta.env.VITE_API_URL;
+
 const CaptchaInput = ({ name, validation, error, ...rest }: Props) => {
-  const [url, setURL] = useState("http://localhost:3005/api/v1/captcha");
+  const [url, setURL] = useState(`${domain}/captcha`);
 
   const handleReset = () => {
-    setURL(`http://localhost:3005/api/v1/captcha?v=${Date.now()}`);
+    setURL(`${domain}/captcha?v=${Date.now()}`);
   };
 
   return (

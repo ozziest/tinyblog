@@ -1,7 +1,7 @@
 import { AxeRequest, AxeResponse, IoCService } from "axe-api";
 import { Knex } from "knex";
 import { validate } from "robust-validator";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import { isBefore } from "date-fns";
 import { captureError } from "../Services/ErrorService";
 

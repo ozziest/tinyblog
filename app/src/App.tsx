@@ -5,6 +5,7 @@ import SuccessMessage from "./components/messages/SuccessMessage";
 import { useEffect, useState } from "react";
 import { interceptors } from "axe-api-client";
 import useAuthStore from "./stores/authStore";
+import LoadingModal from "./components/messages/LoadingModal";
 
 const App = () => {
   const [isReady, setReady] = useState(false);
@@ -47,6 +48,7 @@ const App = () => {
       <RouterProvider router={router} />
       <ErrorMessageComponent />
       <SuccessMessage />
+      <LoadingModal />
     </>
   );
 };

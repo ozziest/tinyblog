@@ -5,6 +5,7 @@ import ErrorText from "./ErrorText";
 interface Props {
   name: string;
   label?: string;
+  description?: string;
   children: React.ReactNode;
   validation?: IValidationResult;
   error?: string;
@@ -26,7 +27,14 @@ const getFirstMessage = (
   return errors[0].message;
 };
 
-const FormGroup = ({ name, label, validation, error, children }: Props) => {
+const FormGroup = ({
+  name,
+  label,
+  description,
+  validation,
+  error,
+  children,
+}: Props) => {
   let isValid = true;
   let errorMessage = undefined;
 
@@ -38,6 +46,11 @@ const FormGroup = ({ name, label, validation, error, children }: Props) => {
   return (
     <div className="flex flex-col gap-2">
       {label && <label className="font-semibold">{label}</label>}
+      {description && (
+        <p className=" text-sm text-neutral-600 font-light -mt-2">
+          {description}
+        </p>
+      )}
       {children}
       {(!isValid || error) && <ErrorText>{errorMessage || error}</ErrorText>}
     </div>

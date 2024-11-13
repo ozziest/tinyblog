@@ -7,7 +7,9 @@ const Header = () => {
       <div className="block max-w-screen-lg mx-auto">
         <div className="flex items-center">
           <div className="text-indigo-800 -ml-[8px]">
-            <LogoIcon size={48} />
+            <Link to="/">
+              <LogoIcon size={48} />
+            </Link>
           </div>
           <Link
             to="/"

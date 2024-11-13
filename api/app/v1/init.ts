@@ -1,11 +1,11 @@
 import { App, IoCService, RedisAdaptor } from "axe-api";
 import cors from "cors";
 import { Knex } from "knex";
+import * as Sentry from "@sentry/node";
+import { nodeProfilingIntegration } from "@sentry/profiling-node";
 import LoginHandler from "./Handlers/LoginHandler";
 import { prepareTemplates } from "./Services/TemplateService";
 import ProfileCheckHandler from "./Handlers/ProfileCheckHandler";
-import ConfirmHandler from "./Handlers/ConfirmHandler";
-import ConfirmResetHandler from "./Handlers/ConfirmResetHandler";
 import { en, setLocales } from "robust-validator";
 import PasswordResetHandler from "./Handlers/PasswordResetHandler";
 import ChangePasswordHandler from "./Handlers/ChangePasswordHandler";
@@ -16,10 +16,21 @@ import UnshareHandler from "./Handlers/UnshareHandler";
 import CaptchaHandler from "./Handlers/CaptchaHandler";
 import AgentMiddleware from "./Middlewares/AgentMiddleware";
 import CSRFHandler from "./Handlers/CSRFHandler";
-import { LogService } from "axe-api/build/src/Services";
 import DefaultSessionRateLimitter from "./Middlewares/RateLimitters/DefaultSessionRateLimitter";
 import UserAgentRateLimitter from "./Middlewares/RateLimitters/UserAgentRateLimitter";
 import HashtagReportHandler from "./Handlers/HashtagReportHandler";
+import LogoutHandler from "./Handlers/LogoutHandler";
+import EmailConfirmationHandler from "./Handlers/EmailConfirmationHandler";
+import RegistrationCompleteHandler from "./Handlers/RegistrationCompleteHandler";
+
+if (process.env.NODE_ENV !== "development") {
+  Sentry.init({
+    dsn: process.env.SENTRY_DSN_KEY,
+    integrations: [nodeProfilingIntegration()],
+    tracesSampleRate: 1.0,
+    profilesSampleRate: 1.0,
+  });
+}
 
 const CORS_WHITE_LIST = [
   "http://localhost:5173",
@@ -62,9 +73,8 @@ const onBeforeInit = async (app: App) => {
   app.use(UserAgentRateLimitter("UserAgent", 1000));
 
   app.post("/api/v1/login", LoginHandler);
+  app.get("/api/v1/logout", SessionMiddleware, LogoutHandler);
   app.post("/api/v1/profileCheck", ProfileCheckHandler);
-  app.post("/api/v1/confirm", ConfirmHandler);
-  app.post("/api/v1/confirmReset", ConfirmResetHandler);
   app.post("/api/v1/passwordReset", PasswordResetHandler);
   app.post("/api/v1/changePassword", ChangePasswordHandler);
   app.get(
@@ -93,17 +103,26 @@ const onBeforeInit = async (app: App) => {
   );
   app.get(
     "/api/v1/captcha",
-    UserAgentRateLimitter("CaptchaCreation", 10),
+    UserAgentRateLimitter("CaptchaCreation", 100),
     CaptchaHandler
   );
   app.get("/api/v1/csrf", UserAgentRateLimitter("CSRF", 100), CSRFHandler);
+  app.patch(
+    "/api/v1/registrations/:id/confirm",
+    UserAgentRateLimitter("EmailConfirmation", 50),
+    EmailConfirmationHandler
+  );
+  app.post(
+    "/api/v1/registrations/:id/complete",
+    // UserAgentRateLimitter("RegistrationComplete", 3),
+    RegistrationCompleteHandler
+  );
 };
 
 const onAfterInit = async (app: App) => {
   const redis = await IoCService.use<RedisAdaptor>("Redis");
   if (!redis.isReady()) {
     await redis.connect();
-    LogService.info("Redis connection in done!");
   }
 };
 

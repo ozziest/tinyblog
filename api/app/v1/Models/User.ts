@@ -13,36 +13,38 @@ import DefaultSessionRateLimitter from "../Middlewares/RateLimitters/DefaultSess
 class User extends Model {
   get fillable() {
     return {
-      POST: ["email", "username", "password", "name"],
+      PATCH: ["bio", "location", "name"],
     };
   }
 
   get validations() {
     return {
-      POST: {
-        email: "required|email|max:320",
-        username: "required|alpha_dash|min:3|max:30",
-        password: "required|min:8|max:50",
+      PUT: {
+        bio: "max:240",
+        location: "required|min:2|max:2",
         name: "required|min:3|max:50",
       },
     };
   }
 
   get handlers() {
-    return [HandlerTypes.INSERT, HandlerTypes.PAGINATE];
+    return [HandlerTypes.PAGINATE, HandlerTypes.PATCH];
   }
 
   get middlewares() {
     return [
-      SessionMiddleware,
       DefaultSessionRateLimitter,
       {
         handler: [HandlerTypes.PAGINATE],
         middleware: SessionRateLimitter("UserPaginate", 200),
       },
       {
-        handler: [HandlerTypes.INSERT],
-        middleware: SessionRateLimitter("UserInsert", 50),
+        handler: [HandlerTypes.PATCH],
+        middleware: SessionRateLimitter("UserPatch", 100),
+      },
+      {
+        handler: [HandlerTypes.PAGINATE, HandlerTypes.PATCH],
+        middleware: SessionMiddleware,
       },
     ];
   }
@@ -57,7 +59,7 @@ class User extends Model {
   }
 
   get hiddens() {
-    return ["password", "deleted_at"];
+    return ["password", "deleted_at", "is_email_confirmed"];
   }
 
   followers() {
@@ -68,6 +70,10 @@ class User extends Model {
     return this.hasMany("UserFollower", "id", "follower_id", {
       autoRouting: false,
     });
+  }
+
+  locations() {
+    return this.hasMany("UserFeedLocation", "id", "user_id");
   }
 }
 

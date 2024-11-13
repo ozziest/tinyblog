@@ -1,3 +1,7 @@
+interface IconProps {
+  size: number;
+}
+
 export const ErrorIcon = () => {
   return (
     <svg
@@ -90,7 +94,7 @@ export const SuccessIcon = () => {
   );
 };
 
-export const LogoIcon = ({ size }: { size: number }) => {
+export const LogoIcon = ({ size }: IconProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -117,7 +121,7 @@ export const LogoIcon = ({ size }: { size: number }) => {
   );
 };
 
-export const ReplyIcon = ({ size }: { size: number }) => {
+export const ReplyIcon = ({ size }: IconProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -133,7 +137,7 @@ export const ReplyIcon = ({ size }: { size: number }) => {
   );
 };
 
-export const LikeIcon = ({ size }: { size: number }) => {
+export const LikeIcon = ({ size }: IconProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -149,7 +153,7 @@ export const LikeIcon = ({ size }: { size: number }) => {
   );
 };
 
-export const ShareIcon = ({ size }: { size: number }) => {
+export const ShareIcon = ({ size }: IconProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -165,7 +169,7 @@ export const ShareIcon = ({ size }: { size: number }) => {
   );
 };
 
-export const ViewCountIcon = ({ size }: { size: number }) => {
+export const ViewCountIcon = ({ size }: IconProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -181,7 +185,7 @@ export const ViewCountIcon = ({ size }: { size: number }) => {
   );
 };
 
-export const HomeIcon = ({ size }: { size: number }) => {
+export const HomeIcon = ({ size }: IconProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -195,7 +199,7 @@ export const HomeIcon = ({ size }: { size: number }) => {
   );
 };
 
-export const LogoutIcon = ({ size }: { size: number }) => {
+export const LogoutIcon = ({ size }: IconProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -209,7 +213,7 @@ export const LogoutIcon = ({ size }: { size: number }) => {
   );
 };
 
-export const DailyIcon = ({ size }: { size: number }) => {
+export const DailyIcon = ({ size }: IconProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -225,7 +229,7 @@ export const DailyIcon = ({ size }: { size: number }) => {
   );
 };
 
-export const HashtagIcon = ({ size }: { size: number }) => {
+export const HashtagIcon = ({ size }: IconProps) => {
   return (
     <svg
       fill="currentColor"
@@ -243,7 +247,7 @@ export const HashtagIcon = ({ size }: { size: number }) => {
   );
 };
 
-export const ProfileIcon = ({ size }: { size: number }) => {
+export const ProfileIcon = ({ size }: IconProps) => {
   return (
     <svg
       width={size}
@@ -261,7 +265,7 @@ export const ProfileIcon = ({ size }: { size: number }) => {
   );
 };
 
-export const NotificationIcon = ({ size }: { size: number }) => {
+export const NotificationIcon = ({ size }: IconProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -282,7 +286,7 @@ export const NotificationIcon = ({ size }: { size: number }) => {
   );
 };
 
-export const MentionIcon = ({ size }: { size: number }) => {
+export const MentionIcon = ({ size }: IconProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -301,6 +305,108 @@ export const MentionIcon = ({ size }: { size: number }) => {
       >
         @
       </text>
+    </svg>
+  );
+};
+
+export const CloseIcon = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="w-6 h-6"
+    >
+      <line x1="18" y1="6" x2="6" y2="18" />
+      <line x1="6" y1="6" x2="18" y2="18" />
+    </svg>
+  );
+};
+
+export const ArrowDownIcon = () => {
+  return (
+    <svg
+      className="w-4 h-4 text-gray-500"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M19 9l-7 7-7-7"
+      />
+    </svg>
+  );
+};
+
+export const OptionsIcon = ({ size }: IconProps) => {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 48 48"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M8 16H26M34 16H40M22 32H40M8 32H14"
+        stroke="currentColor"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M18 36C20.2091 36 22 34.2091 22 32C22 29.7909 20.2091 28 18 28C15.7909 28 14 29.7909 14 32C14 34.2091 15.7909 36 18 36Z"
+        stroke="currentColor"
+        strokeWidth="2.5"
+      />
+      <path
+        d="M30 20C32.2091 20 34 18.2091 34 16C34 13.7909 32.2091 12 30 12C27.7909 12 26 13.7909 26 16C26 18.2091 27.7909 20 30 20Z"
+        stroke="currentColor"
+        strokeWidth="2.5"
+      />
+    </svg>
+  );
+};
+
+export const LocationIcon = ({ size }: IconProps) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M12 11.5C11.337 11.5 10.7011 11.2366 10.2322 10.7678C9.76339 10.2989 9.5 9.66304 9.5 9C9.5 8.33696 9.76339 7.70107 10.2322 7.23223C10.7011 6.76339 11.337 6.5 12 6.5C12.663 6.5 13.2989 6.76339 13.7678 7.23223C14.2366 7.70107 14.5 8.33696 14.5 9C14.5 9.3283 14.4353 9.65339 14.3097 9.95671C14.1841 10.26 13.9999 10.5356 13.7678 10.7678C13.5356 10.9999 13.26 11.1841 12.9567 11.3097C12.6534 11.4353 12.3283 11.5 12 11.5ZM12 2C10.1435 2 8.36301 2.7375 7.05025 4.05025C5.7375 5.36301 5 7.14348 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 7.14348 18.2625 5.36301 16.9497 4.05025C15.637 2.7375 13.8565 2 12 2Z"
+      fill="currentColor"
+    />
+  </svg>
+);
+
+export const CheckIcon = ({ size }: IconProps) => {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M20 7L10 17L5 12"
+        stroke="currentColor"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   );
 };

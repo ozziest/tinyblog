@@ -1,6 +1,7 @@
 export enum MessageTypes {
   SimpleError = "SimpleError",
   SimpleSuccess = "SimpleSuccess",
+  Loading = "Loading",
 }
 
 export enum StoreType {
@@ -16,4 +17,13 @@ export enum NotificationTypes {
   Follow = "Follow",
   Reply = "Reply",
   Mention = "Mention",
+}
+
+export enum Breakpoints {
+  xs = 0,
+  sm = 1,
+  md = 2,
+  lg = 3,
+  xl = 4,
+  "2xl" = 5,
 }

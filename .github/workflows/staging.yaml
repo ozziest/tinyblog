@@ -5,7 +5,7 @@ on:
       - "staging"
 jobs:
   dockerize:
-    name: Dockerize
+    name: staging-api
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -16,17 +16,53 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 20.x
-      - name: Log in to Docker Hub
-        uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
         with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-      - name: Install
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+      - name: Login to AWS ECR
+        run: aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 459672519579.dkr.ecr.us-east-1.amazonaws.com
+      - name: Dependencies
         run: npm ci
       - name: Build
         run: npm run build
       - name: Build the image
         run: |
           cd build
-          docker build -t tinyblogspace/api:latest .
-          docker push tinyblogspace/api:latest
+          docker build -t tinyblog-staging .
+          docker tag tinyblog-staging:latest 459672519579.dkr.ecr.us-east-1.amazonaws.com/tinyblog-staging:latest
+          docker push 459672519579.dkr.ecr.us-east-1.amazonaws.com/tinyblog-staging:latest
+      - name: Deployment
+        env:
+          SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}
+          SERVER_IP: ${{ secrets.SERVER_IP }}
+        run: sshpass -p "$SERVER_PASSWORD" ssh -o StrictHostKeyChecking=no -o PreferredAuthentications=password -o LogLevel=ERROR root@$SERVER_IP 'cd /home/docker && sh restart-tinyblog-staging.sh && docker system prune --force'
+
+  build:
+    name: staging-app
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: app
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Node.js ⚙️
+        uses: actions/setup-node@v2
+        with:
+          node-version: "20.x"
+      - name: Install Dependencies
+        env:
+          VITE_TURNSTILE_SITE_KEY: ${{ secrets.VITE_TURNSTILE_SITE_KEY }}
+          VITE_API_URL: https://api-staging.tinyblog.space/api/v1
+          VITE_SENTRY_DSN: https://02217b9e35b766ec567f93fb83dd0079@o4508185072500736.ingest.de.sentry.io/4508185074925648
+        run: |
+          npm install
+          npm run build
+      - name: Deploy
+        env:
+          SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}
+          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
+        run: |
+          sshpass -p "$SERVER_PASSWORD" scp -o StrictHostKeyChecking=no -o PreferredAuthentications=password -o LogLevel=ERROR -r ./dist/* $DEPLOY_PATH

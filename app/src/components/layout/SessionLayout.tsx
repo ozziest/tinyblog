@@ -8,6 +8,8 @@ import useAuthStore from "@/stores/authStore";
 import api from "@/api";
 import { IUserApi } from "@/types/ApiTypes";
 import MobileNavigation from "./MobileNavigation";
+import TrendsOptionModal from "../modals/TrendsOptionModal";
+import UserEditModal from "../modals/UserEditModal";
 
 const SessionLayout = () => {
   const authStore = useAuthStore();
@@ -15,9 +17,11 @@ const SessionLayout = () => {
   const [isReady, setReady] = useState(false);
 
   const getMeData = async () => {
-    const response = await api.user.getMyself();
-    const user: IUserApi = await response.json();
-    authStore.update(user);
+    if (authStore.state.isLoggedIn) {
+      const response = await api.user.getMyself();
+      const user: IUserApi = await response.json();
+      authStore.update(user);
+    }
   };
 
   useEffect(() => {
@@ -36,13 +40,13 @@ const SessionLayout = () => {
   return (
     <div className="pb-10">
       <Header />
-      <div className="max-w-screen-lg mx-auto mt-2 ">
+      <div className="max-w-screen-lg mx-auto md:mt-2">
         <div className="flex justify-between">
           <div className="w-full lg:w-8/12">
             <Outlet />
           </div>
-          <div className="w-0 lg:w-4/12 lg:min-w-4/12 lg:pl-4">
-            <div className="sticky top-[40px]">
+          <div className="w-0 hidden lg:block lg:w-4/12 lg:min-w-4/12 lg:pl-4">
+            <div className="sticky top-[40px] overflow-visible">
               <UserBox />
               <Navigation />
               <Footer />
@@ -51,6 +55,8 @@ const SessionLayout = () => {
         </div>
       </div>
       <MobileNavigation />
+      <TrendsOptionModal />
+      <UserEditModal user={authStore.state.user} />
     </div>
   );
 };

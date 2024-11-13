@@ -1,3 +1,4 @@
+import { LOCATION_TITLES } from "@/consts";
 import { ExtendedPost } from "@/stores/postStore";
 import { formatDistance } from "date-fns";
 import { useNavigate } from "react-router-dom";
@@ -16,17 +17,30 @@ const PostAuthor = ({ post }: Props) => {
   };
 
   return (
-    <div className="flex gap-2 justify-between items-center">
-      <button
-        type="button"
-        className="group text-neutral-600 font-semibold transition-colors duration-300 hover:text-neutral-950 flex gap-2 items-center"
-        onClick={handleUserClick}
-      >
-        <span className=" group-hover:underline">{post.user.name}</span>
-        <span className="text-neutral-400 text-sm">@{post.user.username}</span>
-      </button>
-      <div className="text-neutral-300 text-sm">
-        {formatDistance(new Date(post.created_at), new Date())}
+    <div className="flex gap-2 justify-between md:items-center">
+      <div className="text-neutral-600 font-semibold flex flex-col md:flex-row md:gap-2 items-center flex-grow">
+        <div className="text-left w-full md:w-auto">
+          <button
+            type="button"
+            onClick={handleUserClick}
+            className="transition-colors hover:text-neutral-950 hover:underline"
+          >
+            {post.user.name}
+          </button>
+        </div>
+        <div className="text-neutral-400 text-sm font-medium text-left w-full md:w-auto">
+          <button
+            type="button"
+            onClick={handleUserClick}
+            className="transition-colors hover:text-neutral-950 hover:underline"
+          >
+            @{post.user.username}
+          </button>
+        </div>
+      </div>
+      <div className="text-neutral-300 text-sm grow text-right">
+        {formatDistance(new Date(post.created_at), new Date())} -{" "}
+        <span title={LOCATION_TITLES[post.location]}>{post.location}</span>
       </div>
     </div>
   );
