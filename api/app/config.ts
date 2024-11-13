@@ -162,7 +162,9 @@ const config: IApplicationConfig = {
    * @link https://github.com/redis/node-redis/blob/HEAD/docs/client-configuration.md
    * @link https://axe-api.com/reference/redis-configs.html
    */
-  redis: {},
+  redis: {
+    url: process.env.REDIS_URL,
+  },
 
   /**
    * Auto-caching feature configurations.
