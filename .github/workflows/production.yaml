@@ -32,3 +32,4 @@ jobs:
           docker build -t api .
           docker tag api:latest registry.digitalocean.com/tinyblog/api:latest
           docker push registry.digitalocean.com/tinyblog/api:latest
+          doctl registry garbage-collection start tinyblog
