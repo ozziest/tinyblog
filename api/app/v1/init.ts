@@ -22,6 +22,7 @@ import HashtagReportHandler from "./Handlers/HashtagReportHandler";
 import LogoutHandler from "./Handlers/LogoutHandler";
 import EmailConfirmationHandler from "./Handlers/EmailConfirmationHandler";
 import RegistrationCompleteHandler from "./Handlers/RegistrationCompleteHandler";
+import HealthCheckHandler from "./Handlers/HealthCheckHandler";
 
 if (process.env.NODE_ENV !== "development") {
   Sentry.init({
@@ -50,6 +51,8 @@ const onBeforeInit = async (app: App) => {
 
   // Prepare the templates
   prepareTemplates();
+
+  app.get("/health", HealthCheckHandler);
 
   // Setting CORS
   app.use(

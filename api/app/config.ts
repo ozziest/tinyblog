@@ -41,6 +41,8 @@ const config: IApplicationConfig = {
    */
   port: process.env.APP_PORT ? parseInt(process.env.APP_PORT) : 3000,
 
+  hostname: "127.0.0.1",
+
   /**
    * Error handler is a routine or mechanism in software that manages and
    * responds to errors or exceptions during program execution, ensuring
