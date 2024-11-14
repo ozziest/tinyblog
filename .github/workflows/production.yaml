@@ -46,14 +46,14 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: "20.x"
-      # - name: Install Dependencies
-      #   env:
-      #     VITE_TURNSTILE_SITE_KEY: ${{ secrets.VITE_TURNSTILE_SITE_KEY }}
-      #     VITE_API_URL: https://api.tinyblog.space/api/v1
-      #     VITE_SENTRY_DSN: https://02217b9e35b766ec567f93fb83dd0079@o4508185072500736.ingest.de.sentry.io/4508185074925648
-      #   run: |
-      #     npm install
-      #     npm run build
+      - name: Install Dependencies
+        env:
+          VITE_TURNSTILE_SITE_KEY: ${{ secrets.VITE_TURNSTILE_SITE_KEY }}
+          VITE_API_URL: https://api.tinyblog.space/api/v1
+          VITE_SENTRY_DSN: https://02217b9e35b766ec567f93fb83dd0079@o4508185072500736.ingest.de.sentry.io/4508185074925648
+        run: |
+          npm install
+          npm run build
       - name: Configure AWS CLI
         run: |
           aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
