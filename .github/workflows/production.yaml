@@ -33,3 +33,34 @@ jobs:
           doctl registry login --expiry-seconds 600
           docker push registry.digitalocean.com/tinyblog/api:latest
           doctl registry garbage-collection start tinyblog --force
+
+  build:
+    name: production-app
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: app
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Node.js ⚙️
+        uses: actions/setup-node@v2
+        with:
+          node-version: "20.x"
+      - name: Install Dependencies
+        env:
+          VITE_TURNSTILE_SITE_KEY: ${{ secrets.VITE_TURNSTILE_SITE_KEY }}
+          VITE_API_URL: https://api.tinyblog.space/api/v1
+          VITE_SENTRY_DSN: https://02217b9e35b766ec567f93fb83dd0079@o4508185072500736.ingest.de.sentry.io/4508185074925648
+        run: |
+          npm install
+          npm run build
+      - name: Configure AWS CLI
+        run: |
+          aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+          aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+          aws configure set region us-east-1
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      - name: Deploy to S3
+          run: aws s3 sync ./dist s3://${{ secrets.AWS_APP_S3_BUCKET }} --acl public-read --delete
