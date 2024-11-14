@@ -37,6 +37,7 @@ const CORS_WHITE_LIST = [
   "http://localhost:5173",
   "http://localhost:3005",
   "https://staging.tinyblog.space",
+  "https://tinyblog.space",
 ];
 
 const onBeforeInit = async (app: App) => {
