@@ -16,7 +16,7 @@
     "@elastic/elasticsearch": "^8.15.0",
     "@sentry/node": "^8.35.0",
     "@sentry/profiling-node": "^8.35.0",
-    "axe-api": "1.5.0-rc-7",
+    "axe-api": "1.5.0-rc-8",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "date-fns": "^4.1.0",
