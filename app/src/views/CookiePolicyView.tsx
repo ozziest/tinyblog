@@ -13,9 +13,16 @@ const TermsView = () => {
     <>
       <main className="bg-white text-gray-900 max-w-screen-lg mx-auto py-10 flex flex-col gap-3 leading-7">
         <h1 className="text-3xl font-bold text-gray-800 mb-6">Cookie Policy</h1>
-        <p className="text-gray-700">
-          Effective Date: <strong>15 November 2024</strong>
+
+        <p>
+          <div>
+            Effective Date: <strong>15 November 2024</strong>
+          </div>
+          <div>
+            Version number: <strong>1</strong>
+          </div>
         </p>
+
         <p className="text-gray-700">
           At <WebsiteName />, we use cookies and similar technologies to enhance
           your experience, analyze usage, and ensure the platform’s

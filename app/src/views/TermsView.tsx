@@ -14,7 +14,14 @@ const TermsView = () => {
       <main className="bg-white text-gray-900 max-w-screen-lg mx-auto py-10 flex flex-col gap-3 leading-7">
         <h1 className="font-bold text-4xl mb-5">Terms of Service</h1>
 
-        <p>Effective Date: 15 November 2024</p>
+        <p>
+          <div>
+            Effective Date: <strong>15 November 2024</strong>
+          </div>
+          <div>
+            Version number: <strong>1</strong>
+          </div>
+        </p>
 
         <p>
           Welcome to <WebsiteName />! We’re thrilled to have you here. Please

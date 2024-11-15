@@ -15,7 +15,16 @@ const TermsView = () => {
         <h1 className="text-3xl font-bold text-gray-800 mb-6">
           Privacy Policy
         </h1>
-        <p className="text-gray-600">Effective Date: 15 November 2024</p>
+
+        <p>
+          <div>
+            Effective Date: <strong>15 November 2024</strong>
+          </div>
+          <div>
+            Version number: <strong>1</strong>
+          </div>
+        </p>
+
         <p className="text-gray-700">
           At <WebsiteName />, your privacy is our priority. This{" "}
           <span className="font-semibold">Privacy Policy</span> explains how we
