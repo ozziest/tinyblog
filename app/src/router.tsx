@@ -14,6 +14,9 @@ import ResetPasswordView from "./views/user/ResetPasswordView";
 import TagsView from "./views/TagsView";
 import AboutView from "./views/AboutView";
 import NotificationView from "./views/NotificationView";
+import TermsView from "./views/TermsView";
+import PrivacyPolicyView from "./views/PrivacyPolicyView";
+import CookiePolicyView from "./views/CookiePolicyView";
 
 const router = createBrowserRouter([
   {
@@ -79,6 +82,9 @@ const router = createBrowserRouter([
     ],
   },
   { path: "/about", element: <AboutView /> },
+  { path: "/terms", element: <TermsView /> },
+  { path: "/privacy-policy", element: <PrivacyPolicyView /> },
+  { path: "/cookie-policy", element: <CookiePolicyView /> },
   { path: "*", element: <PageNotFoundView /> },
 ]);
 
