@@ -41,7 +41,7 @@ const NEXT_STEPS: Record<Steps, Steps | null> = {
 
 const RegisterView = () => {
   const { t } = useTranslation();
-  const [step, setStep] = useState<Steps>("Email");
+  const [step, setStep] = useState<Steps>("Bio");
   const [state, setState] = useState<IRegistrationState>({
     cfToken: null,
     csrf: "",

@@ -10,6 +10,8 @@ import TextareaInput from "../inputs/TextareaInput";
 import SelectInput, { SelectInputModelType } from "../inputs/SelectInput";
 import { SUPPORTED_LOCATIONS } from "@/consts";
 import { loading } from "@/helpers/layout";
+import Checkbox from "../inputs/Checkbox";
+import { Link } from "react-router-dom";
 
 type LocationType = IOption | null;
 
@@ -19,6 +21,7 @@ export const RegisterBioStep = ({ state, next }: IRegisterStep) => {
     name: "",
     bio: "",
     location: SUPPORTED_LOCATIONS.find((item) => item.value === "WW") || null,
+    isConfirmed: false,
   });
   const [validation, setValidation] = useState<IValidationResult>();
 
@@ -60,10 +63,15 @@ export const RegisterBioStep = ({ state, next }: IRegisterStep) => {
 
   const handleNext = async () => {
     setValidation(undefined);
-    const result = await validate(internalState, {
+    const data = {
+      ...internalState,
+      isConfirmed: internalState.isConfirmed || undefined,
+    };
+    const result = await validate(data, {
       name: "required|min:3|max:50",
       bio: "max:240",
       location: "required",
+      isConfirmed: "required",
     });
     setValidation(result);
     if (result.isInvalid) {
@@ -103,6 +111,42 @@ export const RegisterBioStep = ({ state, next }: IRegisterStep) => {
           description="Choose your default location to tag your posts. This location helps others see where you're posting from and customizes your feed to show posts from selected regions."
           options={SUPPORTED_LOCATIONS}
         />
+        <Checkbox
+          name="isConfirmed"
+          checked={internalState.isConfirmed}
+          onChange={(isConfirmed) =>
+            setInternalState({
+              ...internalState,
+              isConfirmed,
+            })
+          }
+          validation={validation}
+        >
+          I agree to the{" "}
+          <Link
+            to="/terms"
+            target="_blank"
+            className="font-semibold hover:underline"
+          >
+            Terms of Service
+          </Link>
+          ,{" "}
+          <Link
+            to="/privacy-policy"
+            target="_blank"
+            className="font-semibold hover:underline"
+          >
+            Privacy Policy
+          </Link>
+          , and{" "}
+          <Link
+            to="/cookie-policy"
+            target="_blank"
+            className="font-semibold hover:underline"
+          >
+            Cookie Policy.
+          </Link>
+        </Checkbox>
       </div>
     </RegisterStep>
   );
