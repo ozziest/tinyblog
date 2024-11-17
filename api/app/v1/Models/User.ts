@@ -51,12 +51,12 @@ class User extends Model {
 
   get limits(): IQueryLimitConfig[][] {
     return [
-      // deny(QueryFeature.All),
-      // deny(QueryFeature.FieldsAll),
-      // allow(QueryFeature.WhereLike, ["username"]),
-      // allow(QueryFeature.WhereEqual, ["username"]),
-      // allow(QueryFeature.Sorting),
-      // allow(QueryFeature.WhereLt),
+      deny(QueryFeature.All),
+      deny(QueryFeature.FieldsAll),
+      allow(QueryFeature.WhereLike, ["username"]),
+      allow(QueryFeature.WhereEqual, ["username"]),
+      allow(QueryFeature.Sorting, ["id"]),
+      allow(QueryFeature.WhereLt, ["id"]),
     ];
   }
 
