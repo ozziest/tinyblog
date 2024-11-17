@@ -6,6 +6,7 @@ declare global {
         options: {
           sitekey: string;
           callback: (token: string) => void;
+          "error-callback": () => void;
           action?: string;
           theme?: "light" | "dark" | "auto";
           language?: string;
@@ -14,7 +15,7 @@ declare global {
 
       remove: (widgetId: HTMLDivElement) => void; // Removes the widget
 
-      reset: (widgetId?: string) => void; // Optionally resets the widget
+      reset: (widgetId?: HTMLDivElement) => void; // Optionally resets the widget
     };
   }
 }

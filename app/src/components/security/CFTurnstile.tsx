@@ -1,3 +1,4 @@
+import { error } from "@/helpers/notication";
 import { useEffect, useRef } from "react";
 
 interface Props {
@@ -10,27 +11,37 @@ const CFTurnstile = ({ onVerify }: Props) => {
   useEffect(() => {
     if (!turnstileRef.current) return;
 
-    // Wait until the Cloudflare script is loaded
+    // Ensure the script is loaded
     const intervalId = setInterval(() => {
       if (window.turnstile) {
         clearInterval(intervalId);
 
-        // Render Turnstile widget
+        // Render the Turnstile widget
         window.turnstile.render(turnstileRef.current, {
           sitekey: import.meta.env.VITE_TURNSTILE_SITE_KEY,
           callback: (newToken) => {
-            onVerify(newToken);
+            onVerify(newToken); // Token verified successfully
+          },
+          "error-callback": () => {
+            error(
+              "We encountered an issue verifying your request. Please try again. If the problem persists, ensure your browser is up-to-date or try using a different one.",
+            );
+            // Optional: Notify the user and/or retry rendering
+            if (turnstileRef.current && window.turnstile) {
+              window.turnstile.reset(turnstileRef.current);
+            }
           },
         });
       }
-    }, 100); // Check every 100ms if `window.turnstile` is available
+    }, 100);
 
     return () => {
+      clearInterval(intervalId);
       if (turnstileRef.current && window.turnstile) {
-        window.turnstile.remove(turnstileRef.current); // Clean up when component unmounts
+        window.turnstile.remove(turnstileRef.current); // Clean up on unmount
       }
     };
-  }, []);
+  }, [onVerify]);
 
   return (
     <div className="flex justify-center">
