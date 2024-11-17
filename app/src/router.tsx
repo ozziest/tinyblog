@@ -17,6 +17,7 @@ import NotificationView from "./views/NotificationView";
 import TermsView from "./views/TermsView";
 import PrivacyPolicyView from "./views/PrivacyPolicyView";
 import CookiePolicyView from "./views/CookiePolicyView";
+import NewbiesView from "./views/NewbiewView";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
       {
         path: "/notifications",
         element: <NotificationView />,
+      },
+      {
+        path: "/newbies",
+        element: <NewbiesView />,
       },
       {
         path: "/u/:username",

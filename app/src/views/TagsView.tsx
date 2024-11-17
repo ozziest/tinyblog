@@ -126,7 +126,10 @@ const TagsView = () => {
           {!isEmptyData && (
             <>
               <Posts store={store} />
-              <InfiniteScroll store={store} loadMore={loadMore} />
+              <InfiniteScroll
+                isLoading={store.state.isLoading}
+                loadMore={loadMore}
+              />
             </>
           )}
         </PostContainer>

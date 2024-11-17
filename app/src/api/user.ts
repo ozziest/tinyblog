@@ -13,6 +13,26 @@ import {
 import { resource } from "axe-api-client";
 import feedLocation from "./userFeedLocation";
 
+const paginate = async (minId?: number) => {
+  const query = resource("users")
+    .fields(
+      "id",
+      "name",
+      "email",
+      "username",
+      "bio",
+      "stats_follower",
+      "stats_following",
+    )
+    .sort("id", "DESC");
+
+  if (minId) {
+    query.where("id", "<", minId);
+  }
+
+  return query.get();
+};
+
 const createUser = async (data: IUserPost) => {
   return resource("users").post(data);
 };
@@ -110,6 +130,7 @@ const patch = async (
 };
 
 export default {
+  paginate,
   createUser,
   login,
   logout,

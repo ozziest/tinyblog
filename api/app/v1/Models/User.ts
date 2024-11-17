@@ -55,6 +55,8 @@ class User extends Model {
       deny(QueryFeature.FieldsAll),
       allow(QueryFeature.WhereLike, ["username"]),
       allow(QueryFeature.WhereEqual, ["username"]),
+      allow(QueryFeature.Sorting),
+      allow(QueryFeature.WhereLt),
     ];
   }
 

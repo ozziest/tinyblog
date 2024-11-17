@@ -64,7 +64,10 @@ const PostDetailView = () => {
       <div className="mb-20">
         <PostContainer>
           <Posts store={store} />
-          <InfiniteScroll store={store} loadMore={loadMore} />
+          <InfiniteScroll
+            isLoading={store.state.isLoading}
+            loadMore={loadMore}
+          />
         </PostContainer>
       </div>
     </>

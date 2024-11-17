@@ -67,7 +67,7 @@ const DashboardView = () => {
       <StickyShareInput store={store} />
       <MobileShareButton store={store} />
       <Posts store={store} />
-      <InfiniteScroll store={store} loadMore={loadMore} />
+      <InfiniteScroll isLoading={store.state.isLoading} loadMore={loadMore} />
     </PostContainer>
   );
 };

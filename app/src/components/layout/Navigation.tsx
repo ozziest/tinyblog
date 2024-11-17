@@ -5,6 +5,7 @@ import {
   DailyIcon,
   HomeIcon,
   LogoutIcon,
+  NewbiesIcon,
   NotificationIcon,
   OptionsIcon,
   ProfileIcon,
@@ -66,6 +67,13 @@ const Navigation = () => {
           onClick={() => navigate("/notifications")}
         >
           Notifications
+        </NavigationButton>
+        <NavigationButton
+          icon={<NewbiesIcon size={24} />}
+          isActive={location.pathname === "/newbies"}
+          onClick={() => navigate("/newbies")}
+        >
+          Newbies
         </NavigationButton>
         <NavigationButton
           icon={<DailyIcon size={24} />}

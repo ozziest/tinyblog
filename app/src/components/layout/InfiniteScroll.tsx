@@ -1,26 +1,27 @@
 import { useCallback, useEffect } from "react";
 import throttle from "lodash/throttle"; // Import the throttle function from lodash
-import { IPostStore } from "@/stores/postStore";
 import LoadingSpinner from "./LoadingSpinner";
 
 interface Props {
-  store: IPostStore;
+  isLoading: boolean;
   loadMore: () => void;
 }
 
-const InfiniteScroll = ({ store, loadMore }: Props) => {
-  const throttledOnLoadMore = useCallback(throttle(loadMore, 3000), [store]);
+const InfiniteScroll = ({ isLoading, loadMore }: Props) => {
+  const throttledOnLoadMore = useCallback(throttle(loadMore, 3000), [
+    isLoading,
+  ]);
 
   // Infinite scroll detection
   const handleScroll = useCallback(() => {
     if (
       window.innerHeight + document.documentElement.scrollTop >=
         document.documentElement.offsetHeight - 300 &&
-      !store.state.isLoading
+      !isLoading
     ) {
       throttledOnLoadMore();
     }
-  }, [store, loadMore]);
+  }, [isLoading, loadMore]);
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
@@ -29,7 +30,7 @@ const InfiniteScroll = ({ store, loadMore }: Props) => {
     };
   }, [handleScroll]);
 
-  return <div>{store.state.isLoading && <LoadingSpinner />}</div>;
+  return <div>{isLoading && <LoadingSpinner />}</div>;
 };
 
 export default InfiniteScroll;
