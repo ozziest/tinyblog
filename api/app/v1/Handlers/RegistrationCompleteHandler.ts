@@ -4,6 +4,25 @@ import { Knex } from "knex";
 import { subMinutes } from "date-fns";
 import { validate } from "robust-validator";
 import * as Sentry from "@sentry/node";
+import { IncomingMessage } from "http";
+
+const getClientInfo = (req: IncomingMessage) => {
+  // Get User-Agent
+  const userAgent = req.headers["user-agent"] || "Unknown";
+
+  // Get IP Address
+  let ip: string | null = req.headers["cf-connecting-ip"] as string;
+  if (!ip) {
+    const forwardedFor = req.headers["x-forwarded-for"] as string;
+    ip = forwardedFor ? forwardedFor.split(",")[0].trim() : null;
+  }
+
+  if (!ip) {
+    ip = req.socket.remoteAddress || "Unknown";
+  }
+
+  return { ip, userAgent };
+};
 
 export default async (req: AxeRequest, res: AxeResponse) => {
   try {
@@ -72,6 +91,17 @@ export default async (req: AxeRequest, res: AxeResponse) => {
         updated_at: new Date(),
       });
     }
+
+    const { ip, userAgent } = getClientInfo(req.original);
+
+    await db.table("user_confirmations").insert({
+      user_id: id,
+      version: "1",
+      ip_address: ip,
+      user_agent: userAgent,
+      created_at: new Date(),
+      updated_at: new Date(),
+    });
 
     // Let's delete the dummy data
     await db.table("registrations").where("id", registerId).delete();
