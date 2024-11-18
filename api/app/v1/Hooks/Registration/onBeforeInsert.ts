@@ -35,7 +35,7 @@ export default async ({ req, formData, res }: IBeforeInsertContext) => {
     if (!isVerifiedByCF) {
       return res.status(400).json({
         error:
-          "We couldn't be sure your are a real user. Please try again later.",
+          "We couldn't verify that you are a real user. Please try again later.",
       });
     }
 
