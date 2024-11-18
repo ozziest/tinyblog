@@ -40,7 +40,7 @@ To see tinyblog in action, check out the live demo [here](https://tinyblog.space
 
 ## Development
 
-This repository contains two project;
+This repository contains two projects;
 
 - `app`: React application for frontend with TypeScript, Vite and Tailwind.
 - `api`: Node.js API application for backend with [Axe API](https://axe-api.com/)
@@ -97,7 +97,7 @@ We have an exciting vision for tinyblog, and we’re working hard to bring new f
 - [x] Follow/Unfollow Users
 - [x] View Feed with posts from followed users
 - [x] Like and Comment on posts
-- [x] Private Messaging between users
+- [ ] Private Messaging between users
 - [x] Hashtags and tagging system for posts
 - [x] Link system on posts
 - [x] User Analytics (Followers count, post engagement stats)
