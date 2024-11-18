@@ -57,6 +57,7 @@ class User extends Model {
       allow(QueryFeature.WhereEqual, ["username"]),
       allow(QueryFeature.Sorting, ["id"]),
       allow(QueryFeature.WhereLt, ["id"]),
+      allow(QueryFeature.Limits),
     ];
   }
 

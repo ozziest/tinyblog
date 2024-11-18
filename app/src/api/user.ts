@@ -30,7 +30,7 @@ const paginate = async (minId?: number) => {
     query.where("id", "<", minId);
   }
 
-  return query.get();
+  return query.paginate({ perPage: 25 });
 };
 
 const createUser = async (data: IUserPost) => {
