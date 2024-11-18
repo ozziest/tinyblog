@@ -13,8 +13,12 @@ import {
 import { resource } from "axe-api-client";
 import feedLocation from "./userFeedLocation";
 
-const paginate = async (minId?: number) => {
-  const query = resource("users")
+interface PaginateProps {
+  minId?: number;
+}
+
+const paginate = async ({ minId }: PaginateProps) => {
+  const query = resource("users/all")
     .fields(
       "id",
       "name",
@@ -30,7 +34,7 @@ const paginate = async (minId?: number) => {
     query.where("id", "<", minId);
   }
 
-  return query.paginate({ perPage: 25 });
+  return query.get();
 };
 
 const createUser = async (data: IUserPost) => {

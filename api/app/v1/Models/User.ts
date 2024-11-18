@@ -28,7 +28,7 @@ class User extends Model {
   }
 
   get handlers() {
-    return [HandlerTypes.PAGINATE, HandlerTypes.PATCH];
+    return [HandlerTypes.PAGINATE, HandlerTypes.ALL, HandlerTypes.PATCH];
   }
 
   get middlewares() {
@@ -43,7 +43,7 @@ class User extends Model {
         middleware: SessionRateLimitter("UserPatch", 100),
       },
       {
-        handler: [HandlerTypes.PAGINATE, HandlerTypes.PATCH],
+        handler: [HandlerTypes.PAGINATE, HandlerTypes.PATCH, HandlerTypes.ALL],
         middleware: SessionMiddleware,
       },
     ];
