@@ -26,9 +26,18 @@ function getLocalIPAddress() {
 const ip = getLocalIPAddress();
 
 export default async (req: AxeRequest, res: AxeResponse) => {
+  const cfIP = req.original.headers["cf-connecting-ip"];
+  const xForwardedFor = req.original.headers["x-forwarded-for"];
+  const remoteAddress = req.original.socket.remoteAddress;
+  const userAgent = req.original.headers["user-agent"];
+
   res.status(200).json({
     status: true,
     hostname: os.hostname(),
-    hash: ip ? md5(ip) : null,
+    ip,
+    cfIP,
+    xForwardedFor,
+    remoteAddress,
+    userAgent,
   });
 };
