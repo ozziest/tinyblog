@@ -82,6 +82,7 @@ const onBeforeInit = async (app: App) => {
   app.post("/api/v1/profileCheck", ProfileCheckHandler);
   app.post("/api/v1/passwordReset", PasswordResetHandler);
   app.post("/api/v1/changePassword", ChangePasswordHandler);
+  app.get("/api/v1/redirect/:code", RedirectHandler);
   app.get(
     "/api/v1/me",
     SessionMiddleware,
@@ -106,12 +107,7 @@ const onBeforeInit = async (app: App) => {
     DefaultSessionRateLimitter,
     HashtagReportHandler
   );
-  app.get(
-    "/api/v1/redirect/:code",
-    SessionMiddleware,
-    DefaultSessionRateLimitter,
-    RedirectHandler
-  );
+
   app.get(
     "/api/v1/captcha",
     UserAgentRateLimitter("CaptchaCreation", 100),
