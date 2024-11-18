@@ -53,10 +53,11 @@ const render = ({ data }: Props) => {
     const linkMatch = (data?.links || []).find((item) => item.link === part);
 
     if (linkMatch) {
+      const path = `https://api.tinyblog.space/api/v1/redirect/${linkMatch.code}`;
       return (
         <a
           key={index}
-          href={`/redirect/${linkMatch.code}`}
+          href={path}
           target="_blank"
           rel="noopener noreferrer"
           className="transition-colors font-medium text-indigo-800 hover:underline hover:text-indigo-950"

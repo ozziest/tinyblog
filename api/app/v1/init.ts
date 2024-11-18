@@ -23,6 +23,7 @@ import LogoutHandler from "./Handlers/LogoutHandler";
 import EmailConfirmationHandler from "./Handlers/EmailConfirmationHandler";
 import RegistrationCompleteHandler from "./Handlers/RegistrationCompleteHandler";
 import HealthCheckHandler from "./Handlers/HealthCheckHandler";
+import RedirectHandler from "./Handlers/RedirectHandler";
 
 if (process.env.NODE_ENV !== "development") {
   Sentry.init({
@@ -106,6 +107,12 @@ const onBeforeInit = async (app: App) => {
     HashtagReportHandler
   );
   app.get(
+    "/api/v1/redirect/:code",
+    SessionMiddleware,
+    DefaultSessionRateLimitter,
+    RedirectHandler
+  );
+  app.get(
     "/api/v1/captcha",
     UserAgentRateLimitter("CaptchaCreation", 100),
     CaptchaHandler
@@ -118,7 +125,7 @@ const onBeforeInit = async (app: App) => {
   );
   app.post(
     "/api/v1/registrations/:id/complete",
-    // UserAgentRateLimitter("RegistrationComplete", 3),
+    UserAgentRateLimitter("RegistrationComplete", 10),
     RegistrationCompleteHandler
   );
 };
