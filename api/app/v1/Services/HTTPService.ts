@@ -37,14 +37,16 @@ const verifyCFToken = async (token: string, ip: string) => {
 };
 
 const getIpAddress = (req: IncomingMessage): string => {
-  return (
-    (req.headers["x-forwarded-for"] as string) ||
-    (req.socket.remoteAddress as string)
-  );
+  return (req.headers["cf-connecting-ip"] as string) || "";
+};
+
+const getUserAgent = (req: IncomingMessage) => {
+  return (req.headers["user-agent"] as string) || "";
 };
 
 export default {
   parseCookies,
   verifyCFToken,
   getIpAddress,
+  getUserAgent,
 };
