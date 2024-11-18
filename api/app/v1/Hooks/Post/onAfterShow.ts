@@ -38,5 +38,12 @@ export default async ({ req, item }: IAfterShowContext) => {
 
       item.reshare.is_shared_by_you = mySharedPostIds.includes(item.reshare.id);
     }
+
+    item.links = (item?.links || []).map((postLink: any) => {
+      return {
+        code: postLink.link.code,
+        link: postLink.link.link,
+      };
+    });
   }
 };
