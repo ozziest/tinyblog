@@ -38,6 +38,55 @@ While decentralized networks have their appeal, we believe they pose significant
 
 To see tinyblog in action, check out the live demo [here](https://tinyblog.space).
 
+## Development
+
+This repository contains two project;
+
+- `app`: React application for frontend with TypeScript, Vite and Tailwind.
+- `api`: Node.js API application for backend with [Axe API](https://axe-api.com/)
+
+The backend uses MySQL and Redis.
+
+### App
+
+Frontend application
+
+```bash
+$ cd app
+$ npm install
+$ npm run dev
+```
+
+### API
+
+You should have MySQL and Redis instance on your machine. Also, you should provide the correct information for the `.env` file.
+
+```.env
+NODE_ENV=development
+APP_PORT=3005
+DB_CLIENT=mysql2
+DB_DATABASE=tinyblog
+DB_HOST=localhost
+DB_USER=root
+DB_PASSWORD=
+LOG_LEVEL=warn
+LOG_TRANSPORT=pino-pretty
+DOCS=true
+APP_SECRET=12345678
+DOMAIN=http://localhost:5173
+REDIS_URL=redis://default@localhost:6379
+
+TURNSTILE_SITEKEY=1x0000000000000000000000000000000AA
+```
+
+After the .env configuration you can run your application.
+
+```bash
+$ cd api
+$ npm install
+$ npm run dev
+```
+
 ## Roadmap
 
 We have an exciting vision for tinyblog, and we’re working hard to bring new features and improvements to the platform. Below is a rough roadmap of what’s to come:
