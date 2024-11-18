@@ -1,41 +1,19 @@
 import api from "@/api";
 import Button from "@/components/inputs/Button";
 import InfiniteScroll from "@/components/layout/InfiniteScroll";
+import LoadingSpinner from "@/components/layout/LoadingSpinner";
+import NotFound from "@/components/layout/NotFound";
+import ServerError from "@/components/layout/ServerError";
 import Avatar from "@/components/user/Avatar";
-import { PER_PAGE } from "@/consts";
+import useUsers from "@/composables/useUsers";
 import useAuthStore from "@/stores/authStore";
 import { IUserApi } from "@/types/ApiTypes";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
-
-export const getMaxId = (users: IUserApi[]): number => {
-  return users.reduce((max, obj) => {
-    return obj.id > max ? obj.id : max;
-  }, 0);
-};
-
-export const getMinId = (users: IUserApi[]): number => {
-  return users.reduce((min, obj) => {
-    return obj.id < min ? obj.id : min;
-  }, Infinity);
-};
 
 const NewbiesView = () => {
   const authStore = useAuthStore();
-  const [isLoading, setLoading] = useState(false);
-  const [items, setItems] = useState<IUserApi[]>([]);
-  const [minId, setMinId] = useState<number | undefined>();
-  const [hasMore, setHashMore] = useState(true);
-
-  const fetchData = async (minId?: number) => {
-    setLoading(true);
-    const response = await api.user.paginate(minId);
-    setLoading(false);
-    const { data } = await response.json();
-    setHashMore(data.length >= PER_PAGE);
-    setItems([...items, ...data]);
-    setMinId(getMinId(data));
-  };
+  const { loading, error, items, setItems, refetch, loadMore } = useUsers();
 
   const handleFollow = async (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -78,15 +56,21 @@ const NewbiesView = () => {
     }
   };
 
-  const loadMore = () => {
-    if (hasMore && isLoading === false) {
-      fetchData(minId);
-    }
-  };
-
   useEffect(() => {
-    fetchData();
+    refetch();
   }, []);
+
+  if (error === "NotFound") {
+    return <NotFound message="The users list not found." />;
+  }
+
+  if (error === "Error") {
+    return <ServerError />;
+  }
+
+  if (loading) {
+    return <LoadingSpinner />;
+  }
 
   const myId = authStore.state.user.id;
 
@@ -129,7 +113,7 @@ const NewbiesView = () => {
         ))}
       </div>
 
-      <InfiniteScroll isLoading={isLoading} loadMore={loadMore} />
+      <InfiniteScroll isLoading={loading} loadMore={loadMore} />
     </>
   );
 };
