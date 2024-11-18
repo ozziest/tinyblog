@@ -1,3 +1,4 @@
+import LegalLinks from "@/components/layout/LegalLinks";
 import { Link } from "react-router-dom";
 
 const WebsiteName = () => {
@@ -236,7 +237,9 @@ const TermsView = () => {
         <p>
           &copy; 2024 <WebsiteName />. All rights reserved.
         </p>
-        <p className="mt-2">Privacy Policy | Terms of Service</p>
+        <p className="mt-2">
+          <LegalLinks classes="text-white" />
+        </p>
       </footer>
     </>
   );

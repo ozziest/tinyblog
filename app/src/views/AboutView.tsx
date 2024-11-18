@@ -1,39 +1,40 @@
-import { LogoIcon } from "@/components/Icons";
+import { GitHubIcon, LogoIcon } from "@/components/Icons";
+import LegalLinks from "@/components/layout/LegalLinks";
 import { Link } from "react-router-dom";
 
 const FEATURES: Record<string, string> = {
   "📜 Microblogging":
     "Microblogging lets you share quick thoughts, updates, or ideas with your followers instantly.",
-  "🕒 No Algorithmic Feeds":
+  "🕒 No algorithmic feeds":
     "Users will only see posts from the accounts they follow, displayed in chronological order.",
-  "👥 Follower-Based Feeds":
+  "👥 Follower-based feeds":
     "All content is based on who you follow, with no content promotions or algorithmic suggestions.",
-  "📢 Ads, but No Tracking":
+  "📢 Ads, but no tracking":
     "We will show ads to support the platform, but no user tracking or behavioral data collection will be involved.",
-  "🚫 No Personalized Ads":
+  "🚫 No personalized ads":
     "Ads are non-intrusive and not tailored based on user profiles or activity.",
   "🔍 Transparency":
     "Our platform will always operate with full transparency about how content and ads are displayed.",
-  "🗓️ Historical Integrity":
+  "🗓️ Historical integrity":
     "Feed data will always be chronological and historically accurate—no curated or manipulated posts.",
-  "🔒 Data Privacy":
+  "🔒 Data privacy":
     "User data will not be sold or shared with third parties. You control your data.",
-  "🌱 Community-Driven":
+  "🌱 Community-driven":
     "Organic growth will be encouraged through genuine user interactions, not artificial engagement techniques.",
 };
 
 const DECENTRALIZATION: Record<string, string> = {
-  "🛠️ Complex Setup":
+  "🛠️ Complex setup":
     "Users must find and join a node, which requires technical knowledge.",
-  "🔍 Difficult to Discover":
+  "🔍 Difficult to discover":
     "It’s hard for users to discover the right communities or instances without a centralized directory.",
-  "🏗️ Trust Issues with Nodes":
+  "🏗️ Trust issues with nodes":
     "Users need to place trust in smaller node providers, which may not be reliable or secure.",
-  "⚙️ Fragmented Experience":
+  "⚙️ Fragmented experience":
     "Different nodes can have different rules, moderation standards, and features, leading to inconsistent user experiences.",
-  "🌐 Scaling Problems":
+  "🌐 Scaling problems":
     "Decentralized networks struggle with scaling, which can result in slower performance or node overloads.",
-  "🤝 Interoperability Challenges":
+  "🤝 Interoperability challenges":
     "Communication between different instances or networks is not always smooth, leading to isolation or incomplete connectivity.",
 };
 
@@ -62,6 +63,16 @@ const AboutView = () => {
             className="bg-neutral-200 font-semibold text-black py-3 px-6 rounded-full hover:bg-neutral-300 transition duration-300 text-center"
           >
             Login
+          </Link>
+        </div>
+        <div className="py-5">
+          <Link
+            to="https://github.com/ozziest/tinyblog"
+            className="bg-black text-white font-semibold py-2 px-4 rounded-full hover:text-neutral-200 transition duration-300 flex gap-2 items-center"
+            target="_blank"
+          >
+            <GitHubIcon size={28} />
+            GitHub
           </Link>
         </div>
       </section>
@@ -115,7 +126,7 @@ const AboutView = () => {
                   />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold mb-2">No Manipulation</h3>
+              <h3 className="text-xl font-semibold mb-2">No manipulation</h3>
               <p className="text-gray-600">
                 Social apps should not be designed to keep users hooked for
                 endless hours.
@@ -147,7 +158,7 @@ const AboutView = () => {
                   />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold mb-2">No Time Theft</h3>
+              <h3 className="text-xl font-semibold mb-2">No time theft</h3>
               <p className="text-gray-600">
                 Your time is valuable. Platforms should not steal it just to
                 increase engagement.
@@ -179,7 +190,7 @@ const AboutView = () => {
                   />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold mb-2">No Exploitation</h3>
+              <h3 className="text-xl font-semibold mb-2">No exploitation</h3>
               <p className="text-gray-600">
                 Social media should not exploit users' emotions and behaviors
                 for profit.
@@ -203,9 +214,11 @@ const AboutView = () => {
         </div>
       </section>
 
-      <footer className="py-10 bg-gray-900 text-white text-center">
+      <footer className="py-10 bg-gray-900 text-white text-center te">
         <p>&copy; 2024 tinyblog.space. All rights reserved.</p>
-        <p className="mt-2">Privacy Policy | Terms of Service</p>
+        <p className="mt-2">
+          <LegalLinks classes="text-white" />
+        </p>
       </footer>
     </main>
   );
