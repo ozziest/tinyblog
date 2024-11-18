@@ -4,9 +4,10 @@ import InfiniteScroll from "@/components/layout/InfiniteScroll";
 import NotificationGroup from "@/components/notification/NotificationGroup";
 import PostContainer from "@/components/posts/PostContainer";
 import { useNotificationsStore } from "@/stores/notifications";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const NotificationView = () => {
+  const [isReady, setReady] = useState(false);
   const store = useNotificationsStore();
 
   const fetchNotifications = async () => {
@@ -23,6 +24,7 @@ const NotificationView = () => {
       store.setItems(data);
     }
 
+    setReady(true);
     store.setLoading(false);
   };
 
@@ -45,7 +47,7 @@ const NotificationView = () => {
     <>
       <h1 className="font-bold text-xl py-5">Notifications</h1>
       <PostContainer>
-        {store.state.items.length === 0 && (
+        {isReady && store.state.items.length === 0 && (
           <EmptyData
             title="Introvert detection!"
             description="You don't have a notification yet! Let's try to connect people."
