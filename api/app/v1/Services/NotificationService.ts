@@ -46,6 +46,7 @@ const createNotificationTrigger = async (
     .where("id", notificationId)
     .update({
       count: db.raw("?? + 1", ["count"]),
+      updated_at: new Date(),
       is_read: false,
     });
 };

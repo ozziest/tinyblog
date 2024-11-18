@@ -17,7 +17,7 @@ const REPLY_DETAIL = `reply{${HASHTAGS},${MENTIONS},${LINKS}}`;
 const paginate = async ({ minId }: PaginateProps = {}) => {
   const query = resource("notifications/all")
     .with(`${POST_DETAIL},${REPLY_DETAIL}`)
-    .sort("id", "DESC");
+    .sort("updated_at", "DESC");
 
   if (minId) {
     query.where("id", "<", minId);
