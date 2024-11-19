@@ -17,6 +17,11 @@ const getUserByEmail = async (email: string) => {
   return db.table("users").where("email", email).first();
 };
 
+const getUserById = async (id: number) => {
+  const db = await IoCService.use<Knex>("Database");
+  return db.table("users").where("id", id).first();
+};
+
 const getUserByEmailOrUsername = async (email: string, username: string) => {
   const db = await IoCService.use<Knex>("Database");
   return db
@@ -74,8 +79,19 @@ const getDeleteCookieContent = () => {
   return `token=; ${getCookieDomain()} SameSite=Strict; Max-Age=0; Path=/; Secure; HttpOnly`;
 };
 
+const clearNotificationSettings = async (userId: number) => {
+  const db = await IoCService.use<Knex>("Database");
+  await db.table("users").where("id", userId).update({
+    is_push_notification_on: false,
+    push_notification_endpoint: null,
+    push_notification_p256dh: null,
+    push_notification_auth: null,
+  });
+};
+
 export default {
   getUserByEmail,
+  getUserById,
   getUserByEmailOrUsername,
   incrementUserPostCount,
   incrementFollowerCount,
@@ -85,4 +101,5 @@ export default {
   getCookieContent,
   getNewAgentId,
   getDeleteCookieContent,
+  clearNotificationSettings,
 };

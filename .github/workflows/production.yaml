@@ -53,6 +53,7 @@ jobs:
           VITE_TURNSTILE_SITE_KEY: ${{ secrets.VITE_TURNSTILE_SITE_KEY }}
           VITE_API_URL: https://api.tinyblog.space/api/v1
           VITE_SENTRY_DSN: https://02217b9e35b766ec567f93fb83dd0079@o4508185072500736.ingest.de.sentry.io/4508185074925648
+          VITE_VAPID_PUBLIC_KEY: ${{ secrets.VITE_VAPID_PUBLIC_KEY }}
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
         run: |
           npm install

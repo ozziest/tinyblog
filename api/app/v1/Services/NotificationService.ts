@@ -3,6 +3,15 @@ import { IoCService } from "axe-api";
 import { NotificationTypes } from "../../enums";
 import PostService from "./PostService";
 import { subHours } from "date-fns";
+import webpush from "web-push";
+import UserService from "./UserService";
+import { captureError } from "./ErrorService";
+
+webpush.setVapidDetails(
+  process.env.VAPID_SUBJECT as string,
+  process.env.VAPID_PUBLIC_KEY as string,
+  process.env.VAPID_PRIVATE_KEY as string
+);
 
 const getTargetUserIds = async (postId: number) => {
   const post = await PostService.getPost(postId);
@@ -51,6 +60,43 @@ const createNotificationTrigger = async (
     });
 };
 
+const pushNotification = async (userId: number) => {
+  const db = await IoCService.use<Knex>("Database");
+  const user = await UserService.getUserById(userId);
+
+  if (!user || user.is_push_notification_on !== 1) {
+    return;
+  }
+
+  const {
+    push_notification_endpoint,
+    push_notification_p256dh,
+    push_notification_auth,
+  } = user;
+
+  try {
+    const response = await webpush.sendNotification(
+      {
+        endpoint: push_notification_endpoint,
+        keys: {
+          p256dh: push_notification_p256dh,
+          auth: push_notification_auth,
+        },
+      },
+      JSON.stringify({
+        title: "tinyblog.space",
+        text: "You have a new notification!",
+      })
+    );
+
+    if (response.statusCode !== 201) {
+      await UserService.clearNotificationSettings(userId);
+    }
+  } catch (error) {
+    captureError(error, { userId });
+  }
+};
+
 const create = async (
   type: NotificationTypes,
   notification: any,
@@ -65,7 +111,9 @@ const create = async (
     notificationId = id;
   }
 
-  return await createNotificationTrigger(notificationId, triggerUserId);
+  await createNotificationTrigger(notificationId, triggerUserId);
+
+  await pushNotification(targetUserId);
 };
 
 const getPreviousNotificationByPost = async (
