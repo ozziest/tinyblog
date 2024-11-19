@@ -55,6 +55,11 @@ const PostActions = ({ store, post }: Props) => {
     navigate(`/${post.id}`);
   };
 
+  const handleViewCountClick = (event: React.MouseEvent<HTMLElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
+  };
+
   const isSharable = authStore.state.user.username !== post.user.username;
 
   return (
@@ -83,7 +88,7 @@ const PostActions = ({ store, post }: Props) => {
         icon={<ViewCountIcon size={20} />}
         count={post.stats_views}
         isSelected={false}
-        onClick={handleDetailClick}
+        onClick={handleViewCountClick}
       />
     </div>
   );
