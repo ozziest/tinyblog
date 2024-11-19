@@ -23,7 +23,7 @@
     "axe-api-client": "^3.0.0-rc-3",
     "classnames": "^2.5.1",
     "date-fns": "^4.1.0",
-    "i18next": "^23.15.1",
+    "i18next": "^23.16.5",
     "lexical": "^0.18.0",
     "lodash": "^4.17.21",
     "mitt": "^3.0.1",
