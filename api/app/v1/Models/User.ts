@@ -13,7 +13,14 @@ import DefaultSessionRateLimitter from "../Middlewares/RateLimitters/DefaultSess
 class User extends Model {
   get fillable() {
     return {
-      PATCH: ["bio", "location", "name"],
+      PATCH: [
+        "bio",
+        "location",
+        "name",
+        "push_notification_endpoint",
+        "push_notification_p256dh",
+        "push_notification_auth",
+      ],
     };
   }
 
@@ -23,6 +30,9 @@ class User extends Model {
         bio: "max:240",
         location: "required|min:2|max:2",
         name: "required|min:3|max:50",
+        push_notification_endpoint: "max:500",
+        push_notification_p256dh: "max:100",
+        push_notification_auth: "max:300",
       },
     };
   }
@@ -62,7 +72,14 @@ class User extends Model {
   }
 
   get hiddens() {
-    return ["password", "deleted_at", "is_email_confirmed"];
+    return [
+      "password",
+      "deleted_at",
+      "is_email_confirmed",
+      "push_notification_endpoint",
+      "push_notification_p256dh",
+      "push_notification_auth",
+    ];
   }
 
   followers() {

@@ -18,6 +18,7 @@ interface AuthState {
   check: () => Promise<void>;
   init: (response: ILoginResponseApi) => void;
   update: (user: IUserApi) => void;
+  patch: (user: Partial<IUserApi>) => void;
   logout: () => void;
   increase: (type: IncreaseType) => void;
   decrease: (type: IncreaseType) => void;
@@ -37,6 +38,7 @@ const DEFAULT_STATE: AuthStoreState = {
     stats_follower: 0,
     stats_following: 0,
     id: 0,
+    is_push_notification_on: false,
     locations: [],
   },
 };
@@ -85,6 +87,14 @@ const useAuthStore = create<AuthState>()((set) => ({
 
   update(user: IUserApi) {
     const newState = { ...this.state, user };
+    set(() => ({ state: newState }));
+  },
+
+  patch(partial: Partial<IUserApi>) {
+    const newState: AuthStoreState = {
+      ...this.state,
+      user: { ...this.state.user, ...partial },
+    };
     set(() => ({ state: newState }));
   },
 

@@ -133,6 +133,19 @@ const patch = async (
   });
 };
 
+const setPushNotifications = async (
+  userId: number,
+  endpoint: string | null,
+  p256dh: string | null,
+  auth: string | null,
+) => {
+  return resource(`users/${userId}`).patch({
+    push_notification_endpoint: endpoint,
+    push_notification_p256dh: p256dh,
+    push_notification_auth: auth,
+  });
+};
+
 export default {
   paginate,
   createUser,
@@ -151,5 +164,6 @@ export default {
   follow,
   unfollow,
   patch,
+  setPushNotifications,
   feedLocation,
 };

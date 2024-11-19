@@ -35,8 +35,26 @@ const App = () => {
     setReady(true);
   };
 
+  const addServices = () => {
+    if (!("serviceWorker" in navigator)) {
+      return;
+    }
+
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("/services/notification.js").then(
+        () => {
+          console.log("Notification Service is registered");
+        },
+        (error) => {
+          console.log("ServiceWorker registration failed: ", error);
+        },
+      );
+    });
+  };
+
   useEffect(() => {
     prepare();
+    addServices();
   }, []);
 
   if (!isReady) {

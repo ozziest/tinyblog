@@ -32,6 +32,7 @@ export interface IUserApi {
   stats_follower: number;
   stats_following: number;
   following_id?: number;
+  is_push_notification_on: boolean;
   locations: IUserFeedLocationApi[];
 }
 

@@ -91,3 +91,9 @@ export interface IRegistrationRequest {
   password?: string;
   name?: string;
 }
+
+export interface IQuestion {
+  title: string;
+  message: string;
+  onConfirm: () => void;
+}

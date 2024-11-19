@@ -79,6 +79,7 @@ export default async (req: AxeRequest, res: AxeResponse) => {
         stats_follower: user.stats_follower,
         stats_following: user.stats_following,
         avatar: getUserAvatar(user.email),
+        is_push_notification_on: user.is_push_notification_on === 1,
         locations,
       },
     });
