@@ -164,10 +164,10 @@ const TermsView = () => {
         <p className="text-gray-700">
           To exercise these rights, contact us at{" "}
           <a
-            href="mailto:contact@tinyblog.space"
+            href="mailto:contact@mail.tinyblog.space	"
             className="font-semibold hover:underline"
           >
-            contact@tinyblog.space
+            contact@mail.tinyblog.space
           </a>
           . We aim to respond within 30 days.
         </p>
@@ -222,10 +222,10 @@ const TermsView = () => {
           <br />
           Email:{" "}
           <a
-            href="mailto:contact@tinyblog.space"
+            href="mailto:contact@mail.tinyblog.space	"
             className="font-semibold hover:underline"
           >
-            contact@tinyblog.space
+            contact@mail.tinyblog.space
           </a>
           <br />
           Website:{" "}

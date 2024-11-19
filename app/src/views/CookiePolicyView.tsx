@@ -163,10 +163,10 @@ const TermsView = () => {
         <p className="text-gray-700">
           Email:{" "}
           <a
-            href="mailto:contact@tinyblog.space"
+            href="mailto:contact@mail.tinyblog.space	"
             className="font-semibold hover:underline"
           >
-            contact@tinyblog.space
+            contact@mail.tinyblog.space
           </a>
           <br />
           Website:{" "}

@@ -152,10 +152,10 @@ const TermsView = () => {
           </ul>
           To exercise these rights, contact us at{" "}
           <Link
-            to="mailto:contact@tinyblog.space"
+            to="mailto:contact@mail.tinyblog.space	"
             className="font-semibold hover:underline"
           >
-            contact@tinyblog.space
+            contact@mail.tinyblog.space
           </Link>
           .
         </p>
@@ -216,8 +216,8 @@ const TermsView = () => {
           </div>
           <div>
             <span className="font-semibold">Email</span>:{" "}
-            <Link to="mailto:contact@tinyblog.space">
-              contact@tinyblog.space
+            <Link to="mailto:contact@mail.tinyblog.space	">
+              contact@mail.tinyblog.space
             </Link>
           </div>
           <div>
