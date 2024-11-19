@@ -91,6 +91,7 @@ function Editor({
   const [lexical, setLexical] = useState<object>({});
   const [editor, setEditor] = useState<LexicalEditor>();
   const [location, setLocation] = useState<string>(initialLocation);
+  const [isSending, setSending] = useState(false);
 
   const initialConfig = {
     editorState: (editor: LexicalEditor) => {
@@ -140,40 +141,45 @@ function Editor({
   };
 
   const handleShare = async () => {
-    const response = await api.post.store({
-      content: content,
-      lexical: JSON.stringify(lexical),
-      parent_id: parent?.id,
-      location,
-    });
-    const post = await response.json();
+    try {
+      setSending(true);
+      const response = await api.post.store({
+        content: content,
+        lexical: JSON.stringify(lexical),
+        parent_id: parent?.id,
+        location,
+      });
+      const post = await response.json();
 
-    authStore.increase("stats_post");
-    clearState();
+      authStore.increase("stats_post");
+      clearState();
 
-    const newPost: IPostApi = {
-      id: post.id,
-      content: post.content,
-      created_at: post.created_at,
-      updated_at: post.updated_at,
-      stats_likes: 0,
-      stats_shares: 0,
-      stats_views: 0,
-      stats_replies: 0,
-      user: authStore.state.user,
-      is_liked_by_you: false,
-      is_shared_by_you: false,
-      location: post.location,
-      hashtags: post.hashtags,
-      mentions: post.mentions,
-      links: post.links,
-    };
+      const newPost: IPostApi = {
+        id: post.id,
+        content: post.content,
+        created_at: post.created_at,
+        updated_at: post.updated_at,
+        stats_likes: 0,
+        stats_shares: 0,
+        stats_views: 0,
+        stats_replies: 0,
+        user: authStore.state.user,
+        is_liked_by_you: false,
+        is_shared_by_you: false,
+        location: post.location,
+        hashtags: post.hashtags,
+        mentions: post.mentions,
+        links: post.links,
+      };
 
-    if (onShared) {
-      onShared(newPost);
+      if (onShared) {
+        onShared(newPost);
+      }
+
+      store.pushPost(newPost);
+    } finally {
+      setSending(false);
     }
-
-    store.pushPost(newPost);
   };
 
   const currentLocation = SUPPORTED_LOCATIONS.find(
@@ -208,7 +214,7 @@ function Editor({
               type="button"
               className="px-3 py-1 border bg-gray-200 hover:bg-gray-300 rounded font-semibold text-sm disabled:text-neutral-300"
               onClick={handleShare}
-              disabled={content.trim().length === 0}
+              disabled={isSending || content.trim().length === 0}
             >
               Share
             </button>
