@@ -19,6 +19,7 @@
     "@lexical/hashtag": "^0.18.0",
     "@lexical/react": "^0.18.0",
     "@sentry/react": "^8.36.0",
+    "@sentry/vite-plugin": "^2.22.6",
     "axe-api-client": "^3.0.0-rc-3",
     "classnames": "^2.5.1",
     "date-fns": "^4.1.0",
