@@ -36,7 +36,7 @@ const LoginView = () => {
       notification.error(error);
     } else {
       notification.success(
-        "The password reset linkt has been sent to your e-mail address.",
+        "The password reset link has been sent to your e-mail address.",
       );
     }
   };
