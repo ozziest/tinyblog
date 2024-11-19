@@ -10,6 +10,7 @@ import { IUserApi } from "@/types/ApiTypes";
 import MobileNavigation from "./MobileNavigation";
 import TrendsOptionModal from "../modals/TrendsOptionModal";
 import UserEditModal from "../modals/UserEditModal";
+import ScrollToTop from "./ScrollToTop";
 
 const SessionLayout = () => {
   const authStore = useAuthStore();
@@ -38,26 +39,29 @@ const SessionLayout = () => {
   }
 
   return (
-    <div className="pb-10">
-      <Header />
-      <div className="max-w-screen-lg mx-auto md:mt-2">
-        <div className="flex justify-between">
-          <div className="w-full lg:w-8/12">
-            <Outlet />
-          </div>
-          <div className="w-0 hidden lg:block lg:w-4/12 lg:min-w-4/12 lg:pl-4">
-            <div className="sticky top-[40px] overflow-visible">
-              <UserBox />
-              <Navigation />
-              <Footer />
+    <>
+      <ScrollToTop />
+      <div className="pb-10">
+        <Header />
+        <div className="max-w-screen-lg mx-auto md:mt-2">
+          <div className="flex justify-between">
+            <div className="w-full lg:w-8/12">
+              <Outlet />
+            </div>
+            <div className="w-0 hidden lg:block lg:w-4/12 lg:min-w-4/12 lg:pl-4">
+              <div className="sticky top-[40px] overflow-visible">
+                <UserBox />
+                <Navigation />
+                <Footer />
+              </div>
             </div>
           </div>
         </div>
+        <MobileNavigation />
+        <TrendsOptionModal />
+        <UserEditModal user={authStore.state.user} />
       </div>
-      <MobileNavigation />
-      <TrendsOptionModal />
-      <UserEditModal user={authStore.state.user} />
-    </div>
+    </>
   );
 };
 
