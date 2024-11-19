@@ -1,6 +1,13 @@
 version: 2
 updates:
-  - package-ecosystem: "npm" # See documentation for possible values
-    directory: "/" # Location of package manifests
+  # Dependencies for the API
+  - package-ecosystem: "npm"
+    directory: "/api"
     schedule:
-      interval: "daily"
+      interval: "weekly"
+
+  # Dependencies for the App
+  - package-ecosystem: "npm"
+    directory: "/app"
+    schedule:
+      interval: "weekly"
