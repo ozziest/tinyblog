@@ -8,6 +8,7 @@ import {
   IMentionMap,
 } from "../../interfaces";
 import { nanoid } from "nanoid";
+import { ALLOWED_SPECIAL_CHARS } from "../../consts";
 
 const getMyLikedPostIds = async (userId: number, postIds: number[]) => {
   const db = await IoCService.use<Knex>("Database");
@@ -291,6 +292,12 @@ const toPostContent = async (content: string): Promise<IPostContent> => {
   content = sanitizeHtml(content, {
     allowedTags: [],
     allowedAttributes: {},
+    textFilter: (text) => {
+      return text.replace(
+        /&lt;|&gt;/g,
+        (match) => ALLOWED_SPECIAL_CHARS[match] || ""
+      );
+    },
   })
     .replace(/(\r\n|\r|\n){2,}/g, "$1\n")
     .trim();
