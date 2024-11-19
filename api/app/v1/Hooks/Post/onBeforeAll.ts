@@ -1,8 +1,8 @@
-import { IBeforePaginateContext } from "axe-api";
+import { IBeforeAllContext } from "axe-api";
 import FollowerService from "../../Services/FollowerService";
 import { FEED_ITEMS_PER_PAGE } from "../../../consts";
 
-export default async ({ query, req, res }: IBeforePaginateContext) => {
+export default async ({ query, req, res }: IBeforeAllContext) => {
   if (!req.original.auth) {
     return res.status(403).json({ error: "Forbidden" });
   }

@@ -1,6 +1,6 @@
-import { IBeforeInsertContext } from "axe-api";
+import { IAfterInsertContext } from "axe-api";
 
-export default async ({ item, req }: IBeforeInsertContext) => {
+export default async ({ item, req }: IAfterInsertContext) => {
   if (req.original.post?.hashtags) {
     item.hashtags = req.original.post.hashtags.map((i) => {
       return {

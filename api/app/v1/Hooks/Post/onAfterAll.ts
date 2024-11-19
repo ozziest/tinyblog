@@ -1,7 +1,7 @@
-import { IAfterPaginateContext } from "axe-api";
+import { IAfterAllContext } from "axe-api";
 import PostService from "../../Services/PostService";
 
-export default async ({ req, result }: IAfterPaginateContext) => {
+export default async ({ req, result }: IAfterAllContext) => {
   // Who am I?
   const userId = req.original.auth?.userId;
 

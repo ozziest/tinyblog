@@ -1,9 +1,9 @@
-import { IBeforeInsertContext } from "axe-api";
+import { IAfterInsertContext } from "axe-api";
 import { captureError } from "../../Services/ErrorService";
 import PostService from "../../Services/PostService";
 import NotificationService from "../../Services/NotificationService";
 
-export default async ({ req, item }: IBeforeInsertContext) => {
+export default async ({ req, item }: IAfterInsertContext) => {
   try {
     await PostService.incrementPostLike(item.post_id);
 

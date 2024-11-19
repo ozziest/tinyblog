@@ -1,7 +1,7 @@
-import { IAfterPaginateContext } from "axe-api";
+import { IAfterAllContext } from "axe-api";
 import FollowerService from "../../Services/FollowerService";
 
-export default async ({ result, req }: IAfterPaginateContext) => {
+export default async ({ result, req }: IAfterAllContext) => {
   if (req.original.auth) {
     const followings = await FollowerService.getMyFollowings(
       req.original.auth?.userId

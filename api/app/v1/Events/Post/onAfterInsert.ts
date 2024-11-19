@@ -1,10 +1,10 @@
-import { IBeforeInsertContext } from "axe-api";
+import { IAfterInsertContext } from "axe-api";
 import { captureError } from "../../Services/ErrorService";
 import UserService from "../../Services/UserService";
 import PostService from "../../Services/PostService";
 import NotificationService from "../../Services/NotificationService";
 
-export default async ({ item, req }: IBeforeInsertContext) => {
+export default async ({ item, req }: IAfterInsertContext) => {
   try {
     // Add hashtags to db
     if (req.original.post?.hashtags) {

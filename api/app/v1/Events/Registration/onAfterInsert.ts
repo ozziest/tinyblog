@@ -1,10 +1,10 @@
-import { IBeforeInsertContext } from "axe-api";
+import { IAfterInsertContext } from "axe-api";
 import { sendEmail } from "../../Services/MailService";
 import { captureError } from "../../Services/ErrorService";
 import { getTemplate } from "../../Services/TemplateService";
 import { EmailTemplates } from "../../../enums";
 
-export default async ({ item }: IBeforeInsertContext) => {
+export default async ({ item }: IAfterInsertContext) => {
   try {
     const { email, confirmation_code } = item;
 
