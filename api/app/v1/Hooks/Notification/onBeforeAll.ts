@@ -1,5 +1,5 @@
 import { IBeforeAllContext } from "axe-api";
-import { FEED_ITEMS_PER_PAGE } from "../../../consts";
+import { NOTIFICATION_ITEMS_PER_PAGE } from "../../../consts";
 
 export default async ({ query, req, res }: IBeforeAllContext) => {
   if (!req.original.auth) {
@@ -11,5 +11,5 @@ export default async ({ query, req, res }: IBeforeAllContext) => {
   // Clients can not fetch all items. We have to apply a limit all the time.
   // But we can not allow clients decide the limit via frontend queries due to
   // performance concern.
-  query.limit(FEED_ITEMS_PER_PAGE);
+  query.limit(NOTIFICATION_ITEMS_PER_PAGE);
 };

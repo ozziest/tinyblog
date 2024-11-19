@@ -2,6 +2,10 @@ import { HandlerTypes } from "axe-api";
 
 export const FEED_ITEMS_PER_PAGE = 10;
 
+export const USER_ITEMS_PER_PAGE = 25;
+
+export const NOTIFICATION_ITEMS_PER_PAGE = 25;
+
 export const DATA_MANIPULATION_HANDLERS = [
   HandlerTypes.DELETE,
   HandlerTypes.FORCE_DELETE,
