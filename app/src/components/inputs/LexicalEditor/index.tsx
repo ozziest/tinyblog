@@ -29,7 +29,7 @@ import "./LexicalEditor.scss";
 import MentionPlugin from "./MentionPlugin";
 import { MentionNode } from "./MentionNode";
 import { OverflowNode } from "@lexical/overflow";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import api from "@/api";
 import useAuthStore from "@/stores/authStore";
 import { IPostApi } from "@/types/ApiTypes";
@@ -139,6 +139,11 @@ function Editor({
       });
     }
   };
+
+  useEffect(() => {
+    // The editor's state should be set again if the initial state changes
+    clearState();
+  }, [initialState]);
 
   const handleShare = async () => {
     try {
