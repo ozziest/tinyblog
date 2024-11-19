@@ -2,9 +2,9 @@ import { IAfterInsertContext } from "axe-api";
 import UserService from "../../Services/UserService";
 import NotificationService from "../../Services/NotificationService";
 
-export default async ({ req, res, item }: IAfterInsertContext) => {
+export default async ({ req, item }: IAfterInsertContext) => {
   if (!req.original.auth) {
-    return res.status(403).json({ error: "Unauthorized" });
+    return;
   }
 
   const { userId: triggerUserId } = req.original.auth;

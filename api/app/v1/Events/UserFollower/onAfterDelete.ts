@@ -3,9 +3,9 @@ import UserService from "../../Services/UserService";
 import NotificationService from "../../Services/NotificationService";
 import { NotificationTypes } from "../../../enums";
 
-export default async ({ req, res, item }: IAfterDeleteContext) => {
+export default async ({ req, item }: IAfterDeleteContext) => {
   if (!req.original.auth) {
-    return res.status(403).json({ error: "Unauthorized" });
+    return;
   }
 
   const { userId: triggerUserId } = req.original.auth;
