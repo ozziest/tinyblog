@@ -109,3 +109,11 @@ We have an exciting vision for tinyblog, and we’re working hard to bring new f
 - [ ] Search functionality for posts and users
 - [ ] Advanced moderation tools (content flagging, spam detection)
 - [ ] Multi-language support
+
+## Contributors
+
+<a href="https://github.com/ozziest/tinyblog/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=ozziest/tinyblog" />
+</a>
+
+Made with [contrib.rocks](https://contrib.rocks).
