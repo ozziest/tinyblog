@@ -43,7 +43,7 @@
     "**/*": "prettier --write --ignore-unknown"
   },
   "devDependencies": {
-    "@eslint/js": "^9.8.0",
+    "@eslint/js": "^9.15.0",
     "@types/lodash": "^4.17.10",
     "@types/node": "^22.7.4",
     "@types/react": "^18.3.3",
