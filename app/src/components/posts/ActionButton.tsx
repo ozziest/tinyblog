@@ -4,10 +4,17 @@ interface Props {
   icon: string | React.ReactNode;
   count: number;
   isSelected: boolean;
+  disabled?: boolean;
   onClick: (event: React.MouseEvent<HTMLElement>) => void;
 }
 
-const ActionButton = ({ icon, count, isSelected, onClick }: Props) => {
+const ActionButton = ({
+  icon,
+  count,
+  isSelected,
+  disabled,
+  onClick,
+}: Props) => {
   return (
     <button
       type="button"
@@ -19,6 +26,7 @@ const ActionButton = ({ icon, count, isSelected, onClick }: Props) => {
         },
       )}
       onClick={onClick}
+      disabled={disabled}
     >
       <span>{icon}</span>
       <span className="text-neutral-400 text-xs font-semibold">{count}</span>
