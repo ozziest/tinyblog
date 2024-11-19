@@ -1,5 +1,6 @@
 import { IAfterShowContext } from "axe-api";
 import PostService from "../../Services/PostService";
+import LinkService from "../../Services/LinkService";
 
 export default async ({ req, item }: IAfterShowContext) => {
   // Who am I?
@@ -31,19 +32,15 @@ export default async ({ req, item }: IAfterShowContext) => {
     if (item.parent) {
       item.parent.is_liked_by_you = myLikedPostIds.includes(item.parent.id);
       item.parent.is_shared_by_you = mySharedPostIds.includes(item.parent.id);
+      item.parent.links = LinkService.mapLinks(item.parent?.links);
     }
 
     if (item.reshare) {
       item.reshare.is_liked_by_you = myLikedPostIds.includes(item.reshare.id);
-
       item.reshare.is_shared_by_you = mySharedPostIds.includes(item.reshare.id);
+      item.reshare.links = LinkService.mapLinks(item.reshare?.links);
     }
 
-    item.links = (item?.links || []).map((postLink: any) => {
-      return {
-        code: postLink.link.code,
-        link: postLink.link.link,
-      };
-    });
+    item.links = LinkService.mapLinks(item?.links);
   }
 };
