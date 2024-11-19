@@ -40,7 +40,7 @@ export default async (req: AxeRequest, res: AxeResponse) => {
     );
 
     if (isAlreadyShared) {
-      return res.status(500).json({ error: "You already shared the post." });
+      return res.status(400).json({ error: "You already shared the post." });
     }
 
     await PostService.share(postId, userId, post.location);
