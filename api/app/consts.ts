@@ -17,3 +17,8 @@ export const DATA_MANIPULATION_HANDLERS = [
 export const DEFAULT_RATE_LIMITTER_WINDOW = 15 * 60;
 
 export const SUPPORTED_LOCATIONS = ["WW", "TR"];
+
+export const ALLOWED_SPECIAL_CHARS: Record<string, string> = {
+  "&lt;": "<",
+  "&gt;": ">",
+};
