@@ -33,7 +33,7 @@
     "robust-validator": "^2.1.1",
     "sanitize-html": "^2.13.1",
     "svg2img": "^1.0.0-beta.2",
-    "uuid": "^10.0.0"
+    "uuid": "^11.0.3"
   },
   "devDependencies": {
     "@babel/cli": "^7.25.9",
