@@ -75,6 +75,10 @@ const NotificationView = () => {
         auth,
       );
       authStore.patch({ is_push_notification_on: true });
+    } catch {
+      error(
+        `We couldn't get permission to send you push notifications. Please check your browser settings and try again.`,
+      );
     } finally {
       loading(false);
     }
