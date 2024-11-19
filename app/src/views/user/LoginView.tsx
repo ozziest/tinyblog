@@ -10,6 +10,7 @@ import { IValidationResult, validate } from "robust-validator";
 import { notification } from "@/helpers/notication";
 import { ILoginResponseApi } from "@/types/ApiTypes";
 import CFTurnstile from "@/components/security/CFTurnstile";
+import { loading } from "@/helpers/layout";
 
 const RULES = {
   email: "required|min:3",
@@ -38,13 +39,20 @@ const LoginView = () => {
       return;
     }
 
-    const response = await api.user.login(state);
-    const { error, ...data } = await response.json();
-    if (error) {
-      notification.error(error);
-    } else {
-      authStore.init(data as ILoginResponseApi);
-      navigate("/");
+    try {
+      loading(true);
+      const response = await api.user.login(state);
+
+      const { error, ...data } = await response.json();
+
+      if (error) {
+        notification.error(error);
+      } else {
+        authStore.init(data as ILoginResponseApi);
+        navigate("/");
+      }
+    } finally {
+      loading(false);
     }
   };
 
