@@ -10,6 +10,7 @@ import {
   NotificationIcon,
   OptionsIcon,
   ProfileIcon,
+  SettingsIcon,
 } from "../Icons";
 import { useEffect, useRef, useState } from "react";
 import api from "@/api";
@@ -91,6 +92,15 @@ const Navigation = () => {
         >
           #{dailyHashtag}
         </NavigationButton>
+        {isLoggedIn && (
+          <NavigationButton
+            icon={<SettingsIcon size={24} />}
+            isActive={location.pathname === "/settings"}
+            onClick={() => navigate("/settings")}
+          >
+            Settings
+          </NavigationButton>
+        )}
         <NavigationButton
           icon={<AboutIcon size={24} />}
           isActive={location.pathname === "/about"}

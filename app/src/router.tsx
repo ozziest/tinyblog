@@ -20,6 +20,7 @@ import CookiePolicyView from "./views/CookiePolicyView";
 import NewbiesView from "./views/NewbiewView";
 import GeneralError from "./components/errors/GeneralError";
 import ViewError from "./components/errors/ViewError";
+import SettingsView from "./views/SettingsView";
 
 const router = createBrowserRouter([
   {
@@ -40,6 +41,11 @@ const router = createBrowserRouter([
       {
         path: "/newbies",
         element: <NewbiesView />,
+        errorElement: <ViewError />,
+      },
+      {
+        path: "/settings",
+        element: <SettingsView />,
         errorElement: <ViewError />,
       },
       {

@@ -8,6 +8,7 @@ import {
   IProfilCheckPost,
   IProfilCheckResponse,
   IUsernameCheckPost,
+  IUserPatch,
   IUserPost,
 } from "@/interfaces";
 import { resource } from "axe-api-client";
@@ -109,17 +110,8 @@ const unfollow = async (userId: number, id: number) => {
   return resource(`users/${userId}/followers/${id}`).delete();
 };
 
-const patch = async (
-  userId: number,
-  name: string,
-  location: string,
-  bio?: string,
-) => {
-  return resource(`users/${userId}`).patch({
-    location,
-    bio,
-    name,
-  });
+const patch = async (userId: number, data: Partial<IUserPatch>) => {
+  return resource(`users/${userId}`).patch(data);
 };
 
 const setPushNotifications = async (

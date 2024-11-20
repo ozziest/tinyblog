@@ -20,6 +20,7 @@ class User extends Model {
         "push_notification_endpoint",
         "push_notification_p256dh",
         "push_notification_auth",
+        "account_visibility",
       ],
     };
   }

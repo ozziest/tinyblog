@@ -14,4 +14,8 @@ export default async ({ formData, req, res }: IBeforePatchContext) => {
   } else {
     formData.is_push_notification_on = false;
   }
+
+  if (!["public", "private"].includes(formData.account_visibility)) {
+    formData.account_visibility = "public";
+  }
 };
