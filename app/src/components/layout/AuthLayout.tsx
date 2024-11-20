@@ -1,15 +1,18 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import LogoFull from "./LogoFull";
 import { useEffect, useState } from "react";
 import useAuthStore from "@/stores/authStore";
 
 const AuthLayout = () => {
   const authStore = useAuthStore();
+  const navigate = useNavigate();
   const [isReady, setReady] = useState(false);
 
   useEffect(() => {
     if (!authStore.state.isLoggedIn) {
       setReady(true);
+    } else {
+      navigate("/");
     }
   }, []);
 
