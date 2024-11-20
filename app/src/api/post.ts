@@ -56,10 +56,6 @@ const paginate = async ({
   return query.get();
 };
 
-const setViewed = async (postId: number) => {
-  return resource(`posts/${postId}/views`).post();
-};
-
 const getPost = async (id: number) => {
   return resource(`posts/${id}`).with(FULL_POST).get();
 };
@@ -92,7 +88,6 @@ const unshare = async (postId: number) => {
 export default {
   store,
   paginate,
-  setViewed,
   getPost,
   getReplies,
   like,

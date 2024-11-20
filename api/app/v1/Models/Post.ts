@@ -47,7 +47,7 @@ class Post extends Model {
   }
 
   get limits(): IQueryLimitConfig[][] {
-    return [deny(QueryFeature.WithHasMany, ["views", "likes"])];
+    return [deny(QueryFeature.WithHasMany, ["likes"])];
   }
 
   get hiddens() {
@@ -64,10 +64,6 @@ class Post extends Model {
 
   reshare() {
     return this.hasOne("Post", "id", "reshare_id");
-  }
-
-  views() {
-    return this.hasMany("PostView", "id", "post_id");
   }
 
   likes() {

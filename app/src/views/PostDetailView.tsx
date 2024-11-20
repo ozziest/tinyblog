@@ -57,7 +57,7 @@ const PostDetailView = () => {
       </Helmet>
       <div className="bg-white sticky top-[40px]">
         <PostContainer>
-          <Post store={store} post={rootPost} autoView={false} />
+          <Post store={store} post={rootPost} />
           <ShareInput
             store={store}
             parent={rootPost}
