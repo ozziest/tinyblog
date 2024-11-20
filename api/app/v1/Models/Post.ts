@@ -6,7 +6,7 @@ import {
   ModelMiddleware,
   QueryFeature,
 } from "axe-api";
-import SessionMiddleware from "../Middlewares/SessionMiddleware";
+import LoginRequireMiddleware from "../Middlewares/LoginRequireMiddleware";
 import DefaultSessionRateLimitter from "../Middlewares/RateLimitters/DefaultSessionRateLimitter";
 import SessionRateLimitter from "../Middlewares/RateLimitters/SessionRateLimitter";
 
@@ -36,7 +36,7 @@ class Post extends Model {
     return [
       {
         handler: [HandlerTypes.INSERT],
-        middleware: SessionMiddleware,
+        middleware: LoginRequireMiddleware,
       },
       DefaultSessionRateLimitter,
       {

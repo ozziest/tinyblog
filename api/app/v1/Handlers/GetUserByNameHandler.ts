@@ -2,6 +2,7 @@ import { AxeRequest, AxeResponse, IoCService } from "axe-api";
 import { captureError } from "../Services/ErrorService";
 import { Knex } from "knex";
 import { getUserAvatar } from "../Services/UserService";
+import FollowerService from "../Services/FollowerService";
 
 export default async (req: AxeRequest, res: AxeResponse) => {
   try {
@@ -17,14 +18,23 @@ export default async (req: AxeRequest, res: AxeResponse) => {
       return res.status(404).send("The user not found");
     }
 
+    let followings: any[] = [];
+    if (req.original.auth) {
+      followings = await FollowerService.getMyFollowings(
+        req.original.auth?.userId
+      );
+    }
+
+    const following = followings.find((i: any) => i.user_id === item.id);
+
     res.status(200).json({
       bio: item.bio,
-      following_id: item.following_id,
       id: item.id,
       name: item.name,
       stats_follower: item.stats_follower,
       stats_following: item.stats_following,
       username: item.username,
+      following_id: following?.id,
       avatar: getUserAvatar(item.email),
     });
   } catch (error) {

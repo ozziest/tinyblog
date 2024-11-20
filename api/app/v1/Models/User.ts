@@ -6,7 +6,7 @@ import {
   Model,
   QueryFeature,
 } from "axe-api";
-import SessionMiddleware from "../Middlewares/SessionMiddleware";
+import LoginRequireMiddleware from "../Middlewares/LoginRequireMiddleware";
 import SessionRateLimitter from "../Middlewares/RateLimitters/SessionRateLimitter";
 import DefaultSessionRateLimitter from "../Middlewares/RateLimitters/DefaultSessionRateLimitter";
 
@@ -55,7 +55,7 @@ class User extends Model {
       },
       {
         handler: [HandlerTypes.PAGINATE, HandlerTypes.PATCH, HandlerTypes.ALL],
-        middleware: SessionMiddleware,
+        middleware: LoginRequireMiddleware,
       },
     ];
   }

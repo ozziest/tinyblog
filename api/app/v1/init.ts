@@ -10,7 +10,7 @@ import { en, setLocales } from "robust-validator";
 import PasswordResetHandler from "./Handlers/PasswordResetHandler";
 import ChangePasswordHandler from "./Handlers/ChangePasswordHandler";
 import MeHandler from "./Handlers/MeHandler";
-import SessionMiddleware from "./Middlewares/SessionMiddleware";
+import LoginRequireMiddleware from "./Middlewares/LoginRequireMiddleware";
 import ShareHandler from "./Handlers/ShareHandler";
 import UnshareHandler from "./Handlers/UnshareHandler";
 import CaptchaHandler from "./Handlers/CaptchaHandler";
@@ -25,6 +25,7 @@ import RegistrationCompleteHandler from "./Handlers/RegistrationCompleteHandler"
 import HealthCheckHandler from "./Handlers/HealthCheckHandler";
 import RedirectHandler from "./Handlers/RedirectHandler";
 import GetUserByNameHandler from "./Handlers/GetUserByNameHandler";
+import SetAuthMiddleware from "./Middlewares/SetAuthMiddleware";
 
 if (process.env.NODE_ENV !== "development") {
   Sentry.init({
@@ -77,28 +78,29 @@ const onBeforeInit = async (app: App) => {
 
   app.use(AgentMiddleware);
   app.use(UserAgentRateLimitter("UserAgent", 1000));
+  app.use(SetAuthMiddleware);
 
   app.post("/api/v1/login", LoginHandler);
-  app.get("/api/v1/logout", SessionMiddleware, LogoutHandler);
+  app.get("/api/v1/logout", LoginRequireMiddleware, LogoutHandler);
   app.post("/api/v1/profileCheck", ProfileCheckHandler);
   app.post("/api/v1/passwordReset", PasswordResetHandler);
   app.post("/api/v1/changePassword", ChangePasswordHandler);
   app.get("/api/v1/redirect/:code", RedirectHandler);
   app.get(
     "/api/v1/me",
-    SessionMiddleware,
+    LoginRequireMiddleware,
     DefaultSessionRateLimitter,
     MeHandler
   );
   app.post(
     "/api/v1/posts/:postId/shares",
-    SessionMiddleware,
+    LoginRequireMiddleware,
     DefaultSessionRateLimitter,
     ShareHandler
   );
   app.post(
     "/api/v1/posts/:postId/unshares",
-    SessionMiddleware,
+    LoginRequireMiddleware,
     DefaultSessionRateLimitter,
     UnshareHandler
   );

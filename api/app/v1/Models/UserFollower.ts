@@ -1,5 +1,5 @@
 import { HandlerTypes, Model } from "axe-api";
-import SessionMiddleware from "../Middlewares/SessionMiddleware";
+import LoginRequireMiddleware from "../Middlewares/LoginRequireMiddleware";
 import SessionRateLimitter from "../Middlewares/RateLimitters/SessionRateLimitter";
 import DefaultSessionRateLimitter from "../Middlewares/RateLimitters/DefaultSessionRateLimitter";
 
@@ -10,7 +10,7 @@ class UserFollower extends Model {
 
   get middlewares() {
     return [
-      SessionMiddleware,
+      LoginRequireMiddleware,
       DefaultSessionRateLimitter,
       {
         handler: [HandlerTypes.INSERT, HandlerTypes.DELETE],
