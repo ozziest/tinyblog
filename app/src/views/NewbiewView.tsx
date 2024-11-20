@@ -6,6 +6,7 @@ import useAuthStore from "@/stores/authStore";
 import { useNewbiesStore } from "@/stores/userStore";
 import { IUserApi } from "@/types/ApiTypes";
 import { useEffect } from "react";
+import { Helmet } from "react-helmet";
 import { Link, useNavigate } from "react-router-dom";
 
 const NewbiesView = () => {
@@ -95,6 +96,10 @@ const NewbiesView = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Newbies - tinyblog.space</title>
+      </Helmet>
+
       <h1 className="font-bold text-xl py-5">Newbies</h1>
       <div className="flex flex-col border border-neutral-200 rounded">
         {store.state.users.map((item, index) => (

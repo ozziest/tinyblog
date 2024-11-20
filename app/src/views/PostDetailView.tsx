@@ -11,6 +11,7 @@ import LoadingSpinner from "@/components/layout/LoadingSpinner";
 import usePostDetail from "@/composables/usePostDetail";
 import NotFound from "@/components/layout/NotFound";
 import ServerError from "@/components/layout/ServerError";
+import { Helmet } from "react-helmet";
 
 const PostDetailView = () => {
   const navigate = useNavigate();
@@ -51,6 +52,9 @@ const PostDetailView = () => {
 
   return (
     <>
+      <Helmet>
+        <title>{rootPost.content.substring(0, 100)} - tinyblog.space</title>
+      </Helmet>
       <div className="bg-white sticky top-[40px]">
         <PostContainer>
           <Post store={store} post={rootPost} autoView={false} />

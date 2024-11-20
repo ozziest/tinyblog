@@ -10,6 +10,7 @@ import { IHashtagApi } from "@/types/ApiTypes";
 import EmptyData from "@/components/layout/EmptyData";
 import classNames from "classnames";
 import useAuthStore from "@/stores/authStore";
+import { Helmet } from "react-helmet";
 
 const TagsView = () => {
   const navigate = useNavigate();
@@ -110,6 +111,10 @@ const TagsView = () => {
 
   return (
     <>
+      <Helmet>
+        <title>{tagItem.hashtag} - tinyblog.space</title>
+      </Helmet>
+
       <div className="bg-white sticky top-[40px]">
         <PostContainer>
           <h1

@@ -8,6 +8,7 @@ import StickyShareInput from "@/components/posts/StickyShareInput";
 import MobileShareButton from "@/components/posts/MobileShareButton";
 import useAuthStore from "@/stores/authStore";
 import { throttle } from "lodash";
+import { Helmet } from "react-helmet";
 
 const DashboardView = () => {
   const store = useDashboardStore();
@@ -63,12 +64,18 @@ const DashboardView = () => {
   }, []);
 
   return (
-    <PostContainer>
-      <StickyShareInput store={store} />
-      <MobileShareButton store={store} />
-      <Posts store={store} />
-      <InfiniteScroll isLoading={store.state.isLoading} loadMore={loadMore} />
-    </PostContainer>
+    <>
+      <Helmet>
+        <title>Home - tinyblog.space</title>
+      </Helmet>
+
+      <PostContainer>
+        <StickyShareInput store={store} />
+        <MobileShareButton store={store} />
+        <Posts store={store} />
+        <InfiniteScroll isLoading={store.state.isLoading} loadMore={loadMore} />
+      </PostContainer>
+    </>
   );
 };
 
