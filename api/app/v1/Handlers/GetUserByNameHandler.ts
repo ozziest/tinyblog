@@ -12,7 +12,13 @@ export default async (req: AxeRequest, res: AxeResponse) => {
     }
 
     const db = await IoCService.use<Knex>("Database");
-    const item = await db.table("users").where("username", username).first();
+    const query = db.table("users").where("username", username);
+
+    if (!req.original.auth) {
+      query.where("account_visibility", "public");
+    }
+
+    const item = await query.first();
 
     if (!item) {
       return res.status(404).send("The user not found");
