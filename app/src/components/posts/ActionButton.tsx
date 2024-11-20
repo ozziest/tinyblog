@@ -1,4 +1,5 @@
 import classNames from "classnames";
+import numbro from "numbro";
 
 interface Props {
   icon: string | React.ReactNode;
@@ -15,6 +16,8 @@ const ActionButton = ({
   disabled,
   onClick,
 }: Props) => {
+  const formattedCount = numbro(count).format({ average: true });
+
   return (
     <button
       type="button"
@@ -29,7 +32,9 @@ const ActionButton = ({
       disabled={disabled}
     >
       <span>{icon}</span>
-      <span className="text-neutral-400 text-xs font-semibold">{count}</span>
+      <span className="text-neutral-400 text-xs font-semibold">
+        {formattedCount}
+      </span>
     </button>
   );
 };
