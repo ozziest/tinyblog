@@ -36,6 +36,10 @@ class Hashtag extends Model {
 
   get middlewares(): ModelMiddleware {
     return [
+      {
+        handler: [HandlerTypes.INSERT],
+        middleware: SessionMiddleware,
+      },
       DefaultSessionRateLimitter,
       {
         handler: [HandlerTypes.INSERT],
