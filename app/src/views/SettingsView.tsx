@@ -78,16 +78,18 @@ const SettingsView = () => {
         </div>
 
         <div className=" flex justify-between">
-          <div className="w-3/12 flex flex-col gap-0 border border-neutral-100 rounded overflow-hidden">
-            {TAB_MENUS.map((item) => (
-              <SubMenuButton
-                key={item.key}
-                isActive={tab === item.key}
-                onClick={() => handleMenuClick(item)}
-              >
-                {item.title}
-              </SubMenuButton>
-            ))}
+          <div className="w-3/12 ">
+            <div className="flex flex-col gap-0 border border-neutral-100 rounded overflow-hidden">
+              {TAB_MENUS.map((item) => (
+                <SubMenuButton
+                  key={item.key}
+                  isActive={tab === item.key}
+                  onClick={() => handleMenuClick(item)}
+                >
+                  {item.title}
+                </SubMenuButton>
+              ))}
+            </div>
           </div>
           <div className="w-9/12 ml-4 p-5 border border-neutral-100 rounded">
             <CurrentTab />

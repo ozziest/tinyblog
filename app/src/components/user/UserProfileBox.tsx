@@ -3,10 +3,8 @@ import Avatar from "./Avatar";
 import useAuthStore from "@/stores/authStore";
 import Button from "../inputs/Button";
 import api from "@/api";
-import { useEffect } from "react";
 import DropdownButton, { IDropdownItem } from "../buttons/DropdownButton";
 import { OptionsIcon } from "../Icons";
-import { emitter } from "@/helpers/events";
 import { useNavigate } from "react-router-dom";
 
 interface Props {
@@ -26,7 +24,7 @@ const SETTINGS_MENU: IDropdownItem[] = [
   },
 ];
 
-const UserProfileBox = ({ user, setUser, refetch }: Props) => {
+const UserProfileBox = ({ user, setUser }: Props) => {
   const authStore = useAuthStore();
   const isLoggedIn = authStore.state.isLoggedIn;
   const isMyself = user.id === authStore.state.user.id;
@@ -55,15 +53,10 @@ const UserProfileBox = ({ user, setUser, refetch }: Props) => {
     }
   };
 
-  const handleEditModalClose = async () => {
-    if (isMyself) {
-      refetch();
-    }
-  };
-
   const handleSettingMenuClicked = async (menu: IDropdownItem) => {
     if (menu.value === "edit") {
-      emitter.emit("user-edit-modal:on");
+      navigate("/settings?tab=profile");
+      return;
     }
 
     if (menu.value === "logout") {
@@ -72,12 +65,6 @@ const UserProfileBox = ({ user, setUser, refetch }: Props) => {
       navigate("/about");
     }
   };
-
-  useEffect(() => {
-    emitter.on("user-edit-modal:off", handleEditModalClose);
-
-    return () => emitter.off("user-edit-modal:off", handleEditModalClose);
-  }, []);
 
   return (
     <>

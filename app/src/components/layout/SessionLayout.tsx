@@ -9,7 +9,6 @@ import api from "@/api";
 import { IUserApi } from "@/types/ApiTypes";
 import MobileNavigation from "./MobileNavigation";
 import TrendsOptionModal from "../modals/TrendsOptionModal";
-import UserEditModal from "../modals/UserEditModal";
 import ScrollToTop from "./ScrollToTop";
 import classNames from "classnames";
 
@@ -56,7 +55,6 @@ const SessionLayout = () => {
         </div>
         <MobileNavigation />
         <TrendsOptionModal />
-        <UserEditModal user={authStore.state.user} />
       </div>
     </>
   );
