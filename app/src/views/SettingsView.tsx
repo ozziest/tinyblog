@@ -7,26 +7,25 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import ProfileSettingsTab from "./settings/ProfileSettingsTab";
 import AccountSettingsTab from "./settings/AccountSettingsTab";
 import PrivacySettingsTab from "./settings/PrivacySettingsTab";
+import SelectInput, {
+  SelectInputModelType,
+} from "@/components/inputs/SelectInput";
+import { IOption } from "@/interfaces";
 
 type TabTypes = "profile" | "account" | "privacy";
 
-interface ITab {
-  key: TabTypes;
-  title: string;
-}
-
-const TAB_MENUS: ITab[] = [
+const TAB_MENUS: IOption[] = [
   {
-    key: "profile",
-    title: "Profile",
+    value: "profile",
+    label: "Profile",
   },
   {
-    key: "account",
-    title: "Account",
+    value: "account",
+    label: "Account",
   },
   {
-    key: "privacy",
-    title: "Privacy",
+    value: "privacy",
+    label: "Privacy",
   },
 ];
 
@@ -49,8 +48,8 @@ const SettingsView = () => {
     setUseSearchParams(newParams);
   };
 
-  const handleMenuClick = (item: ITab) => {
-    setSearchParams("tab", item.key);
+  const handleMenuClick = (item: IOption) => {
+    setSearchParams("tab", item.value);
   };
 
   useEffect(() => {
@@ -65,6 +64,7 @@ const SettingsView = () => {
   }
 
   const CurrentTab = TAB_MAP[tab];
+  const selectedTab = TAB_MENUS.find((item) => item.value === tab);
 
   return (
     <>
@@ -77,21 +77,30 @@ const SettingsView = () => {
           <h1 className="font-bold text-xl py-5 flex-grow">Settings</h1>
         </div>
 
+        <div className="md:hidden pb-5">
+          <SelectInput
+            name="location"
+            value={selectedTab as SelectInputModelType}
+            setValue={(item) => handleMenuClick(item as IOption)}
+            options={TAB_MENUS}
+          />
+        </div>
+
         <div className=" flex justify-between">
-          <div className="w-3/12 ">
+          <div className="hidden md:block w-3/12">
             <div className="flex flex-col gap-0 border border-neutral-100 rounded overflow-hidden">
               {TAB_MENUS.map((item) => (
                 <SubMenuButton
-                  key={item.key}
-                  isActive={tab === item.key}
+                  key={item.value}
+                  isActive={tab === item.value}
                   onClick={() => handleMenuClick(item)}
                 >
-                  {item.title}
+                  {item.label}
                 </SubMenuButton>
               ))}
             </div>
           </div>
-          <div className="w-9/12 ml-4 p-5 border border-neutral-100 rounded">
+          <div className="w-full md:w-9/12 md:ml-4 p-5 border border-neutral-100 rounded">
             <CurrentTab />
           </div>
         </div>

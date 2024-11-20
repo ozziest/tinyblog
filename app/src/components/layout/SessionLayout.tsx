@@ -37,7 +37,7 @@ const SessionLayout = () => {
         <Header />
         <div className="max-w-screen-lg mx-auto md:mt-2">
           <div className="flex justify-between">
-            <div className="w-full lg:w-8/12">
+            <div className="w-full lg:w-8/12 pb-10">
               <Outlet />
             </div>
             <div className="w-0 hidden lg:block lg:w-4/12 lg:min-w-4/12 lg:pl-4">
