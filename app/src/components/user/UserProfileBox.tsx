@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import DropdownButton, { IDropdownItem } from "../buttons/DropdownButton";
 import { OptionsIcon } from "../Icons";
 import { emitter } from "@/helpers/events";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   user: IUserApi;
@@ -19,12 +20,17 @@ const SETTINGS_MENU: IDropdownItem[] = [
     value: "edit",
     title: "Edit profile",
   },
+  {
+    value: "logout",
+    title: "Logout",
+  },
 ];
 
 const UserProfileBox = ({ user, setUser, refetch }: Props) => {
   const authStore = useAuthStore();
   const isLoggedIn = authStore.state.isLoggedIn;
   const isMyself = user.id === authStore.state.user.id;
+  const navigate = useNavigate();
 
   const handleFollow = async () => {
     if (user) {
@@ -55,9 +61,15 @@ const UserProfileBox = ({ user, setUser, refetch }: Props) => {
     }
   };
 
-  const handleSettingMenuClicked = (menu: IDropdownItem) => {
+  const handleSettingMenuClicked = async (menu: IDropdownItem) => {
     if (menu.value === "edit") {
       emitter.emit("user-edit-modal:on");
+    }
+
+    if (menu.value === "logout") {
+      await api.user.logout();
+      authStore.logout();
+      navigate("/about");
     }
   };
 
@@ -97,7 +109,7 @@ const UserProfileBox = ({ user, setUser, refetch }: Props) => {
                 buttonText="Options"
                 items={SETTINGS_MENU}
                 onSelect={handleSettingMenuClicked}
-              ></DropdownButton>
+              />
             )}
           </div>
         )}

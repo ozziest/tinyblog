@@ -2,6 +2,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import useAuthStore from "@/stores/authStore";
 import NavigationButton from "../buttons/NavigationButton";
 import {
+  AboutIcon,
   DailyIcon,
   HomeIcon,
   LogoutIcon,
@@ -89,6 +90,13 @@ const Navigation = () => {
           onClick={() => navigate(dailyLink)}
         >
           #{dailyHashtag}
+        </NavigationButton>
+        <NavigationButton
+          icon={<AboutIcon size={24} />}
+          isActive={location.pathname === "/about"}
+          onClick={() => navigate("/about")}
+        >
+          About
         </NavigationButton>
         <hr className="my-5 border-neutral-200" />
         <h4 className="font-bold px-4 flex justify-between items-center">

@@ -485,3 +485,22 @@ export const NotificationOffIcon = ({ size }: IconProps) => {
     </svg>
   );
 };
+
+export const AboutIcon = ({ size }: IconProps) => {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 16 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M8.00003 1.33334C11.682 1.33334 14.6667 4.31809 14.6667 8C14.6667 11.6819 11.682 14.6667 8.00003 14.6667C4.31816 14.6667 1.33337 11.6819 1.33337 8C1.33337 4.31809 4.31816 1.33334 8.00003 1.33334ZM8.66816 7.33334H7.33484V11.3333H8.66816V7.33334ZM8.00681 4.5C7.52075 4.5 7.16816 4.85062 7.16816 5.32409C7.16816 5.81672 7.51147 6.16669 8.00681 6.16669C8.48291 6.16669 8.83484 5.81669 8.83484 5.33334C8.83484 4.85066 8.48291 4.5 8.00681 4.5Z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+};
