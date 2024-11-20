@@ -141,7 +141,7 @@ function Editor({
   };
 
   useEffect(() => {
-    // The editor's state should be set again if the initial state changes
+    // The editor's state should be set again if the initial state
     clearState();
   }, [initialState]);
 

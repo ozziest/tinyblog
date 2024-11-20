@@ -94,6 +94,11 @@ const addPostView = async (userId?: number, postId?: number) => {
   });
 };
 
+const incrementPostViews = async (postIds: number[]) => {
+  const db = await IoCService.use<Knex>("Database");
+  await db.table("posts").whereIn("id", postIds).increment({ stats_views: 1 });
+};
+
 const incrementPostView = async (postId: number) => {
   const db = await IoCService.use<Knex>("Database");
   await db.table("posts").where("id", postId).increment({ stats_views: 1 });
@@ -383,6 +388,7 @@ export default {
   toPostContent,
   incrementPostReplies,
   incrementPostView,
+  incrementPostViews,
   incrementPostLike,
   incrementPostShare,
   decrementPostLike,

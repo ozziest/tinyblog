@@ -1,5 +1,3 @@
-import { IUserApi } from "@/types/ApiTypes";
-
 export type AvatarSize = "sm" | "md" | "lg";
 
 const SIZES: Record<AvatarSize, number> = {
@@ -9,11 +7,11 @@ const SIZES: Record<AvatarSize, number> = {
 };
 
 interface Props {
-  user: IUserApi;
+  src: string;
   size?: AvatarSize;
 }
 
-const Avatar = ({ user, size = "md" }: Props) => {
+const Avatar = ({ src, size = "md" }: Props) => {
   const realSize = `${SIZES[size]}px`;
   return (
     <img
@@ -24,7 +22,7 @@ const Avatar = ({ user, size = "md" }: Props) => {
         width: realSize,
         height: realSize,
       }}
-      src={user.avatar}
+      src={src}
     />
   );
 };

@@ -17,6 +17,7 @@ import useDailyLink from "@/composables/useDailyLink";
 import useProfileLink from "@/composables/useProfileLink";
 import { emitter } from "@/helpers/events";
 import { throttle } from "lodash";
+import classNames from "classnames";
 
 const Navigation = () => {
   const authStore = useAuthStore();
@@ -25,6 +26,7 @@ const Navigation = () => {
   const profileLink = useProfileLink();
   const location = useLocation();
   const [hashtags, setHashtags] = useState<string[]>([]);
+  const isLoggedIn = authStore.state.isLoggedIn;
 
   const handleLogout = async () => {
     await api.user.logout();
@@ -53,7 +55,9 @@ const Navigation = () => {
 
   return (
     <>
-      <div className="mt-4 flex flex-col justify-between gap-[2px]">
+      <div
+        className={classNames("mt-4 flex flex-col justify-between gap-[2px]")}
+      >
         <NavigationButton
           icon={<HomeIcon size={24} />}
           isActive={location.pathname === "/"}
@@ -61,20 +65,24 @@ const Navigation = () => {
         >
           Home
         </NavigationButton>
-        <NavigationButton
-          icon={<NotificationIcon size={24} />}
-          isActive={location.pathname === "/notifications"}
-          onClick={() => navigate("/notifications")}
-        >
-          Notifications
-        </NavigationButton>
-        <NavigationButton
-          icon={<NewbiesIcon size={24} />}
-          isActive={location.pathname === "/newbies"}
-          onClick={() => navigate("/newbies")}
-        >
-          Newbies
-        </NavigationButton>
+        {isLoggedIn && (
+          <>
+            <NavigationButton
+              icon={<NotificationIcon size={24} />}
+              isActive={location.pathname === "/notifications"}
+              onClick={() => navigate("/notifications")}
+            >
+              Notifications
+            </NavigationButton>
+            <NavigationButton
+              icon={<NewbiesIcon size={24} />}
+              isActive={location.pathname === "/newbies"}
+              onClick={() => navigate("/newbies")}
+            >
+              Newbies
+            </NavigationButton>
+          </>
+        )}
         <NavigationButton
           icon={<DailyIcon size={24} />}
           isActive={location.pathname === dailyLink}
@@ -85,13 +93,15 @@ const Navigation = () => {
         <hr className="my-5 border-neutral-200" />
         <h4 className="font-bold px-4 flex justify-between items-center">
           Trends
-          <button
-            type="button"
-            className="bg-neutral-100 rounded-full p-1 transition hover:bg-neutral-200 duration-300"
-            onClick={() => emitter.emit("option-modal:on")}
-          >
-            <OptionsIcon size={20} />
-          </button>
+          {isLoggedIn && (
+            <button
+              type="button"
+              className="bg-neutral-100 rounded-full p-1 transition hover:bg-neutral-200 duration-300"
+              onClick={() => emitter.emit("option-modal:on")}
+            >
+              <OptionsIcon size={20} />
+            </button>
+          )}
         </h4>
         <div className="px-4 flex flex-col gap-2">
           {hashtags.map((hashtag) => (
@@ -109,21 +119,26 @@ const Navigation = () => {
             </div>
           )}
         </div>
-        <hr className="my-5 border-neutral-200" />
-        <NavigationButton
-          icon={<ProfileIcon size={24} />}
-          isActive={location.pathname === profileLink}
-          onClick={() => navigate(profileLink)}
-        >
-          Profile
-        </NavigationButton>
-        <NavigationButton
-          icon={<LogoutIcon size={24} />}
-          isActive={false}
-          onClick={handleLogout}
-        >
-          Logout
-        </NavigationButton>
+
+        {isLoggedIn && (
+          <>
+            <hr className="my-5 border-neutral-200" />
+            <NavigationButton
+              icon={<ProfileIcon size={24} />}
+              isActive={location.pathname === profileLink}
+              onClick={() => navigate(profileLink)}
+            >
+              Profile
+            </NavigationButton>
+            <NavigationButton
+              icon={<LogoutIcon size={24} />}
+              isActive={false}
+              onClick={handleLogout}
+            >
+              Logout
+            </NavigationButton>
+          </>
+        )}
       </div>
     </>
   );

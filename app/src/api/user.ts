@@ -98,18 +98,7 @@ const searchByUsername = async (search: string) => {
 };
 
 const findByUsername = async (username: string) => {
-  return resource("users")
-    .fields(
-      "id",
-      "name",
-      "email",
-      "username",
-      "bio",
-      "stats_follower",
-      "stats_following",
-    )
-    .where("username", username)
-    .get();
+  return resource(`users/${username}`).get();
 };
 
 const follow = async (userId: number) => {

@@ -34,7 +34,10 @@ class Post extends Model {
 
   get middlewares(): ModelMiddleware {
     return [
-      SessionMiddleware,
+      {
+        handler: [HandlerTypes.INSERT],
+        middleware: SessionMiddleware,
+      },
       DefaultSessionRateLimitter,
       {
         handler: [HandlerTypes.INSERT],

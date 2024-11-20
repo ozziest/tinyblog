@@ -6,13 +6,12 @@ export default async ({ req, item }: IAfterShowContext) => {
   // Who am I?
   const userId = req.original.auth?.userId;
 
-  if (userId) {
-    // Which posts should I check?
-    // Which posts should I check?
-    const postIds = [item.id, item.parent?.id, item.reshare?.id].filter(
-      (id) => id
-    );
+  // Which posts should I check?
+  const postIds = [item.id, item.parent?.id, item.reshare?.id].filter(
+    (id) => id
+  );
 
+  if (userId) {
     // The posts that I liked
     const myLikedPostIds = await PostService.getMyLikedPostIds(userId, postIds);
 
@@ -43,4 +42,7 @@ export default async ({ req, item }: IAfterShowContext) => {
 
     item.links = LinkService.mapLinks(item?.links);
   }
+
+  // No need to use await
+  PostService.incrementPostViews(postIds);
 };

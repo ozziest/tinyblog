@@ -11,6 +11,7 @@ import { IQuestion } from "@/interfaces";
 import useAuthStore from "@/stores/authStore";
 import { useNotificationsStore } from "@/stores/notifications";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const urlB64ToUint8Array = (base64String: string) => {
   const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
@@ -42,6 +43,7 @@ const NotificationView = () => {
   const [isReady, setReady] = useState(false);
   const store = useNotificationsStore();
   const authStore = useAuthStore();
+  const navigate = useNavigate();
   const [question, setQuestion] = useState<IQuestion>();
 
   const enableNotifications = async () => {
@@ -139,6 +141,11 @@ const NotificationView = () => {
   };
 
   useEffect(() => {
+    if (!authStore.state.isLoggedIn) {
+      navigate("/");
+      return;
+    }
+
     fetchNotifications();
   }, []);
 

@@ -23,7 +23,7 @@ const SETTINGS_MENU: IDropdownItem[] = [
 
 const UserProfileBox = ({ user, setUser, refetch }: Props) => {
   const authStore = useAuthStore();
-
+  const isLoggedIn = authStore.state.isLoggedIn;
   const isMyself = user.id === authStore.state.user.id;
 
   const handleFollow = async () => {
@@ -71,7 +71,7 @@ const UserProfileBox = ({ user, setUser, refetch }: Props) => {
     <>
       <div className="flex gap-4 outline outline-neutral-700  rounded p-4 mb-1 justify-between ">
         <div>
-          <Avatar user={user} size="lg" />
+          <Avatar src={user.avatar} size="lg" />
         </div>
         <div className="flex-grow ">
           <h1 className="font-bold text-2xl">{user.name}</h1>
@@ -80,24 +80,27 @@ const UserProfileBox = ({ user, setUser, refetch }: Props) => {
             <div className="pt-1 text-sm text-neutral-700">{user.bio}</div>
           )}
         </div>
-        <div>
-          {!isMyself && user.following_id && (
-            <Button onClick={handleUnfollow} variant="secondary">
-              Unfollow
-            </Button>
-          )}
-          {!isMyself && !user.following_id && (
-            <Button onClick={handleFollow}>Follow</Button>
-          )}
-          {isMyself && (
-            <DropdownButton
-              icon={<OptionsIcon size={18} />}
-              buttonText="Options"
-              items={SETTINGS_MENU}
-              onSelect={handleSettingMenuClicked}
-            ></DropdownButton>
-          )}
-        </div>
+
+        {isLoggedIn && (
+          <div>
+            {!isMyself && user.following_id && (
+              <Button onClick={handleUnfollow} variant="secondary">
+                Unfollow
+              </Button>
+            )}
+            {!isMyself && !user.following_id && (
+              <Button onClick={handleFollow}>Follow</Button>
+            )}
+            {isMyself && (
+              <DropdownButton
+                icon={<OptionsIcon size={18} />}
+                buttonText="Options"
+                items={SETTINGS_MENU}
+                onSelect={handleSettingMenuClicked}
+              ></DropdownButton>
+            )}
+          </div>
+        )}
       </div>
     </>
   );

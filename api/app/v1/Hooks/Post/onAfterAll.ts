@@ -6,14 +6,14 @@ export default async ({ req, result }: IAfterAllContext) => {
   // Who am I?
   const userId = req.original.auth?.userId;
 
-  if (userId) {
-    // Which posts should I check?
-    const postIds = [
-      ...result.map((item: any) => item.id),
-      ...result.map((item: any) => item.parent?.id),
-      ...result.map((item: any) => item.reshare?.id),
-    ].filter((id) => id);
+  // Which posts should I check?
+  const postIds = [
+    ...result.map((item: any) => item.id),
+    ...result.map((item: any) => item.parent?.id),
+    ...result.map((item: any) => item.reshare?.id),
+  ].filter((id) => id);
 
+  if (userId) {
     // The posts that I liked
     const myLikedPostIds = await PostService.getMyLikedPostIds(userId, postIds);
 
@@ -49,4 +49,7 @@ export default async ({ req, result }: IAfterAllContext) => {
       item.links = LinkService.mapLinks(item?.links);
     });
   }
+
+  // No need to use await
+  PostService.incrementPostViews(postIds);
 };

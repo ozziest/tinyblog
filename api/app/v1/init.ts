@@ -24,6 +24,7 @@ import EmailConfirmationHandler from "./Handlers/EmailConfirmationHandler";
 import RegistrationCompleteHandler from "./Handlers/RegistrationCompleteHandler";
 import HealthCheckHandler from "./Handlers/HealthCheckHandler";
 import RedirectHandler from "./Handlers/RedirectHandler";
+import GetUserByNameHandler from "./Handlers/GetUserByNameHandler";
 
 if (process.env.NODE_ENV !== "development") {
   Sentry.init({
@@ -103,7 +104,6 @@ const onBeforeInit = async (app: App) => {
   );
   app.get(
     "/api/v1/hashtags/report",
-    SessionMiddleware,
     DefaultSessionRateLimitter,
     HashtagReportHandler
   );
@@ -127,6 +127,8 @@ const onBeforeInit = async (app: App) => {
 };
 
 const onAfterInit = async (app: App) => {
+  app.get("/api/v1/users/:username", GetUserByNameHandler);
+
   const redis = await IoCService.use<RedisAdaptor>("Redis");
   if (!redis.isReady()) {
     await redis.connect();

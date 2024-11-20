@@ -8,6 +8,7 @@ import PostReshare from "./PostReshare";
 import { useState } from "react";
 import api from "@/api";
 import { useNavigate } from "react-router-dom";
+import useAuthStore from "@/stores/authStore";
 
 interface Props {
   store: IPostStore;
@@ -16,6 +17,7 @@ interface Props {
 }
 
 const Post = ({ store, post, autoView = true }: Props) => {
+  const authStore = useAuthStore();
   const root: ExtendedPost = post.reshare || post;
   const [timer, setTimer] = useState<number | undefined>();
   const navigate = useNavigate();
@@ -23,6 +25,10 @@ const Post = ({ store, post, autoView = true }: Props) => {
   const setAsViewed = async () => {
     // We don't need to send another request
     if (post.isViewed || autoView === false) {
+      return;
+    }
+
+    if (!authStore.state.isLoggedIn) {
       return;
     }
 

@@ -37,12 +37,9 @@ const useUserDetail = (username: string | undefined) => {
       return;
     }
 
-    const { data } = await response.json();
-    if (data.length === 0) {
-      return setError("NotFound");
-    }
+    const data = await response.json();
 
-    setUser(data[0]);
+    setUser(data);
   };
 
   useEffect(() => {

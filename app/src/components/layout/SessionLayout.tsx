@@ -1,9 +1,9 @@
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import Header from "./Header";
 import UserBox from "@/components/user/UserBox";
 import Footer from "./Footer";
 import Navigation from "./Navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import useAuthStore from "@/stores/authStore";
 import api from "@/api";
 import { IUserApi } from "@/types/ApiTypes";
@@ -11,14 +11,14 @@ import MobileNavigation from "./MobileNavigation";
 import TrendsOptionModal from "../modals/TrendsOptionModal";
 import UserEditModal from "../modals/UserEditModal";
 import ScrollToTop from "./ScrollToTop";
+import classNames from "classnames";
 
 const SessionLayout = () => {
   const authStore = useAuthStore();
-  const navigate = useNavigate();
-  const [isReady, setReady] = useState(false);
+  const isLoggedIn = authStore.state.isLoggedIn;
 
   const getMeData = async () => {
-    if (authStore.state.isLoggedIn) {
+    if (isLoggedIn) {
       const response = await api.user.getMyself();
       const user: IUserApi = await response.json();
       authStore.update(user);
@@ -26,17 +26,10 @@ const SessionLayout = () => {
   };
 
   useEffect(() => {
-    if (authStore.state.isLoggedIn) {
-      setReady(true);
+    if (isLoggedIn) {
       getMeData();
-    } else {
-      navigate("/about");
     }
   }, []);
-
-  if (!isReady) {
-    return null;
-  }
 
   return (
     <>
@@ -49,7 +42,11 @@ const SessionLayout = () => {
               <Outlet />
             </div>
             <div className="w-0 hidden lg:block lg:w-4/12 lg:min-w-4/12 lg:pl-4">
-              <div className="sticky top-[40px] overflow-visible">
+              <div
+                className={classNames("sticky top-[40px] overflow-visible", {
+                  "top-[60px]": !isLoggedIn,
+                })}
+              >
                 <UserBox />
                 <Navigation />
                 <Footer />

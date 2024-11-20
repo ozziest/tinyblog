@@ -8,12 +8,17 @@ import { useTagStore } from "@/stores/postStore";
 import InfiniteScroll from "@/components/layout/InfiniteScroll";
 import { IHashtagApi } from "@/types/ApiTypes";
 import EmptyData from "@/components/layout/EmptyData";
+import classNames from "classnames";
+import useAuthStore from "@/stores/authStore";
 
 const TagsView = () => {
   const navigate = useNavigate();
+  const authStore = useAuthStore();
   const store = useTagStore();
   const { tag } = useParams();
   const [tagItem, setTagItem] = useState<IHashtagApi>();
+
+  const isLoggedIn = authStore.state.isLoggedIn;
 
   const getTheDefinedTag = async () => {
     if (!tag) {
@@ -107,7 +112,12 @@ const TagsView = () => {
     <>
       <div className="bg-white sticky top-[40px]">
         <PostContainer>
-          <h1 className="text-neutral-900 font-bold text-2xl px-4 pt-6">
+          <h1
+            className={classNames(
+              "text-neutral-900 font-bold text-2xl px-4 pt-6",
+              { "pb-6": !isLoggedIn },
+            )}
+          >
             {tagItem.hashtag}
           </h1>
           <ShareInput store={store} initialState={`#${tag}`} />
