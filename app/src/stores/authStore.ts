@@ -39,6 +39,7 @@ const DEFAULT_STATE: AuthStoreState = {
     stats_following: 0,
     id: 0,
     is_push_notification_on: false,
+    account_visibility: "public",
     locations: [],
   },
 };
