@@ -36,14 +36,14 @@ class Hashtag extends Model {
 
   get middlewares(): ModelMiddleware {
     return [
-      {
-        handler: [HandlerTypes.INSERT],
-        middleware: LoginRequireMiddleware,
-      },
       DefaultSessionRateLimitter,
       {
         handler: [HandlerTypes.INSERT],
         middleware: SessionRateLimitter("HashtagInsert", 15),
+      },
+      {
+        handler: [HandlerTypes.INSERT],
+        middleware: LoginRequireMiddleware,
       },
     ];
   }
