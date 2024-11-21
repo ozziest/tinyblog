@@ -6,7 +6,7 @@ import {
   Model,
   QueryFeature,
 } from "axe-api";
-import SessionMiddleware from "../Middlewares/SessionMiddleware";
+import LoginRequireMiddleware from "../Middlewares/LoginRequireMiddleware";
 import SessionRateLimitter from "../Middlewares/RateLimitters/SessionRateLimitter";
 import DefaultSessionRateLimitter from "../Middlewares/RateLimitters/DefaultSessionRateLimitter";
 
@@ -20,6 +20,7 @@ class User extends Model {
         "push_notification_endpoint",
         "push_notification_p256dh",
         "push_notification_auth",
+        "account_visibility",
       ],
     };
   }
@@ -54,7 +55,7 @@ class User extends Model {
       },
       {
         handler: [HandlerTypes.PAGINATE, HandlerTypes.PATCH, HandlerTypes.ALL],
-        middleware: SessionMiddleware,
+        middleware: LoginRequireMiddleware,
       },
     ];
   }

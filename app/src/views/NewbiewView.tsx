@@ -6,11 +6,13 @@ import useAuthStore from "@/stores/authStore";
 import { useNewbiesStore } from "@/stores/userStore";
 import { IUserApi } from "@/types/ApiTypes";
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet";
+import { Link, useNavigate } from "react-router-dom";
 
 const NewbiesView = () => {
   const authStore = useAuthStore();
   const store = useNewbiesStore();
+  const navigate = useNavigate();
 
   const handleFollow = async (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -71,6 +73,11 @@ const NewbiesView = () => {
   };
 
   useEffect(() => {
+    if (!authStore.state.isLoggedIn) {
+      navigate("/");
+      return;
+    }
+
     fetchUsers();
   }, []);
 
@@ -89,6 +96,10 @@ const NewbiesView = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Newbies - tinyblog.space</title>
+      </Helmet>
+
       <h1 className="font-bold text-xl py-5">Newbies</h1>
       <div className="flex flex-col border border-neutral-200 rounded">
         {store.state.users.map((item, index) => (
@@ -97,7 +108,7 @@ const NewbiesView = () => {
             className="flex gap-5 border-b border-neutral-200 p-3 hover:bg-neutral-50 transition-colors"
             to={`/u/${item.username}`}
           >
-            <Avatar user={item} />
+            <Avatar src={item.avatar} />
             <div className="flex flex-col justify-center flex-grow">
               <div className="font-semibold text-lg flex items-center gap-1">
                 {item.name}

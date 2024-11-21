@@ -1,5 +1,5 @@
 import { HandlerTypes, Model, ModelMiddleware } from "axe-api";
-import SessionMiddleware from "../Middlewares/SessionMiddleware";
+import LoginRequireMiddleware from "../Middlewares/LoginRequireMiddleware";
 import DefaultSessionRateLimitter from "../Middlewares/RateLimitters/DefaultSessionRateLimitter";
 
 class UserFeedLocation extends Model {
@@ -18,7 +18,7 @@ class UserFeedLocation extends Model {
   }
 
   get middlewares(): ModelMiddleware {
-    return [SessionMiddleware, DefaultSessionRateLimitter];
+    return [LoginRequireMiddleware, DefaultSessionRateLimitter];
   }
 }
 

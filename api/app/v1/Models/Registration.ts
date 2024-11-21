@@ -1,5 +1,4 @@
 import { HandlerTypes, Model } from "axe-api";
-import SessionMiddleware from "../Middlewares/SessionMiddleware";
 import SessionRateLimitter from "../Middlewares/RateLimitters/SessionRateLimitter";
 import DefaultSessionRateLimitter from "../Middlewares/RateLimitters/DefaultSessionRateLimitter";
 

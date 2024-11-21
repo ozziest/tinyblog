@@ -5,45 +5,16 @@ import PostAuthor from "./PostAuthor";
 import { ExtendedPost, IPostStore } from "@/stores/postStore";
 import PostRepliedToText from "./PostRepliedToText";
 import PostReshare from "./PostReshare";
-import { useState } from "react";
-import api from "@/api";
 import { useNavigate } from "react-router-dom";
 
 interface Props {
   store: IPostStore;
   post: ExtendedPost;
-  autoView?: boolean;
 }
 
-const Post = ({ store, post, autoView = true }: Props) => {
+const Post = ({ store, post }: Props) => {
   const root: ExtendedPost = post.reshare || post;
-  const [timer, setTimer] = useState<number | undefined>();
   const navigate = useNavigate();
-
-  const setAsViewed = async () => {
-    // We don't need to send another request
-    if (post.isViewed || autoView === false) {
-      return;
-    }
-
-    const response = await api.post.setViewed(post.id);
-    const data = await response.json();
-    store.setViewed(post.id, data.isAlreadyViewed);
-  };
-
-  const hadleMouseEnter = () => {
-    // We don't need to set a timer
-    if (post.isViewed || autoView === false) {
-      return;
-    }
-
-    // Set a timer to set as viewed
-    setTimer(window.setTimeout(setAsViewed, 1000));
-  };
-
-  const handleMouseLeave = () => {
-    clearTimeout(timer);
-  };
 
   const handleClick = (clickedPost?: ExtendedPost) => {
     if (!clickedPost) {
@@ -62,8 +33,6 @@ const Post = ({ store, post, autoView = true }: Props) => {
           <PostArticle
             post={root.parent}
             isParent
-            hadleMouseEnter={hadleMouseEnter}
-            handleMouseLeave={handleMouseLeave}
             handleClick={() => handleClick(root.parent)}
           >
             <PostAuthor post={root.parent} />
@@ -73,13 +42,7 @@ const Post = ({ store, post, autoView = true }: Props) => {
         </>
       )}
 
-      <PostArticle
-        post={root}
-        showBorder
-        hadleMouseEnter={hadleMouseEnter}
-        handleMouseLeave={handleMouseLeave}
-        handleClick={() => handleClick(root)}
-      >
+      <PostArticle post={root} showBorder handleClick={() => handleClick(root)}>
         <PostAuthor post={root} />
         <PostContent post={root} />
         {post.reshare && <PostReshare post={post} />}

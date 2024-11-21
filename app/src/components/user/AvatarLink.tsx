@@ -13,7 +13,7 @@ const AvatarLink = ({ user }: Props) => {
       onClick={(event) => event.stopPropagation()}
       title={user.name}
     >
-      <Avatar user={user} size="sm" />
+      <Avatar src={user.avatar} size="sm" />
     </Link>
   );
 };

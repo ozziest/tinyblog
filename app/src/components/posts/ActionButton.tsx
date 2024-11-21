@@ -1,4 +1,6 @@
+import useAuthStore from "@/stores/authStore";
 import classNames from "classnames";
+import numbro from "numbro";
 
 interface Props {
   icon: string | React.ReactNode;
@@ -15,21 +17,30 @@ const ActionButton = ({
   disabled,
   onClick,
 }: Props) => {
+  const authStore = useAuthStore();
+  const isLoggedIn = authStore.state.isLoggedIn;
+  const formattedCount = numbro(count).format({ average: true });
+
   return (
     <button
       type="button"
       className={classNames(
-        "flex gap-[6px] items-center text-sm hover:bg-neutral-700 hover:text-white rounded-full px-2 py-1 transition-all",
+        "flex gap-[6px] items-center text-sm rounded-full px-2 py-1 transition-all",
         {
           "text-neutral-900": isSelected,
           "text-neutral-300": !isSelected,
         },
+        {
+          "hover:bg-neutral-700 hover:text-white": isLoggedIn,
+        },
       )}
       onClick={onClick}
-      disabled={disabled}
+      disabled={disabled || !isLoggedIn}
     >
       <span>{icon}</span>
-      <span className="text-neutral-400 text-xs font-semibold">{count}</span>
+      <span className="text-neutral-400 text-xs font-semibold">
+        {formattedCount}
+      </span>
     </button>
   );
 };

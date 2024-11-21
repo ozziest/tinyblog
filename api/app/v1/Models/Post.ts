@@ -6,7 +6,7 @@ import {
   ModelMiddleware,
   QueryFeature,
 } from "axe-api";
-import SessionMiddleware from "../Middlewares/SessionMiddleware";
+import LoginRequireMiddleware from "../Middlewares/LoginRequireMiddleware";
 import DefaultSessionRateLimitter from "../Middlewares/RateLimitters/DefaultSessionRateLimitter";
 import SessionRateLimitter from "../Middlewares/RateLimitters/SessionRateLimitter";
 
@@ -34,7 +34,10 @@ class Post extends Model {
 
   get middlewares(): ModelMiddleware {
     return [
-      SessionMiddleware,
+      {
+        handler: [HandlerTypes.INSERT],
+        middleware: LoginRequireMiddleware,
+      },
       DefaultSessionRateLimitter,
       {
         handler: [HandlerTypes.INSERT],
@@ -44,7 +47,7 @@ class Post extends Model {
   }
 
   get limits(): IQueryLimitConfig[][] {
-    return [deny(QueryFeature.WithHasMany, ["views", "likes"])];
+    return [deny(QueryFeature.WithHasMany, ["likes"])];
   }
 
   get hiddens() {
@@ -61,10 +64,6 @@ class Post extends Model {
 
   reshare() {
     return this.hasOne("Post", "id", "reshare_id");
-  }
-
-  views() {
-    return this.hasMany("PostView", "id", "post_id");
   }
 
   likes() {

@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { CloseIcon, ShareIcon } from "../Icons";
 import { Props } from "./ShareInput";
 import Avatar from "../user/Avatar";
 import LexicalEditor from "../inputs/LexicalEditor";
 import useAuthStore from "@/stores/authStore";
 import { IPostApi } from "@/types/ApiTypes";
+import ShouldLoginWarning from "../inputs/ShouldLoginWarning";
+import classNames from "classnames";
 
 const MobileShareButton = ({
   initialState = undefined,
@@ -14,6 +16,8 @@ const MobileShareButton = ({
 }: Props) => {
   const authStore = useAuthStore();
   const [isModalOpen, setModelOpen] = useState(false);
+  const modalContainerRef = useRef<HTMLDivElement>(null);
+  const isLoggedIn = authStore.state.isLoggedIn;
 
   const handleShared = (post: IPostApi) => {
     setModelOpen(false);
@@ -21,6 +25,22 @@ const MobileShareButton = ({
       onShared(post);
     }
   };
+
+  const handleClickOutside = (event: MouseEvent) => {
+    if (
+      modalContainerRef.current &&
+      !modalContainerRef.current.contains(event.target as Node)
+    ) {
+      setModelOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
     <>
@@ -33,25 +53,37 @@ const MobileShareButton = ({
       </button>
       {isModalOpen && (
         <>
-          <div className="fixed inset-0 z-40 flex items-center justify-center bg-black bg-opacity-50">
-            <div className="bg-white w-11/12 md:w-full max-w-xl rounded-lg shadow-lg relative p-4 pb-3 flex flex-col gap-2">
-              <div className="font-semibold text-neutral-700 flex gap-2 items-center">
-                <Avatar user={authStore.state.user} size="sm" />
-                <div className="flex-grow">Share new post!</div>
-                <button type="button" onClick={() => setModelOpen(false)}>
-                  <CloseIcon />
-                </button>
-              </div>
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+            <div
+              ref={modalContainerRef}
+              className={classNames(
+                "bg-white w-11/12 md:w-full max-w-xl rounded-lg shadow-lg relative flex flex-col gap-2",
+                { "p-4 pb-3": isLoggedIn },
+                { "p-0": !isLoggedIn },
+              )}
+            >
+              {isLoggedIn && (
+                <>
+                  <div className="font-semibold text-neutral-700 flex gap-2 items-center">
+                    <Avatar src={authStore.state.user.avatar} size="sm" />
+                    <div className="flex-grow">Share new post!</div>
+                    <button type="button" onClick={() => setModelOpen(false)}>
+                      <CloseIcon />
+                    </button>
+                  </div>
 
-              <div className="flex-grow">
-                <LexicalEditor
-                  store={store}
-                  parent={parent}
-                  onShared={handleShared}
-                  initialState={initialState}
-                  initialLocation={authStore.state.user.location || "WW"}
-                />
-              </div>
+                  <div className="flex-grow">
+                    <LexicalEditor
+                      store={store}
+                      parent={parent}
+                      onShared={handleShared}
+                      initialState={initialState}
+                      initialLocation={authStore.state.user.location || "WW"}
+                    />
+                  </div>
+                </>
+              )}
+              {!isLoggedIn && <ShouldLoginWarning />}
             </div>
           </div>
         </>

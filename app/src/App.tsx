@@ -22,9 +22,6 @@ const App = () => {
     interceptors.addResponse((response: Response) => {
       if (response.status === 401) {
         authStore.logout();
-        if (!response.url.includes("/api/v1/me")) {
-          window.location.reload();
-        }
         return response;
       }
       return response;

@@ -50,7 +50,7 @@ const PostArticle = ({
         <div className="flex flex-col items-center">
           <button type="button" onClick={handleUserClick}>
             <Avatar
-              user={post.user}
+              src={post.user.avatar}
               size={breakpoint < Breakpoints.sm ? "sm" : "md"}
             />
           </button>

@@ -1,3 +1,5 @@
+import { AccountVisibility } from "./types";
+
 export interface IUserPost {
   cfToken: string | null;
   csrf: string;
@@ -96,4 +98,11 @@ export interface IQuestion {
   title: string;
   message: string;
   onConfirm: () => void;
+}
+
+export interface IUserPatch {
+  name: string;
+  location: string;
+  bio: string;
+  account_visibility: AccountVisibility;
 }

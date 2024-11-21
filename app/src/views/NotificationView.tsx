@@ -11,6 +11,8 @@ import { IQuestion } from "@/interfaces";
 import useAuthStore from "@/stores/authStore";
 import { useNotificationsStore } from "@/stores/notifications";
 import { useEffect, useState } from "react";
+import { Helmet } from "react-helmet";
+import { useNavigate } from "react-router-dom";
 
 const urlB64ToUint8Array = (base64String: string) => {
   const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
@@ -42,6 +44,7 @@ const NotificationView = () => {
   const [isReady, setReady] = useState(false);
   const store = useNotificationsStore();
   const authStore = useAuthStore();
+  const navigate = useNavigate();
   const [question, setQuestion] = useState<IQuestion>();
 
   const enableNotifications = async () => {
@@ -139,75 +142,86 @@ const NotificationView = () => {
   };
 
   useEffect(() => {
+    if (!authStore.state.isLoggedIn) {
+      navigate("/");
+      return;
+    }
+
     fetchNotifications();
   }, []);
 
   return (
-    <div className="px-5 md:px-0">
-      <div className="flex justify-between items-center">
-        <h1 className="font-bold text-xl py-5 flex-grow">Notifications</h1>
-        {authStore.state.user.is_push_notification_on && (
-          <div>
-            <button
-              type="button"
-              className="px-3 py-1 rounded hover:bg-neutral-200 outline-none"
-              onClick={disableNotifications}
-            >
-              Push notifications:{" "}
-              <span className=" text-green-600 font-bold">on</span>
-            </button>
+    <>
+      <Helmet>
+        <title>Notifications - tinyblog.space</title>
+      </Helmet>
+
+      <div className="px-5 md:px-0">
+        <div className="flex justify-between items-center">
+          <h1 className="font-bold text-xl py-5 flex-grow">Notifications</h1>
+          {authStore.state.user.is_push_notification_on && (
+            <div>
+              <button
+                type="button"
+                className="px-3 py-1 rounded hover:bg-neutral-200 outline-none"
+                onClick={disableNotifications}
+              >
+                Push notifications:{" "}
+                <span className=" text-green-600 font-bold">on</span>
+              </button>
+            </div>
+          )}
+        </div>
+
+        {authStore.state.user.is_push_notification_on === false && (
+          <div className="bg-white shadow-lg rounded-lg p-4 md:p-6 mb-10 border border-neutral-100">
+            <div className="flex items-center space-x-4">
+              <div className="hidden flex-shrink-0 text-neutral-400 md:block">
+                <NotificationOffIcon size={64} />
+              </div>
+              <div>
+                <h2 className="text-lg font-semibold text-gray-800">
+                  Push Notifications Disabled
+                </h2>
+                <p className="text-gray-600 mt-1">
+                  Enable push notifications to stay updated with the latest
+                  alerts and messages in real-time.
+                </p>
+              </div>
+            </div>
+            <div className="mt-6 text-center">
+              <button
+                className="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-lg shadow-lg transition"
+                onClick={enableNotifications}
+              >
+                Enable Notifications
+              </button>
+            </div>
           </div>
         )}
-      </div>
 
-      {authStore.state.user.is_push_notification_on === false && (
-        <div className="bg-white shadow-lg rounded-lg p-4 md:p-6 mb-10 border border-neutral-100">
-          <div className="flex items-center space-x-4">
-            <div className="hidden flex-shrink-0 text-neutral-400 md:block">
-              <NotificationOffIcon size={64} />
-            </div>
-            <div>
-              <h2 className="text-lg font-semibold text-gray-800">
-                Push Notifications Disabled
-              </h2>
-              <p className="text-gray-600 mt-1">
-                Enable push notifications to stay updated with the latest alerts
-                and messages in real-time.
-              </p>
-            </div>
-          </div>
-          <div className="mt-6 text-center">
-            <button
-              className="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-lg shadow-lg transition"
-              onClick={enableNotifications}
-            >
-              Enable Notifications
-            </button>
-          </div>
-        </div>
-      )}
-
-      <PostContainer>
-        {isReady && store.state.items.length === 0 && (
-          <EmptyData
-            title="Introvert detection!"
-            description="You don't have a notification yet! Let's try to connect people."
+        <PostContainer>
+          {isReady && store.state.items.length === 0 && (
+            <EmptyData
+              title="Introvert detection!"
+              description="You don't have a notification yet! Let's try to connect people."
+            />
+          )}
+          {store.state.items.map((item) => (
+            <NotificationGroup notification={item} key={item.id} />
+          ))}
+        </PostContainer>
+        <InfiniteScroll isLoading={store.state.isLoading} loadMore={loadMore} />
+        {question && (
+          <ConfirmationModal
+            title={question.title}
+            message={question.message}
+            onCancel={() => setQuestion(undefined)}
+            onConfirm={question.onConfirm}
           />
         )}
-        {store.state.items.map((item) => (
-          <NotificationGroup notification={item} key={item.id} />
-        ))}
-      </PostContainer>
-      <InfiniteScroll isLoading={store.state.isLoading} loadMore={loadMore} />
-      {question && (
-        <ConfirmationModal
-          title={question.title}
-          message={question.message}
-          onCancel={() => setQuestion(undefined)}
-          onConfirm={question.onConfirm}
-        />
-      )}
-    </div>
+      </div>
+    </>
   );
 };
 

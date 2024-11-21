@@ -6,9 +6,6 @@ import { SUPPORTED_LOCATIONS } from "../../consts";
 
 export default async (req: AxeRequest, res: AxeResponse) => {
   try {
-    if (!req.original.auth) {
-      return res.status(404).json({ error: "The user not found!" });
-    }
     const db = (await IoCService.use("Database")) as Knex;
     const redis = await IoCService.use<RedisAdaptor>("Redis");
 

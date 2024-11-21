@@ -1,4 +1,5 @@
 import { NotificationTypes } from "@/enums";
+import { AccountVisibility } from "@/types";
 
 export interface IPostApi {
   id: number;
@@ -33,6 +34,7 @@ export interface IUserApi {
   stats_following: number;
   following_id?: number;
   is_push_notification_on: boolean;
+  account_visibility: AccountVisibility;
   locations: IUserFeedLocationApi[];
 }
 

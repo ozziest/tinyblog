@@ -1,28 +1,24 @@
-import React, { useEffect, useState } from "react";
-import BaseModal from "./BaseModal";
-import TextInput from "../inputs/TextInput";
-import { IUserApi } from "@/types/ApiTypes";
-import TextareaInput from "../inputs/TextareaInput";
-import Button from "../inputs/Button";
 import api from "@/api";
-import useAuthStore from "@/stores/authStore";
-import SelectInput, { SelectInputModelType } from "../inputs/SelectInput";
+import Button from "@/components/inputs/Button";
+import SelectInput, {
+  SelectInputModelType,
+} from "@/components/inputs/SelectInput";
+import TextareaInput from "@/components/inputs/TextareaInput";
+import TextInput from "@/components/inputs/TextInput";
 import { SUPPORTED_LOCATIONS } from "@/consts";
+import { loading } from "@/helpers/layout";
 import { IOption } from "@/interfaces";
+import useAuthStore from "@/stores/authStore";
+import { IUserApi } from "@/types/ApiTypes";
+import { useState } from "react";
 import { IValidationResult, validate } from "robust-validator";
-import { emitter } from "@/helpers/events";
-
-interface ModalProps {
-  user: IUserApi;
-}
 
 type LocationType = IOption | null;
 
-const UserEditModal = ({ user }: ModalProps) => {
+const ProfileSettingsTab = () => {
   const authStore = useAuthStore();
-  const [isOpen, setOpen] = useState(false);
   const [state, setState] = useState<IUserApi>({
-    ...user,
+    ...authStore.state.user,
     email: authStore.state.user.email,
     location: authStore.state.user.location,
     bio: authStore.state.user.bio,
@@ -41,67 +37,37 @@ const UserEditModal = ({ user }: ModalProps) => {
       [field]: event.target.value,
     });
   };
-
   const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
+    try {
+      loading(true);
+      event.preventDefault();
 
-    const result = await validate(state, {
-      bio: "max:240",
-      location: "required|min:2|max:2",
-      name: "required|min:3|max:50",
-    });
-    setValidation(result);
-    if (result.isInvalid) {
-      return;
+      const result = await validate(state, {
+        bio: "max:240",
+        location: "required|min:2|max:2",
+        name: "required|min:3|max:50",
+      });
+      setValidation(result);
+      if (result.isInvalid) {
+        return;
+      }
+
+      await api.user.patch(state.id, {
+        name: state.name,
+        location: location?.value || "WW",
+        bio: state.bio,
+      });
+    } finally {
+      loading(false);
     }
-
-    await api.user.patch(
-      state.id,
-      state.name,
-      location?.value || "WW",
-      state.bio,
-    );
-    handleClose();
   };
-
-  const handleClose = () => {
-    emitter.emit("user-edit-modal:off");
-    setOpen(false);
-  };
-
-  useEffect(() => {
-    const openHandler = () => setOpen(true);
-    emitter.on("user-edit-modal:on", openHandler);
-
-    return () => emitter.off("user-edit-modal:on", openHandler);
-  }, []);
 
   return (
-    <BaseModal
-      title="Edit profile"
-      isOpen={isOpen}
-      onClose={handleClose}
-      footer={
-        <Button type="button" onClick={handleSubmit}>
-          Save
-        </Button>
-      }
-    >
+    <>
+      <h2 className="font-semibold text-lg text-neutral-700 pb-5">
+        Profile settings
+      </h2>
       <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
-        <TextInput
-          name="email"
-          label="E-mail"
-          description="You can not change your e-mail address."
-          value={state.email}
-          disabled
-        />
-        <TextInput
-          name="username"
-          label="Username"
-          description="You can not change your username."
-          value={state.username}
-          disabled
-        />
         <TextInput
           name="name"
           label="Name"
@@ -131,9 +97,10 @@ const UserEditModal = ({ user }: ModalProps) => {
           maxLength={240}
           validation={validation}
         />
+        <Button type="submit">Save</Button>
       </form>
-    </BaseModal>
+    </>
   );
 };
 
-export default UserEditModal;
+export default ProfileSettingsTab;

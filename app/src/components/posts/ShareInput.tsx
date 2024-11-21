@@ -4,6 +4,7 @@ import { IPostApi } from "@/types/ApiTypes";
 import { ExtendedPost, IPostStore } from "@/stores/postStore";
 import LexicalEditor from "../inputs/LexicalEditor";
 import classNames from "classnames";
+import ShouldLoginWarning from "../inputs/ShouldLoginWarning";
 
 export interface Props {
   initialState?: string;
@@ -21,6 +22,11 @@ const ShareInput = ({
   showLocationChanger = true,
 }: Props) => {
   const authStore = useAuthStore();
+  const isLoggedIn = authStore.state.isLoggedIn;
+
+  if (!isLoggedIn) {
+    return <ShouldLoginWarning />;
+  }
 
   return (
     <form
@@ -30,7 +36,7 @@ const ShareInput = ({
       })}
     >
       <div className={classNames("flex gap-2")}>
-        <Avatar user={authStore.state.user} />
+        <Avatar src={authStore.state.user.avatar} />
         <div className="flex-grow">
           <LexicalEditor
             store={store}

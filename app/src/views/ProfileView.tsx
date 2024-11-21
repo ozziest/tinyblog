@@ -11,6 +11,7 @@ import useUserDetail from "@/composables/useUserDetail";
 import NotFound from "@/components/layout/NotFound";
 import LoadingSpinner from "@/components/layout/LoadingSpinner";
 import ServerError from "@/components/layout/ServerError";
+import { Helmet } from "react-helmet";
 
 const ProfileView = () => {
   const store = useProfilePostsStore();
@@ -58,6 +59,8 @@ const ProfileView = () => {
 
   return (
     <>
+      <Helmet>{user && <title>{user.name} - tinyblog.space</title>}</Helmet>
+
       <div className="bg-white sticky top-[50px] lg:top-[44px] pt-4 z-40">
         {user && (
           <UserProfileBox user={user} setUser={setUser} refetch={refetch} />

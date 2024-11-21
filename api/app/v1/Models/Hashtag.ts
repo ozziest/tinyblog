@@ -7,7 +7,7 @@ import {
   ModelMiddleware,
   QueryFeature,
 } from "axe-api";
-import SessionMiddleware from "../Middlewares/SessionMiddleware";
+import LoginRequireMiddleware from "../Middlewares/LoginRequireMiddleware";
 import DefaultSessionRateLimitter from "../Middlewares/RateLimitters/DefaultSessionRateLimitter";
 import SessionRateLimitter from "../Middlewares/RateLimitters/SessionRateLimitter";
 
@@ -36,11 +36,14 @@ class Hashtag extends Model {
 
   get middlewares(): ModelMiddleware {
     return [
-      SessionMiddleware,
       DefaultSessionRateLimitter,
       {
         handler: [HandlerTypes.INSERT],
         middleware: SessionRateLimitter("HashtagInsert", 15),
+      },
+      {
+        handler: [HandlerTypes.INSERT],
+        middleware: LoginRequireMiddleware,
       },
     ];
   }

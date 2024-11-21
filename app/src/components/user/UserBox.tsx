@@ -8,11 +8,15 @@ const UserBox = () => {
   const state = useAuthStore((store) => store.state);
   const profileLink = useProfileLink();
 
+  if (!state.isLoggedIn) {
+    return null;
+  }
+
   return (
     <div className="border border-neutral-100 p-4 rounded  bg-white">
       <div className=" flex justify-between gap-3">
         <Link to={profileLink}>
-          <Avatar user={state.user} />
+          <Avatar src={state.user.avatar} />
         </Link>
         <div className="flex-grow flex flex-col">
           <Link to={profileLink} className="text-xl font-semibold">
