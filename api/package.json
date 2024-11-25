@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@elastic/elasticsearch": "^8.16.1",
-    "@sentry/node": "^8.38.0",
+    "@sentry/node": "^8.40.0",
     "@sentry/profiling-node": "^8.38.0",
     "axe-api": "1.5.1",
     "bcryptjs": "^2.4.3",
