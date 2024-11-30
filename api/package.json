@@ -32,6 +32,7 @@
     "redis": "^4.7.0",
     "robust-validator": "^2.1.1",
     "sanitize-html": "^2.13.1",
+    "sitemap": "^8.0.0",
     "svg2img": "^1.0.0-beta.2",
     "uuid": "^11.0.3",
     "web-push": "^3.6.7"

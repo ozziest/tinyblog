@@ -26,11 +26,15 @@ import HealthCheckHandler from "./Handlers/HealthCheckHandler";
 import RedirectHandler from "./Handlers/RedirectHandler";
 import GetUserByNameHandler from "./Handlers/GetUserByNameHandler";
 import SetAuthMiddleware from "./Middlewares/SetAuthMiddleware";
+import SitemapHandler from "./Handlers/SitemapHandler";
+import SitemapStaticHandler from "./Handlers/SitemapStaticHandler";
+import SitemapUsersHandler from "./Handlers/SitemapUsersHandler";
+import SitemapTagsHandler from "./Handlers/SitemapTagsHandler";
 
 if (process.env.NODE_ENV !== "development") {
   Sentry.init({
     dsn: process.env.SENTRY_DSN_KEY,
-    integrations: [nodeProfilingIntegration()],
+    // integrations: [nodeProfilingIntegration()],
     tracesSampleRate: 0.01,
     profilesSampleRate: 0.01,
   });
@@ -55,6 +59,11 @@ const onBeforeInit = async (app: App) => {
 
   // Prepare the templates
   prepareTemplates();
+
+  app.get("/sitemap.xml", SitemapHandler);
+  app.get("/sitemap-static.xml", SitemapStaticHandler);
+  app.get("/sitemap-users.xml", SitemapUsersHandler);
+  app.get("/sitemap-tags.xml", SitemapTagsHandler);
 
   app.get("/health", HealthCheckHandler);
 
