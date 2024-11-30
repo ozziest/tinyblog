@@ -1,5 +1,3 @@
 User-agent: *
-Disallow: /
+Disallow:
 
-User-agent: *
-Allow: /about
