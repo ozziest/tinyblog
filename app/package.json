@@ -17,7 +17,7 @@
     "@algolia/autocomplete-core": "^1.17.7",
     "@algolia/autocomplete-preset-algolia": "^1.17.7",
     "@headlessui/react": "^2.2.0",
-    "@lexical/hashtag": "^0.18.0",
+    "@lexical/hashtag": "^0.20.2",
     "@lexical/react": "^0.18.0",
     "@sentry/react": "^8.36.0",
     "@sentry/vite-plugin": "^2.22.6",
